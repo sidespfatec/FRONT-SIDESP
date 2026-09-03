@@ -1,0 +1,151 @@
+@use '../../../styles/breakpoints' as *;
+
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: var(--color-brand-primary);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    z-index: 1000;
+    padding: 0 1rem;
+}
+
+.nav-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--white);
+    text-decoration: none;
+
+    i {
+        font-size: 2.5rem;
+        color: var(--white);
+        transition: transform 0.15s, opacity 0.15s;
+    }
+
+    &:hover i {
+        opacity: 0.7;
+    }
+
+    &:active i {
+        transform: scale(0.9);
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.drawer-header {
+    display: flex;
+    align-items: center;
+    padding: 0.25rem 0;
+}
+
+.drawer-titulo {
+    margin: 0;
+    color: var(--color-brand-secondary);
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.drawer-conteudo {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    padding: 0.5rem 0 2rem;
+}
+
+.grupo-titulo {
+    margin: 0 0 0.75rem;
+    color: var(--gray-500);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.grupo-itens {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 1rem;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--color-text-primary);
+    transition: all 0.15s ease;
+    cursor: pointer;
+
+    &:hover {
+        background: var(--white);
+        border-color: var(--color-brand-primary);
+        transform: translateX(-2px);
+        box-shadow: 0 4px 12px rgba(13, 18, 130, 0.1);
+
+        .menu-item-icone {
+            background: var(--color-brand-primary);
+
+            i {
+                color: var(--white);
+            }
+        }
+
+        .menu-item-seta {
+            color: var(--color-brand-primary);
+            transform: translateX(2px);
+        }
+    }
+
+    &:active {
+        transform: translateX(0);
+    }
+}
+
+.menu-item-icone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: var(--white);
+    border-radius: 10px;
+    transition: background 0.15s ease;
+    flex-shrink: 0;
+
+    i {
+        font-size: 1.5rem;
+        color: var(--color-brand-secondary);
+        transition: color 0.15s ease;
+    }
+}
+
+.menu-item-nome {
+    flex: 1;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.menu-item-seta {
+    font-size: 0.85rem;
+    color: var(--gray-400);
+    transition: all 0.15s ease;
+}

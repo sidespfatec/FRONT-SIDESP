@@ -1,0 +1,52 @@
+<app-banner></app-banner>
+<div class="classes-page">
+    <div class="page-header">
+        <i class="pi pi-arrow-left" (click)="goBack()"></i>
+        <div class="modality-icon" [style.background-color]="modalityIconBg">
+            <i [class]="modalityIcon" [style.color]="modalityIconColor"></i>
+        </div>
+        <div>
+            <p class="modality-name">{{ modalityName }}</p>
+            <p class="modality-meta">{{ classes.length }} turmas</p>
+        </div>
+    </div>
+
+    <div class="classes-list">
+        @for (classGroup of classes; track classGroup.id) {
+        <div class="class-card" (click)="openClass(classGroup)">
+            <div class="class-card-header">
+                <p class="class-name">{{ classGroup.name }}</p>
+                <i class="pi pi-chevron-right"></i>
+            </div>
+            <div class="class-details">
+                <div class="detail-row">
+                    <i class="pi pi-user"></i>
+                    <span>Prof. {{ classGroup.teacher }}</span>
+                </div>
+                <div class="detail-row">
+                    <i class="pi pi-clock"></i>
+                    <span>{{ classGroup.schedule }}</span>
+                </div>
+                <div class="detail-row">
+                    <i class="pi pi-map-marker"></i>
+                    <span>{{ classGroup.location }}</span>
+                </div>
+                <div class="detail-row">
+                    <i class="pi pi-users"></i>
+                    <span>{{ classGroup.enrolled }}/{{ classGroup.capacity }} alunos</span>
+                </div>
+            </div>
+        </div>
+        } @empty {
+        <p class="empty-state">Nenhuma turma cadastrada.</p>
+        }
+    </div>
+
+    <div class="add-class">
+        <i class="pi pi-plus"></i>
+        <span>Adicionar Turma</span>
+    </div>
+</div>
+
+
+<app-footer></app-footer>

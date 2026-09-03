@@ -1,0 +1,117 @@
+@use '../../../../../styles/breakpoints.scss' as *;
+
+.main-container {
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-brand-primary);
+}
+
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.layout-login {
+    background-color: var(--color-brand-primary);
+    padding: 2rem;
+    margin-top: 7rem;
+    flex: 1;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 3rem 3rem 3rem 3rem;
+    background-color: var(--color-bg-card);
+}
+
+.title-login {
+    font-size: 2.5rem;
+    color: var(--color-brand-primary);
+    margin-top: 0;
+    margin-bottom: 2rem;
+}
+
+.input-login {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+    gap: 0.5rem;
+    justify-content: center;
+    width: 100%;
+
+    small {
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: 1em;
+    }
+
+    a {
+        display: flex;
+        justify-content: flex-end;
+        cursor: pointer;
+        color: var(--color-brand-secondary);
+    }
+}
+
+:host ::ng-deep .input-login .p-inputtext {
+    background-color: var(--gray-100) !important;
+    border: 1px solid var(--color-border-strong) !important;
+    color: var(--color-text-primary) !important;
+    width: 100%;
+
+    &:focus,
+    &.p-focus {
+        border-color: var(--color-border-focus) !important;
+        box-shadow: 0 0 0 2px rgba(13, 18, 130, 0.15) !important;
+    }
+
+    &::placeholder {
+        color: var(--color-text-muted) !important;
+    }
+}
+
+:host ::ng-deep .button-login .p-button {
+    width: 100% !important;
+    margin-top: 1.5rem !important;
+    font-weight: bold !important;
+    padding: 0.5rem 1rem !important;
+    font-size: 1.2rem !important;
+    background-color: var(--color-brand-primary) !important;
+    border-color: var(--color-brand-primary) !important;
+    color: var(--color-text-on-brand) !important;
+
+    &:hover {
+        background-color: var(--color-action-hover-primary) !important;
+        border-color: var(--color-action-hover-primary) !important;
+    }
+}
+
+:host ::ng-deep .button-register .p-button {
+    width: 100% !important;
+    margin-top: 1 !important;
+    font-weight: bold !important;
+    padding: 0.5rem 1rem !important;
+    font-size: 1.2rem !important;
+    background-color: var(--color-brand-secondary) !important;
+    border-color: var(--color-brand-secondary) !important;
+    color: var(--color-text-on-brand) !important;
+
+    &:hover {
+        background-color: var(--color-action-hover) !important;
+        border-color: var(--color-action-hover) !important;
+    }
+}
+
+.question-register {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}

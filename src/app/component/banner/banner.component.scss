@@ -1,0 +1,50 @@
+@use '../../../styles/breakpoints' as *;
+
+.banner {
+  background-color: var(--color-bg-header);
+  padding: 1rem 2rem;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  border-bottom: 1px solid var(--color-border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.banner-image {
+  margin: 0 auto 0.5rem;
+  width: 30%;
+
+  img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+}
+
+.banner-title {
+  font-size: 1rem;
+  color: var(--color-brand-primary);
+  margin-top: 0.5rem;
+  text-align: start;
+}
+
+@include md {
+  .banner {
+    padding: 10rem;
+  }
+
+  .banner-title {
+    font-size: 1rem;
+  }
+
+  .banner-image img {
+    width: 100%;
+    height: auto;
+  }
+}

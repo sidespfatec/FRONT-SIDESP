@@ -1,0 +1,39 @@
+// ============================================================
+// BREAKPOINTS — Mobile First
+// ============================================================
+// Valores em px, convertidos para em (recomendado por acessibilidade
+// — respeita zoom de fonte do usuário)
+
+$bp-sm:  40em;   // 640px  — celular grande / phablet landscape
+$bp-md:  48em;   // 768px  — tablet portrait
+$bp-lg:  64em;   // 1024px — tablet landscape / desktop pequeno
+$bp-xl:  80em;   // 1280px — desktop
+$bp-2xl: 96em;   // 1536px — desktop grande
+
+// ============================================================
+// MIXINS — sempre min-width (mobile first)
+// ============================================================
+
+@mixin sm  { @media (min-width: $bp-sm)  { @content; } }
+@mixin md  { @media (min-width: $bp-md)  { @content; } }
+@mixin lg  { @media (min-width: $bp-lg)  { @content; } }
+@mixin xl  { @media (min-width: $bp-xl)  { @content; } }
+@mixin xxl { @media (min-width: $bp-2xl) { @content; } }
+
+// ============================================================
+// MIXINS ESPECIAIS
+// ============================================================
+
+// Para um breakpoint customizado pontual
+@mixin from($size) {
+  @media (min-width: $size) { @content; }
+}
+
+// Orientação (útil pra layouts de chamada em tablet)
+@mixin landscape { @media (orientation: landscape) { @content; } }
+@mixin portrait  { @media (orientation: portrait)  { @content; } }
+
+// Acessibilidade — respeitar preferência do usuário
+@mixin reduce-motion {
+  @media (prefers-reduced-motion: reduce) { @content; }
+}

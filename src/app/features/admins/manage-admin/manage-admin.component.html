@@ -1,0 +1,37 @@
+<app-banner></app-banner>
+<p-card class="admin-header">
+    <h1 class="admin-title">Gerenciar Administradores</h1>
+
+    <div class="admin-search">
+        <p-autoComplete class="search-input" field="name" />
+        <i class="pi pi-search search-icon"></i>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="add-admin" (click)="showModal = true">
+        <i class="pi pi-user-plus"></i>
+        <span>Adicionar Administrador</span>
+    </div>
+
+    <!-- <app-new-admin-modal [(visible)]="showModal" /> -->
+
+</p-card>
+
+<p-card class="admin-list-card">
+    <p class="admin-list-title">2 Administradores</p>
+    <div class="admin-list">
+        <div class="admin-item">
+            <div class="avatar">AM</div>
+            <span class="admin-name">Ana Martins</span>
+            <i class="pi pi-chevron-right"></i>
+        </div>
+        <div class="admin-item">
+            <div class="avatar">CS</div>
+            <span class="admin-name">Carlos Souza</span>
+            <i class="pi pi-chevron-right"></i>
+        </div>
+    </div>
+</p-card>
+
+<app-footer></app-footer>

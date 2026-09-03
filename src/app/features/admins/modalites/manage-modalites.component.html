@@ -1,0 +1,45 @@
+<app-banner></app-banner>
+
+<p-card class="modalities-header">
+    <h1 class="modalities-title">Modalidades</h1>
+    <div class="modalities-search">
+        <p-autoComplete class="search-input" field="name" />
+        <i class="pi pi-search search-icon"></i>
+    </div>
+</p-card>
+
+<div class="filter-tabs">
+    <button class="filter-tab" [class.active]="filter === 'active'" (click)="setFilter('active')">
+        Ativas
+    </button>
+    <button class="filter-tab" [class.active]="filter === 'inactive'" (click)="setFilter('inactive')">
+        Inativas
+    </button>
+</div>
+
+<div class="modalities-list">
+    @for (modality of filteredModalities; track modality.id) {
+    <div class="modality-item" (click)="openModality(modality)">
+        <div class="modality-icon" [style.background-color]="modality.iconBg">
+            <i [class]="modality.icon" [style.color]="modality.iconColor"></i>
+        </div>
+        <div class="modality-info">
+            <p class="modality-name">{{ modality.name }}</p>
+            <p class="modality-meta">{{ modality.classesCount }} turmas · {{ modality.studentsCount }} alunos</p>
+        </div>
+        <span class="status-badge" [class.inactive]="!modality.active">
+            {{ modality.active ? 'Ativa' : 'Inativa' }}
+        </span>
+        <i class="pi pi-chevron-right"></i>
+    </div>
+    } @empty {
+    <p class="empty-state">Nenhuma modalidade encontrada.</p>
+    }
+</div>
+
+<div class="add-modality">
+    <i class="pi pi-plus"></i>
+    <span>Adicionar Modalidade</span>
+</div>
+
+<app-footer></app-footer>

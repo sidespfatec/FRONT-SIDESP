@@ -1,0 +1,25 @@
+<main class="main-container">
+    <app-banner></app-banner>
+    <div class="layout-login">
+        <div class="login-container">
+            <h1 class="title-login">LOGIN</h1>
+            <form class="space-y-6 mt-3">
+                <div class="input-login flex flex-col gap-2">
+                    <label for="cpf">CPF</label>
+                    <input pInputText id="cpf" aria-describedby="cpf-help" />
+                    <small id="cpf-help" class="text-sm">Digite seu CPF.</small>
+                </div>
+                <div class="input-login flex flex-col gap-2">
+                    <label pLabel for="password">Senha</label>
+                    <input pInputText id="password" type="password" />
+                    <small id="senha-help" class="text-sm">Digite sua senha.</small>
+                    <a class="text-right text-sm text-blue-500">Esqueci minha senha</a>
+                </div>
+                <p-button class="button-login" label="ENTRAR" routerLink="/home" />
+
+                <p class="question-register">Não possui cadastro?</p>
+                <p-button class="button-register" label="CADASTRE-SE" routerLink="/registration" />
+            </form>
+        </div>
+    </div>
+</main>

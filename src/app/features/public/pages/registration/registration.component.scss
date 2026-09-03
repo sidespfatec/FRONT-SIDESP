@@ -1,0 +1,229 @@
+@use '../../../../../styles/breakpoints.scss' as *;
+
+.main-container {
+    min-height: 100vh;
+    background-color: var(--color-brand-primary);
+    padding: 1.5rem 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.registration-container {
+    background-color: var(--color-bg-card);
+    width: 95%;
+    max-width: 480px;
+    border-radius: 12px;
+    padding: 1.75rem 1rem 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    margin-top: 7rem;
+}
+
+.title-register {
+    text-align: center;
+    color: var(--color-brand-primary);
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+}
+
+.container-step {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding-top: 1rem;
+}
+
+.input-register {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    width: 90%;
+
+    label {
+        color: var(--color-text-primary);
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    small {
+        color: var(--color-text-secondary);
+        font-size: 0.75rem;
+        margin-top: 0.15rem;
+    }
+
+    a {
+        display: flex;
+        justify-content: flex-end;
+        cursor: pointer;
+        color: var(--color-brand-secondary);
+        font-size: 0.85rem;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.step-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+}
+
+:host ::ng-deep .p-stepper {
+    background-color: transparent;
+
+    .p-stepper-number,
+    .p-step-number {
+        background-color: var(--gray-200) !important;
+        color: var(--color-text-secondary) !important;
+        border: 2px solid var(--gray-300) !important;
+        font-weight: bold;
+        min-width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .p-stepper-item.p-highlight .p-stepper-number,
+    .p-step.p-step-active .p-step-number {
+        background-color: var(--color-brand-primary) !important;
+        color: var(--white) !important;
+        border-color: var(--color-brand-primary) !important;
+    }
+
+    .p-stepper-title,
+    .p-step-title {
+        color: var(--color-text-secondary) !important;
+        font-weight: 500;
+        font-size: 0.85rem;
+        margin-left: 0.5rem;
+    }
+
+    .p-stepper-item.p-highlight .p-stepper-title,
+    .p-step.p-step-active .p-step-title {
+        color: var(--color-brand-primary) !important;
+        font-weight: 700;
+    }
+
+    .p-stepper-separator,
+    .p-step-separator {
+        background-color: var(--gray-300) !important;
+    }
+
+    .p-steppanel,
+    .p-steppanel-content,
+    .p-steppanel-content-wrapper {
+        background-color: transparent !important;
+        padding: 0 !important;
+    }
+}
+
+:host ::ng-deep .input-register .p-inputtext {
+    background-color: var(--gray-100) !important;
+    border: 1.5px solid var(--color-border-strong) !important;
+    color: var(--color-text-primary) !important;
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: all 0.15s;
+
+    &:focus,
+    &.p-focus {
+        background-color: var(--white) !important;
+        border-color: var(--color-brand-primary) !important;
+        box-shadow: 0 0 0 3px rgba(13, 18, 130, 0.15) !important;
+        outline: none;
+    }
+
+    &::placeholder {
+        color: var(--color-text-muted) !important;
+    }
+}
+
+:host ::ng-deep .input-register .p-password {
+    width: 100%;
+
+    input {
+        width: 100%;
+        background-color: var(--gray-100) !important;
+        border: 1.5px solid var(--color-border-strong) !important;
+        color: var(--color-text-primary) !important;
+        padding: 0.6rem 2.25rem 0.6rem 0.75rem;
+        border-radius: 6px;
+
+        &:focus {
+            background-color: var(--white) !important;
+            border-color: var(--color-brand-primary) !important;
+            box-shadow: 0 0 0 3px rgba(13, 18, 130, 0.15) !important;
+        }
+    }
+}
+
+:host ::ng-deep .p-selectbutton {
+    display: flex;
+    gap: 0.5rem;
+
+    .p-button,
+    .p-togglebutton {
+        background-color: var(--gray-100) !important;
+        color: var(--color-text-primary) !important;
+        border: 1.5px solid var(--color-border-strong) !important;
+        padding: 0.5rem 1.25rem !important;
+        border-radius: 6px !important;
+        font-weight: 500;
+        flex: 1;
+
+        &.p-highlight,
+        &.p-togglebutton-checked {
+            background-color: var(--color-brand-primary) !important;
+            color: var(--white) !important;
+            border-color: var(--color-brand-primary) !important;
+        }
+
+        &:hover:not(.p-highlight):not(.p-togglebutton-checked) {
+            background-color: var(--gray-200) !important;
+        }
+    }
+}
+
+:host ::ng-deep .step-actions .p-button {
+    padding: 0.65rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.2s;
+    min-width: 110px;
+
+    &:not(.p-button-secondary) {
+        background-color: var(--color-action) !important;
+        border-color: var(--color-action) !important;
+        color: var(--white) !important;
+
+        &:hover {
+            background-color: var(--color-action-hover) !important;
+            border-color: var(--color-action-hover) !important;
+        }
+    }
+
+    &.p-button-secondary {
+        background-color: var(--white) !important;
+        border-color: var(--color-border-strong) !important;
+        color: var(--color-text-primary) !important;
+
+        &:hover {
+            background-color: var(--gray-100) !important;
+        }
+    }
+}
+
+button {
+    margin-right: 1rem;
+}

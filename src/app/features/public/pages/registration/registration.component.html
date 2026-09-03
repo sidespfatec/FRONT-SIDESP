@@ -1,0 +1,187 @@
+<app-simple-banner></app-simple-banner>
+
+<div class="main-container">
+    <div class="registration-container">
+        <h1 class="title-register">CADASTRO</h1>
+
+        <p-stepper [value]="activeStep">
+            <p-step-item [value]="1">
+                <p-step>Informações Pessoais</p-step>
+                <p-step-panel>
+                    <ng-template #content let-activateCallback="activateCallback">
+                        <div class="container-step">
+
+                            <div class="input-register">
+                                <label for="name">Nome Completo</label>
+                                <input pInputText id="name" />
+                                <small>Digite seu Nome Completo.</small>
+                            </div>
+
+                            <div class="input-register">
+                                <label for="cpf">CPF</label>
+                                <p-inputMask id="cpf" mask="999.999.999-99" placeholder="000.000.000-00" />
+                                <small>Digite o CPF.</small>
+                            </div>
+
+                            <div class="input-register">
+                                <label for="birthdate">Data de Nascimento</label>
+                                <p-inputMask id="birthdate" mask="99/99/9999" placeholder="DD/MM/AAAA" />
+                                <small>Digite sua Data de Nascimento.</small>
+                            </div>
+
+                            <div class="input-register">
+                                <label>Gênero</label>
+                                <p-selectButton [options]="[
+                  {label: 'Masculino', value: 'M'},
+                  {label: 'Feminino', value: 'F'}
+                ]" optionLabel="label" optionValue="value" />
+                                <small>Selecione seu Gênero.</small>
+                            </div>
+
+                            <div class="input-register">
+                                <label for="phone">Telefone</label>
+                                <p-inputMask id="phone" mask="(99) 99999-9999" placeholder="(00) 00000-0000" />
+                                <small>Digite seu Telefone.</small>
+                            </div>
+
+                            <div class="input-register">
+                                <label for="guardianName">Nome do Responsável</label>
+                                <input pInputText id="guardianName" />
+                                <small>Digite o nome do responsável.</small>
+                            </div>
+
+                            <div class="input-register">
+                                <label for="guardianCpf">CPF do Responsável</label>
+                                <p-inputMask id="guardianCpf" mask="999.999.999-99" placeholder="000.000.000-00" />
+                                <small>Digite o CPF do responsável.</small>
+                            </div>
+
+                            <div class="input-register">
+                                <label for="kinship">Parentesco</label>
+                                <input pInputText id="kinship" placeholder="Mãe, pai, avó..." />
+                                <small>Digite o parentesco.</small>
+                            </div>
+
+                            <div class="input-register">
+                                <label for="guardianPhone">Telefone do Responsável</label>
+                                <p-inputMask id="guardianPhone" mask="(99) 99999-9999" placeholder="(00) 00000-0000" />
+                                <small>Digite o telefone do responsável.</small>
+                            </div>
+
+                        </div>
+
+                        <div class="step-actions">
+                            <button type="button" pButton (click)="activateCallback(2)">Próximo</button>
+                        </div>
+                    </ng-template>
+                </p-step-panel>
+            </p-step-item>
+
+            <p-step-item [value]="2">
+                <p-step>Endereço</p-step>
+                <p-step-panel>
+                    <ng-template #content let-activateCallback="activateCallback">
+                        <div class="container-step">
+
+                            <div class="input-register">
+                                <label for="cep">CEP</label>
+                                <p-inputMask id="cep" mask="99999-999" placeholder="00000-000" />
+                                <small>Digite seu CEP.</small>
+                            </div>
+
+                            <div class="input-register">
+                                <label for="street">Rua</label>
+                                <input pInputText id="street" />
+                                <small>Digite o nome da rua.</small>
+                            </div>
+
+                            <div class="input-register">
+                                <label for="number">Número</label>
+                                <input pInputText id="number" />
+                                <small>Digite o número.</small>
+                            </div>
+
+                            <div class="input-register">
+                                <label for="complement">Complemento</label>
+                                <input pInputText id="complement" placeholder="Apto, bloco (opcional)" />
+                                <small>Digite o complemento.</small>
+                            </div>
+
+                            <div class="input-register">
+                                <label for="neighborhood">Bairro</label>
+                                <input pInputText id="neighborhood" />
+                                <small>Digite o bairro.</small>
+                            </div>
+
+                            <div class="input-register">
+                                <label for="city">Cidade</label>
+                                <input pInputText id="city" />
+                                <small>Digite a cidade.</small>
+                            </div>
+
+                            <div class="input-register">
+                                <label for="state">Estado</label>
+                                <input pInputText id="state" maxlength="2" placeholder="SP" />
+                                <small>Digite o estado.</small>
+                            </div>
+
+                        </div>
+
+                        <div class="step-actions">
+                            <button type="button" pButton severity="secondary"
+                                (click)="activateCallback(1)">Voltar</button>
+                            <button type="button" pButton (click)="activateCallback(3)">Próximo</button>
+                        </div>
+                    </ng-template>
+                </p-step-panel>
+            </p-step-item>
+
+            <p-step-item [value]="3">
+                <p-step>Login e Senha</p-step>
+                <p-step-panel>
+                    <ng-template #content let-activateCallback="activateCallback">
+                        <div class="container-step">
+
+                            <div class="input-register">
+                                <label for="loginCpf">CPF</label>
+                                <p-inputMask id="loginCpf" mask="999.999.999-99" placeholder="000.000.000-00" />
+                                <small>Digite o CPF.</small>
+                            </div>
+
+                            <div class="input-register">
+                                <label for="loginGuardianCpf">CPF do Responsável</label>
+                                <p-inputMask id="loginGuardianCpf" mask="999.999.999-99" placeholder="000.000.000-00" />
+                                <small>Digite o CPF do responsável.</small>
+                            </div>
+
+                            <div class="input-register">
+                                <label for="password">Senha</label>
+                                <p-password id="password" [toggleMask]="true" [feedback]="true"
+                                    promptLabel="Digite uma senha" weakLabel="Fraca" mediumLabel="Média"
+                                    strongLabel="Forte" styleClass="w-full" inputStyleClass="w-full">
+                                </p-password>
+                                <small>Digite sua senha.</small>
+                            </div>
+
+                            <div class="input-register">
+                                <label for="confirmPassword">Confirmar Senha</label>
+                                <p-password id="confirmPassword" [toggleMask]="true" [feedback]="false"
+                                    styleClass="w-full" inputStyleClass="w-full">
+                                </p-password>
+                                <small>Digite a confirmação de senha.</small>
+                            </div>
+
+                        </div>
+
+                        <div class="step-actions">
+                            <button type="button" pButton severity="secondary"
+                                (click)="activateCallback(2)">Voltar</button>
+                            <button type="button" pButton routerLink="/login">Finalizar</button>
+                        </div>
+                    </ng-template>
+                </p-step-panel>
+            </p-step-item>
+
+        </p-stepper>
+    </div>
+</div>

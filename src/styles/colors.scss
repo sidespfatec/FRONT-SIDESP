@@ -1,0 +1,113 @@
+// ============================================================
+// CAMADA 1 — PALETA PRIMITIVA
+// ============================================================
+// Cores oficiais da marca SIDESP + variações derivadas para uso na UI.
+// NÃO usar direto nos componentes — use os tokens semânticos abaixo.
+
+:root {
+  // -------- Azul institucional (#0D1282) --------
+  // Escala clareando (50) até escurecendo (900)
+  --blue-50: #EAEBF7;
+  --blue-100: #C6C7E9;
+  --blue-200: #9EA1D8;
+  --blue-300: #767AC7;
+  --blue-400: #4A50B4;
+  --blue-500: #2229A0;
+  --blue-600: #0D1282; // ← COR OFICIAL (azul principal)
+  --blue-700: #0B0F6D;
+  --blue-800: #080B58;
+  --blue-900: #050743;
+
+  // -------- Vermelho de ação (#E62727) --------
+  --red-50: #FCE9E9;
+  --red-100: #F8C8C8;
+  --red-200: #F3A0A0;
+  --red-300: #EE7878;
+  --red-400: #EA4F4F;
+  --red-500: #E62727; // ← COR OFICIAL (vermelho principal)
+  --red-600: #C41F1F;
+  --red-700: #9D1919;
+  --red-800: #761212;
+  --red-900: #4F0C0C;
+
+  // -------- Neutros (derivados do preto/branco) --------
+  --gray-50: #FAFAFA;
+  --gray-100: #F4F4F5;
+  --gray-200: #E4E4E7;
+  --gray-300: #D4D4D8;
+  --gray-400: #A1A1AA;
+  --gray-500: #71717A;
+  --gray-600: #52525B;
+  --gray-700: #3F3F46;
+  --gray-800: #27272A;
+  --gray-900: #18181B;
+
+  --white: #f5f5f5; // ← COR OFICIAL
+  --black: #131212; // ← COR OFICIAL
+
+  // -------- Estados (não fazem parte da marca, mas são necessários) --------
+  // Verde e amarelo são exigidos pela UX: usuários esperam
+  // sucesso = verde, aviso = amarelo. Não dá pra fugir disso.
+  --green-100: #DCFCE7;
+  --green-500: #10B981;
+  --green-700: #047857;
+
+  --yellow-100: #FEF3C7;
+  --yellow-500: #F59E0B;
+  --yellow-700: #B45309;
+}
+
+
+// ============================================================
+// CAMADA 2 — TOKENS SEMÂNTICOS
+// ============================================================
+// Nomes por FUNÇÃO. É ISSO que os componentes usam.
+
+:root {
+  // -------- Marca --------
+  --color-brand-primary: var(--blue-600); // #0D1282 — azul oficial
+  --color-brand-secondary: var(--red-500); // #E62727 — vermelho oficial
+
+  // -------- Ações (botões, CTAs) --------
+  --color-action: var(--red-500); // vermelho para todos os CTAs
+  --color-action-hover: var(--red-600);
+  --color-action-pressed: var(--red-700);
+  --color-action-disabled: var(--gray-300);
+  --color-action-hover-primary: var(--blue-700); // -------- Superfícies (backgrounds) --------
+  --color-bg-page: var(--gray-50); // fundo geral do app
+  --color-bg-card: var(--gray-200); // cards, formulários
+  --color-bg-header: var(--white); // barra superior
+  --color-bg-nav: var(--blue-600); // bottom nav e side menu (azul)
+  --color-bg-overlay: rgba(0, 0, 0, 0.5); // fundo de modais
+
+  // -------- Textos --------
+  --color-text-primary: var(--gray-800); // texto principal (quase preto, mas suave)
+  --color-text-secondary: var(--gray-600); // labels, textos de apoio
+  --color-text-muted: var(--gray-400); // placeholders, disabled
+  --color-text-on-brand: var(--white); // texto sobre azul/vermelho
+  --color-text-link: var(--blue-600); // links
+  --color-text-title: var(--red-500); // títulos vermelhos das telas (MODALIDADES, HISTÓRICO)
+
+  // -------- Bordas e divisores --------
+  --color-border: var(--gray-200); // borda padrão
+  --color-border-strong: var(--blue-400); // divisores marcados
+  --color-border-focus: var(--blue-500); // outline em foco (acessibilidade)
+  --color-border-error: var(--red-500); // input inválido
+
+  // -------- Estados semânticos --------
+  --color-success: var(--green-500);
+  --color-success-bg: var(--green-100);
+  --color-warning: var(--yellow-500);
+  --color-warning-bg: var(--yellow-100);
+  --color-danger: var(--red-500);
+  --color-danger-bg: var(--red-100);
+  --color-info: var(--blue-500);
+  --color-info-bg: var(--blue-100);
+
+  // -------- Status do domínio SIDESP --------
+  // Mapeados diretamente dos badges do protótipo
+  --color-status-aberto: var(--green-500); // "INSCRIÇÕES ABERTAS"
+  --color-status-encerrado: var(--red-500); // "INSCRIÇÕES ENCERRADAS"
+  --color-status-espera: var(--yellow-500); // "LISTA DE ESPERA"
+  --color-status-cancelado: var(--gray-400);
+}

@@ -1,0 +1,31 @@
+@use '../../../styles/breakpoints' as *;
+
+.banner {
+    background-color: var(--color-bg-header);
+    text-align: center;
+    padding-top: 0.5rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--color-border-strong);
+}
+
+.banner-image {
+    margin: 0 auto 0.5rem;
+    width: 25%;
+
+    img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+    }
+}
+
+@include md {
+    .banner-image img {
+        width: 100%;
+        height: auto;
+    }
+}

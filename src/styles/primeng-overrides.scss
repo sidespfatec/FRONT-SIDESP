@@ -1,0 +1,20 @@
+:root {
+  // Tokens do PrimeNG apontando pras suas cores oficiais
+  --p-primary-color:        var(--color-brand-primary);
+  --p-primary-color-text:   var(--color-text-on-brand);
+  --p-primary-hover-color:  var(--blue-700);
+
+  // Botões primários do PrimeNG usam a cor de ação (vermelho)
+  --p-button-primary-background:       var(--color-action);
+  --p-button-primary-hover-background: var(--color-action-hover);
+  --p-button-primary-color:            var(--color-text-on-brand);
+
+  // Bordas e superfícies
+  --p-content-border-color:  var(--color-border);
+  --p-surface-100:           var(--gray-100);
+  --p-surface-200:           var(--gray-200);
+
+  // Foco visível (acessibilidade — importante em órgão público)
+  --p-focus-ring-color:      var(--color-border-focus);
+  --p-focus-ring-width:      2px;
+}

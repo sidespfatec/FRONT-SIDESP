@@ -1,0 +1,179 @@
+@use '../../../../../styles/breakpoints.scss' as *;
+
+:host ::ng-deep .p-dialog {
+    background-color: var(--color-bg-card);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+:host ::ng-deep .p-dialog-header {
+    background-color: var(--color-bg-card);
+    color: var(--color-text-primary);
+    padding: 1.25rem 1.25rem 0.5rem;
+    border-bottom: none;
+}
+
+:host ::ng-deep .p-dialog-title {
+    color: var(--color-text-primary);
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+:host ::ng-deep .p-dialog-header-icon {
+    color: var(--color-text-primary);
+
+    &:hover {
+        background-color: var(--gray-100);
+    }
+}
+
+:host ::ng-deep .p-dialog-content {
+    background-color: var(--color-bg-card);
+    color: var(--color-text-primary);
+    padding: 0.5rem 1.25rem 1.25rem;
+    max-height: 65vh;
+    overflow-y: auto;
+}
+
+:host ::ng-deep .p-dialog-footer {
+    background-color: var(--color-bg-card);
+    padding: 0.75rem 1.25rem 1.25rem;
+    border-top: none;
+    display: flex;
+    gap: 8px;
+
+    button {
+        flex: 1;
+    }
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.section-title {
+    margin: 0 0 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-brand-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.03rem;
+}
+
+.field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+
+    label {
+        font-size: 1.2rem;
+        color: var(--color-text-secondary);
+    }
+}
+
+.field-row {
+    display: flex;
+    gap: 8px;
+}
+
+.field-small {
+    flex: 0 0 90px;
+}
+
+.field-grow {
+    flex: 2;
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid var(--color-border-strong);
+    margin-bottom: 16px;
+}
+
+:host ::ng-deep input.p-inputtext,
+:host ::ng-deep .p-select,
+:host ::ng-deep .p-fileupload {
+    width: 100%;
+    background-color: var(--gray-100) !important;
+    border: 1px solid var(--color-border-strong) !important;
+    color: var(--color-text-primary) !important;
+    border-radius: 6px;
+
+    &:enabled:focus {
+        box-shadow: 0 0 0 2px var(--color-brand-secondary) !important;
+        border-color: var(--color-brand-secondary) !important;
+    }
+
+    &::placeholder {
+        color: var(--muted-text);
+    }
+}
+
+:host ::ng-deep .p-select-label {
+    color: var(--color-text-primary) !important;
+}
+
+:host ::ng-deep .p-button.p-button-outlined {
+    background-color: transparent;
+    border: 1px solid var(--color-border-strong);
+    color: var(--color-text-primary);
+
+    &:hover {
+        background-color: var(--gray-100);
+    }
+}
+
+:host ::ng-deep .btn-save {
+    background-color: var(--color-brand-secondary) !important;
+    border-color: var(--color-brand-secondary) !important;
+    color: var(--white) !important;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+:host ::ng-deep .p-fileupload-basic {
+    display: block;
+
+    .p-button {
+        background-color: var(--gray-100) !important;
+        border: 1px dashed var(--color-border-strong) !important;
+        color: var(--color-text-primary) !important;
+        width: 100%;
+        justify-content: center;
+        padding: 10px;
+        border-radius: 6px;
+
+        &:hover {
+            background-color: var(--gray-100) !important;
+            opacity: 0.85;
+        }
+
+        .p-button-icon {
+            color: var(--color-brand-secondary);
+        }
+    }
+
+    .p-fileupload-filename,
+    .p-fileupload-file-list {
+        font-size: 1rem;
+        color: var(--color-text-secondary);
+        margin-top: 6px;
+    }
+}
+
+:host ::ng-deep .p-dialog-footer .btn-save.p-button {
+    background-color: var(--color-brand-secondary) !important;
+    border-color: var(--color-brand-secondary) !important;
+    color: var(--white) !important;
+}

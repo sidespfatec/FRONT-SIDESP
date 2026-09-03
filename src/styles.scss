@@ -1,1 +1,44 @@
-/* You can add global styles to this file, and also import other style files */
+@use 'primeicons/primeicons.css';
+@use './styles/colors';
+@use './styles/breakpoints';
+@use './styles/primeng-overrides';
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Outfit';
+  background: var(--color-bg-page);
+  color: var(--color-text-primary);
+}
+
+.p-drawer.menu-admin-drawer {
+  width: 85vw !important;
+  max-width: 400px !important;
+  background: var(--white) !important;
+
+  .p-drawer-header {
+    padding: 1.5rem 1.5rem 0.5rem !important;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .p-drawer-content {
+    padding: 1rem 1.5rem !important;
+  }
+
+  .p-drawer-close {
+    color: var(--gray-500) !important;
+
+    &:hover {
+      background: var(--gray-100) !important;
+      color: var(--color-brand-primary) !important;
+    }
+  }
+}
+
+.p-drawer-mask {
+  background: rgba(0, 0, 0, 0.5) !important;
+  backdrop-filter: blur(2px);
+}

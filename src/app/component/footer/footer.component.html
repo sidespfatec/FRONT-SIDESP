@@ -1,0 +1,36 @@
+<footer>
+    <a routerLink="/home" class="nav-item" aria-label="Início">
+        <i class="pi pi-home"></i>
+    </a>
+
+    <a routerLink="/profile" class="nav-item" aria-label="Perfil">
+        <i class="pi pi-user"></i>
+    </a>
+
+    <button type="button" class="nav-item" (click)="abrirMenu()" aria-label="Menu">
+        <i class="pi pi-bars"></i>
+    </button>
+</footer>
+
+<p-drawer [(visible)]="menuAberto" position="right" styleClass="menu-admin-drawer">
+    <ng-template pTemplate="header">
+        <div class="drawer-header">
+            <h2 class="drawer-titulo">Menu</h2>
+        </div>
+    </ng-template>
+
+    <div class="drawer-conteudo">
+        <section *ngFor="let grupo of grupos" class="grupo">
+            <h3 class="grupo-titulo">{{ grupo.titulo }}</h3>
+            <div class="grupo-itens">
+                <a *ngFor="let item of grupo.itens" [routerLink]="item.rota" class="menu-item" (click)="fecharMenu()">
+                    <div class="menu-item-icone">
+                        <i [class]="item.icone"></i>
+                    </div>
+                    <span class="menu-item-nome">{{ item.nome }}</span>
+                    <i class="pi pi-chevron-right menu-item-seta"></i>
+                </a>
+            </div>
+        </section>
+    </div>
+</p-drawer>
