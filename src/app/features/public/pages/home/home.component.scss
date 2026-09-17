@@ -8,3 +8,11 @@
 .title-home {
     color: var(--color-brand-primary);
 }
+
+.cards-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
