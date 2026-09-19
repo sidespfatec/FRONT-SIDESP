@@ -1,0 +1,21 @@
+<p-dialog header="Adicionar Notícia" [(visible)]="viewModal" [modal]="true" [style]="{ width: '25rem' }"
+    [breakpoints]="{ '640px': '90vw' }" [draggable]="false" (onHide)="close.emit()">
+    <div class="flex flex-col gap-6">
+        <div class="flex flex-col gap-1">
+            <label pLabel for="username" class="font-semibold">Imagem</label>
+            <p-fileUpload mode="basic" chooseLabel="Anexar " accept=".pdf" styleClass="full-width" />
+        </div>
+        <div class="flex flex-col gap-1">
+            <label pLabel for="username" class="font-semibold">Título</label>
+            <input pInputText id="username" />
+        </div>
+        <div class="flex flex-col gap-1">
+            <label pLabel for="descrição" class="font-semibold">Descrição</label>
+            <input pInputText id="descrição" />
+        </div>
+        <div class="flex justify-end gap-2">
+            <button type="button" pButton severity="secondary" (click)="close.emit()">Cancelar</button>
+            <button type="button" pButton (click)="close.emit()">Salvar</button>
+        </div>
+    </div>
+</p-dialog>

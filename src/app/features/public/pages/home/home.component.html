@@ -4,11 +4,19 @@
         <h1 class="title-home">
             NOTÍCIAS
         </h1>
+
+        <div class="button-container">
+            <button pButton type="button" class="p-button-sm" (click)="openModal()">
+                <i class="pi pi-plus"></i>
+            </button>
+        </div>
     </div>
     <div class="cards-container">
-        <app-card-news></app-card-news>
         <app-card-news></app-card-news>
         <app-card-news></app-card-news>
     </div>
 </div>
 <app-footer></app-footer>
+@if(viewModal == true){
+<app-new-card-news (close)="closeModal()"></app-new-card-news>
+}
