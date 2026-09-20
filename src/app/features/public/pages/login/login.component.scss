@@ -9,14 +9,14 @@
 :host {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    min-height: 100dvh;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
 }
 
 .layout-login {
     background-color: var(--color-brand-primary);
     padding: 2rem;
-    margin-top: 6rem;
     flex: 1;
     display: flex;
     align-items: center;
