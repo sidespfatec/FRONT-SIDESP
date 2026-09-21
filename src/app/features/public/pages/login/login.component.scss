@@ -10,8 +10,7 @@
 :host {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    height: 100dvh;
+    height: 110dvh;
     overflow: hidden;
     padding-bottom: env(safe-area-inset-bottom, 0px);
 }
