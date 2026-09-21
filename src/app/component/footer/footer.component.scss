@@ -85,7 +85,7 @@ footer {
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: 0.9rem 1rem;
+    padding: 0.7rem 0.7rem;
     background: var(--gray-50);
     border: 1px solid var(--gray-200);
     border-radius: 12px;
@@ -123,15 +123,15 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2rem;
+    height: 2rem;
     background: var(--white);
     border-radius: 10px;
     transition: background 0.15s ease;
     flex-shrink: 0;
 
     i {
-        font-size: 1.5rem;
+        font-size: 1rem;
         color: var(--color-brand-secondary);
         transition: color 0.15s ease;
     }
