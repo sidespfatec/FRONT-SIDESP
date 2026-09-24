@@ -17,12 +17,22 @@ p-card.teacher-header {
     margin: 8rem 1rem 1rem 1rem;
     display: block;
     background-color: var(--color-bg-card);
+
+    @include xl {
+        margin: 6rem auto 1.5rem auto;
+        max-width: 900px;
+    }
 }
 
 p-card.teacher-list-card {
     margin: 0 1rem 2rem 1rem;
     display: block;
     background-color: var(--color-bg-card);
+
+    @include xl {
+        margin: 0 auto 3rem auto;
+        max-width: 900px;
+    }
 }
 
 .teacher-search {
@@ -116,6 +126,12 @@ p-card.teacher-list-card {
     display: flex;
     flex-direction: column;
     margin: 1rem;
+
+    @include xl {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem 2rem;
+    }
 }
 
 .teacher-item {
@@ -157,5 +173,11 @@ p-card.teacher-list-card {
     .pi-chevron-right {
         font-size: 2rem;
         color: var(--color-brand-secondary);
+    }
+
+    @include xl {
+        &:nth-last-child(-n+2) {
+            border-bottom: none; // tira a linha dos 2 últimos itens (que ficam na última "linha" do grid)
+        }
     }
 }

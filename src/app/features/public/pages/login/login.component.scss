@@ -5,6 +5,10 @@
     margin-top: 6rem;
     flex: 1;
     background-color: var(--color-brand-primary);
+
+    @include xl {
+        margin-top: 0;
+    }
 }
 
 :host {
@@ -13,7 +17,15 @@
     height: 120dvh;
     overflow: hidden;
     padding-bottom: env(safe-area-inset-bottom, 0px);
+
+    @include xl {
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+    }
 }
+
+
 
 .layout-login {
     background-color: var(--color-brand-primary);
