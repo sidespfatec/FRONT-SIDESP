@@ -3,6 +3,13 @@
 .classes-page {
     padding: 5rem 1rem 2rem 1rem;
     margin-top: 4rem;
+
+    @include xl {
+        margin-top: 2rem;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 
@@ -51,6 +58,12 @@
     display: flex;
     flex-direction: column;
     gap: 0.625rem;
+
+    @include xl {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
 }
 
 .class-card {
