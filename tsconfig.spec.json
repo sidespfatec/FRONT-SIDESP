@@ -8,5 +8,5 @@
   "include": [
     "src/**/*.spec.ts",
     "src/**/*.d.ts"
-  ]
+, "src/app/component/navbar-desktop/navbar-desktop.spec.component.ts"  ]
 }

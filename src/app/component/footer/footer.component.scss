@@ -1,5 +1,9 @@
 @use '../../../styles/breakpoints' as *;
 
+:host {
+    @include xl { display: none; }
+}
+
 footer {
     display: flex;
     align-items: center;

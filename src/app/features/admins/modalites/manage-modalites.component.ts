@@ -7,6 +7,7 @@ import { FooterComponent } from '../../../component/footer/footer.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { CardModule } from 'primeng/card';
 import { Router } from '@angular/router';
+import { NavbarDesktopAdminComponent } from '../../../component/navbar-desktop-admin/navbar-desktop-admin.component';
 
 interface Modality {
     id: string;
@@ -25,7 +26,7 @@ interface Modality {
     imports: [
         CommonModule, BannerComponent,
         ButtonModule, InputTextModule, FooterComponent,
-        AutoCompleteModule, CardModule
+        AutoCompleteModule, CardModule, NavbarDesktopAdminComponent
     ],
     templateUrl: './manage-modalites.component.html',
     styleUrl: './manage-modalites.component.scss'

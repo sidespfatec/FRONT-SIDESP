@@ -1,5 +1,9 @@
 @use '../../../styles/breakpoints' as *;
 
+:host {
+    @include xl { display: none; }
+}
+
 .banner {
   background-color: var(--color-bg-header);
   padding: 1rem 1rem;

@@ -1,0 +1,128 @@
+@use '../../../styles/breakpoints' as *;
+
+:host {
+    display: none;
+
+    @include xl {
+        display: block;
+    }
+}
+
+.navbar-admin {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    height: 80px;
+    padding: 0 3rem;
+    box-sizing: border-box;
+    background-color: var(--color-bg-header);
+    border-bottom: 1px solid var(--color-border-strong);
+}
+
+.navbar-logo {
+    margin: 0;
+    height: 55px;
+
+    img {
+        height: 100%;
+        width: auto;
+        object-fit: contain;
+    }
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    a {
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1rem;
+        color: var(--color-brand-primary);
+        transition: color 0.15s ease;
+
+        &:hover {
+            color: var(--color-action);
+        }
+
+        &.active {
+            color: var(--color-text-primary);
+        }
+    }
+
+    a:hover,
+    a.active {
+        opacity: 1;
+    }
+}
+
+.menu-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--color-brand-primary);
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+.navbar-login-btn {
+    background-color: var(--color-brand-primary);
+    border-color: var(--color-brand-primary);
+    border-radius: 50px;
+    color: #fff; 
+}
+
+.admin-submenu {
+    position: absolute;
+    top: 100%;
+    right: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 1.5rem;
+    background-color: var(--color-brand-primary);
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.submenu-pill {
+    white-space: nowrap;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-brand-primary);
+    background-color: #fff;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+.admin-submenu {
+    animation: submenu-fade-in 0.2s ease-out;
+}
+
+@keyframes submenu-fade-in {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}

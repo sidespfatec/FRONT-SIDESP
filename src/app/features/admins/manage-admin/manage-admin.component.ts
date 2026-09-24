@@ -6,6 +6,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FooterComponent } from '../../../component/footer/footer.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { CardModule } from 'primeng/card';
+import { NavbarDesktopAdminComponent } from '../../../component/navbar-desktop-admin/navbar-desktop-admin.component';
 
 @Component({
     selector: 'app-manage-admin',
@@ -13,7 +14,7 @@ import { CardModule } from 'primeng/card';
     imports: [
         CommonModule, BannerComponent,
         ButtonModule, InputTextModule, FooterComponent,
-        AutoCompleteModule, CardModule,
+        AutoCompleteModule, CardModule , NavbarDesktopAdminComponent
     ],
     templateUrl: './manage-admin.component.html',
     styleUrl: './manage-admin.component.scss'

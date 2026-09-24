@@ -6,6 +6,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @include xl {
+        margin-top: 2rem;
+        margin-left: 0;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        padding: 0 3rem;
+    }
+
 }
 
 .button-container {
@@ -28,10 +37,35 @@
             transform: scale(1.05);
         }
     }
+
+    @include xl {
+        grid-column: 3;
+        justify-self: end;
+        margin-right: 0;
+    }
+
 }
 
 .title-home {
     color: var(--color-brand-primary);
+
+    @include xl {
+        grid-column: 2;
+        text-align: center;
+        position: relative;
+        padding-bottom: 0.75rem;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--color-brand-primary);
+        }
+    }
 }
 
 .cards-container {
@@ -40,6 +74,15 @@
     flex-direction: column;
     align-items: center;
     gap: 2rem;
+
+    @include xl {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 3rem;
+    }
 }
 
 .overlay {
@@ -53,4 +96,16 @@
     align-items: center;
     justify-content: center;
     z-index: 1000;
+}
+
+.hero-banner {
+    display: none;
+    background: linear-gradient(135deg, var(--color-brand-primary), var(--color-action));
+    align-items: flex-end;
+    padding: 2rem 3rem;
+
+    @include xl {
+        display: flex;
+        height: 320px;
+    }
 }

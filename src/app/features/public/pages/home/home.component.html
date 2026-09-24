@@ -1,10 +1,14 @@
+<app-navbar-desktop-admin></app-navbar-desktop-admin>
 <app-banner></app-banner>
+
 <div class="home-container">
+    <section class="hero-banner">
+    </section>
     <div class="header-container">
+
         <h1 class="title-home">
             NOTÍCIAS
         </h1>
-
         <div class="button-container">
             <button pButton type="button" class="p-button-sm" (click)="openModal()">
                 <i class="pi pi-plus"></i>
@@ -12,6 +16,7 @@
         </div>
     </div>
     <div class="cards-container">
+        <app-card-news></app-card-news>
         <app-card-news></app-card-news>
         <app-card-news></app-card-news>
     </div>
