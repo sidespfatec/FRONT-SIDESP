@@ -17,12 +17,22 @@ p-card.admin-header {
     margin: 8rem 1rem 1rem 1rem;
     display: block;
     background-color: var(--color-bg-card);
+
+    @include xl {
+        margin: 6rem auto 1.5rem auto;
+        max-width: 900px;
+    }
 }
 
 p-card.admin-list-card {
     margin: 0 1rem 2rem 1rem;
     display: block;
     background-color: var(--color-bg-card);
+
+    @include xl {
+        margin: 0 auto 3rem auto;
+        max-width: 900px;
+    }
 }
 
 .admin-search {
@@ -116,6 +126,12 @@ p-card.admin-list-card {
     display: flex;
     flex-direction: column;
     margin: 1rem;
+
+    @include xl {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem 2rem;
+    }
 }
 
 .admin-item {
@@ -124,6 +140,8 @@ p-card.admin-list-card {
     gap: 0.625rem;
     padding: 2rem 1rem;
     cursor: pointer;
+
+
 
     &:not(:last-child) {
         border-bottom: 0.02rem solid var(--color-border-strong);
@@ -158,5 +176,11 @@ p-card.admin-list-card {
     .pi-chevron-right {
         font-size: 2rem;
         color: var(--color-brand-primary);
+    }
+
+    @include xl {
+        &:nth-last-child(-n+2) {
+            border-bottom: none;
+        }
     }
 }
