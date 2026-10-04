@@ -1,0 +1,127 @@
+<p-dialog styleClass="admin-dialog" [(visible)]="visible" (visibleChange)="visibleChange.emit($event)" [modal]="true"
+    [draggable]="false" [resizable]="false" [header]="titulo">
+
+    @if (readOnly) {
+    <div class="admin-detail">
+        <p-tag [value]="admin?.ativo ? 'Ativo' : 'Inativo'" [severity]="admin?.ativo ? 'success' : 'secondary'" />
+
+        @for (secao of secoes; track secao.titulo) {
+        <section class="admin-detail-section">
+            <h2 class="admin-form-title">{{ secao.titulo }}</h2>
+            <dl class="admin-detail-list">
+                @for (item of secao.itens; track item.rotulo) {
+                <div class="admin-detail-item">
+                    <dt>{{ item.rotulo }}</dt>
+                    <dd>{{ item.valor || '—' }}</dd>
+                </div>
+                }
+            </dl>
+        </section>
+        }
+
+        <p-button class="admin-detail-action" [label]="admin?.ativo ? 'Desativar acesso' : 'Reativar acesso'"
+            [icon]="admin?.ativo ? 'pi pi-ban' : 'pi pi-check'" [severity]="admin?.ativo ? 'danger' : 'success'"
+            [text]="true" (onClick)="desativar.emit()" />
+    </div>
+    } @else {
+    <form class="admin-form" [formGroup]="form">
+
+        <h2 class="admin-form-title">Dados pessoais</h2>
+
+        <div class="admin-field">
+            <label for="nome">Nome completo</label>
+            <input id="nome" pInputText formControlName="nome" />
+            @if (invalido('nome')) { <small class="admin-field-error">Informe o nome completo.</small> }
+        </div>
+
+        <div class="admin-field-row">
+            <div class="admin-field">
+                <label for="cpf">CPF</label>
+                <p-inputmask id="cpf" formControlName="cpf" mask="999.999.999-99" />
+            </div>
+            <div class="admin-field">
+                <label for="rg">RG</label>
+                <input id="rg" pInputText formControlName="rg" />
+            </div>
+        </div>
+
+        <div class="admin-field">
+            <label for="nascimento">Data de nascimento</label>
+            <p-datepicker id="nascimento" formControlName="nascimento" dateFormat="dd/mm/yy" [maxDate]="hoje"
+                appendTo="body" />
+        </div>
+
+        <h2 class="admin-form-title">Contato</h2>
+
+        <div class="admin-field">
+            <label for="email">E-mail</label>
+            <input id="email" pInputText type="email" formControlName="email" />
+            @if (invalido('email')) { <small class="admin-field-error">Informe um e-mail válido.</small> }
+        </div>
+
+        <div class="admin-field-row">
+            <div class="admin-field">
+                <label for="telefone">Telefone</label>
+                <p-inputmask id="telefone" formControlName="telefone" mask="(99) 99999-9999" />
+            </div>
+            <div class="admin-field">
+                <label for="cidade">Cidade</label>
+                <input id="cidade" pInputText formControlName="cidade" />
+            </div>
+        </div>
+
+        <h2 class="admin-form-title">Acesso</h2>
+
+        <div class="admin-field">
+            <label for="nivel">Nível de permissão</label>
+            <p-select id="nivel" formControlName="nivel" [options]="niveis" optionLabel="label" optionValue="value"
+                appendTo="body" />
+            @if (invalido('nivel')) { <small class="admin-field-error">Escolha um nível.</small> }
+        </div>
+
+        <div class="admin-field-row">
+            <div class="admin-field">
+                <label for="cargo">Cargo</label>
+                <input id="cargo" pInputText formControlName="cargo" />
+            </div>
+            <div class="admin-field">
+                <label for="unidade">Unidade</label>
+                <input id="unidade" pInputText formControlName="unidade" />
+            </div>
+        </div>
+
+        <div class="admin-field">
+            <label for="admissao">Data de admissão</label>
+            <p-datepicker id="admissao" formControlName="admissao" dateFormat="dd/mm/yy" appendTo="body" />
+        </div>
+
+        @if (modo === 'novo') {
+        <div class="admin-field">
+            <label for="senha">Senha inicial</label>
+            <p-password id="senha" formControlName="senha" [toggleMask]="true" [feedback]="false" />
+            <small class="admin-field-hint">A pessoa troca no primeiro acesso.</small>
+        </div>
+        }
+
+        <div class="admin-field-switch">
+            <p-toggleswitch inputId="doisFatores" formControlName="doisFatores" />
+            <label for="doisFatores">Exigir autenticação em dois fatores</label>
+        </div>
+
+        @if (modo === 'editar') {
+        <p-button label="Redefinir senha" icon="pi pi-key" severity="secondary" [text]="true"
+            (onClick)="redefinirSenha.emit()" />
+        }
+    </form>
+    }
+
+    <ng-template pTemplate="footer">
+        @if (readOnly) {
+        <p-button label="Fechar" severity="secondary" [text]="true" (onClick)="fechar()" />
+        <p-button label="Editar" icon="pi pi-pencil" (onClick)="editar.emit()" />
+        } @else {
+        <p-button label="Cancelar" severity="secondary" [text]="true" (onClick)="cancelar()" />
+        <p-button [label]="modo === 'novo' ? 'Cadastrar' : 'Salvar'" icon="pi pi-check" (onClick)="enviar()" />
+        }
+    </ng-template>
+</p-dialog>

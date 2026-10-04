@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
@@ -8,11 +7,7 @@ import { ButtonModule } from 'primeng/button';
 
 @Component({
     selector: 'app-new-teacher-modal',
-    standalone: true,
-    imports: [
-        CommonModule, DialogModule,
-        InputTextModule, SelectModule, FileUploadModule, ButtonModule
-    ],
+    imports: [DialogModule, InputTextModule, SelectModule, FileUploadModule, ButtonModule],
     templateUrl: './new-teacher-modal.component.html',
     styleUrl: './new-teacher-modal.component.scss'
 })

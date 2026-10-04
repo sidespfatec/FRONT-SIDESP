@@ -1,52 +1,62 @@
 <app-navbar-desktop-admin></app-navbar-desktop-admin>
+
 <app-banner></app-banner>
 
-<p-card class="teacher-header">
-    <h1 class="teacher-title">Gerenciar Professores</h1>
+<div class="card-container">
+    <p-card>
 
-    <div class="teacher-search">
-        <p-autoComplete class="search-input" field="name" />
-        <i class="pi pi-search search-icon"></i>
-    </div>
+        <h1 class="title-teacher">Professores</h1>
 
-    <div class="divider"></div>
+        <div class="search-teacher-container">
+            <input pInputText type="text" placeholder="Buscar..." aria-label="Buscar professor" />
 
-    <div class="add-teacher" (click)="showModal = true">
-        <i class="pi pi-user-plus"></i>
-        <span>Adicionar Professor</span>
-    </div>
-
-    <app-new-teacher-modal [(visible)]="showModal" />
-</p-card>
-
-<p-card class="teacher-list-card">
-    <p class="teacher-list-title">4 professores</p>
-    <div class="teacher-list">
-        <div class="teacher-item">
-            <div class="avatar" style="background-color: #c6c2ff; color: #3C3489;">AM</div>
-            <span class="teacher-name">Ana Martins</span>
-            <span class="teacher-modalities">Judô</span>
-            <i class="pi pi-chevron-right"></i>
+            <button pButton aria-label="Novo professor" (click)="openNew()">
+                <i class="pi pi-plus"></i>
+            </button>
         </div>
-        <div class="teacher-item">
-            <div class="avatar" style="background-color: #c6c2ff; color: #3C3489;">CS</div>
-            <span class="teacher-name">Carlos Souza</span>
-            <span class="teacher-modalities">Futsal</span>
-            <i class="pi pi-chevron-right"></i>
-        </div>
-        <div class="teacher-item">
-            <div class="avatar" style="background-color: #c6c2ff; color: #3C3489;">CS</div>
-            <span class="teacher-name">Bruna Lima</span>
-            <span class="teacher-modalities">Vôlei</span>
-            <i class="pi pi-chevron-right"></i>
-        </div>
-        <div class="teacher-item">
-            <div class="avatar" style="background-color: #c6c2ff; color: #3C3489;">CS</div>
-            <span class="teacher-name">Carla Dias</span>
-            <span class="teacher-modalities">Natação</span>
-            <i class="pi pi-chevron-right"></i>
-        </div>
-    </div>
-</p-card>
+
+        <ul class="teacher-list">
+
+            @for (teacher of teachers; track teacher.id) {
+
+            <li class="teacher-item">
+
+                <div class="teacher-info">
+
+                    <div class="teacher-title">
+                        <strong>{{ teacher.name }}</strong>
+                    </div>
+
+                    <span class="teacher-modality">
+                        Modalidade: {{ teacher.modality }}
+                    </span>
+
+                </div>
+
+                <div class="teacher-actions">
+
+                    <button pButton size="small" [text]="true" [rounded]="true" aria-label="Editar professor"
+                        (click)="edit(teacher)">
+                        <i class="pi pi-pencil"></i>
+                    </button>
+
+                    <button pButton size="small" [text]="true" [rounded]="true" severity="danger"
+                        aria-label="Excluir professor" (click)="delete(teacher)">
+                        <i class="pi pi-trash"></i>
+                    </button>
+
+                </div>
+
+            </li>
+
+            }
+
+        </ul>
+
+    </p-card>
+
+</div>
+
+<app-new-teacher-modal [(visible)]="showModal"> </app-new-teacher-modal>
 
 <app-footer></app-footer>

@@ -1,88 +1,85 @@
-<p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '340px' }" [draggable]="false" [resizable]="false"
-    header="Novo professor">
-    <div class="modal-content">
-        <p class="section-title">Dados pessoais</p>
-        <div class="field-group">
-            <div class="field">
-                <label>Nome completo</label>
-                <input pInputText placeholder="Nome do professor" />
+<p-dialog styleClass="teacher-dialog" [(visible)]="visible" (visibleChange)="visibleChange.emit($event)" [modal]="true"
+    [draggable]="false" [resizable]="false" header="Novo professor">
+
+    <form class="teacher-form">
+
+        <h2 class="teacher-form-title">Dados pessoais</h2>
+
+        <div class="teacher-field">
+            <label for="nome">Nome completo</label>
+            <input id="nome" pInputText />
+        </div>
+
+        <div class="teacher-field-row">
+            <div class="teacher-field">
+                <label for="cpf">CPF</label>
+                <input id="cpf" pInputText placeholder="000.000.000-00" />
             </div>
-            <div class="field-row">
-                <div class="field">
-                    <label>CPF</label>
-                    <input pInputText placeholder="000.000.000-00" />
-                </div>
-                <div class="field">
-                    <label>Data nasc.</label>
-                    <input pInputText type="date" />
-                </div>
-            </div>
-            <div class="field">
-                <label>Email</label>
-                <input pInputText type="email" placeholder="nome@guaratingueta.sp.gov.br" />
-            </div>
-            <div class="field">
-                <label>Telefone</label>
-                <input pInputText placeholder="(12) 90000-0000" />
+            <div class="teacher-field">
+                <label for="nascimento">Data de nascimento</label>
+                <input id="nascimento" pInputText type="date" />
             </div>
         </div>
 
-        <hr class="divider" />
+        <div class="teacher-field">
+            <label for="email">E-mail</label>
+            <input id="email" pInputText type="email" />
+        </div>
 
-        <p class="section-title">Endereço</p>
-        <div class="field-group">
-            <div class="field-row">
-                <div class="field field-grow">
-                    <label>CEP</label>
-                    <input pInputText placeholder="00000-000" />
-                </div>
-                <div class="field field-small">
-                    <label>Número</label>
-                    <input pInputText placeholder="0" />
-                </div>
+        <div class="teacher-field">
+            <label for="telefone">Telefone</label>
+            <input id="telefone" pInputText placeholder="(12) 90000-0000" />
+        </div>
+
+        <h2 class="teacher-form-title">Endereço</h2>
+
+        <div class="teacher-field-row">
+            <div class="teacher-field teacher-field-grow">
+                <label for="cep">CEP</label>
+                <input id="cep" pInputText placeholder="00000-000" />
             </div>
-            <div class="field">
-                <label>Rua</label>
-                <input pInputText placeholder="Nome da rua" />
-            </div>
-            <div class="field-row">
-                <div class="field">
-                    <label>Bairro</label>
-                    <input pInputText placeholder="Bairro" />
-                </div>
-                <div class="field">
-                    <label>Cidade</label>
-                    <input pInputText placeholder="Guaratinguetá" />
-                </div>
+            <div class="teacher-field teacher-field-small">
+                <label for="numero">Número</label>
+                <input id="numero" pInputText />
             </div>
         </div>
 
-        <hr class="divider" />
+        <div class="teacher-field">
+            <label for="rua">Rua</label>
+            <input id="rua" pInputText />
+        </div>
 
-        <p class="section-title">Atuação</p>
-        <div class="field-group">
-            <div class="field">
-                <label>Modalidade</label>
-                <p-select [options]="modalities" optionLabel="label" optionValue="value"
-                    placeholder="Selecione uma modalidade" styleClass="full-width" />
+        <div class="teacher-field-row">
+            <div class="teacher-field">
+                <label for="bairro">Bairro</label>
+                <input id="bairro" pInputText />
             </div>
-            <div class="field">
-                <label>Turma</label>
-                <p-select [options]="classGroups" optionLabel="label" optionValue="value"
-                    placeholder="Selecione uma turma" styleClass="full-width" />
+            <div class="teacher-field">
+                <label for="cidade">Cidade</label>
+                <input id="cidade" pInputText />
             </div>
         </div>
 
-        <hr class="divider" />
+        <h2 class="teacher-form-title">Atuação</h2>
 
-        <p class="section-title">Currículo</p>
-        <div class="field-group">
-            <p-fileUpload mode="basic" chooseLabel="Anexar currículo (PDF)" accept=".pdf" styleClass="full-width" />
+        <div class="teacher-field">
+            <label for="modalidade">Modalidade</label>
+            <p-select inputId="modalidade" [options]="modalities" optionLabel="label" optionValue="value"
+                appendTo="body" />
         </div>
-    </div>
+
+        <div class="teacher-field">
+            <label for="turma">Turma</label>
+            <p-select inputId="turma" [options]="classGroups" optionLabel="label" optionValue="value" appendTo="body" />
+        </div>
+
+        <h2 class="teacher-form-title">Currículo</h2>
+
+        <p-fileUpload mode="basic" chooseLabel="Anexar currículo (PDF)" accept=".pdf" />
+    </form>
 
     <ng-template pTemplate="footer">
-        <button pButton type="button" label="Cancelar" class="p-button-outlined" (click)="onCancel()"></button>
-        <button pButton type="button" label="Salvar" class="btn-save"></button>
+        <p-button label="Cancelar" severity="secondary" [text]="true" (onClick)="onCancel()" />
+        <p-button label="Salvar" icon="pi pi-check" />
     </ng-template>
 </p-dialog>

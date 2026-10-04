@@ -1,7 +1,13 @@
 @use '../../../styles/breakpoints' as *;
 
 :host {
-    @include xl { display: none; }
+    display: block;
+    height: 70px;
+
+    @include xl {
+        display: none;
+        height: auto;
+    }
 }
 
 footer {

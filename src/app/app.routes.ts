@@ -6,6 +6,7 @@ import { ManageTeachersComponent } from './features/admins/teacher/manage-teache
 import { ManageModalitesComponent } from './features/admins/modalites/manage-modalites.component';
 import { ClassesComponent } from './features/admins/modalites/classes/classes.component';
 import { ManageAdminComponent } from './features/admins/manage-admin/manage-admin.component';
+import { NewAdminModalComponent } from './features/admins/new-admin-modal/new-admin-modal.component';
 
 export const routes: Routes = [
 
@@ -49,8 +50,16 @@ export const routes: Routes = [
         component: ManageAdminComponent
     },
     {
-    path: '**',
-    redirectTo: 'home'
+        path: 'new-admin-modal',
+        component: NewAdminModalComponent
+    },
+    {
+        path: 'new-admin-modal/:id',
+        component: NewAdminModalComponent
+    },
+    {
+        path: '**',
+        redirectTo: 'home'
     }
 
 ];

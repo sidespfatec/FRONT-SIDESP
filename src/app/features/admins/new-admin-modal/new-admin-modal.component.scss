@@ -1,7 +1,7 @@
-@use '../../../../../styles/breakpoints.scss' as *;
+@use '../../../../styles/breakpoints.scss' as *;
 
 :host ::ng-deep {
-    .teacher-dialog {
+    .admin-dialog {
         width: 100vw;
         height: 100dvh;
         max-height: 100dvh;
@@ -18,9 +18,9 @@
         }
     }
 
-    .teacher-dialog .p-dialog-header,
-    .teacher-dialog .p-dialog-content,
-    .teacher-dialog .p-dialog-footer {
+    .admin-dialog .p-dialog-header,
+    .admin-dialog .p-dialog-content,
+    .admin-dialog .p-dialog-footer {
         background: transparent;
         border: none;
         padding-inline: 1.25rem;
@@ -30,21 +30,21 @@
         }
     }
 
-    .teacher-dialog .p-dialog-header {
+    .admin-dialog .p-dialog-header {
         padding-block: 1rem 0.5rem;
     }
 
-    .teacher-dialog .p-dialog-title {
+    .admin-dialog .p-dialog-title {
         font-size: 1.25rem;
         font-weight: 600;
         color: var(--color-text-primary);
     }
 
-    .teacher-dialog .p-dialog-content {
+    .admin-dialog .p-dialog-content {
         padding-block: 0.5rem 1.5rem;
     }
 
-    .teacher-dialog .p-dialog-footer {
+    .admin-dialog .p-dialog-footer {
         display: flex;
         gap: 0.5rem;
         padding-block: 0.75rem 1rem;
@@ -71,28 +71,26 @@
         }
     }
 
-    .teacher-form {
+    .admin-form {
 
         .p-inputtext,
         .p-select,
-        .p-fileupload-basic,
-        .p-fileupload-basic .p-button {
+        .p-inputmask,
+        .p-datepicker,
+        .p-password,
+        .p-password input {
             width: 100%;
-        }
-
-        .p-fileupload-basic .p-button {
-            justify-content: center;
         }
     }
 }
 
-.teacher-form {
+.admin-form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
 
-.teacher-form-title {
+.admin-form-title {
     margin: 0.75rem 0 0;
     font-size: 0.8125rem;
     font-weight: 600;
@@ -105,7 +103,7 @@
     }
 }
 
-.teacher-field {
+.admin-field {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
@@ -118,7 +116,7 @@
     }
 }
 
-.teacher-field-row {
+.admin-field-row {
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -126,20 +124,76 @@
     @include sm {
         flex-direction: row;
 
-        >.teacher-field {
+        >.admin-field {
             flex: 1 1 0;
         }
     }
 }
 
-.teacher-field-grow {
-    @include sm {
-        flex: 2 1 0;
+.admin-field-switch {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-size: 0.875rem;
+    color: var(--color-text-primary);
+}
+
+.admin-field-hint,
+.admin-field-error {
+    margin: 0;
+    font-size: 0.75rem;
+}
+
+.admin-field-hint {
+    color: var(--color-text-muted);
+}
+
+.admin-field-error {
+    color: var(--color-danger);
+}
+
+.admin-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    >p-tag {
+        align-self: flex-start;
     }
 }
 
-.teacher-field-small {
-    @include sm {
-        flex: 0 0 6rem;
+.admin-detail-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    .admin-form-title {
+        margin: 0;
     }
+}
+
+.admin-detail-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    margin: 0;
+}
+
+.admin-detail-item {
+    dt {
+        font-size: 0.75rem;
+        color: var(--color-text-secondary);
+    }
+
+    dd {
+        margin: 0.125rem 0 0;
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        overflow-wrap: anywhere;
+    }
+}
+
+.admin-detail-action {
+    align-self: flex-start;
 }
