@@ -1,6 +1,6 @@
 <nav class="navbar-admin">
     <figure class="navbar-logo">
-        <img src="../../../assets/images/logo.png" alt="Logo">
+        <img src="assets/images/logo.png" alt="Logo">
     </figure>
 
     <div class="navbar-right">
@@ -11,25 +11,26 @@
         </ul>
 
         @if (currentPageLabel()) {
-            <span class="current-page-badge">{{ currentPageLabel() }}</span>
+        <span class="current-page-badge">{{ currentPageLabel() }}</span>
         }
 
         <button type="button" class="menu-toggle-btn" [class.active]="isMenuOpen()" (click)="toggleMenu()">
             <i class="pi pi-bars"></i>
         </button>
 
-        <button pButton type="button" label="LOGIN" icon="pi pi-user" routerLink="/login" class="navbar-login-btn"></button>
+        <button pButton type="button" label="LOGIN" icon="pi pi-user" routerLink="/login"
+            class="navbar-login-btn"></button>
     </div>
 
     @if (isMenuOpen()) {
-        <div class="admin-submenu">
-            @for (page of adminPages; track page.label) {
-                @if (page.path) {
-                    <a [routerLink]="page.path" routerLinkActive="active-pill" class="submenu-pill">{{ page.label }}</a>
-                } @else {
-                    <a class="submenu-pill">{{ page.label }}</a>
-                }
-            }
-        </div>
+    <div class="admin-submenu">
+        @for (page of adminPages; track page.label) {
+        @if (page.path) {
+        <a [routerLink]="page.path" routerLinkActive="active-pill" class="submenu-pill">{{ page.label }}</a>
+        } @else {
+        <a class="submenu-pill">{{ page.label }}</a>
+        }
+        }
+    </div>
     }
 </nav>
