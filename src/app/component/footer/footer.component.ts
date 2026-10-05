@@ -17,7 +17,7 @@ export class FooterComponent {
         {
             titulo: 'Cadastros',
             itens: [
-                { icone: 'pi pi-map-marker', nome: 'Polos', rota: '/admin/polos' },
+                { icone: 'pi pi-map-marker', nome: 'Polos', rota: '../manage-hubs' },
                 { icone: 'pi pi-user-plus', nome: 'Professores', rota: '../manage-teachers' },
                 { icone: 'pi pi-list', nome: 'Modalidades', rota: '../manage-modalites' }
             ]

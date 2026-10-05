@@ -5,8 +5,10 @@ import { RegistrationComponent } from './features/public/pages/registration/regi
 import { ManageTeachersComponent } from './features/admins/teacher/manage-teachers/manage.teachers.component';
 import { ManageModalitesComponent } from './features/admins/modalites/manage-modalites.component';
 import { ClassesComponent } from './features/admins/modalites/classes/classes.component';
+import { NewModalityComponent } from './features/admins/modalites/new-modality/new-modality.component';
 import { ManageAdminComponent } from './features/admins/manage-admin/manage-admin.component';
 import { NewAdminModalComponent } from './features/admins/new-admin-modal/new-admin-modal.component';
+import { ManageHubsComponent } from './features/admins/manage-hubs/manage-hubs.component';
 
 export const routes: Routes = [
 
@@ -46,6 +48,11 @@ export const routes: Routes = [
     },
 
     {
+        path: 'manage-modalites/new-modality',
+        component: NewModalityComponent
+    },
+
+    {
         path: 'manage-admin',
         component: ManageAdminComponent
     },
@@ -56,6 +63,10 @@ export const routes: Routes = [
     {
         path: 'new-admin-modal/:id',
         component: NewAdminModalComponent
+    },
+    {
+        path: 'manage-hubs',
+        component: ManageHubsComponent
     },
     {
         path: '**',

@@ -1,0 +1,127 @@
+@use '../../../../styles/breakpoints.scss' as *;
+
+.card-container {
+    margin: 8rem 1rem 2rem;
+
+    @include xl {
+        margin: 6rem auto 3rem;
+        max-width: 900px;
+    }
+}
+
+.title-hub {
+    margin: 0 0 1rem;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-brand-primary);
+}
+
+.search-hub-container {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+
+    input {
+        flex: 1;
+    }
+}
+
+.hub-map {
+    isolation: isolate;
+    height: 12rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.75rem;
+    overflow: hidden;
+
+    @include xl {
+        height: 16rem;
+    }
+}
+
+:host ::ng-deep .hub-map {
+    &.leaflet-container {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .leaflet-pane,
+    .leaflet-tile,
+    .leaflet-tile-container,
+    .leaflet-zoom-box {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    img.leaflet-tile {
+        max-width: none !important;
+        max-height: none !important;
+    }
+
+    .leaflet-pane {
+        z-index: 400;
+    }
+
+    .leaflet-tile-pane {
+        z-index: 200;
+    }
+
+    .leaflet-overlay-pane {
+        z-index: 400;
+    }
+
+    .leaflet-marker-pane {
+        z-index: 600;
+    }
+
+    .leaflet-tooltip-pane {
+        z-index: 650;
+    }
+}
+
+.hub-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.hub-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.875rem 0;
+
+    &:not(:last-child) {
+        border-bottom: 0.0625rem solid var(--gray-300);
+    }
+}
+
+.hub-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.hub-title {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.hub-neighborhood {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+.hub-buttons {
+    display: flex;
+    gap: 0.25rem;
+
+    button {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+}

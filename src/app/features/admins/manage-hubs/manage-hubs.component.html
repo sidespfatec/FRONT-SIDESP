@@ -1,0 +1,45 @@
+<app-navbar-desktop-admin></app-navbar-desktop-admin>
+<app-banner></app-banner>
+
+<div class="card-container">
+    <p-card>
+        <h1 class="title-hub">Polos</h1>
+
+        <div class="search-hub-container">
+            <input pInputText type="text" placeholder="Buscar..." aria-label="Buscar polo" />
+            <button pButton aria-label="Novo polo">
+                <i class="pi pi-plus"></i>
+            </button>
+        </div>
+
+        <div id="hub-map" class="hub-map"></div>
+
+        <ul class="hub-list">
+            @for (hub of hubs; track hub.id) {
+            <li class="hub-item">
+                <div class="hub-info">
+                    <div class="hub-title">
+                        <strong>{{ hub.name }}</strong>
+                        <p-tag [value]="hub.active ? 'Ativo' : 'Inativo'"
+                            [severity]="hub.active ? 'success' : 'secondary'" />
+                    </div>
+                    <span class="hub-neighborhood">{{ hub.neighborhood }}</span>
+                </div>
+
+                <div class="hub-buttons">
+                    <button pButton size="small" [text]="true" [rounded]="true" aria-label="Editar">
+                        <i class="pi pi-pencil"></i>
+                    </button>
+                    <button pButton size="small" [text]="true" [rounded]="true"
+                        [severity]="hub.active ? 'danger' : 'success'"
+                        [attr.aria-label]="hub.active ? 'Desativar' : 'Reativar'" (click)="toggleStatus(hub)">
+                        <i [class]="hub.active ? 'pi pi-ban' : 'pi pi-check'"></i>
+                    </button>
+                </div>
+            </li>
+            }
+        </ul>
+    </p-card>
+</div>
+
+<app-footer></app-footer>

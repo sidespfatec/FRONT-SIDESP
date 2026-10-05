@@ -1,0 +1,33 @@
+<app-navbar-desktop-admin></app-navbar-desktop-admin>
+<app-banner></app-banner>
+
+<div class="card-container">
+    <p-card>
+        <h1 class="title-modality">Nova modalidade</h1>
+
+        <form class="modality-form">
+            <div class="modality-field">
+                <label for="name">Nome</label>
+                <input id="name" name="name" pInputText [(ngModel)]="name" />
+            </div>
+
+            <div class="modality-field">
+                <label for="icon">Ícone</label>
+                <p-select inputId="icon" name="icon" [options]="icons" optionLabel="label" optionValue="value"
+                    [(ngModel)]="icon" appendTo="body" />
+            </div>
+
+            <div class="modality-field-switch">
+                <p-toggleswitch inputId="active" name="active" [(ngModel)]="active" />
+                <label for="active">Modalidade ativa</label>
+            </div>
+
+            <div class="modality-actions">
+                <p-button label="Cancelar" severity="secondary" [text]="true" (onClick)="cancel()" />
+                <p-button label="Cadastrar" icon="pi pi-check" (onClick)="save()" />
+            </div>
+        </form>
+    </p-card>
+</div>
+
+<app-footer></app-footer>

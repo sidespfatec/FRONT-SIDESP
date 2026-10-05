@@ -1,0 +1,76 @@
+@use '../../../../../styles/breakpoints.scss' as *;
+
+.card-container {
+    margin: 8rem 1rem 2rem;
+
+    @include xl {
+        margin: 6rem auto 3rem;
+        max-width: 900px;
+    }
+}
+
+.title-modality {
+    margin: 0 0 1rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-brand-primary);
+}
+
+.modality-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.modality-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    label {
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: var(--color-text-secondary);
+    }
+}
+
+:host ::ng-deep .modality-form {
+
+    .p-inputtext,
+    .p-select {
+        width: 100%;
+    }
+}
+
+.modality-field-switch {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-size: 0.875rem;
+}
+
+.modality-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+
+    p-button {
+        flex: 1;
+    }
+
+    ::ng-deep button {
+        width: 100%;
+    }
+
+    @include md {
+        justify-content: flex-end;
+
+        p-button {
+            flex: 0 0 auto;
+        }
+
+        ::ng-deep button {
+            width: auto;
+        }
+    }
+}
