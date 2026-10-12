@@ -1,59 +1,20 @@
-# SIDESP
+# SIDESP — frontend e autenticação
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.21.
+Angular permanece na raiz deste repositório. Backend Java 17/Spring Boot está em backend/, migrations em banco/ e documentação em documentacao/. Base preservada: main 2046d3764142a80c38dd7073058a67c236adab1f.
 
-## Development server
+## Executar
 
-To start a local development server, run:
+1. Crie banco vazio sidesp com banco/00_criar_banco.sql no XAMPP. Não importe migrations manualmente.
+2. Na pasta backend, execute `powershell -ExecutionPolicy Bypass -File scripts/configurar-local.ps1`. Informe URL JDBC MySQL ou MariaDB conforme versão/porta local. Preserve as chaves existentes em config/local.properties se já usa o banco.
+3. Na pasta backend: `.\mvnw.cmd clean package` (Linux: `./mvnw clean package`), depois `java -jar target/sidesp-backend-0.1.0.jar`.
+4. Na raiz Angular: `npm ci`, depois `npm start`. No PowerShell com bloqueio de scripts, use `npm.cmd ci` e `npm.cmd start`. Acesse http://localhost:4200/registration e /login. API http://localhost:8080/api/v1/health.
 
-```bash
-ng serve
-```
+Git não distribui JAR nem segredos. O JAR do pacote de instalação e o código do repositório têm a mesma origem; qualquer nova alteração exige recompilar.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Testes e escopo
 
-## Code scaffolding
+Na raiz: `npm test -- --watch=false` e `npm run build`. Backend: comandos/variáveis em documentacao/PLANO-DE-TESTES.md. Navegador: API/Angular em banco isolado, `npx playwright install chromium` e `npm run test:e2e`.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Cadastro/login e conta do responsável estão implementados. CPF válido/único somente HMAC em documentos; senha Argon2id mínimo 8 caracteres; e-mail obrigatório AES-GCM/HMAC; responsável adulto para menor; nascimento futuro recusado. JWT30min/perfil atual do banco. Não há CRUD das demais páginas, recuperação de senha, anamnese, confirmação de e-mail ou implantação de produção nesta versão. Consulte documentacao/PENDENCIAS.md.
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Abra uma branch e um pull request para main. Esta entrega não fecha issues automaticamente. Consulte documentacao/PUBLICACAO-GITHUB.md para o escopo e a validação desta publicação. A pasta contribuicao e os arquivos locais de credenciais, dependências e backups não são distribuídos. A conta administrativa de teste depende de chaves locais e não integra as migrations canônicas V1–V3.

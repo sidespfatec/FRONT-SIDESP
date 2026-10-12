@@ -42,3 +42,25 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+/test-results
+/playwright-report
+
+**/node_modules/
+**/target/
+**/dist/
+**/.angular/
+**/test-results/
+**/playwright-report/
+backend/config/
+backend/bin/
+**/.env
+**/__pycache__/
+*.zip
+*-backup-*/
+.update-staging/
+.local/
+.contribuicao/
+
+/contribuicao/
+

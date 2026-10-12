@@ -1,0 +1,41 @@
+{
+  "issue": {
+    "url": "https://github.com/sidespfatec/FRONT-SIDESP/issues/11",
+    "title": "PB11 · Cadastrar aluno maior de idade",
+    "issue_number": 11,
+    "body": "## Historia de usuario\n\nComo visitante sem cadastro, quero me cadastrar como aluno maior de idade, para acessar o sistema e me inscrever em modalidades.\n\n## Criterios de aceitacao\n\n- [ ] O formulário coleta nome, CPF, data de nascimento, e-mail, telefone e senha.\n- [ ] O sistema calcula a idade a partir da data de nascimento.\n- [ ] Com idade igual ou maior que 18 anos, o próprio aluno é o titular do login.\n- [ ] CPF já existente é recusado com mensagem clara.\n- [ ] Senha exige confirmação e critério mínimo de segurança.\n- [ ] Ao concluir, o aluno consegue fazer login imediatamente.\n\n## Tarefas tecnicas\n\n- [ ] Endpoint no backend\n- [ ] Regras de negocio no backend: RN016\n- [ ] Service e model tipado no front\n- [ ] Tela ou formulario no front\n- [ ] Mensagens de erro, estado vazio e carregando\n- [ ] Testes das regras RN016\n- [ ] Teste ponta a ponta do fluxo\n- [ ] Revisao de codigo\n\n## Rastreabilidade — Documento de Visao v1.0\n\n| | |\n|---|---|\n| Regras de negocio | RN016 |\n| Requisito (SE) | SE001 |\n| Caso de uso (UC) | UC04 |\n| Tabelas do banco | Usuário, Aluno |\n| Sprint Backlog v1.0 | US03 |\n\n## Planejamento\n\n| | |\n|---|---|\n| Tipo | Funcionalidade |\n| Area | Publico |\n| Prioridade | 11 de 54 |\n| Estimativa | 8 pontos |\n| Sprint prevista | 2 (28/09/2026 a 23/10/2026) |\n| Depende de | #1, #8 |\n| Destrava | — |\n\n<sub>PB11 · gerado a partir do Product Backlog v2.0 do SIDESP</sub>\n",
+    "state": "open",
+    "user": {
+      "login": "liviaaaaaaaa",
+      "name": "liviaaaaaaaa",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/200071863?v=4",
+      "id": 200071863
+    },
+    "assignees": null,
+    "labels": [
+      {
+        "name": "Funcionalidade",
+        "color": "61A93E",
+        "description": "Comportamento novo previsto no Documento de Visao"
+      },
+      {
+        "name": "area: Publico",
+        "color": "B392AC",
+        "description": "Telas abertas: noticias, polos, cadastro e login"
+      }
+    ],
+    "milestone": 2,
+    "state_reason": null,
+    "comments": 0,
+    "created_at": "2026-09-03T19:53:16Z",
+    "updated_at": "2026-09-03T19:56:00Z",
+    "closed_at": null,
+    "display_url": "https://github.com/sidespfatec/FRONT-SIDESP/issues/11",
+    "display_title": "PB11 · Cadastrar aluno maior de idade"
+  },
+  "url": "https://github.com/sidespfatec/FRONT-SIDESP/issues/11",
+  "title": "PB11 · Cadastrar aluno maior de idade",
+  "display_url": "https://github.com/sidespfatec/FRONT-SIDESP/issues/11",
+  "display_title": "PB11 · Cadastrar aluno maior de idade"
+}

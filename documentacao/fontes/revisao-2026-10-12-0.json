@@ -1,0 +1,34 @@
+{
+  "id": "1356192689",
+  "name": "FRONT-SIDESP",
+  "owner": {
+    "login": "sidespfatec",
+    "id": 321941111,
+    "type": "User",
+    "avatar_url": "https://avatars.githubusercontent.com/u/321941111?v=4",
+    "url": "https://api.github.com/users/sidespfatec"
+  },
+  "repository_full_name": "sidespfatec/FRONT-SIDESP",
+  "permissions": {
+    "admin": false,
+    "maintain": false,
+    "pull": true,
+    "push": true,
+    "triage": true
+  },
+  "allow_auto_merge": null,
+  "allow_merge_commit": null,
+  "allow_rebase_merge": null,
+  "allow_squash_merge": null,
+  "allow_update_branch": null,
+  "clone_url": "https://github.com/sidespfatec/FRONT-SIDESP.git",
+  "size": 5511,
+  "default_branch": "main",
+  "git_commits_url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/commits{/sha}",
+  "git_refs_url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/refs{/sha}",
+  "git_url": "git://github.com/sidespfatec/FRONT-SIDESP.git",
+  "master_branch": null,
+  "visibility": "public",
+  "archived": false,
+  "is_code_search_indexed": null
+}

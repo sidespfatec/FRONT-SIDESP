@@ -1,0 +1,4 @@
+Angular/Vitest:19 testes aprovados.
+Angularprodução:compilado, avisoLeafletCommonJS preexistente.
+Playwright:5fluxos integrados aprovados;360/768/1280px e teclado.
+PowerShell:sintaxe/lógica exercitadas emLinux com cópia simulada; checkoutGit real criado sempush.

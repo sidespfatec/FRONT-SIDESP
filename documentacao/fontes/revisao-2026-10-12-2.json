@@ -1,0 +1,68 @@
+{
+  "issue": {
+    "url": "https://github.com/sidespfatec/FRONT-SIDESP/issues/4",
+    "title": "PB04 · Acrescentar autenticação ao modelo de dados",
+    "issue_number": 4,
+    "body": "## Historia de usuario\n\nComo sistema, preciso de onde guardar a senha e o CPF de cada pessoa, para que o login e a redefinição de senha sejam possíveis.\n\n## Criterios de aceitacao\n\n- [ ] pessoas ganha coluna de senha, guardada como hash.\n- [x] Decisão sobre o CPF: sobe para pessoas com restrição de unicidade, ou permanece em documentos com garantia de unicidade só para o tipo CPF (RN016).\n- [ ] E-mail acessível para login: hoje ele vive em contatos, com tipos_contatos igual a EMAIL.\n- [ ] Duplicidade de CPF resolvida entre documentos.doc_des e responsaveis.res_cpf.\n- [x] Perfil de acesso continua vindo de tipos_cadastros (RN017, RN022).\n\n## Tarefas tecnicas\n\n- [x] Revisar o modelo e atualizar o dicionario de dados\n- [x] Escrever a migration\n- [x] Aplicar as restricoes das regras citadas\n- [x] Rodar do zero em maquina limpa\n- [x] Atualizar o ERD e o diagrama de classes\n- [x] Revisao de outra pessoa do backend\n\n## :warning: Ponto em aberto\n\n> Nenhuma das 22 tabelas do ERD tem coluna de senha. Sem isso o login (SE002) e a redefinição (SE003) não são implementáveis, e o item de login do backlog fica bloqueado.\n\n> **Este item nao entra na sprint enquanto isto nao for decidido.**\n\n## Rastreabilidade — Documento de Visao v1.0\n\n| | |\n|---|---|\n| Regras de negocio | RN016, RN017, RN022 |\n| Requisito (SE) | SE002, SE003 |\n| Caso de uso (UC) | UC05, UC06 |\n| Tabelas do banco | pessoas, documentos, contatos, tipos_cadastros |\n\n## Planejamento\n\n| | |\n|---|---|\n| Tipo | Correção |\n| Area | Banco |\n| Prioridade | 4 de 54 |\n| Estimativa | 5 pontos |\n| Sprint prevista | 1 (31/08/2026 a 25/09/2026) |\n| Depende de | #1, #3 |\n| Destrava | #9, #15, #16 |\n\n<sub>PB04 · gerado a partir do Product Backlog v2.0 do SIDESP</sub>\n",
+    "state": "open",
+    "user": {
+      "login": "liviaaaaaaaa",
+      "name": "liviaaaaaaaa",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/200071863?v=4",
+      "id": 200071863
+    },
+    "assignees": [
+      {
+        "login": "HeitorLeite",
+        "name": "HeitorLeite",
+        "email": null,
+        "avatar_url": "https://avatars.githubusercontent.com/u/112519772?v=4",
+        "id": 112519772
+      },
+      {
+        "login": "KauaSouz48",
+        "name": "KauaSouz48",
+        "email": null,
+        "avatar_url": "https://avatars.githubusercontent.com/u/199014105?v=4",
+        "id": 199014105
+      },
+      {
+        "login": "luismariogp",
+        "name": "luismariogp",
+        "email": null,
+        "avatar_url": "https://avatars.githubusercontent.com/u/215764904?v=4",
+        "id": 215764904
+      }
+    ],
+    "labels": [
+      {
+        "name": "Correcao",
+        "color": "C0392B",
+        "description": "Conserta algo que ja existe e esta errado ou incompleto"
+      },
+      {
+        "name": "area: Banco",
+        "color": "B392AC",
+        "description": "Modelagem, migrations e correcoes do banco"
+      },
+      {
+        "name": "ponto em aberto",
+        "color": "D98B26",
+        "description": "Depende de uma decisao de modelagem antes de entrar na sprint"
+      }
+    ],
+    "milestone": 1,
+    "state_reason": null,
+    "comments": 0,
+    "created_at": "2026-09-03T19:52:53Z",
+    "updated_at": "2026-09-24T22:37:46Z",
+    "closed_at": null,
+    "display_url": "https://github.com/sidespfatec/FRONT-SIDESP/issues/4",
+    "display_title": "PB04 · Acrescentar autenticação ao modelo de dados"
+  },
+  "url": "https://github.com/sidespfatec/FRONT-SIDESP/issues/4",
+  "title": "PB04 · Acrescentar autenticação ao modelo de dados",
+  "display_url": "https://github.com/sidespfatec/FRONT-SIDESP/issues/4",
+  "display_title": "PB04 · Acrescentar autenticação ao modelo de dados"
+}

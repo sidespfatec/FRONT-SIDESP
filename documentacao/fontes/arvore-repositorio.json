@@ -1,0 +1,1376 @@
+{
+  "sha": "2046d3764142a80c38dd7073058a67c236adab1f",
+  "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/2046d3764142a80c38dd7073058a67c236adab1f",
+  "tree": [
+    {
+      "path": ".editorconfig",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f166060da1cbc9f216e9f5e99a1ef6074ce2a8f8",
+      "size": 314,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/f166060da1cbc9f216e9f5e99a1ef6074ce2a8f8"
+    },
+    {
+      "path": ".gitignore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "854acd5fc039152f17a960e6a4550983d68941c7",
+      "size": 622,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/854acd5fc039152f17a960e6a4550983d68941c7"
+    },
+    {
+      "path": ".prettierrc",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d6c16d7ee77b5ec0520b2645500a51864b3ec996",
+      "size": 161,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/d6c16d7ee77b5ec0520b2645500a51864b3ec996"
+    },
+    {
+      "path": ".vscode",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "54056ead6a8efab340aab224ede3d912097dcbba",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/54056ead6a8efab340aab224ede3d912097dcbba"
+    },
+    {
+      "path": ".vscode/extensions.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "77b374577de83b86d846eadda2dd17532d7dabaa",
+      "size": 130,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/77b374577de83b86d846eadda2dd17532d7dabaa"
+    },
+    {
+      "path": ".vscode/launch.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "925af837050a4abe679c5fea0df7e41faf6fc011",
+      "size": 470,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/925af837050a4abe679c5fea0df7e41faf6fc011"
+    },
+    {
+      "path": ".vscode/mcp.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "956af8c62ce6984995b4dff94a6a0d2452a0f06d",
+      "size": 179,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/956af8c62ce6984995b4dff94a6a0d2452a0f06d"
+    },
+    {
+      "path": ".vscode/tasks.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "244306f98af6707ac2cb22c1faf06b98271cb4c5",
+      "size": 978,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/244306f98af6707ac2cb22c1faf06b98271cb4c5"
+    },
+    {
+      "path": "README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4ae5cb228fe79d5078a0661b5249a073d608a1f9",
+      "size": 1460,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/4ae5cb228fe79d5078a0661b5249a073d608a1f9"
+    },
+    {
+      "path": "angular.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3d7a5b7a72ab84513b9080d68afee340beba0381",
+      "size": 2371,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/3d7a5b7a72ab84513b9080d68afee340beba0381"
+    },
+    {
+      "path": "docs",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "fb6e0fa57e2573be8ce8ee221fdec231d8afeed2",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/fb6e0fa57e2573be8ce8ee221fdec231d8afeed2"
+    },
+    {
+      "path": "docs/3rdpartylicenses.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3afdc70280d3f94ef558d1c1dd173c9f8b99517f",
+      "size": 42878,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/3afdc70280d3f94ef558d1c1dd173c9f8b99517f"
+    },
+    {
+      "path": "docs/404.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2b91a2388dd7ffaa5d0eef41fe9d4c1d6152f33c",
+      "size": 3408,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/2b91a2388dd7ffaa5d0eef41fe9d4c1d6152f33c"
+    },
+    {
+      "path": "docs/assets",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "bef9cfc942d75c9ad67a83e210a051230dd97c10",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/bef9cfc942d75c9ad67a83e210a051230dd97c10"
+    },
+    {
+      "path": "docs/assets/images",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "bc12922da4211f89a7757e52bf1161173b4478ba",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/bc12922da4211f89a7757e52bf1161173b4478ba"
+    },
+    {
+      "path": "docs/assets/images/logo.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "319d622b697a6e502933f17c4d07860eadf7b12b",
+      "size": 51231,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/319d622b697a6e502933f17c4d07860eadf7b12b"
+    },
+    {
+      "path": "docs/browser",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "e2dab63a20cc4ed693d193bc03c9a308d717c9a5",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/e2dab63a20cc4ed693d193bc03c9a308d717c9a5"
+    },
+    {
+      "path": "docs/browser/assets",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "bef9cfc942d75c9ad67a83e210a051230dd97c10",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/bef9cfc942d75c9ad67a83e210a051230dd97c10"
+    },
+    {
+      "path": "docs/browser/assets/images",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "bc12922da4211f89a7757e52bf1161173b4478ba",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/bc12922da4211f89a7757e52bf1161173b4478ba"
+    },
+    {
+      "path": "docs/browser/assets/images/logo.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "319d622b697a6e502933f17c4d07860eadf7b12b",
+      "size": 51231,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/319d622b697a6e502933f17c4d07860eadf7b12b"
+    },
+    {
+      "path": "docs/browser/favicon.ico",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "57614f9c967596fad0a3989bec2b1deff33034f6",
+      "size": 15086,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/57614f9c967596fad0a3989bec2b1deff33034f6"
+    },
+    {
+      "path": "docs/browser/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1e692208b1710e6eab35f3a19db926c6a731e9cb",
+      "size": 3241,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/1e692208b1710e6eab35f3a19db926c6a731e9cb"
+    },
+    {
+      "path": "docs/browser/main-GO2X7PN3.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7ee4a778816d91b5975823d87d2e58cc27aeaede",
+      "size": 1032630,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/7ee4a778816d91b5975823d87d2e58cc27aeaede"
+    },
+    {
+      "path": "docs/browser/media",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "050a5f6270c413bcb51c6296b9719166061465d6",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/050a5f6270c413bcb51c6296b9719166061465d6"
+    },
+    {
+      "path": "docs/browser/media/primeicons-67GZ63CG.woff",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "931c0ceb8a150a411133e49102351ea6f531457e",
+      "size": 89184,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/931c0ceb8a150a411133e49102351ea6f531457e"
+    },
+    {
+      "path": "docs/browser/media/primeicons-6VHJE6VZ.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8b4f909412cedaffc0a80c41f0876c2af1e330c1",
+      "size": 347201,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/8b4f909412cedaffc0a80c41f0876c2af1e330c1"
+    },
+    {
+      "path": "docs/browser/media/primeicons-MMNJ55EH.ttf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9ab274fd61d3d4eccecb83d7c7c239d6a997f234",
+      "size": 89108,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/9ab274fd61d3d4eccecb83d7c7c239d6a997f234"
+    },
+    {
+      "path": "docs/browser/media/primeicons-P3Q6XDZG.eot",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "afd16cb12eb64d257143b987e21ccfc16f41bf94",
+      "size": 89284,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/afd16cb12eb64d257143b987e21ccfc16f41bf94"
+    },
+    {
+      "path": "docs/browser/media/primeicons-Y4ZH4LAW.woff2",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d3ce1a06b1641b1ebc792a92c5256a589b13e1b2",
+      "size": 32652,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/d3ce1a06b1641b1ebc792a92c5256a589b13e1b2"
+    },
+    {
+      "path": "docs/browser/styles-TSM3NBJY.css",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e90980cc074a26aa7c94bbe8ac668388912a5541",
+      "size": 18134,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/e90980cc074a26aa7c94bbe8ac668388912a5541"
+    },
+    {
+      "path": "docs/favicon.ico",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "57614f9c967596fad0a3989bec2b1deff33034f6",
+      "size": 15086,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/57614f9c967596fad0a3989bec2b1deff33034f6"
+    },
+    {
+      "path": "docs/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2b91a2388dd7ffaa5d0eef41fe9d4c1d6152f33c",
+      "size": 3408,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/2b91a2388dd7ffaa5d0eef41fe9d4c1d6152f33c"
+    },
+    {
+      "path": "docs/main-4US37ZYD.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "272fee969cd5e1025b2b4f4b37ad78c84d5c0092",
+      "size": 1048005,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/272fee969cd5e1025b2b4f4b37ad78c84d5c0092"
+    },
+    {
+      "path": "docs/main-5FHSR74V.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c35f8eb45112c8b86e9675ddb690fa125323b667",
+      "size": 1032628,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/c35f8eb45112c8b86e9675ddb690fa125323b667"
+    },
+    {
+      "path": "docs/main-6MYRD636.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "35e5bb662c4669605b41b664009325a968bdbfe4",
+      "size": 1032673,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/35e5bb662c4669605b41b664009325a968bdbfe4"
+    },
+    {
+      "path": "docs/main-6OGS22YT.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3b07eea1be8df417831fde8a492db85de321d88c",
+      "size": 1355560,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/3b07eea1be8df417831fde8a492db85de321d88c"
+    },
+    {
+      "path": "docs/main-B54K7QEU.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dceeadc00db2975b3bd8dccf11a6cd2b153890a4",
+      "size": 1040153,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/dceeadc00db2975b3bd8dccf11a6cd2b153890a4"
+    },
+    {
+      "path": "docs/main-CW5WIT3Z.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "02c25a9c9fa9d1dfac5eae995961e79b4de0fd87",
+      "size": 1034485,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/02c25a9c9fa9d1dfac5eae995961e79b4de0fd87"
+    },
+    {
+      "path": "docs/main-GO2X7PN3.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7ee4a778816d91b5975823d87d2e58cc27aeaede",
+      "size": 1032630,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/7ee4a778816d91b5975823d87d2e58cc27aeaede"
+    },
+    {
+      "path": "docs/main-HNJSFUOZ.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4a650d7dc9e828b1e084e16021098cc5d9cf8833",
+      "size": 1040175,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/4a650d7dc9e828b1e084e16021098cc5d9cf8833"
+    },
+    {
+      "path": "docs/main-JSHZPETK.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "28535fec6609af1d6abaf6cc31c95fc6a48972f0",
+      "size": 1355523,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/28535fec6609af1d6abaf6cc31c95fc6a48972f0"
+    },
+    {
+      "path": "docs/main-NFJCMWVF.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e6f40400a8370cecd0ef1d6f55dc94bdceeec6c5",
+      "size": 1040169,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/e6f40400a8370cecd0ef1d6f55dc94bdceeec6c5"
+    },
+    {
+      "path": "docs/main-OCAH3FCP.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "af857744b5f612e96c5cd937628ed1127404723f",
+      "size": 1040161,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/af857744b5f612e96c5cd937628ed1127404723f"
+    },
+    {
+      "path": "docs/main-PZ2J7OQT.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cfc6b1e832c3470c55819f205ada5d8980fea550",
+      "size": 1040216,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/cfc6b1e832c3470c55819f205ada5d8980fea550"
+    },
+    {
+      "path": "docs/main-R6KBV5ZX.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3710e783992d6dc560a96474d67d8965f5189e12",
+      "size": 1040156,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/3710e783992d6dc560a96474d67d8965f5189e12"
+    },
+    {
+      "path": "docs/main-UFZNPKHS.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "42c0cb934e7700ad59071f5b3ad87277fb17f440",
+      "size": 1195265,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/42c0cb934e7700ad59071f5b3ad87277fb17f440"
+    },
+    {
+      "path": "docs/main-VN3OTN5J.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c68a003d7244047654748fe488aea17c3e332c7a",
+      "size": 1040203,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/c68a003d7244047654748fe488aea17c3e332c7a"
+    },
+    {
+      "path": "docs/main-WSZ6565I.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bbd0f386241346820616ade2766f9ab7b1aede77",
+      "size": 1040161,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/bbd0f386241346820616ade2766f9ab7b1aede77"
+    },
+    {
+      "path": "docs/main-WWNLPA7R.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4d06fdfad46edbefdd98e4214d7776efe7608a9f",
+      "size": 1040203,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/4d06fdfad46edbefdd98e4214d7776efe7608a9f"
+    },
+    {
+      "path": "docs/main-XP27354Q.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8c6679d5548d90aee559330507f6839fdae071b5",
+      "size": 1052026,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/8c6679d5548d90aee559330507f6839fdae071b5"
+    },
+    {
+      "path": "docs/main-XPHPYKD4.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0821843385d176dc6c2917ba7076b763ca7e5631",
+      "size": 1040192,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/0821843385d176dc6c2917ba7076b763ca7e5631"
+    },
+    {
+      "path": "docs/media",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "5e5542a471b1302212cd63d140d282897d8a8c85",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/5e5542a471b1302212cd63d140d282897d8a8c85"
+    },
+    {
+      "path": "docs/media/layers-2x-TBM42ERR.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "200c333dca9652ac4cba004d609e5af4eee168c1",
+      "size": 1259,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/200c333dca9652ac4cba004d609e5af4eee168c1"
+    },
+    {
+      "path": "docs/media/layers-55W3Q4RM.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1a72e5784b2b456eac5d7670738db80697af3377",
+      "size": 696,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/1a72e5784b2b456eac5d7670738db80697af3377"
+    },
+    {
+      "path": "docs/media/marker-icon-2V3QKKVC.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "950edf24677ded147df13b26f91baa2b0fa70513",
+      "size": 1466,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/950edf24677ded147df13b26f91baa2b0fa70513"
+    },
+    {
+      "path": "docs/media/primeicons-67GZ63CG.woff",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "931c0ceb8a150a411133e49102351ea6f531457e",
+      "size": 89184,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/931c0ceb8a150a411133e49102351ea6f531457e"
+    },
+    {
+      "path": "docs/media/primeicons-6VHJE6VZ.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8b4f909412cedaffc0a80c41f0876c2af1e330c1",
+      "size": 347201,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/8b4f909412cedaffc0a80c41f0876c2af1e330c1"
+    },
+    {
+      "path": "docs/media/primeicons-MMNJ55EH.ttf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9ab274fd61d3d4eccecb83d7c7c239d6a997f234",
+      "size": 89108,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/9ab274fd61d3d4eccecb83d7c7c239d6a997f234"
+    },
+    {
+      "path": "docs/media/primeicons-P3Q6XDZG.eot",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "afd16cb12eb64d257143b987e21ccfc16f41bf94",
+      "size": 89284,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/afd16cb12eb64d257143b987e21ccfc16f41bf94"
+    },
+    {
+      "path": "docs/media/primeicons-Y4ZH4LAW.woff2",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d3ce1a06b1641b1ebc792a92c5256a589b13e1b2",
+      "size": 32652,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/d3ce1a06b1641b1ebc792a92c5256a589b13e1b2"
+    },
+    {
+      "path": "docs/prerendered-routes.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "322654154d99c2516e747ea766d93abb2f170347",
+      "size": 18,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/322654154d99c2516e747ea766d93abb2f170347"
+    },
+    {
+      "path": "docs/styles-HCIUTMQE.css",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "09e527e3d4266d362fc6b01c957d58e5fb5b2566",
+      "size": 29262,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/09e527e3d4266d362fc6b01c957d58e5fb5b2566"
+    },
+    {
+      "path": "docs/styles-TSM3NBJY.css",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e90980cc074a26aa7c94bbe8ac668388912a5541",
+      "size": 18134,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/e90980cc074a26aa7c94bbe8ac668388912a5541"
+    },
+    {
+      "path": "docs/styles-XCAFB4KA.css",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3225f51b30d48136b85cb33c22cf71055011613a",
+      "size": 18191,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/3225f51b30d48136b85cb33c22cf71055011613a"
+    },
+    {
+      "path": "package-lock.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2cdb78af7fec996cc924159aad4da26d62aac3ac",
+      "size": 307071,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/2cdb78af7fec996cc924159aad4da26d62aac3ac"
+    },
+    {
+      "path": "package.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3c000d1e77245db232a4883fe84fd968c1019c44",
+      "size": 1219,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/3c000d1e77245db232a4883fe84fd968c1019c44"
+    },
+    {
+      "path": "public",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "b3f1ecf44a54372bf90afbb60491417242b8769c",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/b3f1ecf44a54372bf90afbb60491417242b8769c"
+    },
+    {
+      "path": "public/favicon.ico",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "57614f9c967596fad0a3989bec2b1deff33034f6",
+      "size": 15086,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/57614f9c967596fad0a3989bec2b1deff33034f6"
+    },
+    {
+      "path": "src",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "b956e425bdd59f837dc9693bd374755f30c2eb17",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/b956e425bdd59f837dc9693bd374755f30c2eb17"
+    },
+    {
+      "path": "src/app",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "77e2622a5e661ea2f4e7f7d9c2c8766908fe34ef",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/77e2622a5e661ea2f4e7f7d9c2c8766908fe34ef"
+    },
+    {
+      "path": "src/app/app.config.server.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "41031f1165dd9da570d26867f2b3a23cd49797c6",
+      "size": 426,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/41031f1165dd9da570d26867f2b3a23cd49797c6"
+    },
+    {
+      "path": "src/app/app.config.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6cc86f71affe2e7ce40e2842ec085d0638519c15",
+      "size": 1550,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/6cc86f71affe2e7ce40e2842ec085d0638519c15"
+    },
+    {
+      "path": "src/app/app.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2f8b10d6d7adfa4300051006d2dd5e14ceb05c0e",
+      "size": 4540,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/2f8b10d6d7adfa4300051006d2dd5e14ceb05c0e"
+    },
+    {
+      "path": "src/app/app.routes.server.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "639563c7f94e412f75d4f70b12cfd6253c0da35d",
+      "size": 163,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/639563c7f94e412f75d4f70b12cfd6253c0da35d"
+    },
+    {
+      "path": "src/app/app.routes.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5a6823c5442edce1a6dc000caf13b55561346f50",
+      "size": 2121,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/5a6823c5442edce1a6dc000caf13b55561346f50"
+    },
+    {
+      "path": "src/app/app.scss",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size": 0,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "src/app/app.spec.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "de4780c47b34ae92ddab0dff66bbf896f34384ff",
+      "size": 673,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/de4780c47b34ae92ddab0dff66bbf896f34384ff"
+    },
+    {
+      "path": "src/app/app.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2a27c5bd854a8255b5f78a4a0ba56e3e6d97ad5a",
+      "size": 289,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/2a27c5bd854a8255b5f78a4a0ba56e3e6d97ad5a"
+    },
+    {
+      "path": "src/app/component",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "484a6b874aebe3d5caeaa80db2b4a9c61c0fb49a",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/484a6b874aebe3d5caeaa80db2b4a9c61c0fb49a"
+    },
+    {
+      "path": "src/app/component/banner",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "e03bb28a200d208844b95567634eef838c073604",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/e03bb28a200d208844b95567634eef838c073604"
+    },
+    {
+      "path": "src/app/component/banner/banner.component.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e78975102c0a533502603ab46cf198fa62a4d8bd",
+      "size": 213,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/e78975102c0a533502603ab46cf198fa62a4d8bd"
+    },
+    {
+      "path": "src/app/component/banner/banner.component.scss",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "865e2a6ff375cb2f8076d751d888ca913ba90e63",
+      "size": 808,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/865e2a6ff375cb2f8076d751d888ca913ba90e63"
+    },
+    {
+      "path": "src/app/component/banner/banner.component.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c48e9c558b67c36c8495a8d5ba3e0eaea6a9d05b",
+      "size": 236,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/c48e9c558b67c36c8495a8d5ba3e0eaea6a9d05b"
+    },
+    {
+      "path": "src/app/component/card-news",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "eed3321305f3ad4116f3767997a19e74c3c0f040",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/eed3321305f3ad4116f3767997a19e74c3c0f040"
+    },
+    {
+      "path": "src/app/component/card-news/card-news.component.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "31bf02a1762b52c8e9723b7f30275a5aad78a259",
+      "size": 467,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/31bf02a1762b52c8e9723b7f30275a5aad78a259"
+    },
+    {
+      "path": "src/app/component/card-news/card-news.component.scss",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "da8a17a57cf06adf1c59754445d45c9e4c6b5e58",
+      "size": 1823,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/da8a17a57cf06adf1c59754445d45c9e4c6b5e58"
+    },
+    {
+      "path": "src/app/component/card-news/card-news.component.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2cec9de86ec15cb4b3fc4a468f3bf1b6efd665f6",
+      "size": 311,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/2cec9de86ec15cb4b3fc4a468f3bf1b6efd665f6"
+    },
+    {
+      "path": "src/app/component/footer",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "d76790f344ddcba144d7fa75e56d350650d379cc",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/d76790f344ddcba144d7fa75e56d350650d379cc"
+    },
+    {
+      "path": "src/app/component/footer/footer.component.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "63541b69844f1dd03be2e9b1964268ee36bfb9cd",
+      "size": 1292,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/63541b69844f1dd03be2e9b1964268ee36bfb9cd"
+    },
+    {
+      "path": "src/app/component/footer/footer.component.scss",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "db423d943d4b23de828ec904592f9fdd399dd217",
+      "size": 2976,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/db423d943d4b23de828ec904592f9fdd399dd217"
+    },
+    {
+      "path": "src/app/component/footer/footer.component.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "797c542a731f433156fead1a6117458bd05e3109",
+      "size": 1483,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/797c542a731f433156fead1a6117458bd05e3109"
+    },
+    {
+      "path": "src/app/component/navbar-desktop-admin",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "0ef38cd967a9504ab20586150ade2a30dd59c34d",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/0ef38cd967a9504ab20586150ade2a30dd59c34d"
+    },
+    {
+      "path": "src/app/component/navbar-desktop-admin/navbar-desktop-admin.component.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a86939c592945f15e95748337023fab732886069",
+      "size": 1252,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/a86939c592945f15e95748337023fab732886069"
+    },
+    {
+      "path": "src/app/component/navbar-desktop-admin/navbar-desktop-admin.component.scss",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e6dcee117ec8fb1305e7cb552ddcd8c687abaad5",
+      "size": 2804,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/e6dcee117ec8fb1305e7cb552ddcd8c687abaad5"
+    },
+    {
+      "path": "src/app/component/navbar-desktop-admin/navbar-desktop-admin.component.spec.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6d0b3b8506e66d6fc0db3da340f4cb9562fc1ea3",
+      "size": 677,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/6d0b3b8506e66d6fc0db3da340f4cb9562fc1ea3"
+    },
+    {
+      "path": "src/app/component/navbar-desktop-admin/navbar-desktop-admin.component.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8af3927654039daf65a186f0320f116f4c29dbd7",
+      "size": 1537,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/8af3927654039daf65a186f0320f116f4c29dbd7"
+    },
+    {
+      "path": "src/app/component/navbar-desktop",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "b6aa0ff0ca4f70f78fd4c05149b8ee729ffb0170",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/b6aa0ff0ca4f70f78fd4c05149b8ee729ffb0170"
+    },
+    {
+      "path": "src/app/component/navbar-desktop/navbar-desktop.component.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c4f1b530c1b4db1368d5894e4bf9b3fc2b8985a2",
+      "size": 29,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/c4f1b530c1b4db1368d5894e4bf9b3fc2b8985a2"
+    },
+    {
+      "path": "src/app/component/navbar-desktop/navbar-desktop.component.scss",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size": 0,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "src/app/component/navbar-desktop/navbar-desktop.component.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d1e61d37d6d3b769494a633a94d4ca08456e1182",
+      "size": 418,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/d1e61d37d6d3b769494a633a94d4ca08456e1182"
+    },
+    {
+      "path": "src/app/component/navbar-desktop/navbar-desktop.spec.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e3c55221709f7fd23dc3d8a52260f156d5fc6d4a",
+      "size": 587,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/e3c55221709f7fd23dc3d8a52260f156d5fc6d4a"
+    },
+    {
+      "path": "src/app/component/new-card-news",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "90b1f6590e86e07de2e61c40392c762cd22a7898",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/90b1f6590e86e07de2e61c40392c762cd22a7898"
+    },
+    {
+      "path": "src/app/component/new-card-news/new-card-news.component.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2ee70e1696fe8c4edec7bdcf6a412f724c1121a0",
+      "size": 1109,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/2ee70e1696fe8c4edec7bdcf6a412f724c1121a0"
+    },
+    {
+      "path": "src/app/component/new-card-news/new-card-news.component.scss",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7dc7fd64dbe82b1efd82fb389f7e623e00e99aef",
+      "size": 3050,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/7dc7fd64dbe82b1efd82fb389f7e623e00e99aef"
+    },
+    {
+      "path": "src/app/component/new-card-news/new-card-news.component.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d888798818752f67ed9b9fd9c94675d67f8a3342",
+      "size": 694,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/d888798818752f67ed9b9fd9c94675d67f8a3342"
+    },
+    {
+      "path": "src/app/component/simple-banner",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "f3fe434cddda07f1352bf5e95ff19cd9018cb925",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/f3fe434cddda07f1352bf5e95ff19cd9018cb925"
+    },
+    {
+      "path": "src/app/component/simple-banner/simple-banner.component.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "daaadf7e9bfd936a28271b96ca8ca7a15ee8eaac",
+      "size": 137,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/daaadf7e9bfd936a28271b96ca8ca7a15ee8eaac"
+    },
+    {
+      "path": "src/app/component/simple-banner/simple-banner.component.scss",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6fc9709a1477dbbd4cbe8c4a302ea699e3f13260",
+      "size": 571,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/6fc9709a1477dbbd4cbe8c4a302ea699e3f13260"
+    },
+    {
+      "path": "src/app/component/simple-banner/simple-banner.component.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b7d9288ef9fccddfbc724c44dde04036e907efa5",
+      "size": 273,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/b7d9288ef9fccddfbc724c44dde04036e907efa5"
+    },
+    {
+      "path": "src/app/features",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "112bcc5b74fbe14bc0cc77e665c1c12bff34a662",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/112bcc5b74fbe14bc0cc77e665c1c12bff34a662"
+    },
+    {
+      "path": "src/app/features/admins",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "9aad5b3583d24a02887d65d5bb42c0ab50d35bf6",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/9aad5b3583d24a02887d65d5bb42c0ab50d35bf6"
+    },
+    {
+      "path": "src/app/features/admins/admin.model.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "feb81dbedc4b543e8a4463ab4d18a0f5ef173152",
+      "size": 879,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/feb81dbedc4b543e8a4463ab4d18a0f5ef173152"
+    },
+    {
+      "path": "src/app/features/admins/manage-admin",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "db5f990c902e1f5b68d3dcbae6bcea6b24cf754a",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/db5f990c902e1f5b68d3dcbae6bcea6b24cf754a"
+    },
+    {
+      "path": "src/app/features/admins/manage-admin/manage-admin.component.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dd539625c7d139d755b9a9cf105422015c5920d4",
+      "size": 2006,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/dd539625c7d139d755b9a9cf105422015c5920d4"
+    },
+    {
+      "path": "src/app/features/admins/manage-admin/manage-admin.component.scss",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "22990c9c96af3d0feef14e41d36cb385e1c25b66",
+      "size": 1147,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/22990c9c96af3d0feef14e41d36cb385e1c25b66"
+    },
+    {
+      "path": "src/app/features/admins/manage-admin/manage-admin.component.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e5747a62dd5b8148f3612787e28aef4f61387896",
+      "size": 4786,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/e5747a62dd5b8148f3612787e28aef4f61387896"
+    },
+    {
+      "path": "src/app/features/admins/manage-hubs",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "df5026881f1882e8d40ad644efd644e817299abf",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/df5026881f1882e8d40ad644efd644e817299abf"
+    },
+    {
+      "path": "src/app/features/admins/manage-hubs/manage-hubs.component.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dd5ece6a9ed8a697b9aa1962354ddb9a81bef112",
+      "size": 1739,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/dd5ece6a9ed8a697b9aa1962354ddb9a81bef112"
+    },
+    {
+      "path": "src/app/features/admins/manage-hubs/manage-hubs.component.scss",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "19eee1f57420b8e3d76ecde7be7f7267659036ef",
+      "size": 1958,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/19eee1f57420b8e3d76ecde7be7f7267659036ef"
+    },
+    {
+      "path": "src/app/features/admins/manage-hubs/manage-hubs.component.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a2a4ae915ad7e45549b7f096e58cce5e6354089f",
+      "size": 2107,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/a2a4ae915ad7e45549b7f096e58cce5e6354089f"
+    },
+    {
+      "path": "src/app/features/admins/modalites",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "b631bf38dd6d05fa0d84e8316d68e9efb4198954",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/b631bf38dd6d05fa0d84e8316d68e9efb4198954"
+    },
+    {
+      "path": "src/app/features/admins/modalites/classes",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "fa24557fcfbec697bb0823657d1f74d7d1606e54",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/fa24557fcfbec697bb0823657d1f74d7d1606e54"
+    },
+    {
+      "path": "src/app/features/admins/modalites/classes/classes.component.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5b57cb80192e6dcbebcb5fdffde3abaf9d16c505",
+      "size": 1920,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/5b57cb80192e6dcbebcb5fdffde3abaf9d16c505"
+    },
+    {
+      "path": "src/app/features/admins/modalites/classes/classes.component.scss",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "90a0ea4e38e6c0f7c9aa1ec872628fd21d63b110",
+      "size": 2608,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/90a0ea4e38e6c0f7c9aa1ec872628fd21d63b110"
+    },
+    {
+      "path": "src/app/features/admins/modalites/classes/classes.component.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f2f6f284a9301b29f96c5ed5b54d4278e15911a6",
+      "size": 1913,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/f2f6f284a9301b29f96c5ed5b54d4278e15911a6"
+    },
+    {
+      "path": "src/app/features/admins/modalites/manage-modalites.component.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9cd9c344dcf8757ecf86d377e311f9a4cbbe29cd",
+      "size": 1747,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/9cd9c344dcf8757ecf86d377e311f9a4cbbe29cd"
+    },
+    {
+      "path": "src/app/features/admins/modalites/manage-modalites.component.scss",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e2f678be5ad6ed1862bf2ac32fa9b7433647d851",
+      "size": 2154,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/e2f678be5ad6ed1862bf2ac32fa9b7433647d851"
+    },
+    {
+      "path": "src/app/features/admins/modalites/manage-modalites.component.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6e49d6bbd80443251791cc6a6b55e9d34a88cd18",
+      "size": 2890,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/6e49d6bbd80443251791cc6a6b55e9d34a88cd18"
+    },
+    {
+      "path": "src/app/features/admins/modalites/new-modality",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "42e8df7316bd3cc66f2cf61605ca5b3f6ba58b82",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/42e8df7316bd3cc66f2cf61605ca5b3f6ba58b82"
+    },
+    {
+      "path": "src/app/features/admins/modalites/new-modality/new-modality.component.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b02a48e09f82a6ae7a391d08549cf8f77b382dd6",
+      "size": 1210,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/b02a48e09f82a6ae7a391d08549cf8f77b382dd6"
+    },
+    {
+      "path": "src/app/features/admins/modalites/new-modality/new-modality.component.scss",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8b877c579787dc10db076ccbc6120683b1494e71",
+      "size": 1164,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/8b877c579787dc10db076ccbc6120683b1494e71"
+    },
+    {
+      "path": "src/app/features/admins/modalites/new-modality/new-modality.component.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d0d3d5ea7ec436b7ec551bb16afb0b6e489310df",
+      "size": 1506,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/d0d3d5ea7ec436b7ec551bb16afb0b6e489310df"
+    },
+    {
+      "path": "src/app/features/admins/new-admin-modal",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "c7f16b3a3d177a06a66d948923bd9bb96fad00a4",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/c7f16b3a3d177a06a66d948923bd9bb96fad00a4"
+    },
+    {
+      "path": "src/app/features/admins/new-admin-modal/new-admin-modal.component.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1d46d7a3620264590a019f2cfcc51ec7a4a1d471",
+      "size": 5304,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/1d46d7a3620264590a019f2cfcc51ec7a4a1d471"
+    },
+    {
+      "path": "src/app/features/admins/new-admin-modal/new-admin-modal.component.scss",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d138633ca07b09ed29bff723ccfe52f9df82b037",
+      "size": 3506,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/d138633ca07b09ed29bff723ccfe52f9df82b037"
+    },
+    {
+      "path": "src/app/features/admins/new-admin-modal/new-admin-modal.component.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "584a0c43a9854ce3e071f89bbbd7bb832b4a0fb9",
+      "size": 6085,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/584a0c43a9854ce3e071f89bbbd7bb832b4a0fb9"
+    },
+    {
+      "path": "src/app/features/admins/teacher",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "d635fb742ad010eb66bed5c84a348c254dab328e",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/d635fb742ad010eb66bed5c84a348c254dab328e"
+    },
+    {
+      "path": "src/app/features/admins/teacher/manage-teachers",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "02513ea46a991914dfa5ae2f2ead22911dd9d195",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/02513ea46a991914dfa5ae2f2ead22911dd9d195"
+    },
+    {
+      "path": "src/app/features/admins/teacher/manage-teachers/manage.teachers.component.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "22cce3d90e29efe402bbcb1c5f1830597cb5970d",
+      "size": 1708,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/22cce3d90e29efe402bbcb1c5f1830597cb5970d"
+    },
+    {
+      "path": "src/app/features/admins/teacher/manage-teachers/manage.teachers.component.scss",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f004362fbbbd17bb844907b6402359500505ce2e",
+      "size": 1178,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/f004362fbbbd17bb844907b6402359500505ce2e"
+    },
+    {
+      "path": "src/app/features/admins/teacher/manage-teachers/manage.teachers.component.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "706e6b33617fa8afba63603822cc1880cde62cdf",
+      "size": 1736,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/706e6b33617fa8afba63603822cc1880cde62cdf"
+    },
+    {
+      "path": "src/app/features/admins/teacher/new-teacher-modal",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "1cd8b3eaa36c9a2e766133fd941724eb09267ab8",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/1cd8b3eaa36c9a2e766133fd941724eb09267ab8"
+    },
+    {
+      "path": "src/app/features/admins/teacher/new-teacher-modal/new-teacher-modal.component.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8d76127bb4871db2bdb84360e912357c1f6a60f5",
+      "size": 3082,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/8d76127bb4871db2bdb84360e912357c1f6a60f5"
+    },
+    {
+      "path": "src/app/features/admins/teacher/new-teacher-modal/new-teacher-modal.component.scss",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3b91a88fbbfed94ddc3f40928bea3624bf6a2a63",
+      "size": 2677,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/3b91a88fbbfed94ddc3f40928bea3624bf6a2a63"
+    },
+    {
+      "path": "src/app/features/admins/teacher/new-teacher-modal/new-teacher-modal.component.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4c70f1520e9e3be9c1f0bea120190adbbf6ebd9b",
+      "size": 1237,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/4c70f1520e9e3be9c1f0bea120190adbbf6ebd9b"
+    },
+    {
+      "path": "src/app/features/public",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "0797214dd547afab0368b987deb91624cb0e31b7",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/0797214dd547afab0368b987deb91624cb0e31b7"
+    },
+    {
+      "path": "src/app/features/public/pages",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "ad3ce6c99f40c6b1d400785eb9e78fb327dcc141",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/ad3ce6c99f40c6b1d400785eb9e78fb327dcc141"
+    },
+    {
+      "path": "src/app/features/public/pages/home",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "c485bd7fab48dd63bd8d81058e0e4aa2528e32cb",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/c485bd7fab48dd63bd8d81058e0e4aa2528e32cb"
+    },
+    {
+      "path": "src/app/features/public/pages/home/home.component.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7bf4fc6583ef18e1860a9f1341f15325943263f8",
+      "size": 764,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/7bf4fc6583ef18e1860a9f1341f15325943263f8"
+    },
+    {
+      "path": "src/app/features/public/pages/home/home.component.scss",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "63369213b3927988ef79063ce9636a4603d54ad1",
+      "size": 2281,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/63369213b3927988ef79063ce9636a4603d54ad1"
+    },
+    {
+      "path": "src/app/features/public/pages/home/home.component.spec.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bf1a471423a5d80e2c9905f2f03c35bffaafdeae",
+      "size": 523,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/bf1a471423a5d80e2c9905f2f03c35bffaafdeae"
+    },
+    {
+      "path": "src/app/features/public/pages/home/home.component.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "87d5f4781c4fcc4b891b45910c7fbc661fde98a5",
+      "size": 911,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/87d5f4781c4fcc4b891b45910c7fbc661fde98a5"
+    },
+    {
+      "path": "src/app/features/public/pages/login",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "24205e29de0629923538dad63b8e26e90dac5b43",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/24205e29de0629923538dad63b8e26e90dac5b43"
+    },
+    {
+      "path": "src/app/features/public/pages/login/login.component.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5ee50a3b2ab5ab1f315facfe63fafcad32437a0d",
+      "size": 1212,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/5ee50a3b2ab5ab1f315facfe63fafcad32437a0d"
+    },
+    {
+      "path": "src/app/features/public/pages/login/login.component.scss",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a1b6e45d7c8c15a7ad28be9f8abae1a3b45ad3a6",
+      "size": 3369,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/a1b6e45d7c8c15a7ad28be9f8abae1a3b45ad3a6"
+    },
+    {
+      "path": "src/app/features/public/pages/login/login.component.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a867a25592b56deb5d122141adff245942201f70",
+      "size": 576,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/a867a25592b56deb5d122141adff245942201f70"
+    },
+    {
+      "path": "src/app/features/public/pages/registration",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "9d5282b76b89f6f1dbfa603814a4d1f510d4ca05",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/9d5282b76b89f6f1dbfa603814a4d1f510d4ca05"
+    },
+    {
+      "path": "src/app/features/public/pages/registration/registration.component.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1027978cdcc0a8f0759e2e709822eab7918a14d7",
+      "size": 9365,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/1027978cdcc0a8f0759e2e709822eab7918a14d7"
+    },
+    {
+      "path": "src/app/features/public/pages/registration/registration.component.scss",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fc5d0e5f8e841821f85978545ffd079f4b0dfd62",
+      "size": 5783,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/fc5d0e5f8e841821f85978545ffd079f4b0dfd62"
+    },
+    {
+      "path": "src/app/features/public/pages/registration/registration.component.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f551a85023b2a1a5d38c1d81445a26cc6cdcb5bd",
+      "size": 1035,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/f551a85023b2a1a5d38c1d81445a26cc6cdcb5bd"
+    },
+    {
+      "path": "src/app/features/public/public.routes.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size": 0,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "src/assets",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "bef9cfc942d75c9ad67a83e210a051230dd97c10",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/bef9cfc942d75c9ad67a83e210a051230dd97c10"
+    },
+    {
+      "path": "src/assets/images",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "bc12922da4211f89a7757e52bf1161173b4478ba",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/bc12922da4211f89a7757e52bf1161173b4478ba"
+    },
+    {
+      "path": "src/assets/images/logo.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "319d622b697a6e502933f17c4d07860eadf7b12b",
+      "size": 51231,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/319d622b697a6e502933f17c4d07860eadf7b12b"
+    },
+    {
+      "path": "src/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8113ba5525d20198dc715af236b21bd36bcc2426",
+      "size": 373,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/8113ba5525d20198dc715af236b21bd36bcc2426"
+    },
+    {
+      "path": "src/main.server.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "723e001fbf7e9916b0f6957c733e46955e931884",
+      "size": 292,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/723e001fbf7e9916b0f6957c733e46955e931884"
+    },
+    {
+      "path": "src/main.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5df75f9c838ea50f80ee4d5703b68dd8ac7243d4",
+      "size": 222,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/5df75f9c838ea50f80ee4d5703b68dd8ac7243d4"
+    },
+    {
+      "path": "src/server.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4bf06311f9e735e49285650f1689ec7fbcf5361a",
+      "size": 1609,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/4bf06311f9e735e49285650f1689ec7fbcf5361a"
+    },
+    {
+      "path": "src/styles.scss",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bb2658b630f0ed5876aeb7507b942ac67a5a4634",
+      "size": 940,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/bb2658b630f0ed5876aeb7507b942ac67a5a4634"
+    },
+    {
+      "path": "src/styles",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "7d1d06d421b025748b31bd4afbaf736e3b5407e6",
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/trees/7d1d06d421b025748b31bd4afbaf736e3b5407e6"
+    },
+    {
+      "path": "src/styles/breakpoints.scss",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5b3f02c033e74cf581117a80192744f8036ea3f4",
+      "size": 1586,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/5b3f02c033e74cf581117a80192744f8036ea3f4"
+    },
+    {
+      "path": "src/styles/colors.scss",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "981e1a6cfc382951c02eecb91f36b43f113cc472",
+      "size": 4214,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/981e1a6cfc382951c02eecb91f36b43f113cc472"
+    },
+    {
+      "path": "src/styles/primeng-overrides.scss",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ec0abc5f24e03f8e0a7b446c2ca1496efe99fa11",
+      "size": 817,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/ec0abc5f24e03f8e0a7b446c2ca1496efe99fa11"
+    },
+    {
+      "path": "tsconfig.app.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2e7ccdc5a5583d459f5c3099ab703a1432625418",
+      "size": 262,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/2e7ccdc5a5583d459f5c3099ab703a1432625418"
+    },
+    {
+      "path": "tsconfig.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2ab7442758fef79ae3551353028b98cdfa1ed562",
+      "size": 957,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/2ab7442758fef79ae3551353028b98cdfa1ed562"
+    },
+    {
+      "path": "tsconfig.spec.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7a60be5f4448c21167385533eec294ef60d3cee8",
+      "size": 277,
+      "url": "https://api.github.com/repos/sidespfatec/FRONT-SIDESP/git/blobs/7a60be5f4448c21167385533eec294ef60d3cee8"
+    }
+  ],
+  "truncated": false
+}

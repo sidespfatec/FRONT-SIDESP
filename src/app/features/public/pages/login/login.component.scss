@@ -137,3 +137,6 @@
     justify-content: center;
     text-align: center;
 }
+.form-error, .field-error { color: #9b1c1c; }
+.form-error { background: #fff3f3; padding: .75rem; border: 1px solid #9b1c1c; border-radius: 6px; margin-bottom: 1rem; }
+

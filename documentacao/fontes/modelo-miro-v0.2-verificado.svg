@@ -1,0 +1,568 @@
+<svg viewBox="0 0 3840 2160" xmlns="http://www.w3.org/2000/svg">
+<foreignObject data-rendered-bounds="-432 -164 5153 2248" id="m3458764683286640820" data-miro-id="3458764683286640820" x="-432" y="-164" width="1600" height="900" data-type="diagram" data-title="SIDESP — Modelo completo v0.2 — 32 tabelas">
+erDiagram
+classDef entidade fill:#fff6b6,stroke:#af7e02
+contas {
+ int con_id PK
+ int pes_id FK, UK "NOT NULL titular"
+ varbinary(512) con_email_criptografado "NOT NULL AES-GCM"
+ binary(32) con_email_hash UK "NOT NULL HMAC"
+ varchar(255) con_senha_hash "NOT NULL Argon2id"
+ boolean con_ativo "NOT NULL default true"
+}
+pessoas {
+ int pes_id PK
+ varchar(150) pes_nome
+ date pes_data_nascimento
+ char(1) pes_sexo
+ int tpc_id FK
+}
+turmas_professores_status {
+ int tpfs_id PK
+ varchar(13) tpfs_des
+}
+responsaveis {
+ int res_id PK
+ varchar(80) res_nome
+ date res_data_nascimento "NULL temporario"
+ int pes_id FK, UK "NOT NULL"
+ int tpc_id FK
+}
+contatos {
+ int cnt_id PK
+ int tct_id FK
+ varchar(30) cnt_des
+ int pes_id FK
+ char(1) cnt_res
+ int res_id FK
+}
+tipos_contatos {
+ int tct_id PK
+ varchar(20) tct_des
+}
+fichas_medicas {
+ int fim_id PK
+ int pes_id FK
+}
+tipos_documentos {
+ int tpd_id PK
+ varchar(20) tpd_des
+}
+documentos {
+ int doc_id PK
+ int pes_id FK
+ int tpd_id FK
+ varchar(20) doc_des
+ binary(32) doc_cpf_hash UK "NULL fora de CPF"
+ int doc_cpf_pes_id UK "GENERATED STORED"
+}
+noticias {
+ int ntc_id PK
+ varchar(100) ntc_titulo
+ varchar(1000) ntc_conteudo_1
+ varchar(1000) ntc_conteudo_2
+ timestamp ntc_data_publicacao
+ int nst_id FK
+}
+noticias_status {
+ int nst_id PK
+ varchar(13) nst_des
+}
+polos {
+ int pol_id PK
+ varchar(40) pol_des
+}
+enderecos {
+ int end_id PK
+ varchar(10) end_cep
+ varchar(30) end_cidade
+ varchar(40) end_bairro
+ varchar(50) end_rua
+ varchar(8) end_numero
+ varchar(100) end_complemento
+ char(2) end_uf
+ int ten_id FK
+ int pes_id FK
+ int pol_id FK
+}
+tipos_enderecos {
+ int ten_id PK
+ varchar(30) ten_des
+}
+turmas {
+ int trm_id PK
+ varchar(30) trm_nome
+ int mdl_id FK
+ int trm_vagas
+ int trm_faltas_maximas
+ int tst_id FK
+ int pol_id FK
+}
+modalidades {
+ int mdl_id PK
+ varchar(30) mdl_des
+}
+inscricoes {
+ int ins_id PK
+ int pes_id FK
+ int trm_id FK
+ date ins_data
+ int sin_id FK
+}
+inscricoes_status {
+ int sin_id PK
+ varchar(20) sin_des
+}
+turmas_pessoas {
+ int tpe_id PK
+ int pes_id FK
+ int trm_id FK
+ int tps_id FK
+}
+turmas_professores {
+ int tpf_id PK
+ int pes_id FK
+ int trm_id FK
+ int tpfs_id FK
+}
+turmas_status {
+ int tst_id PK
+ varchar(13) tst_des
+}
+tipos_cadastros {
+ int tpc_id PK
+ varchar(30) tpc_des
+}
+chamadas {
+ int chm_id PK
+ int dia_id FK "NOT NULL"
+ int pes_id FK "NOT NULL"
+ int trm_id FK "NOT NULL"
+ int tpe_id FK "NOT NULL"
+ int cst_id FK "NOT NULL"
+ int jus_id FK
+}
+chamadas_status {
+ int cst_id PK
+ varchar(13) cst_des
+}
+justificativas {
+ int jus_id PK
+ int pes_id FK
+ int doc_id FK
+ varchar(20) jus_des
+ int jst_id FK
+ int pes_adm_id FK
+ date jus_data_falta
+}
+notificacoes {
+ int not_id PK
+ int ntp_id FK
+ varchar(40) not_titulo
+ varchar(60) not_des
+ int pes_id FK
+ date not_data_envio
+ int nfs_id FK
+}
+notificacoes_tipos {
+ int ntp_id PK
+ varchar(30) ntp_des
+}
+justificativas_situacoes {
+ int jst_id PK
+ varchar(30) jst_des
+}
+turmas_pessoas_status {
+ int tps_id PK
+ varchar(13) tps_des
+}
+notificacoes_status {
+ int nfs_id PK
+ varchar(30) nfs_des
+}
+diarios {
+ int dia_id PK
+ int trm_id FK "NOT NULL"
+ int tpf_id FK "NOT NULL"
+ date dia_data "NOT NULL"
+ text dia_conteudo_aula "NOT NULL"
+ text dia_observacoes
+}
+responsaveis_dependentes {
+ int res_id PK, FK "NOT NULL"
+ int pes_id PK, FK "NOT NULL"
+ varchar(50) rde_parentesco
+}
+pessoas ||..o| contas : "pes_id titular"
+pessoas ||..o| responsaveis : "pes_id adulto"
+tipos_cadastros ||..o{ pessoas : "tpc_id"
+tipos_cadastros ||..o{ responsaveis : "tpc_id"
+tipos_contatos ||..o{ contatos : "tct_id"
+pessoas |o..o{ contatos : "pes_id"
+responsaveis |o..o{ contatos : "res_id"
+pessoas ||..o{ fichas_medicas : "pes_id"
+pessoas ||..o{ documentos : "pes_id"
+tipos_documentos ||..o{ documentos : "tpd_id"
+noticias_status ||..o{ noticias : "nst_id"
+tipos_enderecos ||..o{ enderecos : "ten_id"
+pessoas |o..o{ enderecos : "pes_id"
+polos |o..o{ enderecos : "pol_id"
+modalidades ||..o{ turmas : "mdl_id"
+turmas_status ||..o{ turmas : "tst_id"
+polos ||..o{ turmas : "pol_id"
+pessoas ||..o{ inscricoes : "pes_id"
+turmas ||..o{ inscricoes : "trm_id"
+inscricoes_status ||..o{ inscricoes : "sin_id"
+pessoas ||..o{ turmas_pessoas : "pes_id"
+turmas ||..o{ turmas_pessoas : "trm_id"
+turmas_pessoas_status ||..o{ turmas_pessoas : "tps_id"
+pessoas ||..o{ turmas_professores : "pes_id"
+turmas ||..o{ turmas_professores : "trm_id"
+turmas_professores_status ||..o{ turmas_professores : "tpfs_id"
+diarios ||..o{ chamadas : "dia_id, trm_id"
+pessoas ||..o{ chamadas : "pes_id"
+turmas ||..o{ chamadas : "trm_id"
+turmas_pessoas ||..o{ chamadas : "tpe_id, pes_id, trm_id"
+chamadas_status ||..o{ chamadas : "cst_id"
+justificativas |o..o{ chamadas : "jus_id"
+pessoas ||..o{ justificativas : "pes_id"
+documentos ||..o{ justificativas : "doc_id"
+justificativas_situacoes ||..o{ justificativas : "jst_id"
+pessoas |o..o{ justificativas : "pes_adm_id"
+notificacoes_tipos ||..o{ notificacoes : "ntp_id"
+pessoas ||..o{ notificacoes : "pes_id"
+notificacoes_status ||..o{ notificacoes : "nfs_id"
+turmas ||..o{ diarios : "trm_id"
+turmas_professores ||..o{ diarios : "tpf_id, trm_id"
+responsaveis ||--o{ responsaveis_dependentes : "res_id"
+pessoas ||--o{ responsaveis_dependentes : "pes_id"
+class contas,pessoas,turmas_professores_status,responsaveis,contatos,tipos_contatos,fichas_medicas,tipos_documentos,documentos,noticias,noticias_status,polos,enderecos,tipos_enderecos,turmas,modalidades,inscricoes,inscricoes_status,turmas_pessoas,turmas_professores,turmas_status,tipos_cadastros,chamadas,chamadas_status,justificativas,notificacoes,notificacoes_tipos,justificativas_situacoes,turmas_pessoas_status,notificacoes_status,diarios,responsaveis_dependentes entidade
+</foreignObject>
+<foreignObject data-rendered-bounds="4844 -164 1441 4562" id="m3458764683286854898" data-miro-id="3458764683286854898" x="4844" y="-164" width="1441" height="4562" data-title="Cardinalidades revisadas v0.2 — 43 relações" data-type="table" data-scale="1.1611570247933884">
+<table><thead><tr><th data-field-id="cff93e86-5426-4305-8409-88ada2ac54d9" data-role="title">Relação</th><th data-field-id="98beedb7-57c6-4476-96eb-b94b3eb4cd18">FK → chave referenciada</th><th data-field-id="87747319-9c96-493f-8e73-5c25026e6824">Filhos por pai</th><th data-field-id="7f83e773-d19a-429a-8f3c-0a1a48b2b6d2">Pais por filho</th><th data-field-id="885f4db0-6832-437d-94e7-408992ac3906">Restrições e observações</th></tr></thead><tbody><tr data-record-id="177f548a-4dd2-4fd8-9765-c334e3448075"><td>tipos_cadastros → pessoas</td><td>pessoas(tpc_id) → tipos_cadastros(tpc_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="08707c3e-d8c0-46b9-989c-0f59f87a27d0"><td>tipos_cadastros → responsaveis</td><td>responsaveis(tpc_id) → tipos_cadastros(tpc_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="f4e15254-b29a-4afc-bb30-eceebae9016d"><td>tipos_contatos → contatos</td><td>contatos(tct_id) → tipos_contatos(tct_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="b7578f07-2e8d-4e1a-aa47-e3d775aa1360"><td>pessoas → contatos</td><td>contatos(pes_id) → pessoas(pes_id)</td><td>0..N</td><td>0..1</td><td>Propriedade do registro precisa ser definida: pessoa ou responsável/polo. Definir exclusividade e compatibilidade com o tipo; decisão pendente.</td></tr><tr data-record-id="290102fb-0062-4b78-938f-6f70b2ad3e00"><td>responsaveis → contatos</td><td>contatos(res_id) → responsaveis(res_id)</td><td>0..N</td><td>0..1</td><td>Propriedade do registro precisa ser definida: pessoa ou responsável/polo. Definir exclusividade e compatibilidade com o tipo; decisão pendente.</td></tr><tr data-record-id="d8974b3d-59e3-44f9-80a9-1393658be210"><td>pessoas → fichas_medicas</td><td>fichas_medicas(pes_id) → pessoas(pes_id)</td><td>0..N</td><td>1</td><td>Sem UNIQUE(pes_id), permite várias fichas por pessoa; definir se deve haver uma única ficha atual.</td></tr><tr data-record-id="6e7d0bd5-4efd-4749-9266-1c97b8442d48"><td>pessoas → documentos</td><td>documentos(pes_id) → pessoas(pes_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="5f8ccd43-4a68-440d-a84c-1648b8486128"><td>tipos_documentos → documentos</td><td>documentos(tpd_id) → tipos_documentos(tpd_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="2fb8d93e-bf39-4cec-a295-834020d752c3"><td>noticias_status → noticias</td><td>noticias(nst_id) → noticias_status(nst_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="f06a02a8-88c5-4a52-9ea1-60e8ea8fc408"><td>tipos_enderecos → enderecos</td><td>enderecos(ten_id) → tipos_enderecos(ten_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="39aac5f3-862a-4fc6-bc06-6f44679328a3"><td>pessoas → enderecos</td><td>enderecos(pes_id) → pessoas(pes_id)</td><td>0..N</td><td>0..1</td><td>Propriedade do registro precisa ser definida: pessoa ou responsável/polo. Definir exclusividade e compatibilidade com o tipo; decisão pendente.</td></tr><tr data-record-id="6a4cb111-f013-4c2b-8efa-b464f77a4889"><td>polos → enderecos</td><td>enderecos(pol_id) → polos(pol_id)</td><td>0..N</td><td>0..1</td><td>Propriedade do registro precisa ser definida: pessoa ou responsável/polo. Definir exclusividade e compatibilidade com o tipo; decisão pendente.</td></tr><tr data-record-id="7d0ad2e3-65a7-4cb6-a24c-121fbcc7707a"><td>modalidades → turmas</td><td>turmas(mdl_id) → modalidades(mdl_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="d2731b75-1183-4193-9caa-0074913762a4"><td>turmas_status → turmas</td><td>turmas(tst_id) → turmas_status(tst_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="fc223668-4d41-4bc5-acbf-60e6d7ed33e9"><td>polos → turmas</td><td>turmas(pol_id) → polos(pol_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="a70ef75a-22ec-4457-a13c-5e742ecca9c1"><td>pessoas → inscricoes</td><td>inscricoes(pes_id) → pessoas(pes_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="a190b208-b05e-436f-baa4-9e85ae589abe"><td>turmas → inscricoes</td><td>inscricoes(trm_id) → turmas(trm_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="67eb345d-14db-4095-8de5-c529f8f54377"><td>inscricoes_status → inscricoes</td><td>inscricoes(sin_id) → inscricoes_status(sin_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="a2164ba9-5c3d-4799-a46f-342db4318a53"><td>pessoas → turmas_pessoas</td><td>turmas_pessoas(pes_id) → pessoas(pes_id)</td><td>0..N</td><td>1</td><td>Histórico 0..N; normalmente até 2 turmas ativas, sem repetir modalidade. Exceção administrativa registrada.</td></tr><tr data-record-id="025242dc-1ef8-4721-b437-8072772b2aa6"><td>turmas → turmas_pessoas</td><td>turmas_pessoas(trm_id) → turmas(trm_id)</td><td>0..N</td><td>1</td><td>Participantes ativos contam para trm_vagas; capacidade pode ser excedida por exceção administrativa registrada.</td></tr><tr data-record-id="b46939a3-368d-4f87-bede-90d7434afd5d"><td>turmas_pessoas_status → turmas_pessoas</td><td>turmas_pessoas(tps_id) → turmas_pessoas_status(tps_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="6813068f-26d3-4233-b648-31c6bafbb380"><td>pessoas → turmas_professores</td><td>turmas_professores(pes_id) → pessoas(pes_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="6bc232db-7fca-42b0-853f-60fd06c8166b"><td>turmas → turmas_professores</td><td>turmas_professores(trm_id) → turmas(trm_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="057e739c-8b8b-4269-8c2a-c0e53c56d1da"><td>turmas_professores_status → turmas_professores</td><td>turmas_professores(tpfs_id) → turmas_professores_status(tpfs_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="87247fdd-b712-40df-88c6-be91718adcbe"><td>diarios → chamadas</td><td>chamadas(dia_id, trm_id) → diarios(dia_id, trm_id)</td><td>0..N</td><td>1</td><td>FK composta obrigatória. A combinação referenciada deve possuir UNIQUE; ver Regras aprovadas.</td></tr><tr data-record-id="8fee04f4-a8d0-425f-bafc-a82aaa9c1ee5"><td>pessoas → chamadas</td><td>chamadas(pes_id) → pessoas(pes_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="e4183755-1a69-43b1-bed3-484b04fe4609"><td>turmas → chamadas</td><td>chamadas(trm_id) → turmas(trm_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="d5b8aa98-1ba8-4921-9028-0ff5766ae6f6"><td>turmas_pessoas → chamadas</td><td>chamadas(tpe_id, pes_id, trm_id) → turmas_pessoas(tpe_id, pes_id, trm_id)</td><td>0..N</td><td>1</td><td>FK composta obrigatória. A combinação referenciada deve possuir UNIQUE; ver Regras aprovadas.</td></tr><tr data-record-id="648fb4fc-a91f-4eb7-8293-9b26d5b5c37d"><td>chamadas_status → chamadas</td><td>chamadas(cst_id) → chamadas_status(cst_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="80822565-d676-4a83-8f66-6abefceea92f"><td>justificativas → chamadas</td><td>chamadas(jus_id) → justificativas(jus_id)</td><td>0..N</td><td>0..1</td><td>Opcional. Não foi imposta unicidade: definir se uma justificativa pode cobrir mais de uma falta. Aluno e data devem coincidir.</td></tr><tr data-record-id="2a654ffb-13a9-433e-8368-faac183b36ee"><td>pessoas → justificativas</td><td>justificativas(pes_id) → pessoas(pes_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="0f846584-0ac7-4e2b-b96e-4cfa4ec4a584"><td>documentos → justificativas</td><td>justificativas(doc_id) → documentos(doc_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="bb1a837a-1274-49e4-a699-2569d1708e7f"><td>justificativas_situacoes → justificativas</td><td>justificativas(jst_id) → justificativas_situacoes(jst_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="407d3e89-674d-4f4e-9c01-a3c019378b7e"><td>pessoas → justificativas</td><td>justificativas(pes_adm_id) → pessoas(pes_id)</td><td>0..N</td><td>0..1</td><td>Administrador avaliador: opcional enquanto pendente; obrigatório após análise.</td></tr><tr data-record-id="34df3612-7645-407d-bd05-8a6472499ba2"><td>notificacoes_tipos → notificacoes</td><td>notificacoes(ntp_id) → notificacoes_tipos(ntp_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="546a3ebc-4345-45f8-b845-a22d57c04fc3"><td>pessoas → notificacoes</td><td>notificacoes(pes_id) → pessoas(pes_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="fb1d037b-0196-48c5-848a-3692bd46ad60"><td>notificacoes_status → notificacoes</td><td>notificacoes(nfs_id) → notificacoes_status(nfs_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="f9145c32-5865-4725-8759-eb6d65ec01ad"><td>turmas → diarios</td><td>diarios(trm_id) → turmas(trm_id)</td><td>0..N</td><td>1</td><td>Relação do modelo; confirmar NOT NULL na migration conforme o dicionário.</td></tr><tr data-record-id="484ea34b-844c-4bd1-9f35-cd0865e0c642"><td>turmas_professores → diarios</td><td>diarios(tpf_id, trm_id) → turmas_professores(tpf_id, trm_id)</td><td>0..N</td><td>1</td><td>FK composta obrigatória. A combinação referenciada deve possuir UNIQUE; ver Regras aprovadas.</td></tr><tr data-record-id="2f713464-9459-4e3f-807c-e92940e52064"><td>responsaveis → responsaveis_dependentes</td><td>responsaveis_dependentes(res_id) → responsaveis(res_id)</td><td>0..N</td><td>1</td><td>FK obrigatória; o par (res_id, pes_id) é a PK composta.</td></tr><tr data-record-id="cc3c85ec-d35c-435c-b4ca-c95836d8a869"><td>pessoas → responsaveis_dependentes</td><td>responsaveis_dependentes(pes_id) → pessoas(pes_id)</td><td>0..N</td><td>1</td><td>FK obrigatória; o par (res_id, pes_id) é a PK composta.</td></tr><tr data-record-id="0fd9ea0a-54b9-4a32-aad5-e01aaf12ff8c"><td>pessoas → contas</td><td>contas(pes_id) → pessoas(pes_id)</td><td>0..1</td><td>1</td><td>FK NOT NULL UNIQUE; conta vinculada à pessoa titular adulta. Revisão autorizada por Heitor em 05/10/2026.</td></tr><tr data-record-id="7ef5f747-8990-438f-a542-cf3fe730a702"><td>pessoas → responsaveis</td><td>responsaveis(pes_id) → pessoas(pes_id)</td><td>0..1</td><td>1</td><td>FK NOT NULL UNIQUE; identifica o adulto. CPF vem de documentos dessa pessoa; res_cpf removido.</td></tr></tbody></table>
+</foreignObject>
+<foreignObject data-rendered-bounds="-1449 -164 885 10508" id="m3458764683289601839" data-miro-id="3458764683289601839" x="-1449" y="-164" width="784" height="1105" data-type="doc">
+# SIDESP — dicionário e decisões v0.2
+
+## 1. Pessoas, responsáveis e informações cadastrais
+
+### pessoas
+
+Armazena os dados pessoais de alunos, professores e administradores, como nome, nascimento e sexo. O tipo de cadastro identifica o papel da pessoa no sistema.
+
+**Dependência:** tipos\_cadastros, por tpc\_id.
+
+**Uso nas demais tabelas:** serve de referência para contatos, endereços, documentos, ficha médica, inscrições, participações, vínculos de professores, chamadas, justificativas, notificações e associação de dependentes. Em justificativas, a pessoa pode aparecer como aluno ou como administrador avaliador, em campos distintos.
+
+**Revisão v0.2:** acesso em contas; CPF somente hash protegido em documentos, máximo um por pessoa e único globalmente.
+
+### tipos\_cadastros
+
+Define as categorias de cadastro usadas pelo sistema. As notas citam Administrador Total, Administrador Parcial, Professor e Aluno.
+
+**Dependências:** nenhuma.
+
+**Utilizada por:** pessoas e responsaveis, por tpc\_id. O tipo classifica o cadastro; as permissões de cada perfil ainda precisam ser aplicadas pela autenticação e autorização. O responsável possui pessoa titular e conta; catálogo RESPONSAVEL conforme a revisão v0.2.
+
+### responsaveis
+
+Guarda um registro por adulto responsável, com res\_id como identificador. Os dados do adulto ficam aqui uma única vez, mesmo quando ele possui vários dependentes.
+
+**Dependências:** tipos\_cadastros, por tpc\_id, e pessoas, por pes\_id UNIQUE obrigatório, identificando o adulto.
+
+**Utilizada por:** contatos e responsaveis\_dependentes. O dependente deixou de ser identificado diretamente nesta tabela. A ligação com os filhos ou outros dependentes passou para responsaveis\_dependentes.
+
+**Revisão autorizada:** res\_cpf removido; res\_idade substituído por res\_data\_nascimento; pes\_id liga à pessoa adulta. Nascimento pode ficar nulo transitoriamente se desconhecido; não inventar. CPF fica exclusivamente no documento dessa pessoa. A conta também referencia essa pessoa adulta.
+
+### responsaveis\_dependentes — nova tabela
+
+Associa cada adulto aos seus dependentes. res\_id identifica o adulto em responsaveis; pes\_id identifica o dependente em pessoas.
+
+**Dependências:** responsaveis, por res\_id; pessoas, por pes\_id.
+
+**Identificação:** o par (res\_id, pes\_id) forma uma única PK composta. O mesmo adulto pode aparecer com diferentes dependentes, e o mesmo dependente pode ter mais de um responsável. O mesmo par não pode se repetir. Exemplo: o responsável 10 pode estar ligado às pessoas 101 e 102, sem repetir seus dados pessoais. Esta associação não cria, por si só, uma conta de login para o adulto. A conta em contas referencia a pessoa adulta de responsaveis.pes\_id; rde\_parentesco complementa a associação.
+
+### contatos
+
+Armazena os meios de contato das pessoas e dos responsáveis, como telefone e e-mail. cnt\_des guarda o conteúdo do contato e tct\_id informa sua categoria.
+
+**Dependências:** tipos\_contatos, por tct\_id; pessoas, por pes\_id; responsaveis, por res\_id. O campo res\_id permite associar o contato diretamente ao adulto.
+
+**A definir:** a regra de preenchimento dos proprietários e o significado operacional de cnt\_res, evitando contatos sem titular ou com vínculos incompatíveis.
+
+### tipos\_contatos
+
+Padroniza as categorias de contato. As notas citam TELEFONE e EMAIL.
+
+**Dependências:** nenhuma.
+
+**Utilizada por:** contatos, por tct\_id. Permite identificar como interpretar o valor cadastrado em cnt\_des.
+
+### enderecos
+
+Reúne os dados de localização de pessoas e polos: CEP, cidade, bairro, rua e número. Revisão v0.2 acrescenta end\_complemento e end\_uf conforme cadastro.
+
+**Dependências:** tipos\_enderecos, por ten\_id; pessoas, por pes\_id; polos, por pol\_id. A dependência de polos complementa a nota antiga, que mencionava apenas pessoas e tipos\_enderecos.
+
+**A definir:** uma regra que mantenha o tipo de endereço coerente com seu proprietário, impedindo registros sem proprietário ou combinações incompatíveis.
+
+### tipos\_enderecos
+
+Classifica a destinação do endereço. As notas citam PESSOA e POLOS.
+
+**Dependências:** nenhuma.
+
+**Utilizada por:** enderecos, por ten\_id. Essa classificação deve corresponder ao vínculo preenchido no endereço.
+
+### documentos
+
+Armazena informações dos documentos de uma pessoa. pes\_id identifica o titular e tpd\_id identifica o tipo.
+
+**Dependências:** pessoas, por pes\_id; tipos\_documentos, por tpd\_id.
+
+**Utilizada por:** justificativas, por doc\_id.
+
+**CPF v0.2:** doc\_cpf\_hash é HMAC-SHA-256 (32 bytes) e UNIQUE global. doc\_cpf\_pes\_id gerado aplica unicidade de um CPF por pessoa sem limitar outros tipos de documentos. CPF original/cifrado nunca fica em doc\_des: para CPF usa-se rótulo não identificador. Tipo CPF e presença do hash devem ser coerentes por restrição/trigger na migration. Hash não recupera CPF completo.
+
+**Pendente:** o campo doc\_des, com 20 caracteres, atende a uma descrição ou identificação curta, mas não explicita onde localizar um arquivo comprobatório. Esse suporte deve ser acrescentado para os anexos de justificativas.
+
+### tipos\_documentos
+
+Define os tipos de documento aceitos. As notas originais citam RG e CPF.
+
+**Dependências:** nenhuma.
+
+**Utilizada por:** documentos, por tpd\_id. Caso documentos também abrigue comprovantes de justificativas, seu catálogo deverá contemplar esses tipos.
+
+### fichas\_medicas
+
+Destina-se às informações médicas vinculadas a uma pessoa, necessárias ao cadastro e à participação nas atividades.
+
+**Dependência:** pessoas, por pes\_id.
+
+**Situação atual:** contém apenas fim\_id e pes\_id; os dados médicos ainda precisam ser definidos. Se houver somente uma ficha por pessoa, a unicidade de pes\_id deverá ser declarada. O modelo atual não impõe essa limitação.
+
+## 2. Oferta esportiva, inscrições e participação
+
+### polos
+
+Cadastra os locais ou unidades onde as atividades esportivas são oferecidas.
+
+**Dependências:** nenhuma.
+
+**Utilizada por:** turmas e enderecos, por pol\_id. pol\_des guarda a descrição do polo. Coordenadas e inativação ainda precisam ser contempladas conforme os requisitos.
+
+### modalidades
+
+Cadastra as modalidades esportivas disponíveis, como futebol e vôlei.
+
+**Dependências:** nenhuma.
+
+**Utilizada por:** turmas, por mdl\_id. Uma modalidade pode estar associada a várias turmas.
+
+**Pendente:** completar as regras de faixa etária e resolver a localização do limite de faltas, pois a RN002 o define na modalidade e o campo atual está em turmas.
+
+### turmas
+
+Representa cada turma oferecida: seu nome, modalidade, polo, quantidade de vagas, limite de faltas atualmente previsto e situação.
+
+**Dependências:** modalidades, por mdl\_id; polos, por pol\_id; turmas\_status, por tst\_id.
+
+**Utilizada por:** inscricoes, turmas\_pessoas, turmas\_professores, diarios e chamadas. As dependências acima corrigem a descrição antiga dessa tabela. Pessoas se relacionam com a turma pelos pedidos e vínculos, não por uma FK de pessoa dentro de turmas.
+
+**Pendente:** horários e dias, indicação de seleção e os demais atributos exigidos para a oferta.
+
+### turmas\_status
+
+Define as situações possíveis de uma turma. As notas citam ANDAMENTO, FECHADA e ESPERA.
+
+**Dependências:** nenhuma.
+
+**Utilizada por:** turmas, por tst\_id. Descreve a situação da turma inteira, distinta da situação individual de cada participante.
+
+### inscricoes
+
+Registra os pedidos de inscrição de uma pessoa em uma turma. Um pedido não significa, por si só, que a pessoa já participa da turma.
+
+**Dependências:** pessoas, por pes\_id; turmas, por trm\_id; inscricoes\_status, por sin\_id. ins\_data registra a data do pedido. Uma pessoa pode ter mais de dois pedidos; o limite normal de duas turmas aplica-se às participações ativas em turmas\_pessoas.
+
+**Pendente:** informações para prazo de confirmação e cancelamento, além de um critério de desempate para pedidos da fila feitos na mesma data.
+
+### inscricoes\_status
+
+Padroniza a situação de cada pedido. As notas citam ABERTA, FECHADA, FEITA, CANCELADA e NA FILA DE ESPERA.
+
+**Dependências:** nenhuma.
+
+**Utilizada por:** inscricoes, por sin\_id. O significado de cada estado e as transições permitidas devem ser definidos no fluxo de inscrição. Esse status não substitui o status da participação.
+
+### turmas\_pessoas
+
+Registra a participação efetiva de um aluno em uma turma. tpe\_id identifica o vínculo; pes\_id identifica o aluno; trm\_id identifica a turma; tps\_id informa sua situação.
+
+**Dependências:** pessoas, por pes\_id; turmas, por trm\_id; turmas\_pessoas\_status, por tps\_id.
+
+**Utilizada por:** chamadas, pelo conjunto (tpe\_id, pes\_id, trm\_id). É a base de “Minhas turmas”, da contagem de participantes ativos para vagas e do limite normal de duas turmas ativas, de modalidades diferentes. O histórico pode conter várias participações. As exceções administrativas aos limites precisam de autor, justificativa e data; esses registros ainda devem ser modelados.
+
+### turmas\_pessoas\_status
+
+Define a situação do aluno em uma turma. As notas citam PARTICIPANDO e FORA.
+
+**Dependências:** nenhuma.
+
+**Utilizada por:** turmas\_pessoas, por tps\_id. Permite distinguir os vínculos que contam como participação ativa daqueles mantidos para histórico.
+
+### turmas\_professores
+
+Registra a designação de um professor para uma turma, inclusive os vínculos que precisam permanecer no histórico.
+
+**Dependências:** pessoas, por pes\_id; turmas, por trm\_id; turmas\_professores\_status, por tpfs\_id.
+
+**Utilizada por:** diarios, pelo conjunto (tpf\_id, trm\_id). O vínculo identifica qual professor foi designado e para qual turma. A autorização do lançamento deve considerar esse vínculo; sua inativação posterior não deve invalidar os diários antigos.
+
+### turmas\_professores\_status
+
+Define a situação de uma designação de professor. As notas citam RESPONSAVEL e FORA DA TURMA.
+
+**Dependências:** nenhuma.
+
+**Utilizada por:** turmas\_professores, por tpfs\_id. Controla a designação à turma, sem alterar o cadastro pessoal do professor.
+
+## 3. Diário, frequência e justificativas
+
+### diarios — nova tabela
+
+Representa uma aula de uma turma em determinada data. Centraliza o professor responsável, o conteúdo ministrado e as observações, evitando repetir essas informações na chamada de cada aluno.
+
+**Dependências:** turmas, por trm\_id; turmas\_professores, pela FK composta (tpf\_id, trm\_id).
+
+**Utilizada por:** chamadas, pelo conjunto (dia\_id, trm\_id). dia\_data identifica o dia da aula. A regra UNIQUE(trm\_id, dia\_data) permite somente um diário da mesma turma por dia. O conteúdo é obrigatório e não pode ficar vazio; as observações são opcionais. A FK composta garante que o professor indicado pertença à mesma turma do diário.
+
+### chamadas
+
+Registra a frequência individual de um aluno em um diário. Cada linha corresponde a um aluno em uma aula, com sua situação de presença ou ausência.
+
+**Dependências:** diarios, por (dia\_id, trm\_id); turmas\_pessoas, por (tpe\_id, pes\_id, trm\_id); pessoas, por pes\_id; turmas, por trm\_id; chamadas\_status, por cst\_id; justificativas, por jus\_id, opcional. A restrição UNIQUE(pes\_id, dia\_id) impede duplicar a frequência do aluno na mesma aula. As FKs compostas mantêm coerentes o aluno, sua participação, a turma e o diário. A data, o professor, o conteúdo e as observações da aula são obtidos pelo diário. Não é necessária uma tabela separada de presenças: elas são consultadas filtrando chamadas pelo status adequado.
+
+### chamadas\_status
+
+Padroniza o resultado da frequência, permitindo distinguir presença, ausência e ausência justificada conforme os estados definidos no sistema.
+
+**Dependências:** nenhuma.
+
+**Utilizada por:** chamadas, por cst\_id. Uma ausência justificada permanece registrada como ausência, mas deixa de contar para a penalidade conforme a regra de negócio. Ela não passa a contar como presença.
+
+### justificativas
+
+Registra a solicitação de justificativa de uma falta, com aluno, data da falta, descrição, documento comprobatório, situação da análise e administrador avaliador.
+
+**Dependências:** pessoas, por pes\_id, para o aluno; pessoas, por pes\_adm\_id, para o avaliador; documentos, por doc\_id; justificativas\_situacoes, por jst\_id.
+
+**Utilizada por:** chamadas, por jus\_id. O avaliador pode permanecer sem preenchimento enquanto a análise estiver pendente. O aluno da justificativa deve coincidir com o da chamada, e jus\_data\_falta deve corresponder à data do diário. A data sozinha não distingue duas turmas do aluno no mesmo dia: a ligação da chamada com a justificativa identifica a frequência relacionada. Ainda deve ser definido se uma justificativa pode abranger várias chamadas.
+
+### justificativas\_situacoes
+
+Padroniza a situação da análise de uma justificativa, por exemplo pendente, aprovada ou rejeitada. Esses nomes são exemplos de estados a definir.
+
+**Dependências:** nenhuma.
+
+**Utilizada por:** justificativas, por jst\_id. A situação da análise é diferente da frequência: aprovar a justificativa não transforma ausência em presença.
+
+## 4. Comunicação e notícias
+
+### notificacoes
+
+Registra uma notificação destinada a uma pessoa, com título, mensagem, tipo, data de envio e status.
+
+**Dependências:** pessoas, por pes\_id; notificacoes\_tipos, por ntp\_id; notificacoes\_status, por nfs\_id. O destinatário e o controle básico de envio já estão representados. A definição do canal e da finalidade vem do tipo de notificação.
+
+**Pendente:** usar data e hora se o controle exigir horário preciso; decidir se é necessário histórico de tentativas. O envio ao responsável precisa ser compatibilizado com o fato de o adulto estar em responsaveis, enquanto pes\_id aponta para pessoas.
+
+### notificacoes\_tipos
+
+Classifica o canal e a finalidade de uma notificação, conforme a decisão do projeto. Exemplos: WHATSAPP:AVISO, EMAIL:AVISO, SITE:AVISO e SITE:ERRO.
+
+**Dependências:** nenhuma.
+
+**Utilizada por:** notificacoes, por ntp\_id. Essa organização permite representar canal e tipo no mesmo catálogo, sem obrigar a criação de outra tabela de canais.
+
+### notificacoes\_status
+
+Controla a situação do envio, como pendente, enviado ou falha, incluindo as distinções de falha definidas pelo projeto. Entrega pode ser diferenciada quando houver retorno do canal.
+
+**Dependências:** nenhuma.
+
+**Utilizada por:** notificacoes, por nfs\_id. Substitui o antigo booleano de envio. O prefixo nfs distingue esta tabela de noticias\_status, que usa nst.
+
+### noticias
+
+Armazena as notícias do sistema: título, conteúdo, data e hora de publicação e situação.
+
+**Dependência:** noticias\_status, por nst\_id. ntc\_data\_publicacao está definido como timestamp, permitindo representar o momento de publicação. A publicação agendada também depende de um processo da aplicação que execute a regra no horário indicado.
+
+### noticias\_status
+
+Define a situação de uma notícia. As notas citam ATIVA, INATIVA e EM ESPERA.
+
+**Dependências:** nenhuma.
+
+**Utilizada por:** noticias, por nst\_id. Permite controlar a disponibilidade da notícia em conjunto com a data de publicação.
+
+## 5. Convenções e leitura das relações
+
+Os nomes de tabelas usam minúsculas, snake\_case e, como orientação, plural. Os campos usam os prefixos identificadores adotados no diagrama, como pes\_, trm\_, tpe\_ e dia\_. As FKs preservam o identificador da tabela de destino; quando há dois papéis da mesma entidade, o nome explicita a diferença, como pes\_id e pes\_adm\_id em justificativas. Mantêm-se os prefixos compostos já presentes, como tpfs\_, sem renomear o modelo nesta documentação.
+
+As notas originais recomendam nomes claros para tabelas e prefixos nas FKs. Assim, a orientação sobre evitar abreviações não elimina a convenção de prefixos dos campos. Para eventuais novos booleanos, as notas sugerem is\_ ou has\_; os status com vários resultados continuam representados por tabelas próprias.
+
+Uma relação 1:N permite vários registros filhos para um pai; isso não significa que todos precisam existir desde o cadastro. Os mínimos e o preenchimento obrigatório devem seguir as restrições aprovadas e a definição de NULL/NOT NULL. A associação responsaveis\_dependentes usa suas duas FKs como PK composta. Nas demais ligações, a FK não integra a PK da tabela filha.
+
+As restrições compostas de chamadas, diarios e vínculos precisam ser declaradas no banco com as chaves únicas de suporte registradas no documento de regras. Desenhar a relação não executa essa restrição.
+
+## 6. Regras gerais que complementam as tabelas
+
+O fluxo distingue pedido de inscrição, participação e frequência: inscricoes registra o pedido; turmas\_pessoas identifica a participação; diarios identifica a aula; chamadas registra a frequência do aluno nessa aula.
+
+O limite normal considera duas turmas ativas de modalidades diferentes. A capacidade considera os participantes ativos. Exceções administrativas podem ultrapassar os limites de turmas e vagas mediante justificativa; isso não autoriza automaticamente repetir modalidade.
+
+O modelo ainda precisa ser complementado nos pontos já apontados na revisão: implementação da autenticação/CPF único definidos na revisão v0.2, dados médicos adiados, atributos da oferta, detalhes da fila, arquivos comprobatórios, auditoria de correções, inativação e histórico temporal. Os status atuais, isoladamente, não reconstroem todas as mudanças passadas. As descrições acima explicam a finalidade das tabelas e assinalam essas limitações sem tratar campos pendentes como existentes.
+
+Fontes: notas originais preservadas neste quadro, diagrama “SIDESP — Modelo completo revisado — 31 tabelas”, documento “Regras aprovadas para o modelo revisado” e esclarecimentos do projeto registrados nesta revisão.
+
+## Decisões registradas por Heitor — 05/10/2026
+
+Esta revisão v0.2 substitui as propostas contraditórias da v0.1. Documentação e Miro podem ser atualizados. Código/migrations ainda aguardam a revisão da versão consolidada.
+
+## Aprovado expressamente
+
+- Secretaria de Esportes de Guaratinguetá (P01).
+- CPF canônico em documentos, associado a pessoas: no máximo um CPF por pessoa e CPF não compartilhado por pessoas distintas (P02/RN016).
+- Nova tabela de contas para acesso, ligada à pessoa titular; conta do responsável acessa dependentes (P03).
+- Remover responsaveis.res\_cpf; CPF passa a ser localizado pelo documento da pessoa do responsável (P03).
+- E-mail obrigatório (P04). O backend recusará ausência, embora o frontend atual não o colete.
+- Senha mínima de oito caracteres; números e caracteres especiais não são obrigatórios (P05).
+- Complementar UF/complemento do endereço e parentesco da associação (P06).
+- Substituir idade do responsável por data de nascimento (P07); campo pode permanecer nulo temporariamente, pois a tela não coleta essa data. Não inventar nascimento.
+- Dados médicos ficam adiados (P08). Não adicionar respostas ou colunas de saúde agora; #18 não está integralmente cumprida.
+- Não existe SQL/migration prévia. XAMPP informado atualizado, sem versão numérica fornecida (P09).
+- Governança, consentimento e liberação de dados reais continuam dependentes de definição da Secretaria (#28/P10).
+- JWT de 30 minutos sem refresh inicial (P11); persistência nas telas depende de frontend e continua fora do escopo.
+- Miro como base, com detalhes físicos documentados para revisão (P12). Não alterar outras áreas.
+
+## Especificação técnica derivada, para revisão
+
+CPF será representado por HMAC-SHA-256 com chave secreta externa ao banco, em documentos.doc\_cpf\_hash. É hash protegido, não criptografia reversível. Não guardar CPF original/cifrado/mascarado em doc\_des ou em contas. HMAC permite comparação e busca sem expor o CPF; hash sem segredo seria vulnerável à enumeração do espaço de CPFs. CPF completo não poderá ser recuperado/exibido após cadastro. Chave e cópias de segurança são necessárias para continuidade; perder a chave impede buscar os hashes. Rotação não pode recalcular hashes sem CPF original: exige estratégia separada, não rotação automática.
+
+Senhas: Argon2id com salt aleatório, codificação autocontida e parâmetros mínimos OWASP (19 MiB, duas iterações, paralelismo 1), sujeito a teste de custo no ambiente. Oito caracteres contados como pontos de código Unicode, sem remover espaços, normalizar ou truncar a senha. Proposta de limite técnico: 128 caracteres, sem requisito de composição. Não usar HMAC de CPF como algoritmo de senha.
+
+E-mail de acesso: contas.con\_email\_criptografado usa AES-256-GCM (nonce aleatório, tag e versão no envelope), contas.con\_email\_hash usa HMAC-SHA-256 para busca/unicidade. Chaves de cifragem, busca e JWT separadas fora do banco/ZIP. E-mail normalizado com trim e minúsculas para este produto, sem remover pontos ou sufixos \+. Validar no máximo 254 caracteres. Não duplicar e-mail de acesso em contatos.cnt\_des(30) nem ampliar essa coluna silenciosamente.
+
+Titular: contas.pes\_id UNIQUE NOT NULL referencia pessoas; responsaveis.pes\_id UNIQUE NOT NULL referencia a pessoa adulta. O CPF é obtido dessa pessoa em documentos, sem cópia no responsável. responsaveis\_dependentes permanece com a PK composta atual. Uma pessoa pode não ter conta (ex.: dependente); uma conta possui uma pessoa. Perfil continua em tipos\_cadastros, sem novo perfil arbitrário na entrada. Catálogo RESPONSAVEL será usado conforme #17; se o adulto também for aluno, seu papel efetivo deve ser validado sem apagar vínculo de responsável.
+
+As mudanças específicas acima são exceções autorizadas à preservação estrutural original. Fora delas, nenhum nome/PK/FK/tabela/relacionamento deve ser removido ou reorganizado.
+
+### contas — nova tabela
+
+Uma conta por pessoa titular, pes\_id FK UNIQUE NOT NULL. con\_email\_criptografado: e-mail obrigatório AES-GCM; con\_email\_hash: HMAC UNIQUE para busca; con\_senha\_hash: Argon2id; con\_ativo: controle de acesso. Sem CPF duplicado ou senha em pessoas. JWT de 30 minutos sem refresh. Modelo revisado com 32 tabelas e 43 relações.
+</foreignObject>
+</svg>
+

@@ -1,0 +1,41 @@
+{
+  "issue": {
+    "url": "https://github.com/sidespfatec/FRONT-SIDESP/issues/8",
+    "title": "PB08 · Configurar HttpClient, environments e camada de services",
+    "issue_number": 8,
+    "body": "## Historia de usuario\n\nComo desenvolvedor de front, quero a camada de acesso à API configurada, para que as telas deixem de usar dado fixo no código e a troca pelo backend real não exija refazer tela.\n\n## Criterios de aceitacao\n\n- [ ] provideHttpClient configurado na aplicação.\n- [ ] Arquivos de environment com a URL da API em desenvolvimento e produção.\n- [ ] Um service por domínio, devolvendo Observable, e interfaces em uma pasta de models.\n- [ ] Nenhum componente com lista de dados escrita dentro do próprio arquivo.\n- [ ] Tratamento central de erro de requisição.\n\n## Tarefas tecnicas\n\n- [ ] Implementar\n- [ ] Conferir em 360px, 768px e 1280px\n- [ ] Conferir navegacao por teclado e foco visivel\n- [ ] Nenhum erro no console\n- [ ] Revisao de codigo\n\n## Rastreabilidade — Documento de Visao v1.0\n\n| | |\n|---|---|\n| Regras de negocio | — |\n| Requisito (SE) | Base para SE001 a SE035 |\n| Caso de uso (UC) | — |\n| Tabelas do banco | — |\n\n## Planejamento\n\n| | |\n|---|---|\n| Tipo | Técnico |\n| Area | Base do Front |\n| Prioridade | 8 de 54 |\n| Estimativa | 5 pontos |\n| Sprint prevista | 1 (31/08/2026 a 25/09/2026) |\n| Depende de | #7 |\n| Destrava | #9, #11 |\n\n<sub>PB08 · gerado a partir do Product Backlog v2.0 do SIDESP</sub>\n",
+    "state": "open",
+    "user": {
+      "login": "liviaaaaaaaa",
+      "name": "liviaaaaaaaa",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/200071863?v=4",
+      "id": 200071863
+    },
+    "assignees": null,
+    "labels": [
+      {
+        "name": "Tecnico",
+        "color": "3B7DB5",
+        "description": "Nao e visivel ao usuario, mas sustenta as funcionalidades"
+      },
+      {
+        "name": "area: Base do Front",
+        "color": "B392AC",
+        "description": "Design system, rotas, services e guards"
+      }
+    ],
+    "milestone": 2,
+    "state_reason": null,
+    "comments": 0,
+    "created_at": "2026-09-03T19:53:06Z",
+    "updated_at": "2026-09-23T13:47:10Z",
+    "closed_at": null,
+    "display_url": "https://github.com/sidespfatec/FRONT-SIDESP/issues/8",
+    "display_title": "PB08 · Configurar HttpClient, environments e camada de services"
+  },
+  "url": "https://github.com/sidespfatec/FRONT-SIDESP/issues/8",
+  "title": "PB08 · Configurar HttpClient, environments e camada de services",
+  "display_url": "https://github.com/sidespfatec/FRONT-SIDESP/issues/8",
+  "display_title": "PB08 · Configurar HttpClient, environments e camada de services"
+}
