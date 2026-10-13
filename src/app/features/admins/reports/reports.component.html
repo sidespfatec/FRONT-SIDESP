@@ -1,0 +1,109 @@
+<app-navbar-desktop-admin></app-navbar-desktop-admin>
+<app-banner></app-banner>
+
+<p-toast position="bottom-center" />
+
+<section class="report-page">
+
+    <h1 class="report-title">Relatórios</h1>
+    <p class="report-subtitle">Escolha o relatório e exporte a planilha com os dados do sistema.</p>
+
+    <h2 class="block-title">O que você precisa</h2>
+
+    <div class="report-list">
+        @for (relatorio of relatorios; track relatorio.id) {
+        <article class="report-item">
+            <span class="report-name">
+                {{ relatorio.nome }}
+                @if (relatorio.dependeChamada) {
+                <span class="report-flag">precisa da chamada</span>
+                }
+            </span>
+            <p class="report-desc">{{ relatorio.descricao }}</p>
+            <div class="report-action">
+                <p-button label="Exportar .xls" icon="pi pi-download" severity="secondary"
+                    [outlined]="true" size="small" (onClick)="abrir(relatorio)" />
+            </div>
+        </article>
+        }
+    </div>
+
+    <h2 class="block-title spaced">Exportados recentemente</h2>
+
+    <p-table [value]="exportacoes" styleClass="report-table">
+        <ng-template #header>
+            <tr>
+                <th>Relatório</th>
+                <th>Recorte</th>
+                <th>Quando</th>
+                <th>Por</th>
+                <th></th>
+            </tr>
+        </ng-template>
+
+        <ng-template #body let-exportacao>
+            <tr>
+                <td class="cell-name">{{ exportacao.relatorio }}</td>
+                <td>{{ exportacao.recorte }}</td>
+                <td>{{ exportacao.quando }}</td>
+                <td>{{ exportacao.autor }}</td>
+                <td class="cell-end">
+                    <p-tag value=".xls" severity="secondary" />
+                    <p-button label="baixar" icon="pi pi-download" [text]="true" size="small"
+                        (onClick)="baixar(exportacao)" />
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template #emptymessage>
+            <tr>
+                <td colspan="5" class="cell-empty">Nenhum relatório exportado ainda.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</section>
+
+<p-dialog [visible]="aberto()" (visibleChange)="aberto.set($event)" [modal]="true" [draggable]="false"
+    [dismissableMask]="true" [style]="{ width: '30rem' }" [breakpoints]="{ '40rem': '94vw' }"
+    [header]="escolhido()?.nome ?? ''" styleClass="report-dialog">
+
+    @if (escolhido(); as relatorio) {
+    <div class="dialog-body">
+
+        @if (relatorio.pedeTurma) {
+        <div class="dialog-field">
+            <label for="turmas">Turma</label>
+            <p-multiselect inputId="turmas" [(ngModel)]="turmasSelecionadas" [options]="turmasOpcoes"
+                optionLabel="label" optionValue="value" placeholder="todas as turmas"
+                [maxSelectedLabels]="1" selectedItemsLabel="{0} turmas" appendTo="body" />
+        </div>
+        }
+
+        @if (relatorio.pedePolo) {
+        <div class="dialog-field">
+            <label for="polos">Polo</label>
+            <p-multiselect inputId="polos" [(ngModel)]="polosSelecionados" [options]="polosOpcoes"
+                optionLabel="label" optionValue="value" placeholder="todos os polos"
+                [maxSelectedLabels]="2" selectedItemsLabel="{0} polos" appendTo="body" />
+        </div>
+        }
+
+        @if (relatorio.pedePeriodo) {
+        <div class="dialog-field">
+            <label for="periodo">Mês de referência</label>
+            <p-datepicker inputId="periodo" [(ngModel)]="periodo" view="month" dateFormat="MM yy"
+                [readonlyInput]="true" [showIcon]="true" appendTo="body" />
+        </div>
+        }
+
+        <p class="dialog-note">O arquivo sai em planilha <b>.xls</b>, pronta para abrir no Excel.</p>
+    </div>
+    }
+
+    <ng-template #footer>
+        <p-button label="Cancelar" severity="secondary" [text]="true" (onClick)="fechar()" />
+        <p-button label="Exportar .xls" icon="pi pi-download" (onClick)="exportar()" />
+    </ng-template>
+</p-dialog>
+
+<app-footer></app-footer>

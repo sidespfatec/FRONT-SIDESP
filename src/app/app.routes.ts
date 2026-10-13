@@ -7,6 +7,8 @@ import { ManageModalitesComponent } from './features/admins/modalites/manage-mod
 import { ClassesComponent } from './features/admins/modalites/classes/classes.component';
 import { NewModalityComponent } from './features/admins/modalites/new-modality/new-modality.component';
 import { ManageAdminComponent } from './features/admins/manage-admin/manage-admin.component';
+import { HeatMapComponent } from './features/admins/heat-map/heat-map.component';
+import { ReportsComponent } from './features/admins/reports/reports.component';
 import { NewAdminModalComponent } from './features/admins/new-admin-modal/new-admin-modal.component';
 import { ManageHubsComponent } from './features/admins/manage-hubs/manage-hubs.component';
 
@@ -55,6 +57,15 @@ export const routes: Routes = [
     {
         path: 'manage-admin',
         component: ManageAdminComponent
+    },
+
+    {
+        path: 'admin/mapa-calor',
+        component: HeatMapComponent
+    },
+    {
+        path: 'admin/relatorios',
+        component: ReportsComponent
     },
     {
         path: 'new-admin-modal',

@@ -22,8 +22,8 @@ export class NavbarDesktopAdminComponent {
     { path: '/manage-modalites', label: 'Gerenciar Modalidades' },
     { path: null, label: 'Gerenciar Alunos' },
     { path: '/manage-hubs', label: 'Gerenciar Polos' },
-    { path: null, label: 'Relatórios' },
-    { path: null, label: 'Mapa de Calor' },
+    { path: '/admin/relatorios', label: 'Relatórios' },
+    { path: '/admin/mapa-calor', label: 'Mapa de Calor' },
   ];
 
   constructor() {

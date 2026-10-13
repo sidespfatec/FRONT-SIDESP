@@ -1,0 +1,122 @@
+<app-navbar-desktop-admin></app-navbar-desktop-admin>
+<app-banner></app-banner>
+
+<section class="heat-page">
+
+    <h1 class="heat-title">Mapa de calor</h1>
+    <p class="heat-subtitle">Quantas pessoas, onde e quando.</p>
+
+    <div class="filter-bar">
+        <p-iftalabel class="field-period">
+            <p-datepicker inputId="periodo" [(ngModel)]="periodo" view="month" dateFormat="M yy"
+                selectionMode="range" [readonlyInput]="true" [showIcon]="true" appendTo="body" />
+            <label for="periodo">Período</label>
+        </p-iftalabel>
+
+        <p-iftalabel class="field-select">
+            <p-multiselect inputId="polos" [(ngModel)]="polosSelecionados" [options]="polosOpcoes"
+                optionLabel="label" optionValue="value" placeholder="todos" [maxSelectedLabels]="2"
+                selectedItemsLabel="{0} polos" appendTo="body" />
+            <label for="polos">Polos</label>
+        </p-iftalabel>
+
+        <p-iftalabel class="field-select">
+            <p-multiselect inputId="modalidades" [(ngModel)]="modalidadesSelecionadas"
+                [options]="modalidadesOpcoes" optionLabel="label" optionValue="value" placeholder="todas"
+                [maxSelectedLabels]="2" selectedItemsLabel="{0} modalidades" appendTo="body" />
+            <label for="modalidades">Modalidades</label>
+        </p-iftalabel>
+
+        <p-button label="Mais filtros" icon="pi pi-sliders-h" severity="secondary" [outlined]="true"
+            [badge]="filtrosAtivos().length.toString()" (onClick)="maisFiltros.toggle($event)" />
+
+        <p-button label="limpar tudo" [link]="true" (onClick)="limparTudo()" />
+    </div>
+
+    <p-popover #maisFiltros>
+        <div class="more-filters">
+            <div class="more-block">
+                <span class="more-label">Gênero</span>
+                <p-selectbutton [(ngModel)]="genero" [options]="generoOpcoes" optionLabel="label"
+                    optionValue="value" [allowEmpty]="false" />
+            </div>
+
+            <div class="more-block">
+                <span class="more-label">Faixa etária</span>
+                <p-slider [(ngModel)]="faixaEtaria" [range]="true" [min]="6" [max]="30" />
+                <p class="more-range">
+                    <span>{{ faixaEtaria[0] }} anos</span>
+                    <span>{{ faixaEtaria[1] }} anos</span>
+                </p>
+            </div>
+
+            <div class="more-block">
+                <span class="more-label">Situação da turma</span>
+                <p-selectbutton [(ngModel)]="situacao" [options]="situacaoOpcoes" optionLabel="label"
+                    optionValue="value" [allowEmpty]="false" />
+            </div>
+        </div>
+    </p-popover>
+
+    @if (filtrosAtivos().length) {
+    <div class="active-chips">
+        @for (filtro of filtrosAtivos(); track filtro) {
+        <p-chip [label]="filtro" [removable]="true" (onRemove)="removerFiltro(filtro)" />
+        }
+    </div>
+    }
+
+    <div class="figures">
+        <div class="figure">
+            <b>1.248</b>
+            <span>inscritos</span>
+            <small>em 38 turmas</small>
+        </div>
+        <div class="figure">
+            <b>312</b>
+            <span>na lista de espera</span>
+            <small>25% do total</small>
+        </div>
+        <div class="figure">
+            <b>78%</b>
+            <span>das vagas ocupadas</span>
+            <small>1.248 de 1.600</small>
+        </div>
+        <div class="figure">
+            <b>86%</b>
+            <span>de presença</span>
+            <small>depende da chamada</small>
+        </div>
+    </div>
+
+    <div class="pivot">
+        <div class="pivot-group">
+            <span class="pivot-label">Comparar por</span>
+            <p-selectbutton [ngModel]="eixo()" (ngModelChange)="eixo.set($event)" [options]="compararPor"
+                optionLabel="label" optionValue="value" [allowEmpty]="false" />
+        </div>
+        <div class="pivot-group">
+            <span class="pivot-label">Separar por</span>
+            <p-selectbutton [ngModel]="serie()" (ngModelChange)="serie.set($event)" [options]="separarPor"
+                optionLabel="label" optionValue="value" [allowEmpty]="false" />
+        </div>
+    </div>
+
+    <section class="chart-section">
+        <h2 class="chart-title">{{ titulo() }}</h2>
+        <div class="chart-area">
+            <p-chart type="bar" [data]="dadosGrafico()" [options]="opcoesGrafico()" height="100%" />
+        </div>
+        <p class="chart-note">{{ nota() }}</p>
+    </section>
+
+    <section class="chart-section">
+        <h2 class="chart-title small">Onde se falta mais</h2>
+        <div class="chart-area short">
+            <p-chart type="bar" [data]="dadosFaltas" [options]="opcoesFaltas" height="100%" />
+        </div>
+        <p class="chart-note">Disponível quando a chamada estiver pronta.</p>
+    </section>
+</section>
+
+<app-footer></app-footer>

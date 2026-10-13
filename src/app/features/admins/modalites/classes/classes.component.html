@@ -2,53 +2,92 @@
 <app-banner></app-banner>
 
 <div class="classes-page">
-    <div class="page-header">
-        <i class="pi pi-arrow-left" (click)="goBack()"></i>
-        <div class="modality-icon" [style.background-color]="modalityIconBg">
-            <i [class]="modalityIcon" [style.color]="modalityIconColor"></i>
+
+    <button type="button" class="back-link" (click)="goBack()">
+        <i class="pi pi-angle-left"></i>Modalidades
+    </button>
+
+    <div class="title-row">
+        <div class="title-text">
+            <h1 class="modality-name">{{ modalityName }}</h1>
+            <p class="summary">{{ classes.length }} turmas, {{ totalEnrolled }} de {{ totalCapacity }} vagas ocupadas</p>
         </div>
-        <div>
-            <p class="modality-name">{{ modalityName }}</p>
-            <p class="modality-meta">{{ classes.length }} turmas</p>
-        </div>
+        <p-button label="Nova turma" icon="pi pi-plus" (onClick)="newClass()" />
     </div>
 
-    <div class="classes-list">
+    @if (classes.length) {
+    <section class="week-section">
+        <h2 class="section-title">A semana <small>quando cada turma acontece</small></h2>
+        <table class="week-table">
+            <thead>
+                <tr>
+                    <th class="hour-col"><span class="sr-only">Horário</span></th>
+                    @for (day of weekDays; track day) {
+                    <th scope="col">{{ day }}</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @for (row of schedule; track row.hour) {
+                <tr>
+                    <td class="hour">{{ row.hour }}</td>
+                    @for (cell of row.cells; track $index) {
+                    <td>
+                        @if (cell.classGroup) {
+                        <button type="button" class="week-block" [class.is-full]="isFull(cell.classGroup)"
+                            (click)="openClass(cell.classGroup)">
+                            <b>{{ shortLabel(cell.classGroup) }}</b>
+                            <span>{{ cell.classGroup.location }}</span>
+                        </button>
+                        } @else {
+                        <span class="empty-slot"></span>
+                        }
+                    </td>
+                    }
+                </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+    }
+
+    <section class="classes-section">
+        <h2 class="section-title">As turmas</h2>
+
         @for (classGroup of classes; track classGroup.id) {
-        <div class="class-card" (click)="openClass(classGroup)">
-            <div class="class-card-header">
-                <p class="class-name">{{ classGroup.name }}</p>
-                <i class="pi pi-chevron-right"></i>
+        <article class="class-item">
+            <div class="class-head">
+                <span class="class-name" (click)="openClass(classGroup)">{{ classGroup.name }}</span>
+                @if (classGroup.waiting) {
+                <span class="waiting-note">{{ classGroup.waiting }} na lista de espera</span>
+                }
             </div>
-            <div class="class-details">
-                <div class="detail-row">
-                    <i class="pi pi-user"></i>
-                    <span>Prof. {{ classGroup.teacher }}</span>
-                </div>
-                <div class="detail-row">
-                    <i class="pi pi-clock"></i>
-                    <span>{{ classGroup.schedule }}</span>
-                </div>
-                <div class="detail-row">
-                    <i class="pi pi-map-marker"></i>
-                    <span>{{ classGroup.location }}</span>
-                </div>
-                <div class="detail-row">
-                    <i class="pi pi-users"></i>
-                    <span>{{ classGroup.enrolled }}/{{ classGroup.capacity }} alunos</span>
-                </div>
+
+            <p class="class-when">{{ whenLabel(classGroup) }}</p>
+            <p class="class-who">{{ classGroup.teacher }}, {{ classGroup.location }}</p>
+
+            <p class="class-seats">
+                {{ classGroup.enrolled }} de {{ classGroup.capacity }} alunos,
+                @if (freeSeats(classGroup)) {
+                <span class="seats-free">{{ freeSeats(classGroup) }} vagas livres</span>
+                } @else {
+                <span class="seats-full">sem vagas</span>
+                }
+            </p>
+
+            <div class="class-actions">
+                <p-button label="Fazer chamada" icon="pi pi-check-circle" [outlined]="true" size="small"
+                    (onClick)="takeAttendance(classGroup)" />
+                <p-button label="Ver alunos" [text]="true" size="small" (onClick)="viewStudents(classGroup)" />
             </div>
-        </div>
+        </article>
         } @empty {
-        <p class="empty-state">Nenhuma turma cadastrada.</p>
+        <div class="no-class">
+            <p>Nenhuma turma cadastrada ainda nesta modalidade.</p>
+            <p-button label="Criar a primeira turma" icon="pi pi-plus" (onClick)="newClass()" />
+        </div>
         }
-    </div>
-
-    <div class="add-class">
-        <i class="pi pi-plus"></i>
-        <span>Adicionar Turma</span>
-    </div>
+    </section>
 </div>
-
 
 <app-footer></app-footer>
