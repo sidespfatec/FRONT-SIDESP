@@ -20,7 +20,7 @@ export class NavbarDesktopAdminComponent {
     { path: '/manage-teachers', label: 'Cadastrar Professores' },
     { path: '/manage-admin', label: 'Gerenciar Administradores' },
     { path: '/manage-modalites', label: 'Gerenciar Modalidades' },
-    { path: null, label: 'Gerenciar Alunos' },
+    { path: '/admin/alunos', label: 'Gerenciar Alunos' },
     { path: '/manage-hubs', label: 'Gerenciar Polos' },
     { path: '/admin/relatorios', label: 'Relatórios' },
     { path: '/admin/mapa-calor', label: 'Mapa de Calor' },

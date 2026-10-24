@@ -1,0 +1,165 @@
+@use '../../../../../styles/breakpoints.scss' as *;
+
+.card-container {
+    margin: 8rem 1rem 2rem;
+
+    @include xl {
+        margin: 6rem auto 3rem;
+        max-width: 900px;
+    }
+}
+
+.title-student {
+    margin: 0 0 1rem;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--color-brand-primary);
+}
+
+.search-student-container {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+
+    p-iconfield {
+        flex: 1;
+        min-width: 0;
+    }
+
+    input {
+        width: 100%;
+    }
+}
+
+.filter-student-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-bottom: 1rem;
+    margin-bottom: 0.25rem;
+    border-bottom: 0.0625rem solid var(--gray-300);
+}
+
+.student-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.student-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.875rem 0;
+    border: 0;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+}
+
+.student-list li:not(:last-child) .student-item {
+    border-bottom: 0.0625rem solid var(--gray-300);
+}
+
+.student-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.student-title {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.student-where {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+.student-open {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    border-radius: 50%;
+    color: var(--color-brand-primary);
+}
+
+.student-item:hover .student-open {
+    background: var(--gray-100);
+}
+
+.student-empty {
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.empty-title {
+    margin: 0;
+    font-weight: 600;
+}
+
+.empty-text {
+    margin: 0.25rem 0 0;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+.student-resume {
+    margin: 1rem 0 0;
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+
+    b {
+        color: var(--color-text-primary);
+        font-weight: 600;
+    }
+}
+
+:host ::ng-deep {
+
+    .filter-student-container .p-select {
+        font-size: 0.875rem;
+    }
+
+    .filter-student-container .p-togglebutton {
+        padding: 0.45rem 0.9rem;
+        border: 0.0625rem solid var(--gray-300);
+        border-radius: 999px;
+        background: var(--color-bg-header);
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--color-text-secondary);
+    }
+
+    .filter-student-container .p-togglebutton .p-togglebutton-content {
+        background: transparent;
+        box-shadow: none;
+        padding: 0;
+        color: inherit;
+    }
+
+    .filter-student-container .p-togglebutton:hover:not(.p-togglebutton-checked) {
+        background: var(--gray-100);
+    }
+
+    .filter-student-container .p-togglebutton-checked {
+        background: var(--color-brand-primary);
+        border-color: var(--color-brand-primary);
+    }
+
+    .filter-student-container .p-togglebutton-checked .p-togglebutton-content,
+    .filter-student-container .p-togglebutton-checked .p-togglebutton-label {
+        color: var(--color-text-on-brand);
+    }
+}
