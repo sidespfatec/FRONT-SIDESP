@@ -23,6 +23,12 @@ import { RouterLink } from '@angular/router';
     styleUrl: './registration.component.scss'
 })
 export class RegistrationComponent {
+    password = '';
+    confirmPassword = '';
+
+    get passwordsMatch(): boolean {
+        return this.password === this.confirmPassword;
+    }
 
     activeStep: number = 1;
 }

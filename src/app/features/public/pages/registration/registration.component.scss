@@ -9,22 +9,56 @@
     align-items: center;
 }
 
-.registration-container {
+.registration-card {
+    width: 100%;
+    max-width: 440px;
+    margin-top: 7rem; // espaço do banner fixo
     background-color: var(--color-bg-card);
-    width: 95%;
-    max-width: 480px;
-    border-radius: 12px;
-    padding: 1.75rem 1rem 2rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    margin-top: 7rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+.register-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 2rem 0.5rem;
+}
+
+.register-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background-color: rgba(13, 18, 130, 0.1);
+    margin-bottom: 1rem;
+
+    i {
+        font-size: 1.75rem;
+        color: var(--color-brand-primary);
+    }
 }
 
 .title-register {
-    text-align: center;
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 700;
     color: var(--color-brand-primary);
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
+}
+
+.subtitle-register {
+    margin: 0.35rem 0 0;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+}
+
+.register-body {
+    padding: 1rem 1.5rem 2rem;
 }
 
 .container-step {
@@ -38,31 +72,28 @@
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
-    width: 90%;
+    width: 100%;
 
     label {
         color: var(--color-text-primary);
         font-weight: 600;
         font-size: 0.9rem;
     }
+}
 
-    small {
-        color: var(--color-text-secondary);
-        font-size: 0.75rem;
-        margin-top: 0.15rem;
-    }
+.input-wrap {
+    position: relative;
+    width: 100%;
 
-    a {
-        display: flex;
-        justify-content: flex-end;
-        cursor: pointer;
-        color: var(--color-brand-secondary);
-        font-size: 0.85rem;
-        text-decoration: none;
-
-        &:hover {
-            text-decoration: underline;
-        }
+    > i {
+        position: absolute;
+        left: 0.9rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.05rem;
+        color: var(--color-brand-primary);
+        pointer-events: none;
+        z-index: 1;
     }
 }
 
@@ -72,9 +103,10 @@
     gap: 0.75rem;
     margin-top: 1.5rem;
     padding-top: 1rem;
-    border-top: 1px solid var(--color-border);
+    border-top: 1px solid var(--color-border-strong);
 }
 
+// ---------- Stepper ----------
 :host ::ng-deep .p-stepper {
     background-color: transparent;
 
@@ -126,14 +158,23 @@
     }
 }
 
-:host ::ng-deep .input-register .p-inputtext {
+// ---------- Campos (texto, máscara e senha) com ícone à esquerda ----------
+:host ::ng-deep .input-wrap p-inputmask,
+:host ::ng-deep .input-wrap p-password,
+:host ::ng-deep .input-wrap .p-password {
+    display: block;
+    width: 100%;
+}
+
+:host ::ng-deep .input-wrap .p-inputtext {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.8rem 0.9rem 0.8rem 2.75rem;
     background-color: var(--gray-100) !important;
     border: 1.5px solid var(--color-border-strong) !important;
     color: var(--color-text-primary) !important;
-    width: 100%;
-    padding: 0.6rem 0.75rem;
-    border-radius: 6px;
-    font-size: 0.95rem;
+    border-radius: 8px;
+    font-size: 1rem;
     transition: all 0.15s;
 
     &:focus,
@@ -149,67 +190,69 @@
     }
 }
 
-:host ::ng-deep .input-register .p-password {
-    width: 100%;
-
-    input {
-        width: 100%;
-        background-color: var(--gray-100) !important;
-        border: 1.5px solid var(--color-border-strong) !important;
-        color: var(--color-text-primary) !important;
-        padding: 0.6rem 2.25rem 0.6rem 0.75rem;
-        border-radius: 6px;
-
-        &:focus {
-            background-color: var(--white) !important;
-            border-color: var(--color-brand-primary) !important;
-            box-shadow: 0 0 0 3px rgba(13, 18, 130, 0.15) !important;
-        }
-    }
+:host ::ng-deep .input-wrap .p-password .p-inputtext {
+    padding-right: 2.75rem; // espaço pro olhinho de mostrar senha
 }
 
+// ---------- Gênero (SelectButton) ----------
 :host ::ng-deep .p-selectbutton {
     display: flex;
     gap: 0.5rem;
 
-    .p-button,
-    .p-togglebutton {
+    .p-togglebutton,
+    .p-button {
+        flex: 1;
         background-color: var(--gray-100) !important;
         color: var(--color-text-primary) !important;
         border: 1.5px solid var(--color-border-strong) !important;
-        padding: 0.5rem 1.25rem !important;
-        border-radius: 6px !important;
+        border-radius: 8px !important;
         font-weight: 500;
-        flex: 1;
+        padding: 0.7rem 1.25rem !important;
 
-        &.p-highlight,
-        &.p-togglebutton-checked {
-            background-color: var(--color-brand-primary) !important;
-            color: var(--white) !important;
-            border-color: var(--color-brand-primary) !important;
+        // caixa interna do botão (era ela que ficava branca)
+        .p-togglebutton-content {
+            background: transparent !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            color: inherit !important;
         }
 
-        &:hover:not(.p-highlight):not(.p-togglebutton-checked) {
+        &.p-togglebutton-checked,
+        &.p-highlight {
+            background-color: var(--color-brand-primary) !important;
+            border-color: var(--color-brand-primary) !important;
+            color: var(--white) !important;
+
+            .p-togglebutton-content,
+            .p-togglebutton-label {
+                background: transparent !important;
+                color: var(--white) !important;
+            }
+        }
+
+        &:hover:not(.p-togglebutton-checked):not(.p-highlight) {
             background-color: var(--gray-200) !important;
         }
     }
 }
 
+// ---------- Botões Voltar / Próximo / Finalizar ----------
 :host ::ng-deep .step-actions .p-button {
-    padding: 0.65rem 1.5rem;
-    border-radius: 6px;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
     font-weight: 600;
+    min-width: 120px;
+    justify-content: center;
     transition: all 0.2s;
-    min-width: 110px;
 
     &:not(.p-button-secondary) {
-        background-color: var(--color-action) !important;
-        border-color: var(--color-action) !important;
-        color: var(--white) !important;
+        background-color: var(--color-brand-primary) !important;
+        border-color: var(--color-brand-primary) !important;
+        color: var(--color-text-on-brand) !important;
 
         &:hover {
-            background-color: var(--color-action-hover) !important;
-            border-color: var(--color-action-hover) !important;
+            background-color: var(--color-action-hover-primary) !important;
+            border-color: var(--color-action-hover-primary) !important;
         }
     }
 
@@ -224,6 +267,44 @@
     }
 }
 
-button {
-    margin-right: 1rem;
+// ---------- Critérios da senha (lista dentro do painel) ----------
+.password-rules {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+
+    .rules-title {
+        margin: 0 0 0.35rem;
+        font-weight: 600;
+        color: var(--color-text-primary);
+    }
+
+    ul {
+        margin: 0;
+        padding-left: 1.1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+    }
+
+    .rules-hint {
+        margin: 0.5rem 0 0;
+    }
+}
+
+// ---------- Mensagem "senhas coincidem" ----------
+.match-message {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    &.ok {
+        color: #0f7a4e;
+    }
+
+    &.error {
+        color: var(--color-brand-secondary);
+    }
 }

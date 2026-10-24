@@ -19,30 +19,64 @@
     }
 }
 
-.login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+.login-card {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    margin-top: 7rem; 
     background-color: var(--color-bg-card);
-    width: 95%;
-    max-width: 350px;
-    border-radius: 12px;
-    padding: 2rem 1rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    margin-top: 7rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
 
     @include xl {
         margin-top: 0;
     }
 }
 
-.title-login {
+.login-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
+    padding: 2rem 2rem 0.5rem;
+}
+
+.login-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background-color: rgba(13, 18, 130, 0.1);
+    margin-bottom: 1rem;
+
+    i {
+        font-size: 1.75rem;
+        color: var(--color-brand-primary);
+    }
+}
+
+.title-login {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 700;
     color: var(--color-brand-primary);
-    font-size: 1.75rem;    
-    margin-bottom: 1rem;    
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
+}
+
+.subtitle-login {
+    margin: 0.35rem 0 0;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 1.5rem 2rem 1.75rem;
 }
 
 .input-login {
@@ -50,42 +84,59 @@
     flex-direction: column;
     gap: 0.4rem;
     width: 100%;
-    margin-top: 1rem;
 
     label {
         color: var(--color-text-primary);
         font-weight: 600;
         font-size: 0.9rem;
     }
+}
 
-    small {
-        color: var(--color-text-secondary);
-        font-size: 0.75rem;
-        margin-top: 0.15rem;
-    }
+.input-wrap {
+    position: relative;
+    width: 100%;
 
-    a {
-        display: flex;
-        justify-content: flex-end;
-        cursor: pointer;
-        color: var(--color-brand-secondary);
-        font-size: 0.85rem;
-        text-decoration: none;
-
-        &:hover {
-            text-decoration: underline;
-        }
+    i {
+        position: absolute;
+        left: 0.9rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.05rem;
+        color: var(--color-brand-primary);
+        pointer-events: none;
+        z-index: 1;
     }
 }
 
-:host ::ng-deep .input-login .p-inputtext {
+.forgot-link {
+    align-self: flex-end;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.15rem;
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-brand-secondary);
+    text-decoration: none;
+    transition: background-color 0.15s ease;
+
+    &:hover {
+        background-color: rgba(230, 38, 38, 0.1);
+    }
+}
+
+:host ::ng-deep .input-wrap .p-inputtext {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.8rem 0.9rem 0.8rem 2.75rem;
     background-color: var(--gray-100) !important;
     border: 1.5px solid var(--color-border-strong) !important;
     color: var(--color-text-primary) !important;
-    width: 100%;
-    padding: 0.6rem 0.75rem;
-    border-radius: 6px;
-    font-size: 0.95rem;
+    border-radius: 8px;
+    font-size: 1rem;
     transition: all 0.15s;
 
     &:focus,
@@ -93,6 +144,7 @@
         background-color: var(--white) !important;
         border-color: var(--color-brand-primary) !important;
         box-shadow: 0 0 0 3px rgba(13, 18, 130, 0.15) !important;
+        outline: none;
     }
 
     &::placeholder {
@@ -100,12 +152,19 @@
     }
 }
 
+:host ::ng-deep .button-login,
+:host ::ng-deep .button-register {
+    display: block;
+    width: 100%;
+}
+
 :host ::ng-deep .button-login .p-button {
     width: 100% !important;
-    margin-top: 1.5rem !important;
+    justify-content: center;
     font-weight: bold !important;
-    padding: 0.5rem 1rem !important;
-    font-size: 1.2rem !important;
+    padding: 0.8rem 1rem !important;
+    font-size: 1.05rem !important;
+    border-radius: 8px !important;
     background-color: var(--color-brand-primary) !important;
     border-color: var(--color-brand-primary) !important;
     color: var(--color-text-on-brand) !important;
@@ -116,12 +175,28 @@
     }
 }
 
+.register-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.5rem 2rem 2rem;
+    border-top: 1px solid var(--color-border-strong);
+}
+
+.question-register {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+}
+
 :host ::ng-deep .button-register .p-button {
     width: 100% !important;
-    margin-top: 1rem !important;
+    justify-content: center;
     font-weight: bold !important;
-    padding: 0.5rem 1rem !important;
-    font-size: 1.2rem !important;
+    padding: 0.8rem 1rem !important;
+    font-size: 1.05rem !important;
+    border-radius: 8px !important;
     background-color: var(--color-brand-secondary) !important;
     border-color: var(--color-brand-secondary) !important;
     color: var(--color-text-on-brand) !important;
@@ -130,10 +205,4 @@
         background-color: var(--color-action-hover) !important;
         border-color: var(--color-action-hover) !important;
     }
-}
-
-.question-register {
-    display: flex;
-    justify-content: center;
-    text-align: center;
 }

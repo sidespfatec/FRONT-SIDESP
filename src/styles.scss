@@ -51,3 +51,28 @@ body {
   background: rgba(0, 0, 0, 0.5) !important;
   backdrop-filter: blur(2px);
 }
+
+.p-password-overlay {
+
+  font-family: 'Outfit', sans-serif;
+
+  * {
+    font-family: inherit;
+  }
+
+  .p-password-meter-text {
+    margin-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--color-border-strong);
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-brand-primary);
+  }
+}
+
+.p-password-overlay {
+  max-height: 70vh;
+  overflow-y: auto;
+}
