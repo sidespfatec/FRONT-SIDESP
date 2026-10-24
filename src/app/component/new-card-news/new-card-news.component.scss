@@ -4,113 +4,175 @@
     }
 
     .p-dialog {
-        border-radius: 0.5rem;
+        border-radius: 0.75rem;
         box-shadow: 0 0.25rem 1.5rem rgba(0, 0, 0, 0.2);
         overflow: hidden;
         background: var(--color-bg-header) !important;
 
         .p-dialog-header {
             background-color: var(--color-bg-nav) !important;
-            color: var(--color-text-on-brand) !important;
             padding: 1.25rem 1.5rem;
+
+            .p-dialog-title,
+            .p-dialog-header-icon,
+            .p-dialog-close-button {
+                color: var(--color-text-on-brand) !important;
+            }
 
             .p-dialog-title {
                 font-weight: 600;
                 font-size: 1.15rem;
-                color: var(--color-text-on-brand) !important;
             }
 
-            .p-dialog-header-icon,
-            .p-dialog-close-button {
-                color: var(--color-text-on-brand) !important;
-
-                &:hover {
-                    background-color: rgba(255, 255, 255, 0.15) !important;
-                }
+            .p-dialog-close-button:hover {
+                background-color: rgba(255, 255, 255, 0.15) !important;
             }
         }
 
         .p-dialog-content {
-            padding: 1.75rem 1.5rem;
+            padding: 1.5rem;
             background: var(--color-bg-header) !important;
             color: var(--color-text-primary);
         }
     }
 
-    .flex-col.gap-6 {
-        gap: 1.5rem !important;
+    .news-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
     }
 
-    .flex-col.gap-1 {
-        gap: 0.5rem !important;
-    }
+    .field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
 
-    label {
-        color: var(--color-text-secondary) !important;
-        display: block;
-        margin-bottom: 0.125rem;
-        font-size: 0.9rem;
-    }
-
-    .p-inputtext,
-    input[pInputText] {
-        width: 100%;
-        padding: 0.65rem 0.875rem;
-        border-radius: 0.375rem;
-        border: 1px solid var(--color-border) !important;
-        box-sizing: border-box;
-        background: var(--color-bg-header) !important;
-        color: var(--color-text-primary) !important;
-
-        &:focus {
-            border-color: var(--color-border-focus) !important;
-            outline: none;
-            box-shadow: 0 0 0 0.125rem var(--color-info-bg) !important;
+        label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-text-secondary);
         }
     }
 
-    button[pButton],
-    .p-button {
-        padding: 0.625rem 1.5rem;
-        border-radius: 0.375rem;
-        font-size: 0.85rem;
-        font-weight: 600;
-        background-color: var(--color-action) !important;
-        border-color: var(--color-action) !important;
-        color: var(--color-text-on-brand) !important;
+    .dropzone {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.35rem;
+        min-height: 9rem;
+        border: 2px dashed var(--color-border-strong);
+        border-radius: 0.5rem;
+        background: var(--gray-100);
+        color: var(--color-text-secondary);
+        cursor: pointer;
+        overflow: hidden;
+        transition: border-color 0.2s ease, background-color 0.2s ease;
+
+        i {
+            font-size: 2rem;
+            color: var(--color-brand-primary);
+        }
+
+        small {
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+        }
 
         &:hover {
-            background-color: var(--color-action-hover) !important;
+            border-color: var(--color-brand-primary);
+            background: var(--white);
         }
 
-        &.p-button-secondary {
-            background-color: transparent !important;
-            border: 1px solid var(--color-border) !important;
-            color: var(--color-text-secondary) !important;
+        &.has-image {
+            border-style: solid;
+            padding: 0;
 
-            &:hover {
-                background-color: var(--color-bg-card) !important;
+            img {
+                width: 100%;
+                aspect-ratio: 16 / 9;
+                object-fit: cover;
+                display: block;
+            }
+
+            .change-hint {
+                position: absolute;
+                bottom: 0.5rem;
+                right: 0.5rem;
+                padding: 0.3rem 0.7rem;
+                border-radius: 999px;
+                background: rgba(0, 0, 0, 0.6);
+                color: #fff;
+                font-size: 0.75rem;
+                display: flex;
+                align-items: center;
+                gap: 0.35rem;
+
+                i {
+                    font-size: 0.75rem;
+                    color: #fff;
+                }
             }
         }
     }
 
-    .flex.justify-end.gap-2 {
-        gap: 0.75rem !important;
-        margin-top: 0.5rem;
+    .p-inputtext,
+    input[pInputText],
+    textarea[pInputText] {
+        width: 100%;
+        padding: 0.65rem 0.875rem;
+        border-radius: 0.375rem;
+        border: 1.5px solid var(--color-border-strong) !important;
+        box-sizing: border-box;
+        background: var(--gray-100) !important;
+        color: var(--color-text-primary) !important;
+        font-family: inherit;
+        resize: vertical;
+
+        &:focus {
+            background: var(--white) !important;
+            border-color: var(--color-brand-primary) !important;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(13, 18, 130, 0.15) !important;
+        }
     }
 
-    .p-fileupload-basic {
-        width: 100%;
-        display: block;
-        margin-top: 0.25rem;
+    .actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.75rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--color-border-strong);
 
-        input[type="file"] {
-            display: none !important;
-        }
-
+        button[pButton],
         .p-button {
-            width: auto;
-            justify-content: center;
+            padding: 0.625rem 1.5rem;
+            border-radius: 0.375rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            background-color: var(--color-action) !important;
+            border-color: var(--color-action) !important;
+            color: var(--color-text-on-brand) !important;
+
+            &:hover:not(:disabled) {
+                background-color: var(--color-action-hover) !important;
+            }
+
+            &:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+
+            &.p-button-secondary {
+                background-color: transparent !important;
+                border: 1px solid var(--color-border-strong) !important;
+                color: var(--color-text-secondary) !important;
+
+                &:hover {
+                    background-color: var(--gray-100) !important;
+                }
+            }
         }
     }
 }
