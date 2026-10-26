@@ -10,7 +10,10 @@ mkdirSync(logs, { recursive: true });
 let running = false;
 try {
   const pid = Number(readFileSync(pidFile, 'utf8').trim());
-  if (Number.isSafeInteger(pid) && pid > 0) { process.kill(pid, 0); running = true; }
+  if (Number.isSafeInteger(pid) && pid > 0) {
+    const args = readFileSync(`/proc/${pid}/cmdline`, 'utf8').split('\0');
+    running = args.some(arg => arg.endsWith('/.devcontainer/run.mjs') || arg === '.devcontainer/run.mjs');
+  }
 } catch {}
 if (running) {
   console.log('SIDESP já está iniciado. Logs: .local/codespaces/');
