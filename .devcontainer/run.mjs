@@ -45,7 +45,10 @@ if (process.env.CODESPACE_NAME && process.env.GITHUB_CODESPACES_PORT_FORWARDING_
 }
 launch('backend', 'bash', ['./mvnw', '--batch-mode', 'spring-boot:run'], 'backend', extraEnv);
 const frontendArgs = ['start', '--', '--host', '0.0.0.0'];
+const frontendEnv = {};
 if (process.env.CODESPACE_NAME && process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN) {
-  frontendArgs.push('--allowed-hosts', `${process.env.CODESPACE_NAME}-4200.${process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}`);
+  // A CLI desta versão interpreta --allowed-hosts como booleano. Vite aceita
+  // o hostname exato pelo ambiente, sem desabilitar a validação de hosts.
+  frontendEnv.__VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS = `${process.env.CODESPACE_NAME}-4200.${process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}`;
 }
-launch('frontend', 'npm', frontendArgs, '.');
+launch('frontend', 'npm', frontendArgs, '.', frontendEnv);
