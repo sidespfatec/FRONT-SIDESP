@@ -73,3 +73,20 @@ a franquia da conta e gerar cobrança conforme suas configurações. Esta
 configuração não altera o limite de gastos nem contrata plano pago.
 
 Também funciona no VS Code local com a extensão Dev Containers e Docker Compose.
+
+## Validação em 26/10/2026
+
+- Ambiente criado na branch `backend/integracao-sidesp-completa`, máquina de 2 cores/8 GB.
+- Java 17 e Node 24 instalados; migrations V1–V3 aplicadas em `sidesp`.
+- Backend: 35 testes passaram no Codespace, incluindo os 14 testes de integração
+  com o banco separado `sidesp_test`; nenhum teste ignorado.
+- Frontend: 19 testes e build de produção passaram na cópia limpa da mesma branch.
+- Health `UP` diretamente na API e pelo proxy Angular; `/login` respondeu HTTP 200
+  usando o hostname externo no cabeçalho Host.
+- Reinício dos serviços validado; as chaves existentes permaneceram idênticas.
+
+Se o endereço externo retornar HTTP 401 enquanto os dois comandos `curl` de
+health retornam `UP`, confira a autenticação do encaminhamento privado no GitHub
+e teste a sessão em outro navegador. Isso é diferente de uma resposta 401 do
+endpoint de login da aplicação. Consulte a [documentação de acesso às portas
+privadas](https://docs.github.com/en/codespaces/reference/security-in-github-codespaces#port-forwarding).
