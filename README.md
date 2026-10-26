@@ -4,6 +4,17 @@ Angular permanece na raiz deste repositório. Backend Java 17/Spring Boot está 
 
 ## Executar
 
+### GitHub Codespaces
+
+Na branch `backend/integracao-sidesp-completa`, abra **Code → Codespaces → Create codespace**.
+Java 17, Node 24/npm, dependências e MariaDB 10.11 são preparados automaticamente.
+Abra a porta privada **4200** para usar a aplicação. Banco de desenvolvimento e
+de testes são separados; nenhum dado ou segredo local é necessário.
+Veja [.devcontainer/README.md](.devcontainer/README.md) para comandos, logs,
+persistência e uso de recursos da conta.
+
+### Windows / XAMPP
+
 1. Crie banco vazio sidesp com banco/00_criar_banco.sql no XAMPP. Não importe migrations manualmente.
 2. Na pasta backend, execute `powershell -ExecutionPolicy Bypass -File scripts/configurar-local.ps1`. Informe URL JDBC MySQL ou MariaDB conforme versão/porta local. Preserve as chaves existentes em config/local.properties se já usa o banco.
 3. Na pasta backend: `.\mvnw.cmd clean package` (Linux: `./mvnw clean package`), depois `java -jar target/sidesp-backend-0.1.0.jar`.
