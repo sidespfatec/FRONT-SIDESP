@@ -8,7 +8,8 @@
         <h1 class="title-teacher">Professores</h1>
 
         <div class="search-teacher-container">
-            <input pInputText type="text" placeholder="Buscar..." aria-label="Buscar professor" />
+            <input pInputText type="text" placeholder="Buscar..." aria-label="Buscar professor"
+                [ngModel]="busca()" (ngModelChange)="busca.set($event)" />
 
             <button pButton aria-label="Novo professor" (click)="openNew()">
                 <i class="pi pi-plus"></i>
@@ -17,18 +18,18 @@
 
         <ul class="teacher-list">
 
-            @for (teacher of teachers; track teacher.id) {
+            @for (teacher of professoresFiltrados(); track teacher.id) {
 
             <li class="teacher-item">
 
                 <div class="teacher-info">
 
                     <div class="teacher-title">
-                        <strong>{{ teacher.name }}</strong>
+                        <strong>{{ teacher.nome }}</strong>
                     </div>
 
                     <span class="teacher-modality">
-                        Modalidade: {{ teacher.modality }}
+                        Modalidade: {{ modalidades(teacher) }}
                     </span>
 
                 </div>
@@ -41,7 +42,7 @@
                     </button>
 
                     <button pButton size="small" [text]="true" [rounded]="true" severity="danger"
-                        aria-label="Excluir professor" (click)="delete(teacher)">
+                        aria-label="Inativar professor" (click)="delete(teacher)">
                         <i class="pi pi-trash"></i>
                     </button>
 
@@ -51,14 +52,22 @@
 
             }
 
+            @empty {
+            <li class="teacher-empty">
+                <p class="empty-title">Nenhum professor encontrado</p>
+                <p class="empty-text">Ajuste a busca ou cadastre o primeiro professor.</p>
+            </li>
+            }
+
         </ul>
 
     </p-card>
 
 </div>
 
-<app-new-teacher-modal [(visible)]="showModal"> </app-new-teacher-modal>
+<app-new-teacher-modal [(visible)]="showModal" [professor]="selecionado" (salvo)="aoSalvar($event)" />
 
+<p-confirmdialog />
 <p-toast position="bottom-center" />
 
 <app-footer></app-footer>

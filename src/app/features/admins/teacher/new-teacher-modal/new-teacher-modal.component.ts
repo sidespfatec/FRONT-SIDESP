@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output, signal } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, Output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -7,6 +7,7 @@ import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
+import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 
@@ -19,12 +20,12 @@ import { TeacherService } from '../teacher.service';
     standalone: true,
     imports: [
         CommonModule, ReactiveFormsModule,
-        ButtonModule, DialogModule, FileUploadModule, InputTextModule, SelectModule
+        ButtonModule, DialogModule, FileUploadModule, InputMaskModule, InputTextModule, SelectModule
     ],
     templateUrl: './new-teacher-modal.component.html',
     styleUrl: './new-teacher-modal.component.scss'
 })
-export class NewTeacherModalComponent implements OnInit {
+export class NewTeacherModalComponent implements OnChanges {
 
     @Input() visible = false;
     @Input() professor: Teacher | null = null;
@@ -56,13 +57,21 @@ export class NewTeacherModalComponent implements OnInit {
         modalidadeId: [null as number | null, Validators.required]
     });
 
-    ngOnInit(): void {
-        this.teacherService.listarModalidades().subscribe({
-            next: lista => {
-                if (lista?.length) { this.modalidades.set(lista); }
-            },
-            error: () => this.modalidades.set(MODALIDADES_PROVISORIAS)
-        });
+    ngOnChanges(): void {
+        this.carregarModalidades();
+
+        if (!this.visible) { return; }
+
+        if (this.professor) {
+            this.preencher(this.professor);
+        } else {
+            this.form.reset({ estado: 'SP' });
+            this.curriculo = null;
+        }
+    }
+
+    get titulo(): string {
+        return this.professor ? 'Editar professor' : 'Novo professor';
     }
 
     aoEscolherCurriculo(evento: { currentFiles: File[] }): void {
@@ -92,6 +101,11 @@ export class NewTeacherModalComponent implements OnInit {
         requisicao.subscribe({
             next: professor => this.aposSalvar(professor),
             error: (falha: HttpErrorResponse) => {
+                if (this.teacherService.apiIndisponivel(falha)) {
+                    this.aposSalvar(this.montarLocal(payload));
+                    return;
+                }
+
                 this.salvando.set(false);
                 this.tratarErro(falha);
             }
@@ -109,6 +123,45 @@ export class NewTeacherModalComponent implements OnInit {
         this.visibleChange.emit(false);
     }
 
+    erro(campo: string): string | null {
+        const controle = this.form.get(campo);
+        if (!controle || !controle.touched || !controle.errors) { return null; }
+        if (controle.errors['servidor']) { return controle.errors['servidor'] as string; }
+        if (controle.errors['required']) { return 'Campo obrigatório.'; }
+        if (controle.errors['email']) { return 'E-mail inválido.'; }
+        if (controle.errors['minlength']) { return 'Nome muito curto.'; }
+        return 'Valor inválido.';
+    }
+
+    private carregarModalidades(): void {
+        this.teacherService.listarModalidades().subscribe({
+            next: lista => {
+                if (lista?.length) { this.modalidades.set(lista); }
+            },
+            error: () => this.modalidades.set(MODALIDADES_PROVISORIAS)
+        });
+    }
+
+    private preencher(professor: Teacher): void {
+        this.form.setValue({
+            nome: professor.nome,
+            cpf: professor.cpf,
+            dataNascimento: professor.dataNascimento,
+            email: professor.email,
+            telefone: professor.telefone,
+            registroProfissional: professor.registroProfissional ?? '',
+            cep: professor.endereco?.cep ?? '',
+            rua: professor.endereco?.rua ?? '',
+            numero: professor.endereco?.numero ?? '',
+            complemento: professor.endereco?.complemento ?? '',
+            bairro: professor.endereco?.bairro ?? '',
+            cidade: professor.endereco?.cidade ?? '',
+            estado: professor.endereco?.estado ?? 'SP',
+            modalidadeId: professor.modalidades?.[0]?.id ?? null
+        });
+        this.curriculo = null;
+    }
+
     private aposSalvar(professor: Teacher): void {
         if (!this.curriculo) {
             this.concluir(professor);
@@ -117,13 +170,15 @@ export class NewTeacherModalComponent implements OnInit {
 
         this.teacherService.enviarCurriculo(professor.id, this.curriculo).subscribe({
             next: atualizado => this.concluir(atualizado),
-            error: () => {
-                this.messageService.add({
-                    severity: 'warn',
-                    summary: 'Professor salvo, currículo não',
-                    detail: 'O cadastro foi criado, mas o PDF não subiu. Anexe de novo pela ficha.',
-                    life: 7000
-                });
+            error: (falha: HttpErrorResponse) => {
+                if (!this.teacherService.apiIndisponivel(falha)) {
+                    this.messageService.add({
+                        severity: 'warn',
+                        summary: 'Professor salvo, currículo não',
+                        detail: 'O cadastro foi criado, mas o PDF não subiu.',
+                        life: 7000
+                    });
+                }
                 this.concluir(professor);
             }
         });
@@ -165,18 +220,27 @@ export class NewTeacherModalComponent implements OnInit {
         };
     }
 
+    private montarLocal(payload: TeacherPayload): Teacher {
+        const escolhida = this.modalidades().find(item => item.id === payload.modalidadeIds[0]);
+
+        return {
+            id: this.professor?.id ?? Date.now(),
+            pesId: payload.pesId,
+            nome: payload.nome,
+            cpf: payload.cpf,
+            dataNascimento: payload.dataNascimento,
+            email: payload.email,
+            telefone: payload.telefone,
+            registroProfissional: payload.registroProfissional,
+            endereco: payload.endereco,
+            modalidades: escolhida ? [escolhida] : [],
+            curriculoUrl: null,
+            ativo: true
+        };
+    }
+
     private tratarErro(falha: HttpErrorResponse): void {
         const corpo = falha.error as ApiErro | null;
-
-        if (falha.status === 0) {
-            this.messageService.add({
-                severity: 'error',
-                summary: 'Sem conexão com o servidor',
-                detail: 'A API não respondeu. Verifique se o backend está no ar.',
-                life: 6000
-            });
-            return;
-        }
 
         if (falha.status === 409 && corpo?.pesId && !corpo.jaEhProfessor) {
             this.messageService.add({
@@ -210,15 +274,5 @@ export class NewTeacherModalComponent implements OnInit {
 
     private soNumeros(valor: string): string {
         return (valor ?? '').replace(/\D/g, '');
-    }
-
-    erro(campo: string): string | null {
-        const controle = this.form.get(campo);
-        if (!controle || !controle.touched || !controle.errors) { return null; }
-        if (controle.errors['servidor']) { return controle.errors['servidor'] as string; }
-        if (controle.errors['required']) { return 'Campo obrigatório.'; }
-        if (controle.errors['email']) { return 'E-mail inválido.'; }
-        if (controle.errors['minlength']) { return 'Nome muito curto.'; }
-        return 'Valor inválido.';
     }
 }

@@ -1,5 +1,5 @@
 <p-dialog styleClass="teacher-dialog" [(visible)]="visible" (visibleChange)="visibleChange.emit($event)" [modal]="true"
-    [draggable]="false" [resizable]="false" header="Novo professor">
+    [draggable]="false" [resizable]="false" [header]="titulo">
 
     <form class="teacher-form" [formGroup]="form">
 
@@ -16,7 +16,7 @@
         <div class="teacher-field-row">
             <div class="teacher-field">
                 <label for="cpf">CPF</label>
-                <input id="cpf" pInputText formControlName="cpf" placeholder="000.000.000-00" />
+                <p-inputmask inputId="cpf" formControlName="cpf" mask="999.999.999-99" placeholder="000.000.000-00" fluid />
                 @if (erro('cpf'); as mensagem) {
                 <small class="teacher-error">{{ mensagem }}</small>
                 }
@@ -40,7 +40,7 @@
 
         <div class="teacher-field">
             <label for="telefone">Telefone</label>
-            <input id="telefone" pInputText formControlName="telefone" placeholder="(12) 90000-0000" />
+            <p-inputmask inputId="telefone" formControlName="telefone" mask="(99) 99999-9999" placeholder="(12) 90000-0000" fluid />
             @if (erro('telefone'); as mensagem) {
             <small class="teacher-error">{{ mensagem }}</small>
             }
@@ -51,7 +51,7 @@
         <div class="teacher-field-row">
             <div class="teacher-field teacher-field-grow">
                 <label for="cep">CEP</label>
-                <input id="cep" pInputText formControlName="cep" placeholder="00000-000" />
+                <p-inputmask inputId="cep" formControlName="cep" mask="99999-999" placeholder="00000-000" fluid />
             </div>
             <div class="teacher-field teacher-field-small">
                 <label for="numero">Número</label>

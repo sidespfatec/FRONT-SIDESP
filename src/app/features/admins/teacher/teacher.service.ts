@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
@@ -39,5 +39,13 @@ export class TeacherService {
 
     listarModalidades(): Observable<Modalidade[]> {
         return this.http.get<Modalidade[]>(`${environment.apiUrl}/modalidades`);
+    }
+
+    apiIndisponivel(falha: HttpErrorResponse): boolean {
+        const semResposta = falha.status === 0;
+        const naoImplementado = [403, 404, 405, 501, 502, 503].includes(falha.status);
+        const respostaNaoJson = falha.status === 200;
+
+        return semResposta || naoImplementado || respostaNaoJson;
     }
 }
