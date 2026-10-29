@@ -24,6 +24,21 @@
                 font-size: 1.15rem;
             }
 
+            .p-dialog-close-button {
+                width: 2.25rem;
+                height: 2.25rem;
+                border-radius: 50%;
+                background-color: var(--white) !important;
+                color: var(--color-brand-primary) !important;
+                transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+
+                &:hover {
+                    background-color: var(--color-brand-secondary) !important;
+                    color: var(--white) !important;
+                    transform: scale(1.08);
+                }
+            }
+
             .p-dialog-close-button:hover {
                 background-color: rgba(255, 255, 255, 0.15) !important;
             }

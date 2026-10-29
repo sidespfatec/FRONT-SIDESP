@@ -65,11 +65,14 @@
             color: var(--color-text-primary);
         }
     }
+}
 
-    a:hover,
-    a.active {
-        opacity: 1;
-    }
+.current-page-badge {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--color-text-primary);
+    white-space: nowrap;
+    text-transform: uppercase;
 }
 
 .menu-toggle-btn {
@@ -104,6 +107,22 @@
     background-color: var(--color-brand-primary);
     border-radius: 0 0 16px 16px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease,
+        visibility 0s linear 0.2s;
+
+    &.open {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+        transition-delay: 0s;
+    }
 }
 
 .submenu-pill {
@@ -116,35 +135,9 @@
     padding: 0.5rem 1.1rem;
     border-radius: 999px;
     cursor: pointer;
-}
 
-.admin-submenu {
-    animation: submenu-fade-in 0.2s ease-out;
-}
-
-@keyframes submenu-fade-in {
-    from {
-        opacity: 0;
-        transform: translateY(-8px);
+    &.active-pill {
+        font-weight: 700;
+        box-shadow: inset 0 0 0 2px var(--color-brand-primary);
     }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.current-page-badge {
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--color-text-primary);
-    white-space: nowrap;
-    text-transform: uppercase;
-}
-
-.submenu-pill.active-pill {
-    background-color: #fff;
-    color: var(--color-brand-primary);
-    font-weight: 700;
-    box-shadow: inset 0 0 0 2px var(--color-brand-primary);
 }

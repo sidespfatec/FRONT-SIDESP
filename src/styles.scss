@@ -57,29 +57,45 @@ body {
   backdrop-filter: blur(2px);
 }
 
-.p-password-overlay {
 
+.p-password-overlay {
   font-family: var(--font-app);
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 0.75rem 1rem;
 
   * {
     font-family: inherit;
   }
 
   .p-password-meter-text {
-    margin-top: 0.75rem;
-    padding-bottom: 0.75rem;
+    margin-top: 0.5rem;
+    padding-bottom: 0.5rem;
     border-bottom: 1px solid var(--color-border-strong);
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     color: var(--color-brand-primary);
   }
-}
 
-.p-password-overlay {
-  max-height: 70vh;
-  overflow-y: auto;
+  &:has(.p-password-meter-weak) .p-password-meter-text {
+    color: #ef4444;
+  }
+
+  &:has(.p-password-meter-medium) .p-password-meter-text {
+    color: #f97316;
+  }
+
+  &:has(.p-password-meter-strong) .p-password-meter-text {
+    color: #22c55e;
+  }
+
+  ul {
+    margin: 0.25rem 0;
+    padding-left: 1.25rem;
+    line-height: 1.4;
+  }
 }
 
 .p-select-overlay,
@@ -92,7 +108,7 @@ body {
 .p-tooltip {
   font-family: var(--font-app);
 
-  * {
+  *:not(.pi) {
     font-family: inherit;
   }
 }
