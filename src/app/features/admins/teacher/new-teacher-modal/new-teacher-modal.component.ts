@@ -6,13 +6,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
-import { FileUploadModule } from 'primeng/fileupload';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
-import { ApiErro } from '../../../../core/http/api-erro.model';
-import { Modalidade, MODALIDADES_PROVISORIAS, Teacher, TeacherPayload } from '../teacher.model';
+import {
+    ApiErro, ESPECIALIDADES, SEXO_OPCOES, Sexo, Teacher, TeacherPayload
+} from '../teacher.model';
 import { TeacherService } from '../teacher.service';
 
 @Component({
@@ -20,7 +21,8 @@ import { TeacherService } from '../teacher.service';
     standalone: true,
     imports: [
         CommonModule, ReactiveFormsModule,
-        ButtonModule, DialogModule, FileUploadModule, InputMaskModule, InputTextModule, SelectModule
+        ButtonModule, DialogModule, InputMaskModule, InputTextModule,
+        SelectModule, SelectButtonModule
     ],
     templateUrl: './new-teacher-modal.component.html',
     styleUrl: './new-teacher-modal.component.scss'
@@ -36,46 +38,41 @@ export class NewTeacherModalComponent implements OnChanges {
     private teacherService = inject(TeacherService);
     private messageService = inject(MessageService);
 
+    readonly sexoOpcoes = SEXO_OPCOES;
+    readonly especialidades = ESPECIALIDADES;
+
     salvando = signal(false);
-    modalidades = signal<Modalidade[]>(MODALIDADES_PROVISORIAS);
-    curriculo: File | null = null;
 
     form = this.fb.nonNullable.group({
-        nome: ['', [Validators.required, Validators.minLength(3)]],
+        nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(150)]],
         cpf: ['', Validators.required],
         dataNascimento: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
+        sexo: ['F' as Sexo, Validators.required],
         telefone: ['', Validators.required],
-        registroProfissional: [''],
-        cep: [''],
-        rua: [''],
-        numero: [''],
-        complemento: [''],
-        bairro: [''],
-        cidade: [''],
-        estado: ['SP'],
-        modalidadeId: [null as number | null, Validators.required]
+        registroProfissional: ['', [Validators.required, Validators.maxLength(50)]],
+        especialidade: ['', [Validators.required, Validators.maxLength(100)]]
     });
 
     ngOnChanges(): void {
-        this.carregarModalidades();
-
         if (!this.visible) { return; }
 
         if (this.professor) {
-            this.preencher(this.professor);
+            this.form.setValue({
+                nome: this.professor.nome,
+                cpf: this.professor.cpf,
+                dataNascimento: this.professor.dataNascimento,
+                sexo: this.professor.sexo,
+                telefone: this.professor.telefone,
+                registroProfissional: this.professor.registroProfissional,
+                especialidade: this.professor.especialidade
+            });
         } else {
-            this.form.reset({ estado: 'SP' });
-            this.curriculo = null;
+            this.form.reset({ sexo: 'F' });
         }
     }
 
     get titulo(): string {
         return this.professor ? 'Editar professor' : 'Novo professor';
-    }
-
-    aoEscolherCurriculo(evento: { currentFiles: File[] }): void {
-        this.curriculo = evento.currentFiles?.[0] ?? null;
     }
 
     salvar(): void {
@@ -90,25 +87,20 @@ export class NewTeacherModalComponent implements OnChanges {
             return;
         }
 
-        const payload = this.montarPayload(this.professor?.pesId ?? null);
-
-        const requisicao = this.professor
-            ? this.teacherService.atualizar(this.professor.id, payload)
-            : this.teacherService.criar(payload);
-
+        const payload = this.montarPayload();
         this.salvando.set(true);
 
-        requisicao.subscribe({
-            next: professor => this.aposSalvar(professor),
-            error: (falha: HttpErrorResponse) => {
-                if (this.teacherService.apiIndisponivel(falha)) {
-                    this.aposSalvar(this.montarLocal(payload));
-                    return;
-                }
+        if (this.professor) {
+            this.teacherService.atualizar(this.professor.id, payload).subscribe({
+                next: professor => this.concluir(professor),
+                error: (falha: HttpErrorResponse) => this.aoFalhar(falha, payload, this.professor!.id)
+            });
+            return;
+        }
 
-                this.salvando.set(false);
-                this.tratarErro(falha);
-            }
+        this.teacherService.cadastrar(payload).subscribe({
+            next: resultado => this.concluir(this.montarLocal(payload, resultado.id)),
+            error: (falha: HttpErrorResponse) => this.aoFalhar(falha, payload, Date.now())
         });
     }
 
@@ -117,8 +109,7 @@ export class NewTeacherModalComponent implements OnChanges {
     }
 
     fechar(): void {
-        this.form.reset({ estado: 'SP' });
-        this.curriculo = null;
+        this.form.reset({ sexo: 'F' });
         this.visible = false;
         this.visibleChange.emit(false);
     }
@@ -128,60 +119,19 @@ export class NewTeacherModalComponent implements OnChanges {
         if (!controle || !controle.touched || !controle.errors) { return null; }
         if (controle.errors['servidor']) { return controle.errors['servidor'] as string; }
         if (controle.errors['required']) { return 'Campo obrigatório.'; }
-        if (controle.errors['email']) { return 'E-mail inválido.'; }
-        if (controle.errors['minlength']) { return 'Nome muito curto.'; }
+        if (controle.errors['minlength']) { return 'Muito curto.'; }
+        if (controle.errors['maxlength']) { return 'Passou do tamanho permitido.'; }
         return 'Valor inválido.';
     }
 
-    private carregarModalidades(): void {
-        this.teacherService.listarModalidades().subscribe({
-            next: lista => {
-                if (lista?.length) { this.modalidades.set(lista); }
-            },
-            error: () => this.modalidades.set(MODALIDADES_PROVISORIAS)
-        });
-    }
-
-    private preencher(professor: Teacher): void {
-        this.form.setValue({
-            nome: professor.nome,
-            cpf: professor.cpf,
-            dataNascimento: professor.dataNascimento,
-            email: professor.email,
-            telefone: professor.telefone,
-            registroProfissional: professor.registroProfissional ?? '',
-            cep: professor.endereco?.cep ?? '',
-            rua: professor.endereco?.rua ?? '',
-            numero: professor.endereco?.numero ?? '',
-            complemento: professor.endereco?.complemento ?? '',
-            bairro: professor.endereco?.bairro ?? '',
-            cidade: professor.endereco?.cidade ?? '',
-            estado: professor.endereco?.estado ?? 'SP',
-            modalidadeId: professor.modalidades?.[0]?.id ?? null
-        });
-        this.curriculo = null;
-    }
-
-    private aposSalvar(professor: Teacher): void {
-        if (!this.curriculo) {
-            this.concluir(professor);
+    private aoFalhar(falha: HttpErrorResponse, payload: TeacherPayload, id: number): void {
+        if (this.teacherService.endpointAusente(falha)) {
+            this.concluir(this.montarLocal(payload, id));
             return;
         }
 
-        this.teacherService.enviarCurriculo(professor.id, this.curriculo).subscribe({
-            next: atualizado => this.concluir(atualizado),
-            error: (falha: HttpErrorResponse) => {
-                if (!this.teacherService.apiIndisponivel(falha)) {
-                    this.messageService.add({
-                        severity: 'warn',
-                        summary: 'Professor salvo, currículo não',
-                        detail: 'O cadastro foi criado, mas o PDF não subiu.',
-                        life: 7000
-                    });
-                }
-                this.concluir(professor);
-            }
-        });
+        this.salvando.set(false);
+        this.tratarErro(falha);
     }
 
     private concluir(professor: Teacher): void {
@@ -196,65 +146,50 @@ export class NewTeacherModalComponent implements OnChanges {
         this.fechar();
     }
 
-    private montarPayload(pesId: number | null): TeacherPayload {
+    private montarPayload(): TeacherPayload {
         const dados = this.form.getRawValue();
 
         return {
-            pesId,
             nome: dados.nome.trim(),
             cpf: this.soNumeros(dados.cpf),
             dataNascimento: dados.dataNascimento,
-            email: dados.email.trim().toLowerCase(),
+            sexo: dados.sexo,
             telefone: this.soNumeros(dados.telefone),
-            registroProfissional: dados.registroProfissional.trim() || null,
-            endereco: {
-                cep: this.soNumeros(dados.cep),
-                rua: dados.rua.trim(),
-                numero: dados.numero.trim(),
-                complemento: dados.complemento.trim() || null,
-                bairro: dados.bairro.trim(),
-                cidade: dados.cidade.trim(),
-                estado: dados.estado.trim().toUpperCase()
-            },
-            modalidadeIds: dados.modalidadeId ? [dados.modalidadeId] : []
+            registroProfissional: dados.registroProfissional.trim(),
+            especialidade: dados.especialidade.trim()
         };
     }
 
-    private montarLocal(payload: TeacherPayload): Teacher {
-        const escolhida = this.modalidades().find(item => item.id === payload.modalidadeIds[0]);
-
-        return {
-            id: this.professor?.id ?? Date.now(),
-            pesId: payload.pesId,
-            nome: payload.nome,
-            cpf: payload.cpf,
-            dataNascimento: payload.dataNascimento,
-            email: payload.email,
-            telefone: payload.telefone,
-            registroProfissional: payload.registroProfissional,
-            endereco: payload.endereco,
-            modalidades: escolhida ? [escolhida] : [],
-            curriculoUrl: null,
-            ativo: true
-        };
+    private montarLocal(payload: TeacherPayload, id: number): Teacher {
+        return { id, ...payload, ativo: true };
     }
 
     private tratarErro(falha: HttpErrorResponse): void {
         const corpo = falha.error as ApiErro | null;
 
-        if (falha.status === 409 && corpo?.pesId && !corpo.jaEhProfessor) {
+        if (falha.status === 403) {
             this.messageService.add({
-                severity: 'warn',
-                summary: 'Pessoa já cadastrada',
-                detail: `${corpo.nome} já existe no sistema. Confirme para cadastrar como professor.`,
-                life: 8000
+                severity: 'error',
+                summary: 'Sem permissão',
+                detail: 'Só um administrador total pode cadastrar professores.',
+                life: 6000
             });
             return;
         }
 
-        if (corpo?.campos) {
-            Object.entries(corpo.campos).forEach(([campo, mensagem]) => {
-                const controle = this.form.get(this.mapearCampo(campo));
+        if (falha.status === 401) {
+            this.messageService.add({
+                severity: 'error',
+                summary: 'Sessão expirada',
+                detail: 'Entre de novo para continuar.',
+                life: 6000
+            });
+            return;
+        }
+
+        if (corpo?.errosCampos) {
+            Object.entries(corpo.errosCampos).forEach(([campo, mensagem]) => {
+                const controle = this.form.get(campo);
                 controle?.setErrors({ servidor: mensagem });
                 controle?.markAsTouched();
             });
@@ -262,14 +197,10 @@ export class NewTeacherModalComponent implements OnChanges {
 
         this.messageService.add({
             severity: 'error',
-            summary: 'Não foi possível salvar',
+            summary: corpo?.codigo === 'CADASTRO_EXISTENTE' ? 'CPF já cadastrado' : 'Não foi possível salvar',
             detail: corpo?.mensagem ?? 'Tente novamente em instantes.',
-            life: 6000
+            life: 7000
         });
-    }
-
-    private mapearCampo(campo: string): string {
-        return campo.startsWith('endereco.') ? campo.replace('endereco.', '') : campo;
     }
 
     private soNumeros(valor: string): string {

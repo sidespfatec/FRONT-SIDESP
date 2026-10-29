@@ -7,7 +7,7 @@
 
         <div class="teacher-field">
             <label for="nome">Nome completo</label>
-            <input id="nome" pInputText formControlName="nome" />
+            <input id="nome" pInputText formControlName="nome" maxlength="150" />
             @if (erro('nome'); as mensagem) {
             <small class="teacher-error">{{ mensagem }}</small>
             }
@@ -16,7 +16,8 @@
         <div class="teacher-field-row">
             <div class="teacher-field">
                 <label for="cpf">CPF</label>
-                <p-inputmask inputId="cpf" formControlName="cpf" mask="999.999.999-99" placeholder="000.000.000-00" fluid />
+                <p-inputmask inputId="cpf" formControlName="cpf" mask="999.999.999-99"
+                    placeholder="000.000.000-00" fluid />
                 @if (erro('cpf'); as mensagem) {
                 <small class="teacher-error">{{ mensagem }}</small>
                 }
@@ -31,74 +32,41 @@
         </div>
 
         <div class="teacher-field">
-            <label for="email">E-mail</label>
-            <input id="email" pInputText type="email" formControlName="email" />
-            @if (erro('email'); as mensagem) {
-            <small class="teacher-error">{{ mensagem }}</small>
-            }
+            <label>Sexo</label>
+            <p-selectbutton formControlName="sexo" [options]="sexoOpcoes" optionLabel="label" optionValue="value"
+                [allowEmpty]="false" />
         </div>
 
         <div class="teacher-field">
             <label for="telefone">Telefone</label>
-            <p-inputmask inputId="telefone" formControlName="telefone" mask="(99) 99999-9999" placeholder="(12) 90000-0000" fluid />
+            <p-inputmask inputId="telefone" formControlName="telefone" mask="(99) 99999-9999"
+                placeholder="(12) 90000-0000" fluid />
             @if (erro('telefone'); as mensagem) {
             <small class="teacher-error">{{ mensagem }}</small>
             }
         </div>
 
-        <h2 class="teacher-form-title">Endereço</h2>
-
-        <div class="teacher-field-row">
-            <div class="teacher-field teacher-field-grow">
-                <label for="cep">CEP</label>
-                <p-inputmask inputId="cep" formControlName="cep" mask="99999-999" placeholder="00000-000" fluid />
-            </div>
-            <div class="teacher-field teacher-field-small">
-                <label for="numero">Número</label>
-                <input id="numero" pInputText formControlName="numero" />
-            </div>
-        </div>
-
-        <div class="teacher-field">
-            <label for="rua">Rua</label>
-            <input id="rua" pInputText formControlName="rua" />
-        </div>
-
-        <div class="teacher-field-row">
-            <div class="teacher-field">
-                <label for="bairro">Bairro</label>
-                <input id="bairro" pInputText formControlName="bairro" />
-            </div>
-            <div class="teacher-field">
-                <label for="cidade">Cidade</label>
-                <input id="cidade" pInputText formControlName="cidade" />
-            </div>
-        </div>
-
         <h2 class="teacher-form-title">Atuação</h2>
 
         <div class="teacher-field">
-            <label for="modalidade">Modalidade</label>
-            <p-select inputId="modalidade" formControlName="modalidadeId" [options]="modalidades()" optionLabel="nome"
-                optionValue="id" placeholder="Selecione" appendTo="body" />
-            @if (erro('modalidadeId'); as mensagem) {
+            <label for="especialidade">Especialidade</label>
+            <p-select inputId="especialidade" formControlName="especialidade" [options]="especialidades"
+                optionLabel="label" optionValue="value" [editable]="true" placeholder="Selecione ou digite"
+                appendTo="body" />
+            @if (erro('especialidade'); as mensagem) {
             <small class="teacher-error">{{ mensagem }}</small>
             }
         </div>
 
         <div class="teacher-field">
             <label for="registro">Registro profissional</label>
-            <input id="registro" pInputText formControlName="registroProfissional" placeholder="000000-G/SP" />
+            <input id="registro" pInputText formControlName="registroProfissional" maxlength="50"
+                placeholder="000000-G/SP" />
+            @if (erro('registroProfissional'); as mensagem) {
+            <small class="teacher-error">{{ mensagem }}</small>
+            }
         </div>
 
-        <h2 class="teacher-form-title">Currículo</h2>
-
-        <p-fileUpload mode="basic" chooseLabel="Anexar currículo (PDF)" accept=".pdf" [auto]="false"
-            [customUpload]="true" (onSelect)="aoEscolherCurriculo($event)" />
-
-        @if (curriculo) {
-        <p class="teacher-file">{{ curriculo.name }}</p>
-        }
     </form>
 
     <ng-template pTemplate="footer">

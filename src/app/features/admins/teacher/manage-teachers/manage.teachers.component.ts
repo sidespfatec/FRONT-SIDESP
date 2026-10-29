@@ -17,7 +17,7 @@ import { FooterComponent } from '../../../../component/footer/footer.component';
 import { NavbarDesktopAdminComponent } from '../../../../component/navbar-desktop-admin/navbar-desktop-admin.component';
 import { NewTeacherModalComponent } from '../new-teacher-modal/new-teacher-modal.component';
 
-import { modalidadesDe, PROFESSORES_PROVISORIOS, Teacher } from '../teacher.model';
+import { PROFESSORES_PROVISORIOS, Teacher } from '../teacher.model';
 import { TeacherService } from '../teacher.service';
 
 @Component({
@@ -53,7 +53,7 @@ export class ManageTeachersComponent implements OnInit {
 
         return this.teachers().filter(professor =>
             professor.nome.toLowerCase().includes(termo)
-            || modalidadesDe(professor).toLowerCase().includes(termo)
+            || professor.especialidade.toLowerCase().includes(termo)
         );
     });
 
@@ -72,14 +72,10 @@ export class ManageTeachersComponent implements OnInit {
             },
             error: (falha: HttpErrorResponse) => {
                 this.teachers.set(PROFESSORES_PROVISORIOS);
-                this.semApi.set(this.teacherService.apiIndisponivel(falha));
+                this.semApi.set(this.teacherService.endpointAusente(falha));
                 this.carregando.set(false);
             }
         });
-    }
-
-    modalidades(professor: Teacher): string {
-        return modalidadesDe(professor);
     }
 
     openNew(): void {
@@ -121,7 +117,7 @@ export class ManageTeachersComponent implements OnInit {
         this.teacherService.alterarSituacao(professor.id, false).subscribe({
             next: () => this.removerDaLista(professor),
             error: (falha: HttpErrorResponse) => {
-                if (this.teacherService.apiIndisponivel(falha)) {
+                if (this.teacherService.endpointAusente(falha)) {
                     this.removerDaLista(professor);
                     return;
                 }

@@ -143,3 +143,57 @@
         flex: 0 0 6rem;
     }
 }
+
+.teacher-error {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.6875rem;
+    color: var(--red-600);
+}
+
+:host ::ng-deep {
+
+    .teacher-form .p-selectbutton {
+        display: flex;
+        gap: 0.5rem;
+        max-width: 20rem;
+    }
+
+    .teacher-form .p-togglebutton {
+        flex: 1;
+        padding: 0.55rem 1rem;
+        border: 0.0625rem solid var(--gray-300);
+        border-radius: 0.375rem;
+        background: var(--color-bg-header);
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--color-text-primary);
+    }
+
+    .teacher-form .p-togglebutton .p-togglebutton-content {
+        background: transparent;
+        box-shadow: none;
+        padding: 0;
+        color: inherit;
+    }
+
+    .teacher-form .p-togglebutton:hover:not(.p-togglebutton-checked) {
+        background: var(--gray-100);
+    }
+
+    .teacher-form .p-togglebutton-checked {
+        background: var(--color-brand-primary);
+        border-color: var(--color-brand-primary);
+    }
+
+    .teacher-form .p-togglebutton-checked .p-togglebutton-content,
+    .teacher-form .p-togglebutton-checked .p-togglebutton-label {
+        color: var(--color-text-on-brand);
+    }
+
+    .teacher-form .p-select,
+    .teacher-form .p-inputmask,
+    .teacher-form .p-inputmask input {
+        width: 100%;
+    }
+}
