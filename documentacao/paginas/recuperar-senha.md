@@ -1,3 +1,9 @@
+> Integração solicitada em 29/10/2026. O estado atual abaixo prevalece sobre os registros históricos desta página.
+
+O login solicita o código pelo serviço existente POST /api/v1/auth/recuperar-senha. A opção “Já tenho um código de recuperação” permite confirmar o código e a nova senha por POST /api/v1/auth/redefinir-senha. Código e senhas não entram em URL nem em armazenamento do navegador; são apagados após sucesso. O envio de e-mail depende da configuração SMTP, sem simular entrega.
+
+---
+
 > Atualização v0.3: implementação autorizada por Heitor, incluindo integração Angular. IMPLEMENTACAO.md e ADR-004 registram o estado efetivo; propostas antigas abaixo são histórico quando divergirem.
 
 > Revisão v0.2: decisões de identidade em DECISOES-HEITOR.md/ADR-003 prevalecem sobre texto histórico das issues abaixo. Não implementar esta página no escopo atual.

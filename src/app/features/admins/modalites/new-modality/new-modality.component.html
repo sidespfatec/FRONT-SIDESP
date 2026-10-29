@@ -1,33 +1,75 @@
-<app-navbar-desktop-admin></app-navbar-desktop-admin>
-<app-banner></app-banner>
-
+<app-navbar-desktop-admin /><app-banner />
 <div class="card-container">
-    <p-card>
-        <h1 class="title-modality">Nova modalidade</h1>
-
-        <form class="modality-form">
-            <div class="modality-field">
-                <label for="name">Nome</label>
-                <input id="name" name="name" pInputText [(ngModel)]="name" />
-            </div>
-
-            <div class="modality-field">
-                <label for="icon">Ícone</label>
-                <p-select inputId="icon" name="icon" [options]="icons" optionLabel="label" optionValue="value"
-                    [(ngModel)]="icon" appendTo="body" />
-            </div>
-
-            <div class="modality-field-switch">
-                <p-toggleswitch inputId="active" name="active" [(ngModel)]="active" />
-                <label for="active">Modalidade ativa</label>
-            </div>
-
-            <div class="modality-actions">
-                <p-button label="Cancelar" severity="secondary" [text]="true" (onClick)="cancel()" />
-                <p-button label="Cadastrar" icon="pi pi-check" (onClick)="save()" />
-            </div>
-        </form>
-    </p-card>
+  <p-card
+    ><h1>Nova modalidade</h1>
+    <form #modalityForm="ngForm" (ngSubmit)="save(modalityForm)" class="integration-form">
+      <fieldset [disabled]="busy()">
+        <div class="field-grid">
+          <label for="modality-name"
+            >Nome *<input
+              id="modality-name"
+              name="nome"
+              [(ngModel)]="model.nome"
+              maxlength="100"
+              required /></label
+          ><label for="modality-min"
+            >Idade mínima *<input
+              id="modality-min"
+              name="idadeMinima"
+              type="number"
+              [(ngModel)]="model.idadeMinima"
+              required
+              min="0"
+              max="130"
+              step="1" /></label
+          ><label for="modality-max"
+            >Idade máxima *<input
+              id="modality-max"
+              name="idadeMaxima"
+              type="number"
+              [(ngModel)]="model.idadeMaxima"
+              required
+              min="0"
+              max="130"
+              step="1" /></label
+          ><label for="modality-absences"
+            >Limite de faltas mensais *<input
+              id="modality-absences"
+              name="limiteFaltasMensais"
+              type="number"
+              [(ngModel)]="model.limiteFaltasMensais"
+              required
+              min="0"
+              max="31"
+              step="1" /></label
+          ><label for="modality-hub"
+            >Polo *<select id="modality-hub" name="poloId" [(ngModel)]="model.poloId" required>
+              <option [ngValue]="null">Selecione um polo ativo</option>
+              @for (hub of hubs(); track hub.id) {
+                <option [ngValue]="hub.id">{{ hub.nome }}</option>
+              }
+            </select></label
+          >
+        </div>
+      </fieldset>
+      @if (loading()) {
+        <p role="status">Carregando polos...</p>
+      }
+      @if (!loading() && !hubs().length) {
+        <p>Cadastre ou reative um polo antes de cadastrar a modalidade.</p>
+        <button type="button" (click)="loadHubs()">Atualizar polos</button>
+      }
+      @if (error()) {
+        <p role="alert">{{ error() }}</p>
+      }
+      <p>A modalidade será criada ativa. A situação pode ser alterada na listagem.</p>
+      <div class="form-actions">
+        <button type="button" (click)="cancel()" [disabled]="busy()">Cancelar</button
+        ><button type="submit" [disabled]="busy() || loading() || !hubs().length">
+          {{ busy() ? 'Salvando...' : 'Cadastrar' }}
+        </button>
+      </div>
+    </form></p-card
+  >
 </div>
-
-<app-footer></app-footer>
+<app-footer />

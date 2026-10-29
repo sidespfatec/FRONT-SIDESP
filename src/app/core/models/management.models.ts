@@ -45,7 +45,14 @@ export interface ModalityInput {
   limiteFaltasMensais: number;
   poloId: number;
 }
-export interface Modality extends ModalityInput {
+export interface Modality extends Omit<
+  ModalityInput,
+  'idadeMinima' | 'idadeMaxima' | 'limiteFaltasMensais' | 'poloId'
+> {
+  idadeMinima: number | null;
+  idadeMaxima: number | null;
+  limiteFaltasMensais: number | null;
+  poloId: number | null;
   id: number;
   ativo: boolean;
 }

@@ -1,85 +1,12 @@
-<p-dialog styleClass="teacher-dialog" [(visible)]="visible" (visibleChange)="visibleChange.emit($event)" [modal]="true"
-    [draggable]="false" [resizable]="false" header="Novo professor">
-
-    <form class="teacher-form">
-
-        <h2 class="teacher-form-title">Dados pessoais</h2>
-
-        <div class="teacher-field">
-            <label for="nome">Nome completo</label>
-            <input id="nome" pInputText />
-        </div>
-
-        <div class="teacher-field-row">
-            <div class="teacher-field">
-                <label for="cpf">CPF</label>
-                <input id="cpf" pInputText placeholder="000.000.000-00" />
-            </div>
-            <div class="teacher-field">
-                <label for="nascimento">Data de nascimento</label>
-                <input id="nascimento" pInputText type="date" />
-            </div>
-        </div>
-
-        <div class="teacher-field">
-            <label for="email">E-mail</label>
-            <input id="email" pInputText type="email" />
-        </div>
-
-        <div class="teacher-field">
-            <label for="telefone">Telefone</label>
-            <input id="telefone" pInputText placeholder="(12) 90000-0000" />
-        </div>
-
-        <h2 class="teacher-form-title">Endereço</h2>
-
-        <div class="teacher-field-row">
-            <div class="teacher-field teacher-field-grow">
-                <label for="cep">CEP</label>
-                <input id="cep" pInputText placeholder="00000-000" />
-            </div>
-            <div class="teacher-field teacher-field-small">
-                <label for="numero">Número</label>
-                <input id="numero" pInputText />
-            </div>
-        </div>
-
-        <div class="teacher-field">
-            <label for="rua">Rua</label>
-            <input id="rua" pInputText />
-        </div>
-
-        <div class="teacher-field-row">
-            <div class="teacher-field">
-                <label for="bairro">Bairro</label>
-                <input id="bairro" pInputText />
-            </div>
-            <div class="teacher-field">
-                <label for="cidade">Cidade</label>
-                <input id="cidade" pInputText />
-            </div>
-        </div>
-
-        <h2 class="teacher-form-title">Atuação</h2>
-
-        <div class="teacher-field">
-            <label for="modalidade">Modalidade</label>
-            <p-select inputId="modalidade" [options]="modalities" optionLabel="label" optionValue="value"
-                appendTo="body" />
-        </div>
-
-        <div class="teacher-field">
-            <label for="turma">Turma</label>
-            <p-select inputId="turma" [options]="classGroups" optionLabel="label" optionValue="value" appendTo="body" />
-        </div>
-
-        <h2 class="teacher-form-title">Currículo</h2>
-
-        <p-fileUpload mode="basic" chooseLabel="Anexar currículo (PDF)" accept=".pdf" />
-    </form>
-
-    <ng-template pTemplate="footer">
-        <p-button label="Cancelar" severity="secondary" [text]="true" (onClick)="onCancel()" />
-        <p-button label="Salvar" icon="pi pi-check" />
-    </ng-template>
+<p-dialog
+  [visible]="visible"
+  (visibleChange)="visibleChange.emit($event)"
+  [modal]="true"
+  [draggable]="false"
+  [style]="{ width: '46rem', maxWidth: '95vw' }"
+  header="Novo professor"
+>
+  @if (visible) {
+    <app-professional-form [administrator]="false" (saved)="complete()" (cancel)="close()" />
+  }
 </p-dialog>

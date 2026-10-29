@@ -1,23 +1,16 @@
+import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { Router, provideRouter } from '@angular/router';
 import { App } from './app';
-
-describe('App', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [App],
-    }).compileComponents();
-  });
-
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(App);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it('should render title', async () => {
-    const fixture = TestBed.createComponent(App);
+@Component({standalone:true,template:'<h1>Página de teste</h1>'})
+class TestPage {}
+describe('App',()=>{
+  beforeEach(()=>TestBed.configureTestingModule({imports:[App],providers:[provideRouter([{path:'teste',component:TestPage}])]}));
+  it('cria a aplicação',()=>expect(TestBed.createComponent(App).componentInstance).toBeTruthy());
+  it('exibe a página navegada no lugar do título antigo do projeto inicial',async()=>{
+    const fixture=TestBed.createComponent(App);
+    await TestBed.inject(Router).navigateByUrl('/teste');
     await fixture.whenStable();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, SIDESP');
+    expect((fixture.nativeElement as HTMLElement).querySelector('h1')?.textContent).toBe('Página de teste');
   });
 });

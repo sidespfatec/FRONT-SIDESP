@@ -12,6 +12,13 @@ describe('NewsDetailModalComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(NewsDetailModalComponent);
+    fixture.componentRef.setInput('news', {
+      id: 1,
+      title: 'Notícia de teste',
+      description: 'Conteúdo fictício para verificar o componente.',
+      image: '',
+      date: new Date('2026-01-01T12:00:00Z'),
+    });
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

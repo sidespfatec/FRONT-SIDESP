@@ -1,0 +1,105 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="integration-form">
+  @if (error()) {
+    <p role="alert">{{ error() }}</p>
+  }
+  <fieldset [disabled]="busy()">
+    <legend>Dados pessoais e endereço</legend>
+    <div class="field-grid">
+      @for (field of fields; track field.key) {
+        <label [for]="'professional-' + field.key"
+          >{{ field.label }} *
+          <input
+            [id]="'professional-' + field.key"
+            [type]="field.type"
+            [formControlName]="field.key"
+            [attr.maxlength]="field.max"
+            [attr.max]="field.type === 'date' ? today : null"
+          />
+        </label>
+      }
+      <label for="professional-genero"
+        >Gênero *<select id="professional-genero" formControlName="genero">
+          <option value="">Selecione</option>
+          <option value="M">Masculino</option>
+          <option value="F">Feminino</option>
+        </select></label
+      >
+      <label for="professional-complemento"
+        >Complemento<input
+          id="professional-complemento"
+          formControlName="complemento"
+          maxlength="100"
+      /></label>
+    </div>
+  </fieldset>
+  <fieldset [disabled]="busy()">
+    <legend>{{ administrator ? 'Acesso administrativo' : 'Dados profissionais' }}</legend>
+    <div class="field-grid">
+      @if (administrator) {
+        <label for="professional-nivel"
+          >Nível de permissão *<select id="professional-nivel" formControlName="nivel">
+            <option value="ADMINISTRADOR_PARCIAL">Administrador parcial</option>
+            <option value="ADMINISTRADOR_TOTAL">Administrador total</option>
+          </select></label
+        >
+        <label for="professional-rg"
+          >RG<input id="professional-rg" formControlName="rg" maxlength="20"
+        /></label>
+        <label for="professional-cargo"
+          >Cargo<input id="professional-cargo" formControlName="cargo" maxlength="100"
+        /></label>
+        <label for="professional-unidade"
+          >Unidade<input id="professional-unidade" formControlName="unidade" maxlength="100"
+        /></label>
+        <label for="professional-admissao"
+          >Admissão<input
+            id="professional-admissao"
+            type="date"
+            formControlName="admissao"
+            [max]="today"
+        /></label>
+      } @else {
+        <label for="professional-registro"
+          >Registro profissional<input
+            id="professional-registro"
+            formControlName="registro"
+            maxlength="40"
+        /></label>
+        <label for="professional-especialidade"
+          >Especialidade<input
+            id="professional-especialidade"
+            formControlName="especialidade"
+            maxlength="150"
+        /></label>
+      }
+      <label for="professional-senha"
+        >Senha inicial *<input
+          id="professional-senha"
+          type="password"
+          formControlName="senha"
+          minlength="8"
+          maxlength="128"
+          autocomplete="new-password"
+      /></label>
+      <label for="professional-confirmacao"
+        >Confirmar senha *<input
+          id="professional-confirmacao"
+          type="password"
+          formControlName="confirmacao"
+          maxlength="128"
+          autocomplete="new-password"
+      /></label>
+    </div>
+  </fieldset>
+  <p>
+    {{
+      administrator
+        ? 'Autenticação em dois fatores ainda não está disponível.'
+        : 'O vínculo com turmas será feito quando essa funcionalidade estiver disponível.'
+    }}
+  </p>
+  <div class="form-actions">
+    <button type="button" (click)="cancel.emit()" [disabled]="busy()">Cancelar</button
+    ><button type="submit" [disabled]="busy()">{{ busy() ? 'Salvando...' : 'Cadastrar' }}</button>
+  </div>
+</form>

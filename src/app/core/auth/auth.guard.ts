@@ -17,3 +17,14 @@ export const adminGuard: CanActivateFn = (route) => {
     catchError(() => of(router.createUrlTree(['/login']))),
   );
 };
+
+/** Protege as páginas da própria conta para qualquer perfil autenticado. */
+export const authGuard: CanActivateFn = () => {
+  const auth = inject(AuthService),
+    router = inject(Router);
+  if (!auth.token()) return router.createUrlTree(['/login']);
+  return auth.me().pipe(
+    map(() => true),
+    catchError(() => of(router.createUrlTree(['/login']))),
+  );
+};

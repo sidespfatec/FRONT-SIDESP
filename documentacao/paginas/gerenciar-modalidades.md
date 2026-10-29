@@ -1,3 +1,9 @@
+> Integração solicitada em 29/10/2026. O estado atual abaixo prevalece sobre os registros históricos desta página.
+
+A tela usa GET /api/v1/admin/modalidades, filtro de busca/situação e PATCH /api/v1/admin/modalidades/{id}/situacao. O polo é identificado pelos registros reais de polos. Foram removidas modalidades e contagens de turmas/alunos de demonstração. A gestão de turmas permanece identificada como protótipo, pois não há endpoint.
+
+---
+
 > Atualização v0.3: implementação autorizada por Heitor, incluindo integração Angular. IMPLEMENTACAO.md e ADR-004 registram o estado efetivo; propostas antigas abaixo são histórico quando divergirem.
 
 > Revisão v0.2: decisões de identidade em DECISOES-HEITOR.md/ADR-003 prevalecem sobre texto histórico das issues abaixo. Não implementar esta página no escopo atual.

@@ -1,0 +1,121 @@
+<main class="account-card">
+  <nav>
+    <a routerLink="/home">Início</a>
+    @if (auth.isAdmin()) {
+      <a routerLink="/manage-hubs">Administração</a>
+    }
+    <button type="button" (click)="auth.logout()">Sair</button>
+  </nav>
+  <h1>Meu perfil</h1>
+  @if (error()) {
+    <p role="alert">{{ error() }}</p>
+  }
+  @if (message()) {
+    <p role="status">{{ message() }}</p>
+  }
+  @if (busy()) {
+    <p role="status">Carregando...</p>
+  }
+  @if (profile(); as p) {
+    <p>Perfil: {{ p.perfil }} · CPF protegido, não pode ser alterado por esta tela.</p>
+    <form #profileForm="ngForm" class="integration-form" (ngSubmit)="save(profileForm)">
+      <fieldset [disabled]="busy()">
+        <div class="field-grid">
+          <label for="profile-name"
+            >Nome *<input
+              id="profile-name"
+              name="nome"
+              [(ngModel)]="model.nome"
+              required
+              maxlength="150" /></label
+          ><label for="profile-social"
+            >Nome social<input
+              id="profile-social"
+              name="nomeSocial"
+              [(ngModel)]="model.nomeSocial"
+              maxlength="150" /></label
+          ><label for="profile-email"
+            >E-mail *<input
+              id="profile-email"
+              type="email"
+              name="email"
+              [(ngModel)]="model.email"
+              required
+              email
+              maxlength="254" /></label
+          ><label for="profile-phone"
+            >Telefone *<input
+              id="profile-phone"
+              name="telefone"
+              [(ngModel)]="model.telefone"
+              required
+              maxlength="20"
+          /></label>
+          @for (field of addressFields; track field.key) {
+            <label [for]="'profile-' + field.key"
+              >{{ field.label
+              }}<input
+                [id]="'profile-' + field.key"
+                [name]="field.key"
+                [(ngModel)]="model.endereco[field.key]"
+                [required]="field.key !== 'complemento'"
+                [maxlength]="field.max"
+            /></label>
+          }
+        </div>
+      </fieldset>
+      <div class="form-actions">
+        <button type="submit" [disabled]="busy()">Salvar perfil</button>
+      </div>
+    </form>
+    <h2>Alterar senha</h2>
+    <form #passwordForm="ngForm" class="integration-form" (ngSubmit)="changePassword(passwordForm)">
+      <fieldset [disabled]="busy()">
+        <div class="field-grid">
+          <label for="profile-current-password"
+            >Senha atual<input
+              id="profile-current-password"
+              name="senhaAtual"
+              [(ngModel)]="password.senhaAtual"
+              type="password"
+              autocomplete="current-password"
+              required
+              maxlength="128" /></label
+          ><label for="profile-new-password"
+            >Nova senha<input
+              id="profile-new-password"
+              name="novaSenha"
+              [(ngModel)]="password.novaSenha"
+              type="password"
+              autocomplete="new-password"
+              required
+              minlength="8"
+              maxlength="128" /></label
+          ><label for="profile-confirm-password"
+            >Confirmar nova senha<input
+              id="profile-confirm-password"
+              name="confirmacao"
+              [(ngModel)]="password.confirmacao"
+              type="password"
+              autocomplete="new-password"
+              required
+              minlength="8"
+              maxlength="128"
+          /></label>
+        </div>
+      </fieldset>
+      <div class="form-actions">
+        <button type="submit" [disabled]="busy()">Alterar senha e sair</button>
+      </div>
+    </form>
+  }
+  <h2>Dependentes</h2>
+  <ul>
+    @for (child of auth.user()?.dependentes || []; track child.id) {
+      <li>{{ child.nome }}</li>
+    } @empty {
+      <li>Nenhum dependente vinculado.</li>
+    }
+  </ul>
+  <a routerLink="/dependentes/novo">Cadastrar outro dependente</a>
+</main>

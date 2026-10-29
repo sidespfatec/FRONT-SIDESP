@@ -1,3 +1,9 @@
+> Integração solicitada em 29/10/2026. O estado atual abaixo prevalece sobre os registros históricos desta página.
+
+O cartão do formulário agora usa a mesma classe do estilo e mantém superfície branca em todas as etapas. O cadastro preserva adulto/menor e oferece ficha médica opcional no POST /api/v1/auth/cadastros. Quando a ficha é incluída, o contato e o telefone de emergência são obrigatórios. Campos de saúde desconhecidos podem permanecer vazios. Não foram alterados schema ou migrations.
+
+---
+
 # Cadastro
 
 A página `/registration` permite cadastrar uma pessoa adulta ou uma pessoa menor de idade. O formulário reúne dados pessoais, endereço e credenciais; para menor, solicita também os dados de um responsável adulto.

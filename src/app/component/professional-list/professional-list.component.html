@@ -1,0 +1,116 @@
+<div class="card-container">
+  <p-card
+    ><h1>{{ administrator ? 'Administradores' : 'Professores' }}</h1>
+    <div class="field-grid">
+      <label for="professional-search"
+        >Buscar por nome<input id="professional-search" [(ngModel)]="search" /></label
+      ><label for="professional-status"
+        >Situação<select id="professional-status" [(ngModel)]="status">
+          <option value="all">Todos</option>
+          <option value="active">Ativos</option>
+          <option value="inactive">Inativos</option>
+        </select></label
+      >
+    </div>
+    <div class="form-actions">
+      <button type="button" (click)="load()" [disabled]="busy()">Atualizar</button
+      ><button type="button" (click)="message.set(''); visible = true" [disabled]="busy()">
+        {{ administrator ? 'Novo administrador' : 'Novo professor' }}
+      </button>
+    </div>
+    @if (error()) {
+      <p role="alert">{{ error() }}</p>
+    }
+    @if (message()) {
+      <p role="status">{{ message() }}</p>
+    }
+    @if (busy()) {
+      <p role="status">Carregando...</p>
+    }
+    <ul>
+      @for (row of filtered; track row.id) {
+        <li
+          style="
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid #ddd;
+          "
+        >
+          <div>
+            <strong>{{ row.nome }}</strong>
+            <p>
+              {{ row.ativo ? 'Ativo' : 'Inativo' }} ·
+              {{
+                administrator
+                  ? row.perfil === 'ADMINISTRADOR_TOTAL'
+                    ? 'Administrador total'
+                    : 'Administrador parcial'
+                  : row.especialidade || 'Especialidade não informada'
+              }}
+            </p>
+          </div>
+          <div class="form-actions">
+            <button type="button" (click)="selected = row">Ver dados</button
+            ><button type="button" (click)="toggle(row)" [disabled]="busy()">
+              {{ row.ativo ? 'Inativar' : 'Reativar' }}
+            </button>
+          </div>
+        </li>
+      } @empty {
+        @if (!busy() && !error()) {
+          <li>Nenhum cadastro encontrado.</li>
+        }
+      }
+    </ul>
+  </p-card>
+</div>
+<p-dialog
+  [visible]="visible"
+  (visibleChange)="visible = $event"
+  [modal]="true"
+  [draggable]="false"
+  [style]="{ width: '46rem', maxWidth: '95vw' }"
+  [header]="administrator ? 'Novo administrador' : 'Novo professor'"
+>
+  @if (visible) {
+    <app-professional-form
+      [administrator]="administrator"
+      (saved)="saved()"
+      (cancel)="visible = false"
+    />
+  }
+</p-dialog>
+<p-dialog
+  [visible]="selected !== null"
+  (visibleChange)="selected = null"
+  [modal]="true"
+  header="Dados do cadastro"
+>
+  @if (selected; as row) {
+    <h2>{{ row.nome }}</h2>
+    <p>Perfil: {{ row.perfil }}</p>
+    <p>Situação: {{ row.ativo ? 'Ativo' : 'Inativo' }}</p>
+    @if (row.registro) {
+      <p>Registro: {{ row.registro }}</p>
+    }
+    @if (row.especialidade) {
+      <p>Especialidade: {{ row.especialidade }}</p>
+    }
+    @if (row.cargo) {
+      <p>Cargo: {{ row.cargo }}</p>
+    }
+    @if (row.unidade) {
+      <p>Unidade: {{ row.unidade }}</p>
+    }
+    @if (row.admissao) {
+      <p>Admissão: {{ row.admissao }}</p>
+    }
+    <p>
+      CPF e credenciais não são expostos nesta consulta. A API atual permite alterar a situação, mas
+      ainda não oferece edição dos demais dados.
+    </p>
+  }
+</p-dialog>

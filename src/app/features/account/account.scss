@@ -1,0 +1,26 @@
+:host {
+  display: block;
+  background: var(--color-bg-page);
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+.account-card {
+  max-width: 850px;
+  margin: auto;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 3px 18px #0002;
+}
+nav {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+h2 {
+  margin-top: 2rem;
+}
+[role='status'] {
+  color: #047857;
+}

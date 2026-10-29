@@ -7,6 +7,10 @@ import { AuthService } from './auth.service';
   imports: [RouterLink],
   template: `<nav aria-label="Acesso à conta" class="session">
     @if (auth.user(); as u) {
+      <a routerLink="/perfil">Meu perfil</a>
+      @if (auth.isAdmin() || u.perfil === 'PROFESSOR') {
+        <a routerLink="/fichas-medicas">Consultar ficha médica</a>
+      }
       <span>Olá, {{ u.nome }}</span
       ><button type="button" (click)="auth.logout()">Sair</button>
       @if (u.dependentes.length) {

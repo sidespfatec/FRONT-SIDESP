@@ -1,34 +1,58 @@
 <nav class="navbar-admin">
-    <figure class="navbar-logo">
-        <img src="assets/images/logo.png" alt="Logo">
-    </figure>
+  <figure class="navbar-logo">
+    <img src="assets/images/logo.png" alt="Logo" />
+  </figure>
 
-    <div class="navbar-right">
-        <ul class="navbar-links">
-            <li><a routerLink="/home" routerLinkActive="active">INICIAL</a></li>
-            <li><a routerLink="/esportes" routerLinkActive="active">ESPORTES</a></li>
-            <li><a routerLink="/perfil" routerLinkActive="active">PERFIL</a></li>
-        </ul>
+  <div class="navbar-right">
+    <ul class="navbar-links">
+      <li><a routerLink="/home" routerLinkActive="active">INICIAL</a></li>
+      <li><a routerLink="/manage-modalites" routerLinkActive="active">ESPORTES</a></li>
+      <li><a routerLink="/perfil" routerLinkActive="active">PERFIL</a></li>
+    </ul>
 
-        @if (currentPageLabel()) {
-            <span class="current-page-badge">{{ currentPageLabel() }}</span>
-        }
+    @if (currentPageLabel()) {
+      <span class="current-page-badge">{{ currentPageLabel() }}</span>
+    }
 
-        <button type="button" class="menu-toggle-btn" [class.active]="isMenuOpen()" (click)="toggleMenu()">
-            <i class="pi pi-bars"></i>
-        </button>
+    <button
+      type="button"
+      class="menu-toggle-btn"
+      [class.active]="isMenuOpen()"
+      (click)="toggleMenu()"
+    >
+      <i class="pi pi-bars"></i>
+    </button>
 
-        <button pButton type="button" label="LOGIN" icon="pi pi-user" routerLink="/login"
-            class="navbar-login-btn"></button>
-    </div>
+    @if (auth.user()) {
+      <button
+        pButton
+        type="button"
+        label="SAIR"
+        icon="pi pi-sign-out"
+        (click)="auth.logout()"
+        class="navbar-login-btn"
+      ></button>
+    } @else {
+      <button
+        pButton
+        type="button"
+        label="LOGIN"
+        icon="pi pi-user"
+        routerLink="/login"
+        class="navbar-login-btn"
+      ></button>
+    }
+  </div>
 
-    <div class="admin-submenu" [class.open]="isMenuOpen()">
-        @for (page of adminPages; track page.label) {
-            @if (page.path) {
-                <a [routerLink]="page.path" routerLinkActive="active-pill" class="submenu-pill">{{ page.label }}</a>
-            } @else {
-                <a class="submenu-pill">{{ page.label }}</a>
-            }
-        }
-    </div>
+  <div class="admin-submenu" [class.open]="isMenuOpen()">
+    @for (page of adminPages; track page.label) {
+      @if (page.path) {
+        <a [routerLink]="page.path" routerLinkActive="active-pill" class="submenu-pill">{{
+          page.label
+        }}</a>
+      } @else {
+        <a class="submenu-pill">{{ page.label }}</a>
+      }
+    }
+  </div>
 </nav>

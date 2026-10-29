@@ -25,7 +25,11 @@ Gere cada chave separadamente com `openssl rand -base64 32`. Preserve as chaves 
 
 O frontend usa `/api/v1`; no desenvolvimento, `proxy.conf.json` encaminha para `localhost:8080`. Na produção, configure o proxy reverso para a API ou a URL de `src/environments/environment.production.ts`. GitHub Pages sozinho não hospeda o backend nem encaminha `/api`.
 
-## O que está conectado nas telas
+## Integração das telas
+
+Consulte [INTEGRACAO-TELAS.md](documentacao/INTEGRACAO-TELAS.md) para o estado atualizado dos cadastros, perfil, dependentes e recuperação. As notas abaixo descrevem a entrega anterior da Sprint 2.
+
+## O que estava conectado na entrega anterior
 
 Login, cadastro público de adulto/menor e solicitação de recuperação usam a API. Guard, interceptor e filtro do menu conferem o perfil confirmado no servidor. O cadastro reaproveita os campos e a integração da versão enviada, com os estilos da `main`.
 

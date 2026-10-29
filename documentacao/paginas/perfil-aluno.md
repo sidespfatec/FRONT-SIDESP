@@ -1,3 +1,9 @@
+> Integração solicitada em 29/10/2026. O estado atual abaixo prevalece sobre os registros históricos desta página.
+
+A rota /perfil exige sessão de qualquer perfil e consulta GET /api/v1/perfil. O titular pode editar nome, nome social, e-mail, telefone e endereço com PUT /api/v1/perfil. CPF é protegido e não pode ser editado. POST /api/v1/perfil/senha exige senha atual e confirmação e encerra a sessão após sucesso. /dependentes/novo permite ao titular adulto cadastrar menor pelo POST /api/v1/responsavel/dependentes com endereço, parentesco e ficha médica, sem escolher responsável alheio.
+
+---
+
 > Atualização v0.3: implementação autorizada por Heitor, incluindo integração Angular. IMPLEMENTACAO.md e ADR-004 registram o estado efetivo; propostas antigas abaixo são histórico quando divergirem.
 
 > Revisão v0.2: decisões de identidade em DECISOES-HEITOR.md/ADR-003 prevalecem sobre texto histórico das issues abaixo. Não implementar esta página no escopo atual.

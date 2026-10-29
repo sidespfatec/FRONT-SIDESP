@@ -1,3 +1,9 @@
+> Integração solicitada em 29/10/2026. O estado atual abaixo prevalece sobre os registros históricos desta página.
+
+A listagem consulta GET /api/v1/admin/professores, permite busca local por nome, filtro por situação e PATCH /api/v1/admin/professores/{id}/situacao. Não exibe professores fictícios nem quantidades de turmas inventadas. Os dados disponíveis podem ser consultados; edição e vínculo com turmas continuam sem endpoint.
+
+---
+
 > Atualização v0.3: implementação autorizada por Heitor, incluindo integração Angular. IMPLEMENTACAO.md e ADR-004 registram o estado efetivo; propostas antigas abaixo são histórico quando divergirem.
 
 > Revisão v0.2: decisões de identidade em DECISOES-HEITOR.md/ADR-003 prevalecem sobre texto histórico das issues abaixo. Não implementar esta página no escopo atual.

@@ -1,45 +1,57 @@
-<app-navbar-desktop-admin></app-navbar-desktop-admin>
-<app-banner></app-banner>
-
+<app-navbar-desktop-admin /><app-banner />
 <div class="card-container">
-    <p-card>
-        <h1 class="title-modality">Modalidades</h1>
-
-        <div class="search-modality-container">
-            <input pInputText type="text" placeholder="Buscar..." aria-label="Buscar modalidade" />
-            <button pButton aria-label="Nova modalidade" (click)="openNew()">
-                <i class="pi pi-plus"></i>
-            </button>
-        </div>
-
-        <div class="modality-filter">
-            <p-selectbutton [options]="filterOptions" [(ngModel)]="filter" optionLabel="label" optionValue="value"
-                [allowEmpty]="false" aria-label="Filtrar modalidades" />
-        </div>
-
-        <ul class="modality-list">
-            @for (modality of filteredModalities; track modality.id) {
-            <li>
-                <button type="button" class="modality-item" (click)="openModality(modality)">
-                    <span class="modality-icon" [style.background]="modality.iconBg" [style.color]="modality.iconColor">
-                        <i [class]="modality.icon"></i>
-                    </span>
-
-                    <span class="modality-info">
-                        <strong>{{ modality.name }}</strong>
-                        <span class="modality-meta">
-                            {{ modality.classesCount }} turmas · {{ modality.studentsCount }} alunos
-                        </span>
-                    </span>
-
-                    <i class="pi pi-chevron-right"></i>
-                </button>
-            </li>
-            } @empty {
-            <li class="modality-empty">Nenhuma modalidade encontrada.</li>
-            }
-        </ul>
-    </p-card>
+  <p-card
+    ><h1 class="title-modality">Modalidades</h1>
+    <div class="field-grid">
+      <label for="modality-search"
+        >Buscar modalidade<input id="modality-search" [(ngModel)]="search" /></label
+      ><label for="modality-status"
+        >Situação<select id="modality-status" [(ngModel)]="status">
+          <option value="active">Ativas</option>
+          <option value="inactive">Inativas</option>
+          <option value="all">Todas</option>
+        </select></label
+      >
+    </div>
+    <div class="form-actions">
+      <button type="button" (click)="load()" [disabled]="busy()">Atualizar</button
+      ><button type="button" (click)="openNew()">Nova modalidade</button>
+    </div>
+    @if (error()) {
+      <p role="alert">{{ error() }}</p>
+    }
+    @if (message()) {
+      <p role="status">{{ message() }}</p>
+    }
+    @if (busy()) {
+      <p role="status">Carregando...</p>
+    }
+    <ul class="modality-list">
+      @for (m of filteredModalities; track m.id) {
+        <li class="modality-item">
+          <span class="modality-info"
+            ><strong>{{ m.nome }}</strong
+            ><span
+              >{{ m.ativo ? 'Ativa' : 'Inativa' }} ·
+              {{
+                (m.poloId === null ? undefined : hubs().get(m.poloId)) || 'Polo não informado'
+              }}</span
+            ><span
+              >Idades: {{ m.idadeMinima ?? 'Não informada' }} a
+              {{ m.idadeMaxima ?? 'Não informada' }} · Faltas mensais:
+              {{ m.limiteFaltasMensais ?? 'Não informado' }}</span
+            ></span
+          ><button type="button" (click)="toggle(m)" [disabled]="busy()">
+            {{ m.ativo ? 'Inativar' : 'Reativar' }}
+          </button>
+        </li>
+      } @empty {
+        @if (!busy() && !error()) {
+          <li>Nenhuma modalidade encontrada.</li>
+        }
+      }
+    </ul>
+    <p>A consulta e gestão de turmas ainda não estão disponíveis na API.</p></p-card
+  >
 </div>
-
-<app-footer></app-footer>
+<app-footer />

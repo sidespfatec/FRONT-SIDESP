@@ -1,45 +1,139 @@
-<app-navbar-desktop-admin></app-navbar-desktop-admin>
-<app-banner></app-banner>
-
+<app-navbar-desktop-admin /><app-banner />
 <div class="card-container">
-    <p-card>
-        <h1 class="title-hub">Polos</h1>
-
-        <div class="search-hub-container">
-            <input pInputText type="text" placeholder="Buscar..." aria-label="Buscar polo" />
-            <button pButton aria-label="Novo polo">
-                <i class="pi pi-plus"></i>
+  <p-card
+    ><h1 class="title-hub">Polos</h1>
+    <form class="field-grid" (ngSubmit)="load()">
+      <label for="hub-search"
+        >Buscar polo<input id="hub-search" name="search" [(ngModel)]="search" /></label
+      ><label for="hub-status"
+        >Situação<select
+          id="hub-status"
+          name="status"
+          [(ngModel)]="status"
+          (ngModelChange)="load()"
+        >
+          <option value="all">Todos</option>
+          <option value="active">Ativos</option>
+          <option value="inactive">Inativos</option>
+        </select></label
+      ><button type="submit" [disabled]="busy()">Buscar</button
+      ><button type="button" (click)="open()">Novo polo</button>
+    </form>
+    @if (error()) {
+      <p role="alert">{{ error() }}</p>
+    }
+    @if (message()) {
+      <p role="status">{{ message() }}</p>
+    }
+    @if (busy()) {
+      <p role="status">Carregando...</p>
+    }
+    <div id="hub-map" class="hub-map" aria-label="Localização dos polos cadastrados"></div>
+    <ul class="hub-list">
+      @for (hub of hubs(); track hub.id) {
+        <li class="hub-item">
+          <div>
+            <strong>{{ hub.nome }}</strong>
+            <p>{{ hub.bairro }} · {{ hub.cidade }} / {{ hub.uf }}</p>
+            <p>{{ hub.ativo ? 'Ativo' : 'Inativo' }}</p>
+          </div>
+          <div class="form-actions">
+            <button type="button" (click)="selected = hub">Ver endereço</button
+            ><button type="button" (click)="toggle(hub)" [disabled]="busy()">
+              {{ hub.ativo ? 'Inativar' : 'Reativar' }}
             </button>
-        </div>
-
-        <div id="hub-map" class="hub-map"></div>
-
-        <ul class="hub-list">
-            @for (hub of hubs; track hub.id) {
-            <li class="hub-item">
-                <div class="hub-info">
-                    <div class="hub-title">
-                        <strong>{{ hub.name }}</strong>
-                        <p-tag [value]="hub.active ? 'Ativo' : 'Inativo'"
-                            [severity]="hub.active ? 'success' : 'secondary'" />
-                    </div>
-                    <span class="hub-neighborhood">{{ hub.neighborhood }}</span>
-                </div>
-
-                <div class="hub-buttons">
-                    <button pButton size="small" [text]="true" [rounded]="true" aria-label="Editar">
-                        <i class="pi pi-pencil"></i>
-                    </button>
-                    <button pButton size="small" [text]="true" [rounded]="true"
-                        [severity]="hub.active ? 'danger' : 'success'"
-                        [attr.aria-label]="hub.active ? 'Desativar' : 'Reativar'" (click)="toggleStatus(hub)">
-                        <i [class]="hub.active ? 'pi pi-ban' : 'pi pi-check'"></i>
-                    </button>
-                </div>
-            </li>
-            }
-        </ul>
-    </p-card>
+          </div>
+        </li>
+      } @empty {
+        @if (!busy() && !error()) {
+          <li>Nenhum polo encontrado.</li>
+        }
+      }
+    </ul></p-card
+  >
 </div>
-
-<app-footer></app-footer>
+<p-dialog
+  [visible]="visible"
+  (visibleChange)="visible = $event"
+  [modal]="true"
+  [style]="{ width: '46rem', maxWidth: '95vw' }"
+  header="Novo polo"
+>
+  @if (visible) {
+    <form #hubForm="ngForm" class="integration-form" (ngSubmit)="save(hubForm)">
+      <fieldset [disabled]="saving()">
+        <div class="field-grid">
+          <label for="hub-name"
+            >Nome *<input
+              id="hub-name"
+              name="nome"
+              [(ngModel)]="model.nome"
+              required
+              maxlength="100"
+          /></label>
+          @for (field of addressFields; track field.key) {
+            <label [for]="'hub-' + field.key"
+              >{{ field.label }} *<input
+                [id]="'hub-' + field.key"
+                [name]="field.key"
+                [(ngModel)]="model.endereco[field.key]"
+                required
+                [maxlength]="field.max"
+                [pattern]="field.key === 'uf' ? '[a-zA-Z]{2}' : '.*'"
+            /></label>
+          }
+          <label for="hub-complement"
+            >Complemento<input
+              id="hub-complement"
+              name="complemento"
+              [(ngModel)]="model.endereco.complemento"
+              maxlength="100" /></label
+          ><label for="hub-lat"
+            >Latitude *<input
+              id="hub-lat"
+              name="latitude"
+              type="number"
+              [(ngModel)]="model.latitude"
+              required
+              min="-90"
+              max="90"
+              step="any" /></label
+          ><label for="hub-lng"
+            >Longitude *<input
+              id="hub-lng"
+              name="longitude"
+              type="number"
+              [(ngModel)]="model.longitude"
+              required
+              min="-180"
+              max="180"
+              step="any"
+          /></label>
+        </div>
+      </fieldset>
+      @if (formError()) {
+        <p role="alert">{{ formError() }}</p>
+      }
+      <div class="form-actions">
+        <button type="button" (click)="visible = false" [disabled]="saving()">Cancelar</button
+        ><button type="submit" [disabled]="saving()">
+          {{ saving() ? 'Salvando...' : 'Cadastrar' }}
+        </button>
+      </div>
+    </form>
+  }
+</p-dialog>
+<p-dialog
+  [visible]="selected !== null"
+  (visibleChange)="selected = null"
+  [modal]="true"
+  header="Dados do polo"
+>
+  @if (selected; as hub) {
+    <h2>{{ hub.nome }}</h2>
+    <p>{{ hub.rua }}, {{ hub.numero }} {{ hub.complemento }}</p>
+    <p>{{ hub.bairro }} · {{ hub.cidade }} / {{ hub.uf }} · CEP {{ hub.cep }}</p>
+    <p>Coordenadas: {{ hub.latitude }}, {{ hub.longitude }}</p>
+    <p>A edição do endereço ainda não está disponível na API.</p>
+  }</p-dialog
+><app-footer />

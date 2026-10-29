@@ -29,6 +29,10 @@ export class LoginComponent {
   private auth = inject(AuthService);
   private account = inject(AccountService);
   private router = inject(Router);
+  resetVisible = false;
+  resetToken = '';
+  resetPassword = '';
+  resetConfirmation = '';
   identificador = '';
   senha = '';
   busy = signal(false);
@@ -72,6 +76,35 @@ export class LoginComponent {
         next: (result) => this.message.set(result.mensagem),
         error: (error) =>
           this.message.set(error.error?.mensagem || 'Não foi possível solicitar a recuperação.'),
+      });
+  }
+
+  /** Consome o código recebido pelo usuário e volta ao formulário de login após sucesso. */
+  reset(): void {
+    if (this.busy()) return;
+    if (
+      !this.resetToken.trim() ||
+      this.resetPassword.length < 8 ||
+      this.resetPassword.length > 128 ||
+      this.resetPassword !== this.resetConfirmation
+    ) {
+      this.message.set('Informe o código e senhas iguais, com 8 a 128 caracteres.');
+      return;
+    }
+    this.busy.set(true);
+    this.account
+      .reset(this.resetToken.trim(), this.resetPassword, this.resetConfirmation)
+      .pipe(finalize(() => this.busy.set(false)))
+      .subscribe({
+        next: () => {
+          this.senha = '';
+          this.resetToken = '';
+          this.resetPassword = '';
+          this.resetConfirmation = '';
+          this.resetVisible = false;
+          this.message.set('Senha redefinida. Entre com a nova senha.');
+        },
+        error: (e) => this.message.set(e.error?.mensagem || 'Não foi possível redefinir a senha.'),
       });
   }
 }

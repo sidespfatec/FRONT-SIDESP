@@ -1,6 +1,6 @@
 <app-simple-banner></app-simple-banner>
 <div class="main-container">
-  <div class="registration-container">
+  <div class="registration-card register-body">
     <h1 class="title-register">CADASTRO</h1>
     @if (error()) {
       <div role="alert" class="form-error">
@@ -304,6 +304,68 @@
                   }
                 </div>
               </div>
+              <div class="input-register">
+                <label
+                  ><input type="checkbox" formControlName="incluirFicha" /> Incluir ficha médica
+                  (opcional)</label
+                >
+              </div>
+              @if (form.controls.incluirFicha.value) {
+                <fieldset>
+                  <legend>Ficha médica</legend>
+                  <p>Informe somente o necessário para o atendimento.</p>
+                  <div class="input-register">
+                    <label for="register-condicoes">Condições de saúde</label
+                    ><textarea
+                      id="register-condicoes"
+                      formControlName="condicoes"
+                      maxlength="1000"
+                    ></textarea>
+                  </div>
+                  <div class="input-register">
+                    <label for="register-alergias">Alergias</label
+                    ><textarea
+                      id="register-alergias"
+                      formControlName="alergias"
+                      maxlength="1000"
+                    ></textarea>
+                  </div>
+                  <div class="input-register">
+                    <label for="register-medicamentos">Medicamentos</label
+                    ><textarea
+                      id="register-medicamentos"
+                      formControlName="medicamentos"
+                      maxlength="1000"
+                    ></textarea>
+                  </div>
+                  <div class="input-register">
+                    <label for="register-restricoes">Restrições para atividades</label
+                    ><textarea
+                      id="register-restricoes"
+                      formControlName="restricoes"
+                      maxlength="1000"
+                    ></textarea>
+                  </div>
+                  <div class="input-register">
+                    <label for="register-emergency-name">Contato de emergência</label
+                    ><input
+                      pInputText
+                      id="register-emergency-name"
+                      formControlName="contatoEmergencia"
+                      maxlength="100"
+                    />
+                  </div>
+                  <div class="input-register">
+                    <label for="register-emergency-phone">Telefone de emergência</label
+                    ><input
+                      pInputText
+                      id="register-emergency-phone"
+                      formControlName="telefoneEmergencia"
+                      maxlength="20"
+                    />
+                  </div>
+                </fieldset>
+              }
               <div class="step-actions">
                 <button type="button" pButton (click)="activateCallback(2)">Voltar</button
                 ><button type="submit" pButton [disabled]="busy()">

@@ -14,7 +14,7 @@ import { filter } from 'rxjs/operators';
 })
 export class NavbarDesktopAdminComponent {
   private router = inject(Router);
-  private auth = inject(AuthService);
+  auth = inject(AuthService);
 
   isMenuOpen = signal(false);
   currentPageLabel = signal<string | null>(null);
@@ -25,6 +25,7 @@ export class NavbarDesktopAdminComponent {
     { path: '/manage-modalites', label: 'Gerenciar Modalidades' },
     { path: '/admin/alunos', label: 'Gerenciar Alunos' },
     { path: '/manage-hubs', label: 'Gerenciar Polos' },
+    { path: '/fichas-medicas', label: 'Consultar ficha médica' },
     { path: '/admin/relatorios', label: 'Relatórios' },
     { path: '/admin/mapa-calor', label: 'Mapa de Calor' },
   ];

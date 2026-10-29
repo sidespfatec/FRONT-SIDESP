@@ -92,6 +92,13 @@ export class RegistrationComponent {
     email: ['', [Validators.required, Validators.email, Validators.maxLength(254)]],
     senha: ['', [passwordValidator]],
     confirmacaoSenha: ['', [Validators.required]],
+    incluirFicha: [false],
+    condicoes: ['', Validators.maxLength(1000)],
+    alergias: ['', Validators.maxLength(1000)],
+    medicamentos: ['', Validators.maxLength(1000)],
+    restricoes: ['', Validators.maxLength(1000)],
+    contatoEmergencia: ['', Validators.maxLength(100)],
+    telefoneEmergencia: ['', Validators.maxLength(20)],
   });
   activeStep = 1;
   busy = signal(false);
@@ -214,6 +221,20 @@ export class RegistrationComponent {
         telefone: v.guardianPhone,
         parentesco: v.kinship,
       };
+    if (v.incluirFicha) {
+      if (!v.contatoEmergencia.trim() || !v.telefoneEmergencia.trim()) {
+        this.error.set('Informe contato e telefone de emergência para incluir a ficha médica.');
+        return;
+      }
+      payload.fichaMedica = {
+        condicoes: v.condicoes,
+        alergias: v.alergias,
+        medicamentos: v.medicamentos,
+        restricoes: v.restricoes,
+        contatoEmergencia: v.contatoEmergencia,
+        telefoneEmergencia: v.telefoneEmergencia,
+      };
+    }
     this.busy.set(true);
     this.auth
       .register(payload)

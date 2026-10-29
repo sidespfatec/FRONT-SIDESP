@@ -16,6 +16,7 @@ export interface Registration {
     uf: string;
   };
   credenciais: { email: string; senha: string; confirmacaoSenha: string; cpfLogin: string };
+  fichaMedica?: import('../models/management.models').Medical;
   responsavel?: {
     nome: string;
     cpf: string;

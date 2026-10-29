@@ -1,44 +1,112 @@
 <main class="main-container">
-    <app-banner></app-banner>
-    <div class="layout-login">
-        <div class="login-card">
-
-            <header class="login-header">
-                <div class="login-badge">
-                    <i class="pi pi-user"></i>
-                </div>
-                <h1 class="title-login">Fazer login</h1>
-                <p class="subtitle-login">Acesse sua conta com CPF e senha</p>
-            </header>
-
-            <form class="login-form" (ngSubmit)="submit()">
-                <div class="input-login">
-                    <label for="cpf">CPF</label>
-                    <div class="input-wrap">
-                        <i class="pi pi-id-card"></i>
-                        <p-inputmask id="cpf" name="identificador" [(ngModel)]="identificador" mask="999.999.999-99" placeholder="000.000.000-00" [autoClear]="false" styleClass="w-full" />
-                    </div>
-                </div>
-
-                <div class="input-login">
-                    <label for="password">Senha</label>
-                    <div class="input-wrap">
-                        <i class="pi pi-lock"></i>
-                        <input pInputText id="password" name="senha" [(ngModel)]="senha" type="password" placeholder="Digite sua senha" />
-                    </div>
-                    <a class="forgot-link" role="button" tabindex="0" (click)="recover()" (keydown.enter)="recover()">Esqueci minha senha</a>
-                </div>
-
-                <p-button class="button-login" label="ENTRAR" icon="pi pi-sign-in" type="submit" [loading]="busy()" />
-                @if (message()) { <p role="status">{{ message() }}</p> }
-            </form>
-
-            <div class="register-area">
-                <p class="question-register">Ainda não tem conta?</p>
-                <p-button class="button-register" label="CADASTRE-SE" icon="pi pi-user-plus"
-                    routerLink="/registration" />
-            </div>
-
+  <app-banner></app-banner>
+  <div class="layout-login">
+    <div class="login-card">
+      <header class="login-header">
+        <div class="login-badge">
+          <i class="pi pi-user"></i>
         </div>
+        <h1 class="title-login">Fazer login</h1>
+        <p class="subtitle-login">Acesse sua conta com CPF e senha</p>
+      </header>
+
+      <form class="login-form" (ngSubmit)="submit()">
+        <div class="input-login">
+          <label for="cpf">CPF</label>
+          <div class="input-wrap">
+            <i class="pi pi-id-card"></i>
+            <p-inputmask
+              id="cpf"
+              name="identificador"
+              [(ngModel)]="identificador"
+              mask="999.999.999-99"
+              placeholder="000.000.000-00"
+              [autoClear]="false"
+              styleClass="w-full"
+            />
+          </div>
+        </div>
+
+        <div class="input-login">
+          <label for="password">Senha</label>
+          <div class="input-wrap">
+            <i class="pi pi-lock"></i>
+            <input
+              pInputText
+              id="password"
+              name="senha"
+              [(ngModel)]="senha"
+              type="password"
+              placeholder="Digite sua senha"
+            />
+          </div>
+          <a
+            class="forgot-link"
+            role="button"
+            tabindex="0"
+            (click)="recover()"
+            (keydown.enter)="recover()"
+            >Esqueci minha senha</a
+          >
+        </div>
+
+        <p-button
+          class="button-login"
+          label="ENTRAR"
+          icon="pi pi-sign-in"
+          type="submit"
+          [loading]="busy()"
+        />
+        @if (message()) {
+          <p role="status">{{ message() }}</p>
+        }
+      </form>
+
+      <button type="button" (click)="resetVisible = !resetVisible">
+        Já tenho um código de recuperação
+      </button>
+      @if (resetVisible) {
+        <form class="login-form" (ngSubmit)="reset()">
+          <label for="reset-code">Código recebido por e-mail</label
+          ><input
+            pInputText
+            id="reset-code"
+            name="resetToken"
+            [(ngModel)]="resetToken"
+            required
+            autocomplete="one-time-code"
+          /><label for="reset-password">Nova senha</label
+          ><input
+            pInputText
+            id="reset-password"
+            name="resetPassword"
+            type="password"
+            [(ngModel)]="resetPassword"
+            minlength="8"
+            maxlength="128"
+            required
+            autocomplete="new-password"
+          /><label for="reset-confirmation">Confirmar nova senha</label
+          ><input
+            pInputText
+            id="reset-confirmation"
+            name="resetConfirmation"
+            type="password"
+            [(ngModel)]="resetConfirmation"
+            required
+            autocomplete="new-password"
+          /><p-button type="submit" label="Redefinir senha" [loading]="busy()" />
+        </form>
+      }
+      <div class="register-area">
+        <p class="question-register">Ainda não tem conta?</p>
+        <p-button
+          class="button-register"
+          label="CADASTRE-SE"
+          icon="pi pi-user-plus"
+          routerLink="/registration"
+        />
+      </div>
     </div>
+  </div>
 </main>
