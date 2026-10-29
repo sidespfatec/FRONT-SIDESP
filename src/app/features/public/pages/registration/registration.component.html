@@ -1,270 +1,254 @@
+
 <app-simple-banner></app-simple-banner>
 
 <div class="main-container">
-    <div class="registration-card">
+  <div class="registration-card">
+    <header class="register-header">
+      <div class="register-badge">
+        <i class="pi pi-user-plus"></i>
+      </div>
+      <h1 class="title-register">Criar conta</h1>
+      <p class="subtitle-register">Preencha seus dados para se cadastrar</p>
+    </header>
 
-        <header class="register-header">
-            <div class="register-badge">
-                <i class="pi pi-user-plus"></i>
-            </div>
-            <h1 class="title-register">Criar conta</h1>
-            <p class="subtitle-register">Preencha seus dados para se cadastrar</p>
-        </header>
+    @if (error()) {
+      <div role="alert" class="form-error">
+        {{ error() }}
+        @for (message of serverErrors(); track $index) {
+          <p>{{ message }}</p>
+        }
+      </div>
+    }
 
-        <div class="register-body">
-            <p-stepper [value]="activeStep">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="register-body">
+        <p-stepper [(value)]="activeStep">
+          <p-step-item [value]="1">
+            <p-step>Informações Pessoais</p-step>
+            <p-step-panel>
+              <ng-template #content let-activateCallback="activateCallback">
+                <div class="container-step">
+                  <div class="input-register">
+                    <label for="name">Nome Completo</label>
+                    <div class="input-wrap">
+                      <i class="pi pi-user"></i>
+                      <input pInputText id="name" formControlName="nome" placeholder="Digite seu nome completo" />
+                    </div>
+                    @if (invalid('nome')) {
+                      <small class="field-error">Confira este campo.</small>
+                    }
+                  </div>
 
-                <p-step-item [value]="1">
-                    <p-step>Informações Pessoais</p-step>
-                    <p-step-panel>
-                        <ng-template #content let-activateCallback="activateCallback">
-                            <div class="container-step">
+                  <div class="input-register">
+                    <label for="cpf">CPF</label>
+                    <div class="input-wrap">
+                      <i class="pi pi-id-card"></i>
+                      <p-inputMask inputId="cpf" mask="999.999.999-99" placeholder="000.000.000-00" formControlName="cpf" />
+                    </div>
+                    <small>Para menores, o CPF do aluno é opcional.</small>
+                    @if (invalid('cpf')) {
+                      <small class="field-error">Confira o CPF.</small>
+                    }
+                  </div>
 
-                                <div class="input-register">
-                                    <label for="name">Nome Completo</label>
-                                    <div class="input-wrap">
-                                        <i class="pi pi-user"></i>
-                                        <input pInputText id="name" placeholder="Digite seu nome completo" />
-                                    </div>
-                                </div>
+                  <div class="input-register">
+                    <label for="birthdate">Data de Nascimento</label>
+                    <div class="input-wrap">
+                      <i class="pi pi-calendar"></i>
+                      <p-inputMask inputId="birthdate" mask="99/99/9999" placeholder="DD/MM/AAAA" formControlName="dataNascimento" />
+                    </div>
+                    @if (invalid('dataNascimento')) {
+                      <small class="field-error">Informe uma data válida.</small>
+                    }
+                  </div>
 
-                                <div class="input-register">
-                                    <label for="cpf">CPF</label>
-                                    <div class="input-wrap">
-                                        <i class="pi pi-id-card"></i>
-                                        <p-inputMask id="cpf" mask="999.999.999-99" placeholder="000.000.000-00" />
-                                    </div>
-                                </div>
+                  <div class="input-register">
+                    <label id="gender-label">Gênero</label>
+                    <p-selectButton [options]="genderOptions" optionLabel="label" optionValue="value" formControlName="genero" ariaLabelledBy="gender-label" />
+                    @if (invalid('genero')) {
+                      <small class="field-error">Selecione uma opção.</small>
+                    }
+                  </div>
 
-                                <div class="input-register">
-                                    <label for="birthdate">Data de Nascimento</label>
-                                    <div class="input-wrap">
-                                        <i class="pi pi-calendar"></i>
-                                        <p-inputMask id="birthdate" mask="99/99/9999" placeholder="DD/MM/AAAA" />
-                                    </div>
-                                </div>
+                  <div class="input-register">
+                    <label for="phone">Telefone</label>
+                    <div class="input-wrap">
+                      <i class="pi pi-phone"></i>
+                      <p-inputMask inputId="phone" mask="(99) 99999-9999" placeholder="(00) 00000-0000" formControlName="telefone" />
+                    </div>
+                    @if (invalid('telefone')) {
+                      <small class="field-error">Confira o telefone.</small>
+                    }
+                  </div>
 
-                                <div class="input-register">
-                                    <label>Gênero</label>
-                                    <p-selectButton [options]="[
-                                        {label: 'Masculino', value: 'M'},
-                                        {label: 'Feminino', value: 'F'}
-                                    ]" optionLabel="label" optionValue="value" />
-                                </div>
+                  @if (minor) {
+                    <p role="status">O cadastro será vinculado à conta do responsável.</p>
 
-                                <div class="input-register">
-                                    <label for="phone">Telefone</label>
-                                    <div class="input-wrap">
-                                        <i class="pi pi-phone"></i>
-                                        <p-inputMask id="phone" mask="(99) 99999-9999" placeholder="(00) 00000-0000" />
-                                    </div>
-                                </div>
+                    <div class="input-register">
+                      <label for="guardianName">Nome do Responsável</label>
+                      <input pInputText id="guardianName" formControlName="guardianName" placeholder="Nome completo" />
+                      @if (invalid('guardianName')) {
+                        <small class="field-error">Informe o nome do responsável.</small>
+                      }
+                    </div>
 
-                                <div class="input-register">
-                                    <label for="guardianName">Nome do Responsável</label>
-                                    <div class="input-wrap">
-                                        <i class="pi pi-users"></i>
-                                        <input pInputText id="guardianName"
-                                            placeholder="Digite o nome do responsável" />
-                                    </div>
-                                </div>
+                    <div class="input-register">
+                      <label for="guardianCpf">CPF do Responsável</label>
+                      <p-inputMask inputId="guardianCpf" mask="999.999.999-99" placeholder="000.000.000-00" formControlName="guardianCpf" />
+                      @if (invalid('guardianCpf')) {
+                        <small class="field-error">Confira o CPF.</small>
+                      }
+                    </div>
 
-                                <div class="input-register">
-                                    <label for="guardianCpf">CPF do Responsável</label>
-                                    <div class="input-wrap">
-                                        <i class="pi pi-id-card"></i>
-                                        <p-inputMask id="guardianCpf" mask="999.999.999-99"
-                                            placeholder="000.000.000-00" />
-                                    </div>
-                                </div>
+                    <div class="input-register">
+                      <label for="guardianBirthdate">Nascimento do Responsável</label>
+                      <p-inputMask inputId="guardianBirthdate" mask="99/99/9999" placeholder="DD/MM/AAAA" formControlName="guardianBirthdate" />
+                      @if (invalid('guardianBirthdate')) {
+                        <small class="field-error">Confira a data de nascimento.</small>
+                      }
+                    </div>
 
-                                <div class="input-register">
-                                    <label for="kinship">Parentesco</label>
-                                    <div class="input-wrap">
-                                        <i class="pi pi-heart"></i>
-                                        <input pInputText id="kinship" placeholder="Mãe, pai, avó..." />
-                                    </div>
-                                </div>
+                    <div class="input-register">
+                      <label for="guardianPhone">Telefone do Responsável</label>
+                      <p-inputMask inputId="guardianPhone" mask="(99) 99999-9999" placeholder="(00) 00000-0000" formControlName="guardianPhone" />
+                      @if (invalid('guardianPhone')) {
+                        <small class="field-error">Confira o telefone.</small>
+                      }
+                    </div>
 
-                                <div class="input-register">
-                                    <label for="guardianPhone">Telefone do Responsável</label>
-                                    <div class="input-wrap">
-                                        <i class="pi pi-phone"></i>
-                                        <p-inputMask id="guardianPhone" mask="(99) 99999-9999"
-                                            placeholder="(00) 00000-0000" />
-                                    </div>
-                                </div>
+                    <div class="input-register">
+                      <label for="kinship">Parentesco</label>
+                      <input pInputText id="kinship" formControlName="kinship" placeholder="Mãe, pai, avó..." />
+                      @if (invalid('kinship')) {
+                        <small class="field-error">Informe o parentesco.</small>
+                      }
+                    </div>
+                  }
+                </div>
 
-                            </div>
+                <div class="step-actions">
+                  <button type="button" pButton (click)="next(2, activateCallback)">Próximo</button>
+                </div>
+              </ng-template>
+            </p-step-panel>
+          </p-step-item>
 
-                            <div class="step-actions">
-                                <button type="button" pButton label="Próximo" icon="pi pi-arrow-right" iconPos="right"
-                                    (click)="activateCallback(2)"></button>
-                            </div>
-                        </ng-template>
-                    </p-step-panel>
-                </p-step-item>
+          <p-step-item [value]="2">
+            <p-step>Endereço</p-step>
+            <p-step-panel>
+              <ng-template #content let-activateCallback="activateCallback">
+                <div class="container-step">
+                  <div class="input-register">
+                    <label for="cep">CEP</label>
+                    <p-inputMask inputId="cep" mask="99999-999" placeholder="00000-000" formControlName="cep" />
+                    @if (invalid('cep')) {
+                      <small class="field-error">Confira o CEP.</small>
+                    }
+                  </div>
 
-                <p-step-item [value]="2">
-                    <p-step>Endereço</p-step>
-                    <p-step-panel>
-                        <ng-template #content let-activateCallback="activateCallback">
-                            <div class="container-step">
+                  <div class="input-register">
+                    <label for="street">Rua</label>
+                    <input pInputText id="street" formControlName="rua" placeholder="Nome da rua" />
+                    @if (invalid('rua')) {
+                      <small class="field-error">Informe a rua.</small>
+                    }
+                  </div>
 
-                                <div class="input-register">
-                                    <label for="cep">CEP</label>
-                                    <div class="input-wrap">
-                                        <i class="pi pi-map-marker"></i>
-                                        <p-inputMask id="cep" mask="99999-999" placeholder="00000-000" />
-                                    </div>
-                                </div>
+                  <div class="input-register">
+                    <label for="number">Número</label>
+                    <input pInputText id="number" formControlName="numero" placeholder="Número" />
+                    @if (invalid('numero')) {
+                      <small class="field-error">Informe o número.</small>
+                    }
+                  </div>
 
-                                <div class="input-register">
-                                    <label for="street">Rua</label>
-                                    <div class="input-wrap">
-                                        <i class="pi pi-map"></i>
-                                        <input pInputText id="street" placeholder="Nome da rua" />
-                                    </div>
-                                </div>
+                  <div class="input-register">
+                    <label for="complement">Complemento</label>
+                    <input pInputText id="complement" formControlName="complemento" placeholder="Apto, bloco (opcional)" />
+                  </div>
 
-                                <div class="input-register">
-                                    <label for="number">Número</label>
-                                    <div class="input-wrap">
-                                        <i class="pi pi-hashtag"></i>
-                                        <input pInputText id="number" placeholder="Número" />
-                                    </div>
-                                </div>
+                  <div class="input-register">
+                    <label for="neighborhood">Bairro</label>
+                    <input pInputText id="neighborhood" formControlName="bairro" placeholder="Bairro" />
+                    @if (invalid('bairro')) {
+                      <small class="field-error">Informe o bairro.</small>
+                    }
+                  </div>
 
-                                <div class="input-register">
-                                    <label for="complement">Complemento</label>
-                                    <div class="input-wrap">
-                                        <i class="pi pi-home"></i>
-                                        <input pInputText id="complement" placeholder="Apto, bloco (opcional)" />
-                                    </div>
-                                </div>
+                  <div class="input-register">
+                    <label for="city">Cidade</label>
+                    <input pInputText id="city" formControlName="cidade" placeholder="Cidade" />
+                    @if (invalid('cidade')) {
+                      <small class="field-error">Informe a cidade.</small>
+                    }
+                  </div>
 
-                                <div class="input-register">
-                                    <label for="neighborhood">Bairro</label>
-                                    <div class="input-wrap">
-                                        <i class="pi pi-compass"></i>
-                                        <input pInputText id="neighborhood" placeholder="Bairro" />
-                                    </div>
-                                </div>
+                  <div class="input-register">
+                    <label for="state">Estado</label>
+                    <input pInputText id="state" formControlName="uf" maxlength="2" placeholder="SP" />
+                    @if (invalid('uf')) {
+                      <small class="field-error">Informe a UF.</small>
+                    }
+                  </div>
+                </div>
 
-                                <div class="input-register">
-                                    <label for="city">Cidade</label>
-                                    <div class="input-wrap">
-                                        <i class="pi pi-building"></i>
-                                        <input pInputText id="city" placeholder="Cidade" />
-                                    </div>
-                                </div>
+                <div class="step-actions">
+                  <button type="button" pButton (click)="activateCallback(1)">Voltar</button>
+                  <button type="button" pButton (click)="next(3, activateCallback)">Próximo</button>
+                </div>
+              </ng-template>
+            </p-step-panel>
+          </p-step-item>
 
-                                <div class="input-register">
-                                    <label for="state">Estado</label>
-                                    <div class="input-wrap">
-                                        <i class="pi pi-flag"></i>
-                                        <input pInputText id="state" maxlength="2" placeholder="SP" />
-                                    </div>
-                                </div>
+          <p-step-item [value]="3">
+            <p-step>Login e Senha</p-step>
+            <p-step-panel>
+              <ng-template #content let-activateCallback="activateCallback">
+                <div class="container-step">
+                  <p>
+                    O login usará o CPF {{ minor ? 'do responsável' : 'do aluno' }}
+                    ou o e-mail informado abaixo.
+                  </p>
 
-                            </div>
+                  <div class="input-register">
+                    <label for="email">E-mail do titular</label>
+                    <input pInputText id="email" type="email" formControlName="email" placeholder="seu@email.com" autocomplete="email" />
+                    @if (invalid('email')) {
+                      <small class="field-error">Informe um e-mail válido.</small>
+                    }
+                  </div>
 
-                            <div class="step-actions">
-                                <button type="button" pButton severity="secondary" label="Voltar"
-                                    icon="pi pi-arrow-left" (click)="activateCallback(1)"></button>
-                                <button type="button" pButton label="Próximo" icon="pi pi-arrow-right" iconPos="right"
-                                    (click)="activateCallback(3)"></button>
-                            </div>
-                        </ng-template>
-                    </p-step-panel>
-                </p-step-item>
+                  <div class="input-register">
+                    <label for="password">Senha</label>
+                    <p-password inputId="password" formControlName="senha" [toggleMask]="true" [feedback]="true" promptLabel="Digite uma senha" weakLabel="Fraca" mediumLabel="Média" strongLabel="Forte" styleClass="w-full" inputStyleClass="w-full" autocomplete="new-password" />
+                    <small>De 8 a 128 caracteres.</small>
+                    @if (invalid('senha')) {
+                      <small class="field-error">Confira a senha.</small>
+                    }
+                  </div>
 
-                <p-step-item [value]="3">
-                    <p-step>Login e Senha</p-step>
-                    <p-step-panel>
-                        <ng-template #content let-activateCallback="activateCallback">
-                            <div class="container-step">
+                  <div class="input-register">
+                    <label for="confirmPassword">Confirmar Senha</label>
+                    <p-password inputId="confirmPassword" formControlName="confirmacaoSenha" [toggleMask]="true" [feedback]="false" styleClass="w-full" inputStyleClass="w-full" autocomplete="new-password" />
+                    @if (invalid('confirmacaoSenha')) {
+                      <small class="field-error">Confirme sua senha.</small>
+                    }
+                  </div>
+                </div>
 
-                                <div class="input-register">
-                                    <label for="loginCpf">CPF</label>
-                                    <div class="input-wrap">
-                                        <i class="pi pi-id-card"></i>
-                                        <p-inputMask id="loginCpf" mask="999.999.999-99" placeholder="000.000.000-00" />
-                                    </div>
-                                </div>
+                <div class="step-actions">
+                  <button type="button" pButton (click)="activateCallback(2)">Voltar</button>
+                  <button type="submit" pButton [disabled]="busy()">
+                    {{ busy() ? 'Salvando...' : 'Finalizar cadastro' }}
+                  </button>
+                </div>
+              </ng-template>
+            </p-step-panel>
+          </p-step-item>
+        </p-stepper>
+      </div>
+    </form>
 
-                                <div class="input-register">
-                                    <label for="loginGuardianCpf">CPF do Responsável</label>
-                                    <div class="input-wrap">
-                                        <i class="pi pi-id-card"></i>
-                                        <p-inputMask id="loginGuardianCpf" mask="999.999.999-99"
-                                            placeholder="000.000.000-00" />
-                                    </div>
-                                </div>
-
-                                <div class="input-register">
-                                    <label for="password">Senha</label>
-                                    <div class="input-wrap">
-                                        <i class="pi pi-lock"></i>
-                                        <p-password id="password" name="password" [(ngModel)]="password" appendTo="body"
-                                            [toggleMask]="true" [feedback]="true" promptLabel="Digite uma senha"
-                                            weakLabel="Fraca" mediumLabel="Média" strongLabel="Forte"
-                                            placeholder="Digite sua senha" styleClass="w-full" inputStyleClass="w-full"
-                                            [mediumRegex]="'^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})'"
-                                            [strongRegex]="'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})'">
-                                            <ng-template #footer>
-                                                <div class="password-rules">
-                                                    <p class="rules-title">Para uma senha forte, use:</p>
-                                                    <ul>
-                                                        <li>Pelo menos 8 caracteres</li>
-                                                        <li>Uma letra maiúscula (A-Z)</li>
-                                                        <li>Uma letra minúscula (a-z)</li>
-                                                        <li>Um número (0-9)</li>
-                                                    </ul>
-                                                    <p class="rules-hint">
-                                                        Senha média: 6 caracteres ou mais, misturando letras e números,
-                                                        ou maiúsculas e minúsculas.
-                                                    </p>
-                                                </div>
-                                            </ng-template>
-                                        </p-password>
-                                    </div>
-                                </div>
-
-                                <div class="input-register">
-                                    <label for="confirmPassword">Confirmar Senha</label>
-                                    <div class="input-wrap">
-                                        <i class="pi pi-shield"></i>
-                                        <p-password id="confirmPassword" name="confirmPassword"
-                                            [(ngModel)]="confirmPassword" [toggleMask]="true" [feedback]="false"
-                                            placeholder="Repita sua senha" styleClass="w-full" inputStyleClass="w-full">
-                                        </p-password>
-                                    </div>
-
-                                    @if (confirmPassword) {
-                                    <small class="match-message" [class.ok]="passwordsMatch"
-                                        [class.error]="!passwordsMatch">
-                                        <i class="pi" [class.pi-check-circle]="passwordsMatch"
-                                            [class.pi-times-circle]="!passwordsMatch"></i>
-                                        {{ passwordsMatch ? 'As senhas coincidem' : 'As senhas não coincidem' }}
-                                    </small>
-                                    }
-                                </div>
-
-                            </div>
-
-                            <div class="step-actions">
-                                <button type="button" pButton severity="secondary" label="Voltar"
-                                    icon="pi pi-arrow-left" (click)="activateCallback(2)"></button>
-                                <button type="button" pButton label="Finalizar" icon="pi pi-check"
-                                    routerLink="/login"></button>
-                            </div>
-                        </ng-template>
-                    </p-step-panel>
-                </p-step-item>
-
-            </p-stepper>
-        </div>
-
-    </div>
+    <p><a routerLink="/login">Já tenho conta</a></p>
+  </div>
 </div>

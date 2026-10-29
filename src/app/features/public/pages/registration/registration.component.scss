@@ -262,42 +262,21 @@
     }
 }
 
-.password-rules {
-    margin-top: 0.75rem;
-    font-size: 0.85rem;
-    color: var(--color-text-secondary);
 
-    .rules-title {
-        margin: 0 0 0.35rem;
-        font-weight: 600;
-        color: var(--color-text-primary);
-    }
-
-    ul {
-        margin: 0;
-        padding-left: 1.1rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0.15rem;
-    }
-
-    .rules-hint {
-        margin: 0.5rem 0 0;
-    }
+.form-error,
+.field-error {
+    color: #9b1c1c;
 }
 
-.match-message {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.85rem;
-    font-weight: 600;
-
-    &.ok {
-        color: #0f7a4e;
-    }
-
-    &.error {
-        color: var(--color-brand-secondary);
-    }
+.form-error {
+    background: #fff3f3;
+    padding: 0.75rem;
+    border: 1px solid #9b1c1c;
+    border-radius: 6px;
+    margin-bottom: 1rem;
 }
+
+.field-error {
+    font-size: 0.85rem;
+}
+

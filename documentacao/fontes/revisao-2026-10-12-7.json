@@ -1,0 +1,41 @@
+{
+  "issue": {
+    "url": "https://github.com/sidespfatec/FRONT-SIDESP/issues/18",
+    "title": "PB18 · Cadastrar aluno menor de idade pelo responsável",
+    "issue_number": 18,
+    "body": "## Historia de usuario\n\nComo responsável legal, quero cadastrar meu filho menor de idade usando o meu CPF como titular do login, para ter acesso e controle sobre a conta do aluno.\n\n## Criterios de aceitacao\n\n- [ ] Se a data de nascimento indicar menos de 18 anos, o formulário muda para o fluxo do responsável.\n- [ ] O CPF usado para login é o do responsável, e o aluno pode não ter CPF.\n- [ ] O formulário coleta dados do responsável, dados do aluno, endereço completo e ficha de anamnese.\n- [ ] Notificações de faltas e alertas são endereçadas ao responsável (RN007).\n- [ ] A ficha de anamnese fica acessível ao administrador em situação de emergência.\n\n## Tarefas tecnicas\n\n- [ ] Endpoint no backend\n- [ ] Regras de negocio no backend: RN007, RN016\n- [ ] Service e model tipado no front\n- [ ] Tela ou formulario no front\n- [ ] Mensagens de erro, estado vazio e carregando\n- [ ] Testes das regras RN007, RN016\n- [ ] Teste ponta a ponta do fluxo\n- [ ] Revisao de codigo\n\n## Rastreabilidade — Documento de Visao v1.0\n\n| | |\n|---|---|\n| Regras de negocio | RN007, RN016 |\n| Requisito (SE) | SE001 adaptado para menores |\n| Caso de uso (UC) | UC04 |\n| Tabelas do banco | Usuário, Aluno, Responsável, Endereço, Anamnese |\n| Sprint Backlog v1.0 | US04 |\n\n## Planejamento\n\n| | |\n|---|---|\n| Tipo | Funcionalidade |\n| Area | Publico |\n| Prioridade | 18 de 54 |\n| Estimativa | 8 pontos |\n| Sprint prevista | 2 (28/09/2026 a 23/10/2026) |\n| Depende de | #17 |\n| Destrava | — |\n\n<sub>PB18 · gerado a partir do Product Backlog v2.0 do SIDESP</sub>\n",
+    "state": "open",
+    "user": {
+      "login": "liviaaaaaaaa",
+      "name": "liviaaaaaaaa",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/200071863?v=4",
+      "id": 200071863
+    },
+    "assignees": null,
+    "labels": [
+      {
+        "name": "Funcionalidade",
+        "color": "61A93E",
+        "description": "Comportamento novo previsto no Documento de Visao"
+      },
+      {
+        "name": "area: Publico",
+        "color": "B392AC",
+        "description": "Telas abertas: noticias, polos, cadastro e login"
+      }
+    ],
+    "milestone": 2,
+    "state_reason": null,
+    "comments": 0,
+    "created_at": "2026-09-03T19:53:40Z",
+    "updated_at": "2026-09-03T19:56:13Z",
+    "closed_at": null,
+    "display_url": "https://github.com/sidespfatec/FRONT-SIDESP/issues/18",
+    "display_title": "PB18 · Cadastrar aluno menor de idade pelo responsável"
+  },
+  "url": "https://github.com/sidespfatec/FRONT-SIDESP/issues/18",
+  "title": "PB18 · Cadastrar aluno menor de idade pelo responsável",
+  "display_url": "https://github.com/sidespfatec/FRONT-SIDESP/issues/18",
+  "display_title": "PB18 · Cadastrar aluno menor de idade pelo responsável"
+}

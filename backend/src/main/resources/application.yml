@@ -1,0 +1,30 @@
+server:
+  port: ${PORT:8080}
+  error:
+    include-message: never
+    include-stacktrace: never
+spring:
+  config:
+    import: optional:file:./config/local.properties
+  datasource:
+    url: ${DB_URL:jdbc:mysql://127.0.0.1:3306/sidesp?useUnicode=true&characterEncoding=UTF-8&serverTimezone=America/Sao_Paulo}
+    username: ${DB_USERNAME:sidesp}
+    password: ${DB_PASSWORD}
+  flyway:
+    enabled: true
+    clean-disabled: true
+    baseline-on-migrate: false
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+sidesp:
+  cpf-key: ${CPF_HMAC_KEY}
+  email-hmac-key: ${EMAIL_HMAC_KEY}
+  email-encryption-key: ${EMAIL_ENCRYPTION_KEY}
+  jwt-key: ${JWT_KEY}
+  cors-origins: ${CORS_ORIGINS:http://localhost:4200,http://127.0.0.1:4200}
+
+# Evita que o driver MariaDB registre valores de índices HMAC ao avisar duplicidade.
+logging:
+  level:
+    org.mariadb.jdbc.message.server.ErrorPacket: ERROR

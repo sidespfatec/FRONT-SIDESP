@@ -1,0 +1,237 @@
+erDiagram
+classDef entidade fill:#fff6b6,stroke:#af7e02
+contas {
+ int con_id PK
+ int pes_id FK, UK "NOT NULL titular"
+ varbinary(512) con_email_criptografado "NOT NULL AES-GCM"
+ binary(32) con_email_hash UK "NOT NULL HMAC"
+ varchar(255) con_senha_hash "NOT NULL Argon2id"
+ boolean con_ativo "NOT NULL default true"
+}
+pessoas {
+ int pes_id PK
+ varchar(150) pes_nome
+ date pes_data_nascimento
+ char(1) pes_sexo
+ int tpc_id FK
+}
+turmas_professores_status {
+ int tpfs_id PK
+ varchar(13) tpfs_des
+}
+responsaveis {
+ int res_id PK
+ varchar(80) res_nome
+ date res_data_nascimento "NULL temporario"
+ int pes_id FK, UK "NOT NULL"
+ int tpc_id FK
+}
+contatos {
+ int cnt_id PK
+ int tct_id FK
+ varchar(30) cnt_des
+ int pes_id FK
+ char(1) cnt_res
+ int res_id FK
+}
+tipos_contatos {
+ int tct_id PK
+ varchar(20) tct_des
+}
+fichas_medicas {
+ int fim_id PK
+ int pes_id FK
+}
+tipos_documentos {
+ int tpd_id PK
+ varchar(20) tpd_des
+}
+documentos {
+ int doc_id PK
+ int pes_id FK
+ int tpd_id FK
+ varchar(20) doc_des
+ binary(32) doc_cpf_hash UK "NULL fora de CPF"
+ int doc_cpf_pes_id UK "GENERATED STORED"
+}
+noticias {
+ int ntc_id PK
+ varchar(100) ntc_titulo
+ varchar(1000) ntc_conteudo_1
+ varchar(1000) ntc_conteudo_2
+ timestamp ntc_data_publicacao
+ int nst_id FK
+}
+noticias_status {
+ int nst_id PK
+ varchar(13) nst_des
+}
+polos {
+ int pol_id PK
+ varchar(40) pol_des
+}
+enderecos {
+ int end_id PK
+ varchar(10) end_cep
+ varchar(30) end_cidade
+ varchar(40) end_bairro
+ varchar(50) end_rua
+ varchar(8) end_numero
+ varchar(100) end_complemento
+ char(2) end_uf
+ int ten_id FK
+ int pes_id FK
+ int pol_id FK
+}
+tipos_enderecos {
+ int ten_id PK
+ varchar(30) ten_des
+}
+turmas {
+ int trm_id PK
+ varchar(30) trm_nome
+ int mdl_id FK
+ int trm_vagas
+ int trm_faltas_maximas
+ int tst_id FK
+ int pol_id FK
+}
+modalidades {
+ int mdl_id PK
+ varchar(30) mdl_des
+}
+inscricoes {
+ int ins_id PK
+ int pes_id FK
+ int trm_id FK
+ date ins_data
+ int sin_id FK
+}
+inscricoes_status {
+ int sin_id PK
+ varchar(20) sin_des
+}
+turmas_pessoas {
+ int tpe_id PK
+ int pes_id FK
+ int trm_id FK
+ int tps_id FK
+}
+turmas_professores {
+ int tpf_id PK
+ int pes_id FK
+ int trm_id FK
+ int tpfs_id FK
+}
+turmas_status {
+ int tst_id PK
+ varchar(13) tst_des
+}
+tipos_cadastros {
+ int tpc_id PK
+ varchar(30) tpc_des
+}
+chamadas {
+ int chm_id PK
+ int dia_id FK "NOT NULL"
+ int pes_id FK "NOT NULL"
+ int trm_id FK "NOT NULL"
+ int tpe_id FK "NOT NULL"
+ int cst_id FK "NOT NULL"
+ int jus_id FK
+}
+chamadas_status {
+ int cst_id PK
+ varchar(13) cst_des
+}
+justificativas {
+ int jus_id PK
+ int pes_id FK
+ int doc_id FK
+ varchar(20) jus_des
+ int jst_id FK
+ int pes_adm_id FK
+ date jus_data_falta
+}
+notificacoes {
+ int not_id PK
+ int ntp_id FK
+ varchar(40) not_titulo
+ varchar(60) not_des
+ int pes_id FK
+ date not_data_envio
+ int nfs_id FK
+}
+notificacoes_tipos {
+ int ntp_id PK
+ varchar(30) ntp_des
+}
+justificativas_situacoes {
+ int jst_id PK
+ varchar(30) jst_des
+}
+turmas_pessoas_status {
+ int tps_id PK
+ varchar(13) tps_des
+}
+notificacoes_status {
+ int nfs_id PK
+ varchar(30) nfs_des
+}
+diarios {
+ int dia_id PK
+ int trm_id FK "NOT NULL"
+ int tpf_id FK "NOT NULL"
+ date dia_data "NOT NULL"
+ text dia_conteudo_aula "NOT NULL"
+ text dia_observacoes
+}
+responsaveis_dependentes {
+ int res_id PK, FK "NOT NULL"
+ int pes_id PK, FK "NOT NULL"
+ varchar(50) rde_parentesco
+}
+pessoas ||..o| contas : "pes_id titular"
+pessoas ||..o| responsaveis : "pes_id adulto"
+tipos_cadastros ||..o{ pessoas : "tpc_id"
+tipos_cadastros ||..o{ responsaveis : "tpc_id"
+tipos_contatos ||..o{ contatos : "tct_id"
+pessoas |o..o{ contatos : "pes_id"
+responsaveis |o..o{ contatos : "res_id"
+pessoas ||..o{ fichas_medicas : "pes_id"
+pessoas ||..o{ documentos : "pes_id"
+tipos_documentos ||..o{ documentos : "tpd_id"
+noticias_status ||..o{ noticias : "nst_id"
+tipos_enderecos ||..o{ enderecos : "ten_id"
+pessoas |o..o{ enderecos : "pes_id"
+polos |o..o{ enderecos : "pol_id"
+modalidades ||..o{ turmas : "mdl_id"
+turmas_status ||..o{ turmas : "tst_id"
+polos ||..o{ turmas : "pol_id"
+pessoas ||..o{ inscricoes : "pes_id"
+turmas ||..o{ inscricoes : "trm_id"
+inscricoes_status ||..o{ inscricoes : "sin_id"
+pessoas ||..o{ turmas_pessoas : "pes_id"
+turmas ||..o{ turmas_pessoas : "trm_id"
+turmas_pessoas_status ||..o{ turmas_pessoas : "tps_id"
+pessoas ||..o{ turmas_professores : "pes_id"
+turmas ||..o{ turmas_professores : "trm_id"
+turmas_professores_status ||..o{ turmas_professores : "tpfs_id"
+diarios ||..o{ chamadas : "dia_id, trm_id"
+pessoas ||..o{ chamadas : "pes_id"
+turmas ||..o{ chamadas : "trm_id"
+turmas_pessoas ||..o{ chamadas : "tpe_id, pes_id, trm_id"
+chamadas_status ||..o{ chamadas : "cst_id"
+justificativas |o..o{ chamadas : "jus_id"
+pessoas ||..o{ justificativas : "pes_id"
+documentos ||..o{ justificativas : "doc_id"
+justificativas_situacoes ||..o{ justificativas : "jst_id"
+pessoas |o..o{ justificativas : "pes_adm_id"
+notificacoes_tipos ||..o{ notificacoes : "ntp_id"
+pessoas ||..o{ notificacoes : "pes_id"
+notificacoes_status ||..o{ notificacoes : "nfs_id"
+turmas ||..o{ diarios : "trm_id"
+turmas_professores ||..o{ diarios : "tpf_id, trm_id"
+responsaveis ||--o{ responsaveis_dependentes : "res_id"
+pessoas ||--o{ responsaveis_dependentes : "pes_id"
+class contas,pessoas,turmas_professores_status,responsaveis,contatos,tipos_contatos,fichas_medicas,tipos_documentos,documentos,noticias,noticias_status,polos,enderecos,tipos_enderecos,turmas,modalidades,inscricoes,inscricoes_status,turmas_pessoas,turmas_professores,turmas_status,tipos_cadastros,chamadas,chamadas_status,justificativas,notificacoes,notificacoes_tipos,justificativas_situacoes,turmas_pessoas_status,notificacoes_status,diarios,responsaveis_dependentes entidade

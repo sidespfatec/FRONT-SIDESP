@@ -1,4 +1,5 @@
-<app-navbar-desktop-admin></app-navbar-desktop-admin>
+<app-session></app-session>
+@if(auth.isAdmin()){<app-navbar-desktop-admin></app-navbar-desktop-admin>}
 <app-banner></app-banner>
 
 <div class="home-container">
@@ -9,11 +10,11 @@
         <h1 class="title-home">
             NOTÍCIAS
         </h1>
-        <div class="button-container">
+        @if(auth.isAdmin()){<div class="button-container">
             <button pButton type="button" class="p-button-sm" (click)="openModal()">
                 <i class="pi pi-plus"></i>
             </button>
-        </div>
+        </div>}
     </div>
     <div class="cards-container">
         @for (item of newsList; track item.id) {

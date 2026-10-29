@@ -1,0 +1,46 @@
+{
+  "issue": {
+    "url": "https://github.com/sidespfatec/FRONT-SIDESP/issues/28",
+    "title": "PB28 · Proteger dados sensíveis e atender à LGPD",
+    "issue_number": 28,
+    "body": "## Historia de usuario\n\nComo Secretaria, precisamos tratar os dados pessoais e de saúde dos alunos com segurança, para cumprir a LGPD e proteger os cidadãos que usam o serviço.\n\n## Criterios de aceitacao\n\n- [ ] Senhas armazenadas com hash e tráfego apenas em HTTPS.\n- [ ] Dados de saúde e documentos acessíveis somente aos perfis autorizados (RN017).\n- [ ] Termo de consentimento no cadastro e política de privacidade publicada.\n- [ ] Registro de acesso aos dados sensíveis.\n- [ ] Regra de retenção e descarte dos dados definida.\n\n## Tarefas tecnicas\n\n- [ ] Levantar as informacoes necessarias\n- [ ] Documentar a proposta ou o resultado\n- [ ] Apresentar ao time e, quando couber, a Secretaria\n- [ ] Registrar a decisao onde o time consulta\n\n## :warning: Ponto em aberto\n\n> A ficha de anamnese introduz dado de saúde, que é dado sensível na LGPD. Definir com o time quem pode ver, por quanto tempo se guarda e como se registra o acesso, antes de o sistema receber cadastro real.\n\n> **Este item nao entra na sprint enquanto isto nao for decidido.**\n\n## Rastreabilidade — Documento de Visao v1.0\n\n| | |\n|---|---|\n| Regras de negocio | RN017 |\n| Requisito (SE) | Restrição do projeto: segurança das informações |\n| Caso de uso (UC) | — |\n| Tabelas do banco | Usuário, Aluno, Anamnese |\n\n## Planejamento\n\n| | |\n|---|---|\n| Tipo | Técnico |\n| Area | Projeto |\n| Prioridade | 28 de 54 |\n| Estimativa | 8 pontos |\n| Sprint prevista | 3 (26/10/2026 a 20/11/2026) |\n| Depende de | #17 |\n| Destrava | — |\n\n<sub>PB28 · gerado a partir do Product Backlog v2.0 do SIDESP</sub>\n",
+    "state": "open",
+    "user": {
+      "login": "liviaaaaaaaa",
+      "name": "liviaaaaaaaa",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/200071863?v=4",
+      "id": 200071863
+    },
+    "assignees": null,
+    "labels": [
+      {
+        "name": "Tecnico",
+        "color": "3B7DB5",
+        "description": "Nao e visivel ao usuario, mas sustenta as funcionalidades"
+      },
+      {
+        "name": "area: Projeto",
+        "color": "B392AC",
+        "description": "Hospedagem, LGPD, testes e publicacao"
+      },
+      {
+        "name": "ponto em aberto",
+        "color": "D98B26",
+        "description": "Depende de uma decisao de modelagem antes de entrar na sprint"
+      }
+    ],
+    "milestone": 3,
+    "state_reason": null,
+    "comments": 0,
+    "created_at": "2026-09-03T19:54:13Z",
+    "updated_at": "2026-09-03T19:56:32Z",
+    "closed_at": null,
+    "display_url": "https://github.com/sidespfatec/FRONT-SIDESP/issues/28",
+    "display_title": "PB28 · Proteger dados sensíveis e atender à LGPD"
+  },
+  "url": "https://github.com/sidespfatec/FRONT-SIDESP/issues/28",
+  "title": "PB28 · Proteger dados sensíveis e atender à LGPD",
+  "display_url": "https://github.com/sidespfatec/FRONT-SIDESP/issues/28",
+  "display_title": "PB28 · Proteger dados sensíveis e atender à LGPD"
+}
