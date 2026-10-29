@@ -12,7 +12,9 @@ import javax.crypto.spec.SecretKeySpec;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -36,6 +38,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 /** Configura senha, JWT e acesso HTTP; o frontend nunca decide sozinho a autorização. */
 @Configuration
+@EnableMethodSecurity
 public class SecurityConfig {
   /**
    * Cria o codificador Argon2id: salt 16 bytes, hash 32 bytes, paralelismo 1, memória 19 Mi B e
@@ -115,6 +118,10 @@ public class SecurityConfig {
                 .permitAll()
                 .requestMatchers("/api/v1/auth/me")
                 .authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/v1/professores")
+                .hasRole("ADMINISTRADOR_TOTAL")
+                .requestMatchers(HttpMethod.GET, "/api/v1/professores/**")
+                .hasAnyRole("ADMINISTRADOR_TOTAL", "ADMINISTRADOR_PARCIAL")
                 .anyRequest()
                 .denyAll());
     http.oauth2ResourceServer(
