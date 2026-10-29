@@ -1,5 +1,6 @@
 package br.gov.sidesp.security;
 
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import br.gov.sidesp.auth.AuthRepository;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,7 +15,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -36,12 +36,16 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-/** Configura senha, JWT e acesso HTTP; o frontend nunca decide sozinho a autorização. */
+/**
+ * Configura senha, JWT e acesso HTTP; o frontend nunca decide sozinho a
+ * autorização.
+ */
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
   /**
-   * Cria o codificador Argon2id: salt 16 bytes, hash 32 bytes, paralelismo 1, memória 19 Mi B e
+   * Cria o codificador Argon2id: salt 16 bytes, hash 32 bytes, paralelismo 1,
+   * memória 19 Mi B e
    * duas iterações.
    */
   @Bean
@@ -50,7 +54,8 @@ public class SecurityConfig {
   }
 
   /**
-   * Cria o assinador JWT com chave externa Base64 de 32 bytes; a chave não vai para o navegador.
+   * Cria o assinador JWT com chave externa Base64 de 32 bytes; a chave não vai
+   * para o navegador.
    */
   @Bean
   JwtEncoder jwtEncoder(@Value("${sidesp.jwt-key}") String key) {
@@ -59,13 +64,13 @@ public class SecurityConfig {
   }
 
   /**
-   * Aceita apenas assinatura HS256 válida, emissor SIDESP, audiência do frontend e datas válidas.
+   * Aceita apenas assinatura HS256 válida, emissor SIDESP, audiência do frontend
+   * e datas válidas.
    */
   @Bean
   JwtDecoder jwtDecoder(@Value("${sidesp.jwt-key}") String key, Clock clock) {
     SecretKeySpec secret = new SecretKeySpec(Crypto.key(key), "HmacSHA256");
-    NimbusJwtDecoder decoder =
-        NimbusJwtDecoder.withSecretKey(secret).macAlgorithm(MacAlgorithm.HS256).build();
+    NimbusJwtDecoder decoder = NimbusJwtDecoder.withSecretKey(secret).macAlgorithm(MacAlgorithm.HS256).build();
     decoder.setJwtValidator(
         new DelegatingOAuth2TokenValidator<Jwt>(
             new JwtIssuerValidator("sidesp"),
@@ -74,7 +79,10 @@ public class SecurityConfig {
     return decoder;
   }
 
-  /** Rejeita token sem expiração/emissão, expirado ou emitido mais de 30 s no futuro. */
+  /**
+   * Rejeita token sem expiração/emissão, expirado ou emitido mais de 30 s no
+   * futuro.
+   */
   private OAuth2TokenValidatorResult validateTokenDates(Jwt token, Clock clock) {
     if (token.getExpiresAt() == null || !token.getExpiresAt().isAfter(clock.instant())) {
       return invalidToken();
@@ -86,7 +94,10 @@ public class SecurityConfig {
     return OAuth2TokenValidatorResult.success();
   }
 
-  /** Garante que o JWT foi emitido para sidesp-web, impedindo aceitar token de outra aplicação. */
+  /**
+   * Garante que o JWT foi emitido para sidesp-web, impedindo aceitar token de
+   * outra aplicação.
+   */
   private OAuth2TokenValidatorResult validateAudience(Jwt token) {
     if (!token.getAudience().contains("sidesp-web")) {
       return invalidToken();
@@ -94,60 +105,66 @@ public class SecurityConfig {
     return OAuth2TokenValidatorResult.success();
   }
 
-  /** Produz resultado genérico de validação JWT, sem divulgar o motivo específico ao cliente. */
+  /**
+   * Produz resultado genérico de validação JWT, sem divulgar o motivo específico
+   * ao cliente.
+   */
   private OAuth2TokenValidatorResult invalidToken() {
     return OAuth2TokenValidatorResult.failure(new OAuth2Error("invalid_token"));
   }
 
   /**
-   * Define endpoints públicos, sessão stateless, JWT e erros JSON. Demais APIs ainda não
+   * Define endpoints públicos, sessão stateless, JWT e erros JSON. Demais APIs
+   * ainda não
    * implementadas são negadas.
    */
   @Bean
   SecurityFilterChain security(HttpSecurity http, AuthRepository repository) throws Exception {
-    // A autenticação usa Bearer manual, sem cookies de sessão; CSRF é desabilitado somente nesse
+    // A autenticação usa Bearer manual, sem cookies de sessão; CSRF é desabilitado
+    // somente nesse
     // modelo.
     http.csrf(csrf -> csrf.disable());
-    http.cors(cors -> {});
+    http.cors(cors -> {
+    });
     http.sessionManagement(
         session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
     http.authorizeHttpRequests(
-        access ->
-            access
-                .requestMatchers("/api/v1/auth/login", "/api/v1/auth/cadastros", "/api/v1/health")
-                .permitAll()
-                .requestMatchers("/api/v1/auth/me")
-                .authenticated()
-                .requestMatchers(HttpMethod.POST, "/api/v1/professores")
-                .hasRole("ADMINISTRADOR_TOTAL")
-                .requestMatchers(HttpMethod.GET, "/api/v1/professores/**")
-                .hasAnyRole("ADMINISTRADOR_TOTAL", "ADMINISTRADOR_PARCIAL")
-                .anyRequest()
-                .denyAll());
+        access -> access
+            .requestMatchers(
+                "/api/v1/auth/login",
+                "/api/v1/auth/cadastros",
+                "/api/v1/health")
+            .permitAll()
+            .requestMatchers("/api/v1/auth/me")
+            .authenticated()
+            .requestMatchers(HttpMethod.POST, "/api/v1/professores")
+            .hasRole("ADMINISTRADOR_TOTAL")
+            .requestMatchers(HttpMethod.GET, "/api/v1/professores")
+            .hasAnyRole("ADMINISTRADOR_TOTAL", "ADMINISTRADOR_PARCIAL")
+            .anyRequest()
+            .denyAll());
+
     http.oauth2ResourceServer(
-        resource ->
-            resource
-                .jwt(
-                    jwt ->
-                        jwt.jwtAuthenticationConverter(
-                            token -> authenticateToken(token, repository)))
-                .authenticationEntryPoint(
-                    (request, response, exception) ->
-                        writeError(response, 401, "AUTENTICACAO", "Faça login novamente.")));
+        resource -> resource
+            .jwt(
+                jwt -> jwt.jwtAuthenticationConverter(
+                    token -> authenticateToken(token, repository)))
+            .authenticationEntryPoint(
+                (request, response, exception) -> writeError(response, 401, "AUTENTICACAO", "Faça login novamente.")));
     http.exceptionHandling(
-        errors ->
-            errors
-                .authenticationEntryPoint(
-                    (request, response, exception) ->
-                        writeError(response, 401, "AUTENTICACAO", "Faça login novamente."))
-                .accessDeniedHandler(
-                    (request, response, exception) ->
-                        writeError(response, 403, "ACESSO_NEGADO", "Acesso não autorizado.")));
+        errors -> errors
+            .authenticationEntryPoint(
+                (request, response, exception) -> writeError(response, 401, "AUTENTICACAO", "Faça login novamente."))
+            .accessDeniedHandler(
+                (request, response, exception) -> writeError(response, 403, "ACESSO_NEGADO",
+                    "Acesso não autorizado.")));
     return http.build();
   }
 
   /**
-   * Consulta atividade/perfil atual da conta em CADA acesso; inativar conta bloqueia até tokens já
+   * Consulta atividade/perfil atual da conta em CADA acesso; inativar conta
+   * bloqueia até tokens já
    * emitidos.
    */
   private UsernamePasswordAuthenticationToken authenticateToken(
@@ -167,21 +184,24 @@ public class SecurityConfig {
   }
 
   /**
-   * Escreve envelope JSON para erros da camada de segurança, que ocorrem antes do Controller
+   * Escreve envelope JSON para erros da camada de segurança, que ocorrem antes do
+   * Controller
    * Advice.
    */
   private static void writeError(
       HttpServletResponse response, int status, String code, String message) throws IOException {
     response.setStatus(status);
     response.setContentType("application/json;charset=UTF-8");
-    // Código/mensagem são constantes internas acima, nunca entrada fornecida pelo usuário.
+    // Código/mensagem são constantes internas acima, nunca entrada fornecida pelo
+    // usuário.
     response
         .getWriter()
         .write("{\"codigo\":\"" + code + "\",\"mensagem\":\"" + message + "\",\"errosCampos\":{}}");
   }
 
   /**
-   * Permite apenas origens configuradas, métodos da API e cabeçalhos necessários; não permite
+   * Permite apenas origens configuradas, métodos da API e cabeçalhos necessários;
+   * não permite
    * cookie cross-origin.
    */
   @Bean
