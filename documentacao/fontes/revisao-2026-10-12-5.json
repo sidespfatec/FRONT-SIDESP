@@ -1,0 +1,41 @@
+{
+  "issue": {
+    "url": "https://github.com/sidespfatec/FRONT-SIDESP/issues/10",
+    "title": "PB10 · Controlar acesso por perfil com guard e interceptor",
+    "issue_number": 10,
+    "body": "## Historia de usuario\n\nComo usuário, quero ser levado ao login quando não estiver autenticado e não enxergar o que não é do meu perfil, para que o sistema respeite o meu nível de acesso.\n\n## Criterios de aceitacao\n\n- [ ] Interceptor anexa o token em todas as requisições.\n- [ ] Guard de rota por perfil: aluno, professor, administrador total e administrador parcial.\n- [ ] Resposta 401 redireciona para o login.\n- [ ] O menu é montado conforme o perfil logado.\n- [ ] Tentativa de acessar rota de outro perfil é bloqueada também no backend.\n\n## Tarefas tecnicas\n\n- [ ] Implementar\n- [ ] Conferir em 360px, 768px e 1280px\n- [ ] Conferir navegacao por teclado e foco visivel\n- [ ] Nenhum erro no console\n- [ ] Revisao de codigo\n\n## Rastreabilidade — Documento de Visao v1.0\n\n| | |\n|---|---|\n| Regras de negocio | RN017, RN022 |\n| Requisito (SE) | SE002 |\n| Caso de uso (UC) | UC05 |\n| Tabelas do banco | Usuário |\n\n## Planejamento\n\n| | |\n|---|---|\n| Tipo | Técnico |\n| Area | Base do Front |\n| Prioridade | 10 de 54 |\n| Estimativa | 5 pontos |\n| Sprint prevista | 1 (31/08/2026 a 25/09/2026) |\n| Depende de | #9 |\n| Destrava | #12, #13, #25 |\n\n<sub>PB10 · gerado a partir do Product Backlog v2.0 do SIDESP</sub>\n",
+    "state": "open",
+    "user": {
+      "login": "liviaaaaaaaa",
+      "name": "liviaaaaaaaa",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/200071863?v=4",
+      "id": 200071863
+    },
+    "assignees": null,
+    "labels": [
+      {
+        "name": "Tecnico",
+        "color": "3B7DB5",
+        "description": "Nao e visivel ao usuario, mas sustenta as funcionalidades"
+      },
+      {
+        "name": "area: Base do Front",
+        "color": "B392AC",
+        "description": "Design system, rotas, services e guards"
+      }
+    ],
+    "milestone": 2,
+    "state_reason": null,
+    "comments": 0,
+    "created_at": "2026-09-03T19:53:13Z",
+    "updated_at": "2026-09-23T13:47:11Z",
+    "closed_at": null,
+    "display_url": "https://github.com/sidespfatec/FRONT-SIDESP/issues/10",
+    "display_title": "PB10 · Controlar acesso por perfil com guard e interceptor"
+  },
+  "url": "https://github.com/sidespfatec/FRONT-SIDESP/issues/10",
+  "title": "PB10 · Controlar acesso por perfil com guard e interceptor",
+  "display_url": "https://github.com/sidespfatec/FRONT-SIDESP/issues/10",
+  "display_title": "PB10 · Controlar acesso por perfil com guard e interceptor"
+}

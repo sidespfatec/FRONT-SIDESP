@@ -1,10 +1,11 @@
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './core/auth/auth.interceptor';
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { providePrimeNG } from 'primeng/config';
 import { definePreset } from '@primeng/themes';
 import Aura from '@primeng/themes/aura';
 import { routes } from './app.routes';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
 const SidespPreset = definePreset(Aura, {
     semantic: {
@@ -37,8 +38,8 @@ const SidespPreset = definePreset(Aura, {
 export const appConfig: ApplicationConfig = {
     providers: [
         provideBrowserGlobalErrorListeners(),
+        provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
         provideRouter(routes),
-        provideClientHydration(withEventReplay()),
 
         providePrimeNG({
             theme: {

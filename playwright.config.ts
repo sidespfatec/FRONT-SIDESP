@@ -1,0 +1,2 @@
+import { defineConfig } from '@playwright/test';
+export default defineConfig({testDir:'./e2e',workers:1,retries:0,timeout:60000,reporter:'list',use:{baseURL:process.env['E2E_URL']||'http://127.0.0.1:4200',headless:true,launchOptions:process.env['BROWSER_PATH']?{executablePath:process.env['BROWSER_PATH'],args:process.env['E2E_SANDBOX_FLAGS']?['--no-sandbox','--no-zygote','--single-process']:[]}:{} }});

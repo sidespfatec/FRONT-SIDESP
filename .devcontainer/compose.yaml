@@ -1,0 +1,39 @@
+services:
+  dev:
+    image: mcr.microsoft.com/devcontainers/java:17-bookworm
+    command: sleep infinity
+    volumes:
+      - ..:/workspaces/FRONT-SIDESP:cached
+      - maven-cache:/home/vscode/.m2
+    environment:
+      DB_URL: jdbc:mariadb://db:3306/sidesp
+      DB_USERNAME: sidesp
+      DB_PASSWORD: sidesp-dev-only
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mariadb:10.11
+    restart: unless-stopped
+    environment:
+      # Credenciais fictícias exclusivas deste banco de desenvolvimento isolado.
+      MARIADB_ROOT_PASSWORD: sidesp-root-dev-only
+      MARIADB_DATABASE: sidesp
+      MARIADB_USER: sidesp
+      MARIADB_PASSWORD: sidesp-dev-only
+      TZ: America/Sao_Paulo
+    volumes:
+      - mariadb-data:/var/lib/mysql
+      - ./init-db.sql:/docker-entrypoint-initdb.d/01-test-database.sql:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+    # Sem porta publicada: acessível somente pela rede interna do ambiente.
+
+volumes:
+  mariadb-data:
+  maven-cache:

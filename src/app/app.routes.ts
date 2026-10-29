@@ -1,3 +1,4 @@
+import { adminGuard } from './core/auth/auth.guard';
 import { Routes } from '@angular/router';
 import { HomeComponent } from './features/public/pages/home/home.component';
 import { LoginComponent } from './features/public/pages/login/login.component';
@@ -34,38 +35,49 @@ export const routes: Routes = [
 
     {
         path: 'manage-teachers',
+        canActivate: [adminGuard],
         component: ManageTeachersComponent
     },
 
     {
         path: 'manage-modalites',
+        canActivate: [adminGuard],
         component: ManageModalitesComponent
     },
 
     {
         path: 'manage-modalites/:id/classes',
+        canActivate: [adminGuard],
         component: ClassesComponent
     },
 
     {
         path: 'manage-modalites/new-modality',
+        canActivate: [adminGuard],
         component: NewModalityComponent
     },
 
     {
         path: 'manage-admin',
+        data: { roles: ['ADMINISTRADOR_TOTAL'] },
+        canActivate: [adminGuard],
         component: ManageAdminComponent
     },
     {
         path: 'new-admin-modal',
+        data: { roles: ['ADMINISTRADOR_TOTAL'] },
+        canActivate: [adminGuard],
         component: NewAdminModalComponent
     },
     {
         path: 'new-admin-modal/:id',
+        data: { roles: ['ADMINISTRADOR_TOTAL'] },
+        canActivate: [adminGuard],
         component: NewAdminModalComponent
     },
     {
         path: 'manage-hubs',
+        canActivate: [adminGuard],
         component: ManageHubsComponent
     },
     {

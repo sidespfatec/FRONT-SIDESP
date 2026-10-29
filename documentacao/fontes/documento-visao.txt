@@ -1,0 +1,513 @@
+          SIDESP - Sistemas Integrado de
+         Desenvolvimento Esportivo Publico
+
+                         Documento de Visão
+                                   Versão 1.0
+
+
+
+
+Componentes: Diego Henrico, Heitor Leite, Kauã Raphael, Lívia Andrade, Luís Mario,
+Micael Phillipini
+Sumário
+Documento de Visão ................................................................................................................ 3
+
+   1.          Objetivo do Documento ........................................................................................... 3
+
+        1.1.      Objetivos .............................................................................................................. 3
+
+        1.2.      Abrangência do Projeto........................................................................................ 4
+
+        1.3.      Justificativa .......................................................................................................... 5
+
+        1.4.      Definições, Acrônimos e Abreviações ................................................................. 6
+
+        1.5.      Referências ........................................................................................................... 7
+
+        1.6.      Descrição da Equipe ............................................................................................ 7
+
+        1.7.      Análise Estatística ................................................................................................ 9
+
+   2.          Descrição do(s) Problema(s) ...................................................................................11
+
+   3.          Resumo dos usuários.............................................................................................. 12
+
+   4.          Descrição da Solução Proposta .............................................................................. 12
+
+   5.          Restrições do Projeto ............................................................................................. 13
+
+   6. Visão Geral do sistema – Modelo Conceitual e protótipos ............................................ 13
+
+        6.1 Regras de Negócios .................................................................................................. 13
+
+        6.2 Requisitos do sistema – Funcionais e Não Funcionais ............................................ 15
+
+        6.3 Diagrama de Casos de Uso ...................................................................................... 18
+
+        6.4 Diagrama de Classes ................................................................................................ 22
+
+        6.5 Protótipo das telas principais ................................................................................... 23
+                           Documento de Visão
+
+1.      Objetivo do Documento
+ Este documento apresenta uma solução de software para o projeto da Secretaria de
+ Esportes, solicitado como Projeto Interdisciplinar pelas disciplinas de Engenharia de
+ Software II, Estatística, Gestão de Equipes e Programação Orientada a Objetos,
+ apresentando o tipo de negócio para o qual será desenvolvido o projeto, os problemas a
+ serem solucionados, as necessidades dos principais envolvidos, o alcance do projeto e as
+ principais funcionalidades esperadas do sistema. Este projeto terá as horas de
+ desenvolvimento computadas como Projeto de Extensão Universitária, uma vez que
+ promove a interação entre a comunidade acadêmica e a sociedade.
+
+
+
+1.1.    Objetivos
+
+ O presente projeto tem como finalidade atender às demandas da Secretaria de Esportes de
+ Guaratinguetá, por meio da implementação de um sistema voltado ao gerenciamento das
+ atividades esportivas, bem como ao controle de inscrições e adesão dos participantes.
+ Nesse sentido, a proposta busca promover maior organização e proporcionar uma visão
+ mais clara e estruturada das informações relacionadas às atividades desenvolvidas. O
+ sistema proposto visa à otimização dos processos burocráticos, contemplando o
+ gerenciamento de inscrições, o cadastro de professores e alunos, o registro e controle de
+ presenças e faltas, além do envio de notificações referentes a eventos e ocorrências
+ relevantes. Ademais, permitirá a geração de relatórios detalhados, como o quantitativo de
+ alunos participantes — inclusive segmentados por professor —, dados de frequência e
+ relatórios por modalidade. Como recurso complementar, será disponibilizado um mapa
+ de calor com diferentes filtros, incluindo lista de espera, nível de satisfação, polos com
+ maior concentração de atividades, bem como recortes por gênero e faixa etária. A adoção
+ do sistema contribuirá significativamente para a melhoria da organização das atividades
+ esportivas, possibilitando um controle mais eficiente das informações e reduzindo a
+ dependência de procedimentos manuais, o que tende a minimizar erros e retrabalho.
+ Além disso, a solução favorecerá uma comunicação mais eficaz entre a gestão,
+ professores e alunos, por meio do envio de avisos e notificações. Por fim, os dados
+ consolidados e as análises geradas servirão como suporte à tomada de decisões
+ estratégicas, promovendo uma gestão mais eficiente dos recursos e das atividades
+ ofertadas.
+
+
+
+1.2.    Abrangência do Projeto
+
+ O presente projeto tem como escopo o desenvolvimento de um sistema voltado à gestão
+ das atividades esportivas da Secretaria de Esportes de Guaratinguetá, destinado a atender
+ diferentes perfis de usuários, incluindo a equipe administrativa, professores e alunos
+ participantes das modalidades oferecidas.
+
+
+ A solução contemplará funcionalidades relacionadas ao cadastro e gerenciamento de
+ polos, modalidades, professores e alunos, bem como o controle de inscrições nas
+ atividades esportivas. Além disso, permitirá o registro e acompanhamento de presenças e
+ faltas, incluindo a definição de limites e a possibilidade de envio de notificações aos
+ usuários acerca de eventos relevantes, como ausências e comunicados gerais.
+ No que se refere aos perfis de uso, o sistema oferecerá recursos específicos para cada tipo
+ de usuário. A administração poderá gerenciar cadastros, acompanhar inscrições e acessar
+ relatórios e análises, incluindo mapas de calor. Os alunos terão acesso a funcionalidades
+ de cadastro, inscrição e acompanhamento de sua participação nas atividades. Já os
+ professores poderão gerenciar suas turmas, registrar presenças e
+ acompanhar o desempenho dos alunos.
+ Como forma de ampliar a comunicação, o sistema poderá integrar-se a serviços de envio
+ de mensagens, como o WhatsApp, para notificação de usuários. Como produto final,
+ espera-se a entrega de um sistema funcional, com interface acessível aos diferentes perfis
+ de usuários, além de relatórios gerenciais que auxiliem na tomada de decisões e no
+ acompanhamento das atividades esportivas.
+1.3.    Justificativa
+
+ A proposta de desenvolvimento do sistema para a Secretaria de Esportes de Guaratinguetá
+ fundamenta-se na necessidade de aprimorar a gestão das atividades esportivas, diante das
+ limitações observadas nos processos atualmente utilizados.
+ Atualmente, o controle de informações é realizado de forma majoritariamente manual e
+ descentralizada, o que gera retrabalho, inconsistências nos dados e dificuldades no acesso
+ às informações. Um dos principais problemas identificados refere-se à duplicidade de
+ registros, uma vez que os professores precisam registrar a mesma informação diversas
+ vezes, como a presença dos alunos em aula, o envio diário de dados aos supervisores, o
+ controle semanal e o preenchimento de relatórios mensais. Esse cenário torna a rotina
+ operacional mais cansativa, reduz a eficiência e aumenta a probabilidade de erros.
+ Além disso, o processo de inscrição dos alunos apresenta fragilidades, pois não há um
+ vínculo estruturado entre alunos e professores responsáveis. Tal limitação dificulta o
+ acompanhamento das turmas e a organização das atividades. Soma-se a isso a dificuldade
+ de acesso a informações importantes dos alunos, como dados de saúde, que não estão
+ prontamente disponíveis, podendo comprometer a segurança em situações emergenciais.
+ Com base nos dados coletados por meio de questionário aplicado aos professores, foi
+ possível identificar pontos críticos e oportunidades de melhoria. Destaca-se que a maioria
+ dos respondentes reconhece a importância da adoção de ferramentas digitais, sendo que
+ 52,2% concordam totalmente e 13% concordam parcialmente que novas funcionalidades
+ digitais facilitariam o trabalho diário. Esse resultado demonstra uma elevada aceitação de
+ soluções tecnológicas e reforça a viabilidade do projeto.
+ Por outro lado, também foram identificados desafios relacionados à infraestrutura,
+ especialmente quanto à qualidade da internet nos locais de aula, considerada insuficiente
+ por parte dos respondentes. Além disso, aspectos como gestão de matrículas, lista de
+ espera e acesso rápido às informações dos alunos apresentaram avaliações neutras ou
+ negativas, indicando falhas nos processos atuais e ausência de um sistema integrado.
+ Diante desse contexto, evidencia-se a necessidade de desenvolvimento de um sistema
+ digital que centralize as informações, reduza o retrabalho e proporcione maior eficiência
+ na gestão das atividades esportivas. A solução proposta permitirá o registro único das
+ informações, com geração automática de relatórios e indicadores, além de melhorar a
+ organização das turmas, facilitar o acesso a dados relevantes dos alunos e otimizar a
+ comunicação entre professores e gestores.
+ Dessa forma, o projeto contribui para a modernização dos serviços oferecidos pela
+ Secretaria de Esportes, promovendo maior organização, confiabilidade das informações
+ e apoio à tomada de decisão.
+
+1.4.     Definições, Acrônimos e Abreviações
+
+ Sistema de Gestão de Atividades Esportivas: Sistema desenvolvido para gerenciar
+ inscrições, presença, faltas e relatórios das atividades esportivas da Secretaria de
+ Esportes.
+ Polos de Esporte: Locais onde são realizadas as atividades esportivas oferecidas pela
+ Secretaria.
+ Modalidades: Tipos de atividades esportivas disponibilizadas aos participantes. Mapa
+ de Calor: Ferramenta de visualização de dados que permite identificar padrões, como
+ concentração de alunos por região, modalidade ou perfil.
+ Lista de Espera: Relação de alunos que aguardam vaga em determinada modalidade.
+ Relatórios Gerenciais: Documentos que apresentam dados consolidados sobre
+ participação, frequência e desempenho das atividades.
+ Notificações: Mensagens enviadas aos usuários para informar eventos, ausências ou
+ comunicados importantes.
+ Centralização de Dados: Processo de reunir informações em um único sistema,
+ facilitando o acesso e a gestão.
+ QR Code: Código utilizado para registro de presença nas atividades.
+ WhatsApp: Aplicativo de mensagens utilizado para envio de notificações e comunicação
+ com os usuários.
+1.5.      Referências
+
+ As informações utilizadas para o desenvolvimento deste projeto foram obtidas por meio
+ de diferentes fontes, incluindo atividades de levantamento de requisitos, entrevistas e
+ materiais elaborados pela equipe.
+ Destaca-se, inicialmente, a realização de entrevistas com representantes da Secretaria de
+ Esportes de Guaratinguetá, por meio das quais foi possível compreender os processos
+ atualmente adotados, bem como identificar as principais necessidades e dificuldades
+ relacionadas à gestão das atividades esportivas.
+ Além disso, foi aplicado um questionário aos professores e instrutores, com o objetivo de
+ coletar dados sobre a percepção dos usuários em relação aos processos existentes, suas
+ limitações e a viabilidade da adoção de soluções tecnológicas. Os resultados obtidos
+ contribuíram significativamente para a identificação de pontos críticos e oportunidades
+ de melhoria.
+ Também foram utilizados documentos internos desenvolvidos pela equipe do projeto,
+ como a Lista de Prioridades (Product Backlog), que reúne as principais funcionalidades
+ e requisitos do sistema proposto, e o documento de levantamento de requisitos, elaborado
+ a partir das análises realizadas, contendo informações detalhadas sobre o funcionamento
+ esperado do sistema.
+
+
+
+1.6.      Descrição da Equipe
+ O grupo foi organizado de forma estratégica, distribuindo funções essenciais para garantir
+ o bom desenvolvimento do projeto, eficiência na comunicação e qualidade na entrega
+ final.
+ Kauã assumirá o papel de Scrum Master, sendo responsável por organizar o andamento
+ do time, acompanhar o progresso das atividades e garantir que todos estejam alinhados
+ com os prazos e objetivos. Além disso, ele também contribuirá diretamente no
+ desenvolvimento backend, auxiliando na implementação e apoiando a equipe técnica
+ quando necessário.
+ Lívia será a Product Owner (PO), tendo como principal função definir os requisitos do
+ projeto e priorizar as tarefas de acordo com os objetivos. Ela representa a visão do
+produto, garantindo que o desenvolvimento esteja sempre focado no que realmente
+precisa ser entregue. Além disso, também colaborará com o desenvolvimento frontend,
+contribuindo com ideias e ajustes na interface do sistema.
+Heitor ficará como Tech Lead (Líder Técnico), sendo responsável por orientar
+tecnicamente a equipe, definir padrões de desenvolvimento e auxiliar na tomada de
+decisões relacionadas à estrutura e funcionamento do sistema. Assim como Kauã, ele
+também atuará no backend, ajudando no desenvolvimento e garantindo a qualidade
+técnica das implementações.
+Luis Mario atuará como Desenvolvedor Backend, cuidando da lógica do sistema,
+implementação das regras de negócio e integração com banco de dados. Seu papel é
+fundamental para garantir que o sistema funcione corretamente por trás das interfaces,
+trabalhando em conjunto com Kauã e Heitor.
+Diego será o Desenvolvedor Frontend, responsável pela criação da interface do sistema e
+pela experiência do usuário. Ele trabalhará na construção das telas, garantindo que o
+sistema seja intuitivo, funcional e visualmente organizado, contando com o apoio da Lívia
+nesse processo.
+Micael assumirá a função de QA (Quality Assurance), sendo responsável por testar o
+sistema, identificar possíveis erros e garantir a qualidade do produto final. Ele também
+contribuirá para que o sistema esteja funcionando conforme o esperado antes da entrega,
+ajudando a equipe a manter um alto padrão de qualidade.
+
+
+Dessa forma, com os papéis bem definidos e com colaboração entre as áreas, a equipe
+consegue trabalhar de maneira mais organizada, integrada e eficiente, aumentando
+significativamente as chances de sucesso do projeto.
+1.7.    Análise Estatística
+ A análise estatística foi realizada com base nos dados coletados por meio de um
+ questionário aplicado aos professores envolvidos nas atividades esportivas da Secretaria
+ de Esportes de Guaratinguetá. O objetivo da pesquisa foi identificar dificuldades
+ enfrentadas nos processos atuais e avaliar a viabilidade da implementação de um sistema
+ digital para gestão das atividades.
+ A amostra foi composta por professores atuantes nos polos esportivos, representando os
+ principais usuários do sistema proposto. O cálculo amostral considerou a participação
+ voluntária dos profissionais disponíveis no período da coleta, permitindo a obtenção de
+ dados representativos da realidade operacional enfrentada pelos usuários.
+ Após a coleta dos dados, foi realizada a tabulação das respostas e a elaboração de gráficos
+ estatísticos, permitindo a visualização dos resultados obtidos. Os gráficos utilizados
+ foram predominantemente gráficos de barras horizontais, adequados para representar
+ respostas categóricas em escala de concordância, como "concordo totalmente", "concordo
+ parcialmente", "nem concordo nem discordo", "discordo parcialmente" e "discordo
+ totalmente".
+ Os resultados obtidos demonstraram que uma parcela significativa dos respondentes
+ reconhece limitações nos processos atuais, especialmente em relação ao tempo gasto com
+ registro de presença, dificuldades na gestão de listas de espera e problemas relacionados
+ à qualidade da internet nos locais de aula. Observou-se também que muitos participantes
+ apontaram dificuldades no acesso rápido às informações dos alunos em situações
+ emergenciais.
+ De modo geral, os dados estatísticos evidenciam a necessidade de modernização dos
+ processos atualmente utilizados, reforçando a importância da implementação de um
+ sistema digital que centralize as informações, reduza o retrabalho e aumente a eficiência
+ operacional.
+2.           Descrição do(s) Problema(s)
+
+
+     O problema                     Dificuldade de acesso às informações dos alunos
+
+
+     Afeta                          Professores e Administradores
+
+     O impacto deste problema é     Atendimento lento e baixa gestão
+
+
+     Uma solução ideal permitiria   Cadastro centralizado e perfis de acesso
+
+
+
+
+     O problema                     Controle manual e repetitivo
+
+
+     Afeta                          Administradores
+
+     O impacto deste problema é     Retrabalho e erros
+
+
+     Uma solução ideal permitiria   Regras de faltas + registro único + requisitos de
+                                    frequência
+
+
+
+
+     O problema                     Falta de controle de vagas e inscrições
+
+     Afeta                          Administradores e Professores
+
+     O impacto deste problema é     Desorganização das turmas
+
+     Uma solução ideal permitiria   Regras de inscrição, limite e lista de espera
+3.        Resumo dos usuários
+
+
+     Nome                      Responsabilidade
+
+     Aluno                     - Inscrever-se em modalidades
+                               - Ver presenças
+                               - Ver informações das aulas
+     Professor                 - Realizar chamadas
+                               - Ver informações de alunos
+                               - Ver informações de aulas
+     Administrador             -     Cadastrar administradores
+                               -     Cadastrar professores
+                               -     Cadastrar polos
+                               -     Cadastrar turmas e aulas
+                               -     Adicionar noticias
+                               -     Adicionar modalidades - Ver informações dos
+                               alunos
+
+
+     Usuário sem cadastro      - Acessar página de noticias
+                               - Fazer cadastro
+
+
+
+
+4.        Descrição da Solução Proposta
+ O objetivo do projeto é desenvolver um sistema que organize e facilite a gestão das
+ atividades esportivas da Secretaria de Esportes de Guaratinguetá, tornando os processos
+ mais eficientes e simples, aplicando:
+
+
+ - Controle de inscrições
+
+
+ - Cadastro de alunos e professores
+
+
+ - Registro de presença e faltas
+ - Relatórios e mapas de calor
+
+
+ A nossa proposta é unificar todos os processos em uma unica aplicação para que a perda
+ de tempo seja diminuida e a facilidade a acesso de informações aumente.
+
+
+5.       Restrições do Projeto
+ Como restrições por ser um orgão público precisamos seguir alguns protocólos
+ necessários:
+
+ -     Orçamento reduzido: como é um projeto público ficamos dependetes de aprovações
+ de gastos por parte da Secretária, onde precisamos enviar três propostas com empresas
+ diferentes para a hospedagem ser análisada e aprovada
+ -     Segurança nas informações: por se tratar de um sistema onde a população irá
+ acessar, é necessário o maior cuidado possível com informações sensíveis.
+
+
+ 6. Visão Geral do sistema – Modelo Conceitual e protótipos
+ 6.1 Regras de Negócios
+
+     Código   Descrição
+
+     RN001    Cada aluno pode estar inscrito em no máximo 2 modalidades
+              simultaneamente.
+
+     RN002    Cada modalidade define seu próprio limite de faltas mensais no cadastro.
+
+     RN003    Somente a 3ª falta do mês é elegível para justificativa.
+
+     RN004    Toda justificativa de falta deve ser acompanhada de documento
+              comprobatório.
+
+     RN005    Ao ultrapassar o limite de faltas sem justificativa válida, a inscrição do
+              aluno é cancelada automaticamente pelo sistema.
+
+     RN006    O sistema deve notificar o aluno ao atingir a 2ª falta do mês, alertando
+              sobre o risco de cancelamento.
+
+     RN007    Quando o aluno for menor de 18 anos, as notificações de faltas e alertas
+              também devem ser enviadas ao responsável legal cadastrado.
+RN008   Cada modalidade define faixa etária mínima e máxima. O aluno só pode
+        se inscrever em modalidades compatíveis com sua idade.
+
+RN009   Quando uma turma está com vagas esgotadas, o aluno que tentar se
+        inscrever é automaticamente incluído na lista de espera na posição
+        correspondente à ordem de chegada.
+
+RN010   Ao surgir uma vaga, o sistema notifica e oferece a vaga ao primeiro
+        aluno da lista de espera da modalidade/turma correspondente.
+
+RN011   O aluno notificado sobre uma vaga disponível deve confirmar sua
+        inscrição em um prazo definido. Caso contrário, a vaga passa ao próximo
+        da lista.
+
+RN012   Cada turma possui um número máximo de alunos definido no cadastro.
+        Novas inscrições diretas são bloqueadas ao atingir esse limite.
+
+RN013   Um professor só pode visualizar e registrar chamadas nas turmas às quais
+        está vinculado pelo administrador.
+
+RN014   O professor deve registrar o conteúdo da aula no momento em que realiza
+        a chamada, sendo obrigatório o preenchimento antes de salvar o diário.
+
+RN015   Registros de polos, modalidades, professores e turmas não devem ser
+        excluídos permanentemente do banco de dados; devem ser apenas
+        inativados para preservar integridade histórica.
+
+RN016   O CPF é único no sistema. Não é permitido o cadastro de dois usuários
+        com o mesmo CPF.
+
+RN017   O sistema deve garantir que cada usuário acesse somente as
+        funcionalidades correspondentes ao seu perfil, por meio de controle de
+        autenticação e autorização.
+
+RN018   Determinadas turmas podem exigir processo seletivo. Nesses casos, a
+        inscrição não garante vaga imediata, sendo necessária avaliação e
+        aprovação pelo administrador via Kanban.
+ RN019    Registros de chamadas salvas não podem ser alterados ou excluídos pelo
+          professor. Apenas o administrador pode realizar correções mediante
+          justificativa.
+
+ RN020    Avisos de cancelamento ou mudança de local enviados pelo professor
+          devem ser disparados imediatamente para todos os alunos da turma via
+          WhatsApp.
+
+ RN021    O administrador pode criar uma notícia e definir uma data futura de
+          publicação, sendo exibida automaticamente na tela inicial na data
+          configurada.
+
+ RN022    O sistema deve suportar ao menos dois níveis de permissão
+          administrativa: acesso total e acesso parcial, a ser configurado no cadastro
+          do administrador.
+
+ RN023    O administrador pode criar ou cancelar inscrições de alunos independente
+          das restrições de limite, podendo fazer isso por necessidade operacional
+          justificada.
+
+ RN024    A aceitação ou rejeição de uma justificativa de falta é de responsabilidade
+          exclusiva do administrador. O professor não tem acesso a essa
+          funcionalidade.
+
+ RN025    O aluno deve ser notificado automaticamente quando sua justificativa de
+          falta for aceita ou recusada pelo administrador.
+
+
+6.2 Requisitos do sistema – Funcionais e Não Funcionais
+
+ Código   Descrição
+
+ SE001    Permitir cadastro de aluno com dados pessoais e CPF único.
+
+ SE002    Permitir login com CPF/e-mail e senha conforme perfil do usuário.
+
+ SE003    Permitir redefinição de senha via CPF ou e-mail.
+
+ SE004    Exibir notícias em ordem cronológica na tela inicial.
+
+ SE005    Exibir conteúdo completo da notícia selecionada.
+
+ SE006    Exibir mapa de polos e modalidades com filtros de pesquisa.
+
+ SE007    Permitir inscrição do aluno em até 2 modalidades com vagas.
+SE008   Inserir aluno automaticamente na lista de espera sem vagas.
+
+SE009   Permitir cancelamento de inscrição e liberação automática da vaga.
+
+SE010   Exibir presença, faltas e histórico de aulas do aluno.
+
+SE011   Permitir envio de justificativa de falta com documento.
+
+SE012   Exibir turmas inscritas com horários e informações do professor.
+
+SE013   Permitir edição de perfil e alteração de senha do aluno.
+
+SE014   Exibir ao professor apenas suas turmas vinculadas.
+
+SE015   Permitir registro de presença e faltas dos alunos.
+
+SE016   Permitir registro de conteúdo e observações da aula.
+
+SE017   Permitir envio de avisos para alunos via sistema e WhatsApp.
+
+SE018   Permitir ao professor visualizar dados e frequência dos alunos.
+
+SE019   Permitir cadastro e gerenciamento de polos esportivos.
+
+SE020   Permitir cadastro e gerenciamento de modalidades esportivas.
+
+SE021   Permitir cadastro de professores e seus vínculos.
+
+SE022   Permitir criação e gerenciamento de turmas.
+
+SE023   Permitir gerenciamento de alunos pelo administrador.
+SE024   Permitir gerenciamento da lista de espera das turmas.
+
+SE025   Disponibilizar painel Kanban para processo seletivo.
+
+SE026   Permitir análise e aprovação de justificativas de falta.
+
+SE027   Gerar relatórios de participação, frequência e evasão.
+
+SE028   Permitir exportação de relatórios em Excel e PDF.
+
+SE029   Exibir mapa de calor com concentração de alunos.
+
+SE030   Permitir criação e publicação de notícias.
+
+SE031   Permitir cadastro de novos administradores.
+
+SE032   Enviar notificações automáticas sobre limite de faltas.
+
+SE033   Cancelar automaticamente a inscrição por excesso de faltas sem
+        justificativa.
+
+SE034   Notificar o aluno via WhatsApp sobre aprovação na lista de espera.
+
+SE035   Registrar histórico de notificações enviadas pelo WhatsApp.
+6.3 Diagrama de Casos de Uso
+6.4 Diagrama de Classes
+6.5 Protótipo das telas principais
+
