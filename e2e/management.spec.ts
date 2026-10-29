@@ -24,7 +24,7 @@ function cpf(seed:number):string {
 async function professional(page:Page, name:string, seed:number):Promise<void> {
   const fields:Record<string,string>={'Nome completo *':name,'CPF *':cpf(seed),'Data de nascimento *':'1990-01-01','E-mail *':seed+'-'+suffix+'@example.invalid','Telefone *':'12999999999','CEP *':'12500000','Rua *':'Rua Ficticia de Teste','Número *':'1','Bairro *':'Teste','Cidade *':'Cidade de Teste','UF *':'SP','Senha inicial *':testPassword,'Confirmar senha *':testPassword};
   for(const [label,value] of Object.entries(fields)) await page.getByLabel(label,{exact:true}).fill(value);
-  await page.getByLabel('Gênero *',{exact:true}).selectOption('M');
+  await page.locator('#professional-genero').selectOption('M');
 }
 
 test.beforeAll(async({request})=>{
@@ -55,7 +55,7 @@ test('cadastra professor e administrador, recarrega e altera situação real',as
     await page.goto(route);
     await page.getByRole('button',{name:administrator?'Novo administrador':'Novo professor',exact:true}).click();
     await professional(page,name,administrator?seed+1:seed);
-    if(administrator)await page.getByLabel('Nível de permissão *',{exact:true}).selectOption('ADMINISTRADOR_PARCIAL');
+    if(administrator)await page.locator('#professional-nivel').selectOption('ADMINISTRADOR_PARCIAL');
     else {await page.getByLabel('Registro profissional',{exact:true}).fill('TESTE-UI');await page.getByLabel('Especialidade',{exact:true}).fill('Esporte de teste');}
     await page.getByRole('button',{name:'Cadastrar',exact:true}).click();
     await expect(page.getByRole('dialog')).not.toBeVisible();
@@ -82,12 +82,12 @@ test('cadastra polo, usa polo ativo na modalidade e persiste os filtros',async({
   await page.goto('/manage-modalites/new-modality');
   await page.getByLabel('Nome *',{exact:true}).fill(modalityName);
   await page.getByLabel('Idade mínima *',{exact:true}).fill('10');await page.getByLabel('Idade máxima *',{exact:true}).fill('8');
-  await page.getByLabel('Limite de faltas mensais *',{exact:true}).fill('4');await page.getByLabel('Polo *',{exact:true}).selectOption({label:hubName});
+  await page.getByLabel('Limite de faltas mensais *',{exact:true}).fill('4');await page.locator('#modality-hub').selectOption({label:hubName});
   await page.getByRole('button',{name:'Cadastrar',exact:true}).click();await expect(page.getByRole('alert')).toContainText('mínima');
   await page.getByLabel('Idade máxima *',{exact:true}).fill('80');await page.getByRole('button',{name:'Cadastrar',exact:true}).click();await expect(page).toHaveURL(/manage-modalites$/);
   await page.reload();const row=page.getByRole('listitem').filter({hasText:modalityName});await expect(row).toContainText(hubName);
   const modalities=await request.get(api+'/admin/modalidades',{headers:{Authorization:'Bearer '+token}});const modality=(await modalities.json()).find((m:{nome:string})=>m.nome===modalityName);expect(modality.poloId).toBe(hub.id);created.push({domain:'modalidades',id:modality.id});
-  await row.getByRole('button',{name:'Inativar',exact:true}).click();await page.getByLabel('Situação',{exact:true}).selectOption('inactive');await expect(row).toBeVisible();
+  await row.getByRole('button',{name:'Inativar',exact:true}).click();await page.locator('#modality-status').selectOption('inactive');await expect(row).toBeVisible();
 });
 
 test('consulta perfil real e mostra o cartão branco do cadastro',async({page})=>{
