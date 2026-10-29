@@ -3,9 +3,9 @@
     <p role="alert">{{ error() }}</p>
   }
   <fieldset [disabled]="busy()">
-    <legend>Dados pessoais e endereço</legend>
+    <legend>Dados pessoais</legend>
     <div class="field-grid">
-      @for (field of fields; track field.key) {
+      @for (field of fields.slice(0, 5); track field.key) {
         <label [for]="'professional-' + field.key"
           >{{ field.label }} *
           <input
@@ -25,6 +25,24 @@
           <option value="F">Feminino</option>
         </select></label
       >
+    </div>
+  </fieldset>
+  <fieldset [disabled]="busy()">
+    <legend>Endereço</legend>
+    <div class="field-grid">
+      @for (field of fields.slice(5); track field.key) {
+        <label [for]="'professional-' + field.key"
+          >{{ field.label }} *
+          <input
+            pInputText
+            [id]="'professional-' + field.key"
+            [type]="field.type"
+            [formControlName]="field.key"
+            [attr.maxlength]="field.max"
+            [attr.max]="field.type === 'date' ? today : null"
+          />
+        </label>
+      }
       <label for="professional-complemento"
         >Complemento<input
           pInputText

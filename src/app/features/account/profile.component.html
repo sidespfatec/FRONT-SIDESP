@@ -1,13 +1,7 @@
+<app-navbar-desktop-admin />
 <app-banner />
 <main class="account-card">
   <p-card>
-    <nav>
-      <a routerLink="/home">Início</a>
-      @if (auth.isAdmin()) {
-        <a routerLink="/manage-hubs">Administração</a>
-      }
-      <button pButton type="button" (click)="auth.logout()">Sair</button>
-    </nav>
     <h1>Meu perfil</h1>
     @if (error()) {
       <p role="alert">{{ error() }}</p>

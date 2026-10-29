@@ -1,3 +1,4 @@
+import { NavbarDesktopAdminComponent } from '../../component/navbar-desktop-admin/navbar-desktop-admin.component';
 import { BannerComponent } from '../../component/banner/banner.component';
 import { FooterComponent } from '../../component/footer/footer.component';
 import { CardModule } from 'primeng/card';
@@ -16,6 +17,7 @@ import { apiError } from '../../core/services/api-error';
   selector: 'app-profile',
   standalone: true,
   imports: [
+    NavbarDesktopAdminComponent,
     BannerComponent,
     FooterComponent,
     CardModule,
