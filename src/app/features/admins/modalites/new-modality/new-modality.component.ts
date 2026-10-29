@@ -10,25 +10,33 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
-import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { ModalityDemoStore } from '../modality-demo.store';
 
 @Component({
     selector: 'app-new-modality',
     imports: [
         FormsModule, BannerComponent, FooterComponent, NavbarDesktopAdminComponent,
-        CardModule, ButtonModule, InputTextModule, SelectModule, ToggleSwitchModule
+        CardModule, ButtonModule, InputTextModule, SelectModule
     ],
     templateUrl: './new-modality.component.html',
     styleUrl: './new-modality.component.scss'
 })
 export class NewModalityComponent {
     private router = inject(Router);
+    private store = inject(ModalityDemoStore);
 
     name = '';
-    icon = '';
-    active = true;
+    icon = 'pi pi-circle-fill';
+    minAge: number | null = null;
+    maxAge: number | null = null;
+    monthlyAbsenceLimit: number | null = null;
+    hubId = '';
+    errorMessage = '';
+
+    hubs = this.store.hubs;
 
     icons = [
+        { label: 'Padrão', value: 'pi pi-circle-fill' },
         { label: 'Estrela', value: 'pi pi-star' },
         { label: 'Coração', value: 'pi pi-heart' },
         { label: 'Raio', value: 'pi pi-bolt' },
@@ -40,6 +48,23 @@ export class NewModalityComponent {
     }
 
     save() {
-        this.router.navigate(['/manage-modalites']);
+        this.errorMessage = '';
+        if (this.minAge === null || this.maxAge === null || this.monthlyAbsenceLimit === null) {
+            this.errorMessage = 'Informe as idades e o limite de faltas.';
+            return;
+        }
+        try {
+            this.store.create({
+                name: this.name,
+                minAge: this.minAge,
+                maxAge: this.maxAge,
+                monthlyAbsenceLimit: this.monthlyAbsenceLimit,
+                hubId: this.hubId,
+                icon: this.icon
+            });
+            this.router.navigate(['/manage-modalites']);
+        } catch (error) {
+            this.errorMessage = error instanceof Error ? error.message : 'Não foi possível cadastrar.';
+        }
     }
 }

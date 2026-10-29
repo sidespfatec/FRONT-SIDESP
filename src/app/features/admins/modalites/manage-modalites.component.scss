@@ -16,6 +16,11 @@
     color: var(--color-brand-primary);
 }
 
+.modality-alert {
+    margin: 0 0 1rem;
+    color: #9f1b1b;
+}
+
 .search-modality-container {
     display: flex;
     gap: 0.75rem;
@@ -64,25 +69,82 @@
     }
 }
 
-.modality-item {
+.modality-row {
     display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    width: 100%;
-    padding: 0.875rem 1rem;
+    align-items: stretch;
+    min-width: 0;
     border: 0.0625rem solid var(--gray-300);
     border-radius: 0.75rem;
     background: #fff;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+
+    &:hover {
+        box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.08);
+    }
+}
+
+.modality-item {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+    padding: 0.875rem 1rem;
+    border: none;
+    background: transparent;
     font: inherit;
     text-align: left;
     cursor: pointer;
 
-    &:hover {
+    &:hover:not(:disabled) {
         background: var(--gray-100);
+    }
+
+    &:disabled {
+        cursor: default;
+        opacity: 0.85;
     }
 
     .pi-chevron-right {
         color: var(--color-text-secondary);
+    }
+}
+
+.status-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    min-width: 5.5rem;
+    padding: 0 0.75rem;
+    border: none;
+    border-left: 0.0625rem solid var(--gray-300);
+    background: transparent;
+    color: var(--color-brand-secondary);
+    font: inherit;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    .pi {
+        font-size: 1.1rem;
+    }
+
+    &:hover {
+        background: var(--color-brand-secondary);
+        color: #fff;
+    }
+
+    &.reactivate {
+        color: #0f7a4e;
+
+        &:hover {
+            background: #0f7a4e;
+            color: #fff;
+        }
     }
 }
 
@@ -118,4 +180,124 @@
     padding: 1.5rem 0;
     text-align: center;
     color: var(--color-text-secondary);
+}
+
+:host ::ng-deep .p-dialog {
+    border-radius: 0.75rem;
+    overflow: hidden;
+
+    .p-dialog-header {
+        background-color: var(--color-bg-nav);
+        padding: 1.25rem 1.5rem;
+
+        .p-dialog-title {
+            color: var(--color-text-on-brand);
+            font-weight: 600;
+            font-size: 1.15rem;
+        }
+
+        .p-dialog-close-button {
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 50%;
+            background-color: var(--white) !important;
+            color: var(--color-brand-primary) !important;
+
+            &:hover {
+                background-color: var(--color-brand-secondary) !important;
+                color: var(--white) !important;
+            }
+        }
+    }
+
+    .p-dialog-content {
+        padding: 1.5rem;
+    }
+
+    .p-dialog-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.5rem;
+        padding: 0 1.5rem 1.5rem;
+    }
+}
+
+.details-head {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.details-title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+
+    strong {
+        font-size: 1.2rem;
+        color: var(--color-brand-primary);
+        overflow-wrap: anywhere;
+    }
+}
+
+.details-status {
+    align-self: flex-start;
+    padding: 0.125rem 0.625rem;
+    border-radius: 999px;
+    background: #e1f5ee;
+    color: #0f7a4e;
+    font-size: 0.75rem;
+    font-weight: 600;
+
+    &.off {
+        background: #faeeda;
+        color: #8a5a00;
+    }
+}
+
+.details-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.875rem 1rem;
+    margin: 0;
+
+    div {
+        min-width: 0;
+    }
+
+    dt {
+        font-size: 0.75rem;
+        color: var(--color-text-secondary);
+    }
+
+    dd {
+        margin: 0.125rem 0 0;
+        font-weight: 600;
+        color: var(--color-text-primary);
+        overflow-wrap: anywhere;
+    }
+}
+
+.delete-warning {
+    margin: 1.25rem 0 0;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    background: #fdecec;
+    color: #9f1b1b;
+    font-size: 0.875rem;
+}
+
+:host ::ng-deep .p-dialog-footer .btn-neutral {
+    min-width: 6.5rem;
+    border: 1.5px solid var(--color-brand-primary) !important;
+    background: var(--white) !important;
+    color: var(--color-brand-primary) !important;
+    font-weight: 600;
+
+    &:hover {
+        background: var(--color-brand-primary) !important;
+        color: var(--white) !important;
+    }
 }
