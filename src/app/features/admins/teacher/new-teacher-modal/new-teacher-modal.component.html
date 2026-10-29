@@ -1,34 +1,49 @@
 <p-dialog styleClass="teacher-dialog" [(visible)]="visible" (visibleChange)="visibleChange.emit($event)" [modal]="true"
     [draggable]="false" [resizable]="false" header="Novo professor">
 
-    <form class="teacher-form">
+    <form class="teacher-form" [formGroup]="form">
 
         <h2 class="teacher-form-title">Dados pessoais</h2>
 
         <div class="teacher-field">
             <label for="nome">Nome completo</label>
-            <input id="nome" pInputText />
+            <input id="nome" pInputText formControlName="nome" />
+            @if (erro('nome'); as mensagem) {
+            <small class="teacher-error">{{ mensagem }}</small>
+            }
         </div>
 
         <div class="teacher-field-row">
             <div class="teacher-field">
                 <label for="cpf">CPF</label>
-                <input id="cpf" pInputText placeholder="000.000.000-00" />
+                <input id="cpf" pInputText formControlName="cpf" placeholder="000.000.000-00" />
+                @if (erro('cpf'); as mensagem) {
+                <small class="teacher-error">{{ mensagem }}</small>
+                }
             </div>
             <div class="teacher-field">
                 <label for="nascimento">Data de nascimento</label>
-                <input id="nascimento" pInputText type="date" />
+                <input id="nascimento" pInputText type="date" formControlName="dataNascimento" />
+                @if (erro('dataNascimento'); as mensagem) {
+                <small class="teacher-error">{{ mensagem }}</small>
+                }
             </div>
         </div>
 
         <div class="teacher-field">
             <label for="email">E-mail</label>
-            <input id="email" pInputText type="email" />
+            <input id="email" pInputText type="email" formControlName="email" />
+            @if (erro('email'); as mensagem) {
+            <small class="teacher-error">{{ mensagem }}</small>
+            }
         </div>
 
         <div class="teacher-field">
             <label for="telefone">Telefone</label>
-            <input id="telefone" pInputText placeholder="(12) 90000-0000" />
+            <input id="telefone" pInputText formControlName="telefone" placeholder="(12) 90000-0000" />
+            @if (erro('telefone'); as mensagem) {
+            <small class="teacher-error">{{ mensagem }}</small>
+            }
         </div>
 
         <h2 class="teacher-form-title">Endereço</h2>
@@ -36,27 +51,27 @@
         <div class="teacher-field-row">
             <div class="teacher-field teacher-field-grow">
                 <label for="cep">CEP</label>
-                <input id="cep" pInputText placeholder="00000-000" />
+                <input id="cep" pInputText formControlName="cep" placeholder="00000-000" />
             </div>
             <div class="teacher-field teacher-field-small">
                 <label for="numero">Número</label>
-                <input id="numero" pInputText />
+                <input id="numero" pInputText formControlName="numero" />
             </div>
         </div>
 
         <div class="teacher-field">
             <label for="rua">Rua</label>
-            <input id="rua" pInputText />
+            <input id="rua" pInputText formControlName="rua" />
         </div>
 
         <div class="teacher-field-row">
             <div class="teacher-field">
                 <label for="bairro">Bairro</label>
-                <input id="bairro" pInputText />
+                <input id="bairro" pInputText formControlName="bairro" />
             </div>
             <div class="teacher-field">
                 <label for="cidade">Cidade</label>
-                <input id="cidade" pInputText />
+                <input id="cidade" pInputText formControlName="cidade" />
             </div>
         </div>
 
@@ -64,22 +79,31 @@
 
         <div class="teacher-field">
             <label for="modalidade">Modalidade</label>
-            <p-select inputId="modalidade" [options]="modalities" optionLabel="label" optionValue="value"
-                appendTo="body" />
+            <p-select inputId="modalidade" formControlName="modalidadeId" [options]="modalidades()" optionLabel="nome"
+                optionValue="id" placeholder="Selecione" appendTo="body" />
+            @if (erro('modalidadeId'); as mensagem) {
+            <small class="teacher-error">{{ mensagem }}</small>
+            }
         </div>
 
         <div class="teacher-field">
-            <label for="turma">Turma</label>
-            <p-select inputId="turma" [options]="classGroups" optionLabel="label" optionValue="value" appendTo="body" />
+            <label for="registro">Registro profissional</label>
+            <input id="registro" pInputText formControlName="registroProfissional" placeholder="000000-G/SP" />
         </div>
 
         <h2 class="teacher-form-title">Currículo</h2>
 
-        <p-fileUpload mode="basic" chooseLabel="Anexar currículo (PDF)" accept=".pdf" />
+        <p-fileUpload mode="basic" chooseLabel="Anexar currículo (PDF)" accept=".pdf" [auto]="false"
+            [customUpload]="true" (onSelect)="aoEscolherCurriculo($event)" />
+
+        @if (curriculo) {
+        <p class="teacher-file">{{ curriculo.name }}</p>
+        }
     </form>
 
     <ng-template pTemplate="footer">
-        <p-button label="Cancelar" severity="secondary" [text]="true" (onClick)="onCancel()" />
-        <p-button label="Salvar" icon="pi pi-check" />
+        <p-button label="Cancelar" severity="secondary" [text]="true" [disabled]="salvando()" (onClick)="onCancel()" />
+        <p-button label="Salvar" icon="pi pi-check" [loading]="salvando()" [disabled]="salvando()"
+            (onClick)="salvar()" />
     </ng-template>
 </p-dialog>

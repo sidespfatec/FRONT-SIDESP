@@ -1,3 +1,4 @@
+import { ToastModule } from 'primeng/toast';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BannerComponent } from '../../../../component/banner/banner.component';
@@ -21,8 +22,7 @@ interface Teacher {
     imports: [
         CommonModule, BannerComponent,
         ButtonModule, InputTextModule, FooterComponent,
-        AutoCompleteModule, CardModule, NewTeacherModalComponent, NavbarDesktopAdminComponent
-    ],
+        AutoCompleteModule, CardModule, NewTeacherModalComponent, NavbarDesktopAdminComponent, ToastModule],
     templateUrl: './manage.teachers.component.html',
     styleUrl: './manage.teachers.component.scss'
 })
