@@ -1,5 +1,7 @@
+<app-navbar-desktop-admin></app-navbar-desktop-admin>
+@if (auth.user()) {
 <app-session></app-session>
-@if(auth.isAdmin()){<app-navbar-desktop-admin></app-navbar-desktop-admin>}
+}
 <app-banner></app-banner>
 
 <div class="home-container">
