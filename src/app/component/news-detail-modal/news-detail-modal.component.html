@@ -1,0 +1,9 @@
+<p-dialog header="Notícia" [visible]="true" [modal]="true" [dismissableMask]="true" [draggable]="false"
+    [style]="{ width: '40rem' }" [breakpoints]="{ '640px': '92vw' }" (onHide)="close.emit()">
+    <figure class="news-image">
+        <img [src]="news.image" [alt]="news.title">
+    </figure>
+    <h2 class="news-title">{{ news.title }}</h2>
+    <p class="news-date"><i class="pi pi-calendar"></i> {{ news.date | date:'dd/MM/yyyy' }}</p>
+    <p class="news-description">{{ news.description }}</p>
+</p-dialog>

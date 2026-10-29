@@ -6,145 +6,313 @@
 
     @include xl {
         margin-top: 2rem;
-        max-width: 900px;
         margin-left: auto;
         margin-right: auto;
+        max-width: 900px;
     }
 }
 
-
-.page-header {
-    display: flex;
+.back-link {
+    display: inline-flex;
     align-items: center;
-    gap: 0.625rem;
-    margin-bottom: 0.875rem;
+    gap: 0.35rem;
+    margin-bottom: 1.25rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+    cursor: pointer;
 
-    .pi-arrow-left {
-        font-size: 1.5rem;
-        color: var(--color-text-primary);
-        cursor: pointer;
+    &:hover {
+        color: var(--color-brand-primary);
     }
 }
 
-.modality-icon {
-    width: 2.25rem;
-    height: 2.25rem;
-    border-radius: 0.5625rem;
+.title-row {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
 
-    i {
-        font-size: 1.3rem;
+    @include md {
+        flex-direction: row;
+        align-items: flex-end;
+        gap: 1.5rem;
+    }
+}
+
+.title-text {
+    min-width: 0;
+
+    @include md {
+        flex: 1 1 auto;
+    }
+}
+
+:host ::ng-deep .title-row p-button {
+    flex: 0 0 auto;
+
+    .p-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    @include md {
+        .p-button {
+            width: auto;
+        }
     }
 }
 
 .modality-name {
+    flex: 1 1 auto;
     margin: 0;
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
     color: var(--color-text-primary);
+
+    @include md {
+        font-size: 2rem;
+    }
+
+    @include xl {
+        font-size: 2.5rem;
+    }
 }
 
-.modality-meta {
-    margin: 0;
-    font-size: 1rem;
+.summary {
+    margin: 0.375rem 0 0;
+    font-size: 0.875rem;
     color: var(--color-text-secondary);
 }
 
-
-.classes-list {
+.section-title {
     display: flex;
-    flex-direction: column;
-    gap: 0.625rem;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin: 0 0 0.875rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
 
-    @include xl {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-    }
-}
-
-.class-card {
-    padding: 0.75rem;
-    border: 1px solid var(--color-border-strong);
-    border-radius: 0.75rem;
-    cursor: pointer;
-}
-
-.class-card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-
-    .class-name {
-        margin: 0;
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: var(--color-text-primary);
-    }
-
-    .pi-chevron-right {
-        font-size: 1.3rem;
-        color: var(--muted-text);
-    }
-}
-
-.class-details {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-}
-
-.detail-row {
-    display: flex;
-    align-items: center;
-    gap: 0.375rem;
-
-    i {
-        font-size: 1.2rem;
-        color: var(--muted-text);
-    }
-
-    span {
-        font-size: 1.3rem;
+    small {
+        font-weight: 400;
         color: var(--color-text-secondary);
     }
 }
 
-.empty-state {
-    text-align: center;
-    color: var(--color-text-secondary);
-    font-size: 1rem;
-    padding: 1rem 0;
+/* ---------- a semana ---------- */
+.week-section {
+    display: none;
+    margin-bottom: 2.25rem;
+
+    @include md {
+        display: block;
+    }
 }
 
+.week-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
 
-.add-class {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    border: 1.5px dashed var(--color-brand-secondary);
-    border-radius: 0.625rem;
-    padding: 0.75rem;
-    margin-top: 0.75rem;
-
-    &:hover {
-        background-color: var(--gray-100);
+    th {
+        padding: 0 0 0.5rem;
+        font-size: 0.6875rem;
+        font-weight: 600;
+        text-align: center;
+        color: var(--color-text-secondary);
     }
 
-    i {
-        font-size: 1.1rem;
-        color: var(--color-brand-secondary);
+    th.hour-col {
+        width: 3rem;
+    }
+
+    td {
+        padding: 0 2px 4px 0;
+        vertical-align: top;
+    }
+
+    td.hour {
+        padding-top: 0.4rem;
+        font-size: 0.75rem;
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+        color: var(--color-text-secondary);
+    }
+}
+
+.week-block {
+    display: block;
+    width: 100%;
+    padding: 0.4rem 0.5rem;
+    border: 0;
+    border-left: 3px solid var(--color-brand-primary);
+    border-radius: 0 0.25rem 0.25rem 0;
+    background-color: var(--blue-50);
+    text-align: left;
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--blue-100);
+    }
+
+    b {
+        display: block;
+        overflow: hidden;
+        font-size: 0.75rem;
+        font-weight: 600;
+        line-height: 1.2;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: var(--color-brand-primary);
     }
 
     span {
-        font-size: 1;
-        font-weight: 500;
-        color: var(--color-brand-secondary);
+        display: none;
+        margin-top: 0.1rem;
+        font-size: 0.65625rem;
+        color: var(--color-text-secondary);
+
+        @include lg {
+            display: block;
+        }
     }
+
+    &.is-full {
+        border-left-color: var(--yellow-700);
+        background-color: var(--yellow-100);
+
+        b {
+            color: var(--yellow-700);
+        }
+    }
+}
+
+.empty-slot {
+    display: block;
+    min-height: 2.75rem;
+    height: 100%;
+    border-radius: 0.25rem;
+    background-color: var(--gray-100);
+    opacity: 0.6;
+}
+
+/* ---------- as turmas ---------- */
+.class-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.25rem 1rem;
+    align-items: start;
+    padding: 1.125rem 0;
+    border-top: 1px solid var(--gray-300);
+}
+
+.class-head {
+    grid-column: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
+}
+
+.class-name {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+
+    &:hover {
+        color: var(--color-brand-primary);
+    }
+}
+
+.waiting-note {
+    font-size: 0.71875rem;
+    font-weight: 600;
+    color: var(--yellow-700);
+}
+
+.class-when {
+    grid-column: 1;
+    margin: 0.15rem 0 0;
+    font-size: 0.84375rem;
+    color: var(--color-text-primary);
+}
+
+.class-who {
+    grid-column: 1;
+    margin: 0.15rem 0 0;
+    font-size: 0.78125rem;
+    color: var(--color-text-secondary);
+}
+
+.class-seats {
+    grid-column: 1;
+    margin: 0.5rem 0 0;
+    font-size: 0.84375rem;
+    color: var(--color-text-secondary);
+}
+
+.seats-free {
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.seats-full {
+    font-weight: 600;
+    color: var(--yellow-700);
+}
+
+.class-actions {
+    grid-column: 2;
+    grid-row: 1 / span 5;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+
+    @include md {
+        grid-column: 2;
+    }
+}
+
+@media (max-width: 47.99em) {
+    .class-item {
+        grid-template-columns: 1fr;
+    }
+
+    .class-actions {
+        grid-column: 1;
+        grid-row: auto;
+        flex-direction: row;
+        align-items: center;
+        margin-top: 0.75rem;
+    }
+}
+
+.no-class {
+    padding: 2.5rem 0;
+    text-align: center;
+    border-top: 1px solid var(--gray-300);
+
+    p {
+        margin: 0 auto 0.875rem;
+        max-width: 36ch;
+        font-size: 0.84375rem;
+        color: var(--color-text-secondary);
+    }
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
 }

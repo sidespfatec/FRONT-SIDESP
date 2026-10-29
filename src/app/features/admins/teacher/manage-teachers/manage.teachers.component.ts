@@ -1,3 +1,4 @@
+import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -23,6 +24,7 @@ interface Teacher {
         CommonModule, BannerComponent,
         ButtonModule, InputTextModule, FooterComponent,
         AutoCompleteModule, CardModule, NewTeacherModalComponent, NavbarDesktopAdminComponent, ToastModule],
+    providers: [MessageService],
     templateUrl: './manage.teachers.component.html',
     styleUrl: './manage.teachers.component.scss'
 })

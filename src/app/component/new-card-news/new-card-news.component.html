@@ -1,21 +1,36 @@
-<p-dialog header="Adicionar Notícia" [(visible)]="viewModal" [modal]="true" [style]="{ width: '25rem' }"
+<p-dialog header="Adicionar Notícia" [(visible)]="viewModal" [modal]="true" [style]="{ width: '32rem' }"
     [breakpoints]="{ '640px': '90vw' }" [draggable]="false" (onHide)="close.emit()">
-    <div class="flex flex-col gap-6">
-        <div class="flex flex-col gap-1">
-            <label pLabel for="username" class="font-semibold">Imagem</label>
-            <p-fileUpload mode="basic" chooseLabel="Anexar " accept=".pdf" styleClass="full-width" />
+    <div class="news-form">
+        <div class="field">
+            <label>Imagem</label>
+            <input #fileInput type="file" accept="image/*" hidden (change)="onFileSelected($event)" />
+            <div class="dropzone" [class.has-image]="imagePreview" (click)="fileInput.click()">
+                @if (imagePreview) {
+                <img [src]="imagePreview" alt="Pré-visualização">
+                <span class="change-hint"><i class="pi pi-pencil"></i> Trocar imagem</span>
+                } @else {
+                <i class="pi pi-image"></i>
+                <span>Clique para escolher uma imagem</span>
+                <small>PNG ou JPG</small>
+                }
+            </div>
         </div>
-        <div class="flex flex-col gap-1">
-            <label pLabel for="username" class="font-semibold">Título</label>
-            <input pInputText id="username" />
+
+        <div class="field">
+            <label for="news-title">Título</label>
+            <input pInputText id="news-title" [(ngModel)]="title" maxlength="100"
+                placeholder="Digite o título da notícia" />
         </div>
-        <div class="flex flex-col gap-1">
-            <label pLabel for="descrição" class="font-semibold">Descrição</label>
-            <input pInputText id="descrição" />
+
+        <div class="field">
+            <label for="news-description">Descrição</label>
+            <textarea pInputText id="news-description" rows="5" [(ngModel)]="description"
+                placeholder="Escreva os detalhes da notícia"></textarea>
         </div>
-        <div class="flex justify-end gap-2">
+
+        <div class="actions">
             <button type="button" pButton severity="secondary" (click)="close.emit()">Cancelar</button>
-            <button type="button" pButton (click)="close.emit()">Salvar</button>
+            <button type="button" pButton [disabled]="!title.trim()" (click)="onSave()">Salvar</button>
         </div>
     </div>
 </p-dialog>

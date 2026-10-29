@@ -1,0 +1,313 @@
+<app-navbar-desktop-admin></app-navbar-desktop-admin>
+<app-banner></app-banner>
+
+<p-toast position="bottom-center" />
+
+<div class="card-container">
+
+    <button type="button" class="back-link" (click)="voltar()">
+        <i class="pi pi-angle-left"></i> Alunos
+    </button>
+
+    @if (aluno(); as aluno) {
+
+    <p-card styleClass="student-head-card">
+        <div class="student-head">
+
+            <div class="student-photo">
+                @if (aluno.foto) {
+                <p-image [src]="aluno.foto" [alt]="aluno.nome" [preview]="true" width="100%" />
+                } @else {
+                <span class="photo-empty">sem foto</span>
+                }
+            </div>
+
+            <button type="button" class="photo-action" (click)="trocarFoto()">
+                {{ aluno.foto ? 'trocar foto' : 'adicionar foto' }}
+            </button>
+
+            <div class="student-identity">
+                <h1 class="student-name">{{ aluno.nome }}</h1>
+                <p class="student-age">
+                    {{ idade(aluno) }} anos, {{ aluno.genero === 'F' ? 'nascida' : 'nascido' }} em {{ aluno.nascimento }}
+                </p>
+
+                <div class="student-tags">
+                    <p-tag [value]="aluno.situacao === 'ativo' ? 'Ativo' : 'Trancado'"
+                        [severity]="aluno.situacao === 'ativo' ? 'success' : 'secondary'" />
+
+                    <p-tag [value]="turmasAtivas(aluno) + (turmasAtivas(aluno) === 1 ? ' turma' : ' turmas')"
+                        severity="secondary" />
+
+                    @if (pendencias(aluno)) {
+                    <p-tag [value]="pendencias(aluno) + (pendencias(aluno) === 1 ? ' documento pendente' : ' documentos pendentes')"
+                        severity="danger" />
+                    }
+                </div>
+            </div>
+
+            @if (!editando()) {
+            <div class="student-head-actions">
+                <p-button label="Editar cadastro" icon="pi pi-pencil" severity="secondary" [outlined]="true"
+                    size="small" (onClick)="editar()" />
+            </div>
+            }
+
+        </div>
+    </p-card>
+
+    <p-card styleClass="student-body-card">
+        <p-tabs value="resumo">
+
+            <p-tablist>
+                <p-tab value="resumo">Resumo</p-tab>
+                <p-tab value="matriculas">Matrículas</p-tab>
+                <p-tab value="documentos">
+                    Documentos
+                    @if (pendencias(aluno)) {
+                    <span class="tab-count">{{ pendencias(aluno) }}</span>
+                    }
+                </p-tab>
+                <p-tab value="frequencia">Frequência</p-tab>
+            </p-tablist>
+
+            <p-tabpanels>
+
+                <p-tabpanel value="resumo">
+
+                    @if (!editando()) {
+
+                    <section class="block">
+                        <h2 class="block-name">Identificação</h2>
+                        <div class="rows">
+                            <p class="row"><span>CPF</span><b>{{ aluno.cpf }}</b></p>
+                            <p class="row"><span>Data de nascimento</span><b>{{ aluno.nascimento }}</b></p>
+                            <p class="row"><span>Gênero</span><b>{{ genero(aluno) }}</b></p>
+                            <p class="row"><span>Telefone</span><b>{{ aluno.telefone }}</b></p>
+                        </div>
+                    </section>
+
+                    <section class="block">
+                        <h2 class="block-name">Endereço</h2>
+                        <div class="rows">
+                            <p class="row"><span>Rua e número</span><b>{{ ruaENumero(aluno) }}</b></p>
+                            @if (aluno.endereco.complemento) {
+                            <p class="row"><span>Complemento</span><b>{{ aluno.endereco.complemento }}</b></p>
+                            }
+                            <p class="row"><span>Bairro</span><b>{{ aluno.endereco.bairro }}</b></p>
+                            <p class="row"><span>Cidade e estado</span><b>{{ cidadeEEstado(aluno) }}</b></p>
+                            <p class="row"><span>CEP</span><b>{{ aluno.endereco.cep }}</b></p>
+                        </div>
+                    </section>
+
+                    <section class="block last">
+                        <h2 class="block-name">Responsável</h2>
+                        <div class="rows">
+                            <p class="row"><span>Nome</span><b>{{ aluno.responsavel.nome }}</b></p>
+                            <p class="row"><span>Parentesco</span><b>{{ aluno.responsavel.parentesco }}</b></p>
+                            <p class="row"><span>CPF</span><b>{{ aluno.responsavel.cpf }}</b></p>
+                            <p class="row"><span>Telefone</span><b>{{ aluno.responsavel.telefone }}</b></p>
+                        </div>
+                    </section>
+
+                    } @else {
+
+                    <form [formGroup]="form" (ngSubmit)="salvar()">
+
+                        <p-message severity="info" styleClass="edit-note">
+                            São os mesmos campos do cadastro. Turmas ficam na aba Matrículas e arquivos na aba
+                            Documentos.
+                        </p-message>
+
+                        <section class="block">
+                            <h2 class="block-name">Informações pessoais</h2>
+
+                            <div class="form-grid">
+                                <p-iftalabel class="wide">
+                                    <input pInputText id="nome" formControlName="nome" fluid
+                                        [class.ng-dirty]="invalido('nome')" />
+                                    <label for="nome">Nome completo</label>
+                                </p-iftalabel>
+
+                                <p-iftalabel>
+                                    <p-inputmask inputId="cpf" formControlName="cpf" mask="999.999.999-99" fluid />
+                                    <label for="cpf">CPF</label>
+                                </p-iftalabel>
+
+                                <p-iftalabel>
+                                    <p-inputmask inputId="nascimento" formControlName="nascimento" mask="99/99/9999"
+                                        fluid />
+                                    <label for="nascimento">Data de nascimento</label>
+                                </p-iftalabel>
+
+                                <div class="field-open wide">
+                                    <span class="field-label">Gênero</span>
+                                    <p-selectbutton formControlName="genero" [options]="generoOpcoes"
+                                        optionLabel="label" optionValue="value" [allowEmpty]="false" />
+                                </div>
+
+                                <p-iftalabel>
+                                    <p-inputmask inputId="telefone" formControlName="telefone"
+                                        mask="(99) 99999-9999" fluid />
+                                    <label for="telefone">Telefone</label>
+                                </p-iftalabel>
+                            </div>
+                        </section>
+
+                        <section class="block">
+                            <h2 class="block-name">Endereço</h2>
+
+                            <div class="form-grid">
+                                <p-iftalabel>
+                                    <p-inputmask inputId="cep" formControlName="cep" mask="99999-999" fluid />
+                                    <label for="cep">CEP</label>
+                                </p-iftalabel>
+
+                                <p-iftalabel>
+                                    <input pInputText id="rua" formControlName="rua" fluid />
+                                    <label for="rua">Rua</label>
+                                </p-iftalabel>
+
+                                <p-iftalabel>
+                                    <input pInputText id="numero" formControlName="numero" fluid />
+                                    <label for="numero">Número</label>
+                                </p-iftalabel>
+
+                                <p-iftalabel>
+                                    <input pInputText id="complemento" formControlName="complemento" fluid />
+                                    <label for="complemento">Complemento</label>
+                                </p-iftalabel>
+
+                                <p-iftalabel>
+                                    <input pInputText id="bairro" formControlName="bairro" fluid />
+                                    <label for="bairro">Bairro</label>
+                                </p-iftalabel>
+
+                                <p-iftalabel>
+                                    <input pInputText id="cidade" formControlName="cidade" fluid />
+                                    <label for="cidade">Cidade</label>
+                                </p-iftalabel>
+
+                                <p-iftalabel>
+                                    <input pInputText id="estado" formControlName="estado" maxlength="2" fluid />
+                                    <label for="estado">Estado</label>
+                                </p-iftalabel>
+                            </div>
+                        </section>
+
+                        <section class="block last">
+                            <h2 class="block-name">Responsável</h2>
+
+                            <div class="form-grid">
+                                <p-iftalabel class="wide">
+                                    <input pInputText id="respNome" formControlName="respNome" fluid
+                                        [class.ng-dirty]="invalido('respNome')" />
+                                    <label for="respNome">Nome do responsável</label>
+                                </p-iftalabel>
+
+                                <p-iftalabel>
+                                    <p-inputmask inputId="respCpf" formControlName="respCpf" mask="999.999.999-99"
+                                        fluid />
+                                    <label for="respCpf">CPF do responsável</label>
+                                </p-iftalabel>
+
+                                <p-iftalabel>
+                                    <input pInputText id="respParentesco" formControlName="respParentesco" fluid />
+                                    <label for="respParentesco">Parentesco</label>
+                                </p-iftalabel>
+
+                                <div class="field-with-error">
+                                    <p-iftalabel>
+                                        <p-inputmask inputId="respTelefone" formControlName="respTelefone"
+                                            mask="(99) 99999-9999" fluid
+                                            [styleClass]="invalido('respTelefone') ? 'ng-dirty ng-invalid' : ''" />
+                                        <label for="respTelefone">Telefone do responsável</label>
+                                    </p-iftalabel>
+
+                                    @if (invalido('respTelefone')) {
+                                    <small class="field-error">Telefone incompleto.</small>
+                                    }
+                                </div>
+                            </div>
+                        </section>
+
+                        <div class="form-footer">
+                            <p-button label="Cancelar" severity="secondary" [text]="true" (onClick)="cancelar()" />
+                            <p-button label="Salvar alterações" type="submit" />
+                        </div>
+                    </form>
+
+                    }
+
+                </p-tabpanel>
+
+                <p-tabpanel value="matriculas">
+                    @for (matricula of aluno.matriculas; track matricula.id) {
+                    <div class="enrollment">
+                        <span class="enrollment-name">{{ matricula.modalidade }}, {{ matricula.turma }}</span>
+                        <p class="enrollment-when">{{ quando(matricula) }}</p>
+                        <span class="enrollment-end">
+                            <p-tag [value]="matricula.situacao === 'ativa' ? 'Ativa' : 'Encerrada'"
+                                [severity]="matricula.situacao === 'ativa' ? 'success' : 'secondary'" />
+                        </span>
+                    </div>
+                    }
+
+                    <div class="enrollment-action">
+                        <p-button label="Matricular em outra turma" icon="pi pi-plus" severity="secondary"
+                            [outlined]="true" size="small" (onClick)="matricular()" />
+                    </div>
+                </p-tabpanel>
+
+                <p-tabpanel value="documentos">
+                    @for (documento of aluno.documentos; track documento.tipo) {
+                    <div class="document">
+                        <span class="document-name">{{ documento.tipo }}</span>
+                        <p class="document-state" [class.missing]="documento.estado === 'faltando'"
+                            [class.expired]="documento.estado === 'vencido'">
+                            {{ estadoDocumento(documento) }}
+                        </p>
+
+                        <span class="document-end">
+                            @if (documento.estado === 'enviado') {
+                            <p-button label="ver" [text]="true" size="small" (onClick)="verDocumento(documento)" />
+                            <p-button label="substituir" [text]="true" size="small"
+                                (onClick)="anexarDocumento(documento)" />
+                            } @else {
+                            <p-button [label]="documento.estado === 'vencido' ? 'substituir' : 'anexar'"
+                                icon="pi pi-upload" severity="secondary" [outlined]="true" size="small"
+                                (onClick)="anexarDocumento(documento)" />
+                            }
+                        </span>
+                    </div>
+                    }
+                </p-tabpanel>
+
+                <p-tabpanel value="frequencia">
+                    <div class="empty-panel">
+                        <p class="empty-title">Ainda não há chamada registrada</p>
+                        <p class="empty-text">
+                            A frequência aparece aqui quando o registro de presença estiver funcionando.
+                        </p>
+                    </div>
+                </p-tabpanel>
+
+            </p-tabpanels>
+        </p-tabs>
+    </p-card>
+
+    } @else {
+
+    <p-card>
+        <div class="empty-panel">
+            <p class="empty-title">Aluno não encontrado</p>
+            <p class="empty-text">Esse cadastro pode ter sido removido.</p>
+            <p-button label="Voltar para a lista" (onClick)="voltar()" />
+        </div>
+    </p-card>
+
+    }
+
+</div>
+
+<app-footer></app-footer>

@@ -1,0 +1,77 @@
+<app-navbar-desktop-admin></app-navbar-desktop-admin>
+<app-banner></app-banner>
+
+<div class="card-container">
+    <p-card>
+
+        <h1 class="title-student">Alunos</h1>
+
+        <div class="search-student-container">
+            <p-iconfield>
+                <p-inputicon styleClass="pi pi-search" />
+                <input pInputText type="text" placeholder="Buscar..." aria-label="Buscar por nome ou CPF"
+                    [ngModel]="busca()" (ngModelChange)="busca.set($event)" />
+            </p-iconfield>
+        </div>
+
+        <div class="filter-student-container">
+            <p-select [ngModel]="polo()" (ngModelChange)="polo.set($event)" [options]="polosOpcoes" optionLabel="label"
+                optionValue="value" placeholder="Todos os polos" [showClear]="true" appendTo="body" />
+
+            <p-select [ngModel]="turma()" (ngModelChange)="turma.set($event)" [options]="turmasOpcoes"
+                optionLabel="label" optionValue="value" placeholder="Todas as turmas" [showClear]="true"
+                appendTo="body" />
+
+            <p-togglebutton [ngModel]="soAtivos()" (ngModelChange)="soAtivos.set($event)" onLabel="Só ativos"
+                offLabel="Todos" />
+
+            <p-togglebutton [ngModel]="soPendentes()" (ngModelChange)="soPendentes.set($event)"
+                onLabel="Documentação pendente" offLabel="Documentação pendente" />
+        </div>
+
+        <ul class="student-list">
+            @for (aluno of alunosFiltrados(); track aluno.id) {
+            <li>
+                <button type="button" class="student-item" (click)="abrirFicha(aluno)">
+                    <span class="student-info">
+                        <span class="student-title">
+                            <strong>{{ aluno.nome }}</strong>
+                            @if (aluno.situacao === 'trancado') {
+                            <p-tag value="Trancado" severity="secondary" />
+                            }
+                            @if (temPendencia(aluno)) {
+                            <p-tag value="Pendência" severity="danger" />
+                            }
+                        </span>
+                        <span class="student-where">
+                            {{ idade(aluno) }} anos, {{ ondeEstuda(aluno) }}
+                        </span>
+                    </span>
+
+                    <span class="student-open" aria-hidden="true">
+                        <i class="pi pi-angle-right"></i>
+                    </span>
+                </button>
+            </li>
+            }
+
+            @empty {
+            <li class="student-empty">
+                <p class="empty-title">Nenhum aluno encontrado</p>
+                <p class="empty-text">Ajuste a busca ou os filtros para ver outros alunos.</p>
+            </li>
+            }
+        </ul>
+
+    </p-card>
+
+    @if (alunosFiltrados().length) {
+    <p class="student-resume">
+        <b>{{ alunosFiltrados().length }}</b>
+        {{ alunosFiltrados().length === 1 ? 'aluno' : 'alunos' }} nesse recorte,
+        <b>{{ totalPendentes() }}</b> com documentação pendente.
+    </p>
+    }
+</div>
+
+<app-footer></app-footer>

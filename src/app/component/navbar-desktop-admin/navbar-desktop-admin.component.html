@@ -11,7 +11,7 @@
         </ul>
 
         @if (currentPageLabel()) {
-        <span class="current-page-badge">{{ currentPageLabel() }}</span>
+            <span class="current-page-badge">{{ currentPageLabel() }}</span>
         }
 
         <button type="button" class="menu-toggle-btn" [class.active]="isMenuOpen()" (click)="toggleMenu()">
@@ -22,15 +22,13 @@
             class="navbar-login-btn"></button>
     </div>
 
-    @if (isMenuOpen()) {
-    <div class="admin-submenu">
+    <div class="admin-submenu" [class.open]="isMenuOpen()">
         @for (page of adminPages; track page.label) {
-        @if (page.path) {
-        <a [routerLink]="page.path" routerLinkActive="active-pill" class="submenu-pill">{{ page.label }}</a>
-        } @else {
-        <a class="submenu-pill">{{ page.label }}</a>
-        }
+            @if (page.path) {
+                <a [routerLink]="page.path" routerLinkActive="active-pill" class="submenu-pill">{{ page.label }}</a>
+            } @else {
+                <a class="submenu-pill">{{ page.label }}</a>
+            }
         }
     </div>
-    }
 </nav>
