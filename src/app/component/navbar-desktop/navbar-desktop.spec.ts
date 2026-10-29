@@ -1,21 +1,17 @@
-import { provideRouter } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NavbarDesktopComponent } from './navbar-desktop.component';
+import { NavbarDesktop } from './navbar-desktop.component';
 
-describe('NavbarDesktopComponent', () => {
-  let component: NavbarDesktopComponent;
-  let fixture: ComponentFixture<NavbarDesktopComponent>;
+describe('NavbarDesktop', () => {
+  let component: NavbarDesktop;
+  let fixture: ComponentFixture<NavbarDesktop>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      providers: [provideRouter([]), provideHttpClient(), provideHttpClientTesting()],
-      imports: [NavbarDesktopComponent],
+      imports: [NavbarDesktop],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(NavbarDesktopComponent);
+    fixture = TestBed.createComponent(NavbarDesktop);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

@@ -21,7 +21,7 @@ public class AuthRepository {
   private static final String ACCOUNT_SELECT =
       """
       SELECT c.con_id, c.pes_id, p.pes_nome, t.tpc_des,
-             c.con_senha_hash, c.con_ativo, c.con_email_hash
+             c.con_senha_hash, c.con_ativo, c.con_email_hash, c.con_versao
       FROM contas c
       JOIN pessoas p ON p.pes_id = c.pes_id
       JOIN tipos_cadastros t ON t.tpc_id = p.tpc_id
@@ -42,7 +42,8 @@ public class AuthRepository {
       String role,
       String password,
       boolean active,
-      byte[] emailHash) {
+      byte[] emailHash,
+      int version) {
     /** Evita expor hashes ou dados pessoais caso alguém imprima o objeto durante depuração. */
     @Override
     public String toString() {
@@ -61,7 +62,8 @@ public class AuthRepository {
         result.getString("tpc_des"),
         result.getString("con_senha_hash"),
         result.getBoolean("con_ativo"),
-        result.getBytes("con_email_hash"));
+        result.getBytes("con_email_hash"),
+        result.getInt("con_versao"));
   }
 
   /** Executa a busca com placeholders e devolve ausência ou a única conta encontrada. */
@@ -195,15 +197,10 @@ public class AuthRepository {
   }
 
   /**
-   * Cria responsável ligado à pessoa titular, preservando nome/data e perfil do modelo aprovado.
+   * Cria o vínculo de responsável; nome e nascimento permanecem na pessoa titular.
    */
   public int createGuardian(int person, Requests.Guardian guardian) {
-    return insert(
-        "INSERT INTO responsaveis(res_nome,res_data_nascimento,pes_id,tpc_id) VALUES(?,?,?,?)",
-        guardian.nome().strip(),
-        guardian.dataNascimento(),
-        person,
-        registrationType("RESPONSAVEL"));
+    return insert("INSERT INTO responsaveis(pes_id) VALUES(?)", person);
   }
 
   /** Verifica se a pessoa já possui cadastro de responsável, evitando duplicar o titular. */

@@ -1,6 +1,6 @@
 # ADR-004 — implementação e integração autorizadas
 
-Status: implementado. Base: última instrução de Heitor, documentação v0.2 e ADR-003.
+Status: implementado. Base: última instrução de a equipe, documentação v0.2 e ADR-003.
 
 1. Integrar Angular cadastro/login e sessão/guards; substitui proibição anterior nesse escopo. E-mail obrigatório e nascimento do responsável incluídos sem remodelar o restante do produto.
 2. Java17 / SpringBoot3.5.16 e MavenWrapper3.9.11. SpringJdbc/JdbcTemplate substitui proposta JPA para manter tabelas e relações sem ddl-auto. Repositório parametrizado e serviço transacional.

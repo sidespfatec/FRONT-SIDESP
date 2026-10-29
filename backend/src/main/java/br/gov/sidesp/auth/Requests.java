@@ -54,7 +54,8 @@ public final class Requests {
       @NotNull @Valid Person dadosPessoais,
       @NotNull @Valid Address endereco,
       @NotNull @Valid Credentials credenciais,
-      @Valid Guardian responsavel) {
+      @Valid Guardian responsavel,
+      @Valid br.gov.sidesp.management.ManagementRequests.Medical fichaMedica) {
     /**
      * Oculta conteúdo sensível quando o DTO é convertido para texto durante depuração; não muda sua
      * serialização JSON.

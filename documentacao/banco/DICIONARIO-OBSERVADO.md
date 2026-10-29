@@ -1,5 +1,3 @@
-> Atualização v0.3: implementação autorizada por Heitor, incluindo integração Angular. IMPLEMENTACAO.md e ADR-004 registram o estado efetivo; propostas antigas abaixo são histórico quando divergirem.
-
 # Dicionário observado no Miro
 
 Tipos/chaves transcritos; ausência de NOT NULL não prova nulabilidade. Não é DDL aprovado. Complementos propostos estão no DATA-CARD.md.

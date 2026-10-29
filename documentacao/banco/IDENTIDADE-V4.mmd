@@ -1,0 +1,87 @@
+erDiagram
+classDef entity fill:#fff6b6,stroke:#af7e02,color:#574900
+pessoas {
+ int pes_id PK
+ varchar pes_nome
+ varchar pes_nome_social
+ date pes_data_nascimento
+ char pes_sexo
+ int tpc_id FK
+ timestamp pes_criado_em
+}
+contas {
+ int con_id PK
+ int pes_id FK,UK
+ varbinary con_email_criptografado
+ binary con_email_hash UK
+ varchar con_senha_hash
+ boolean con_ativo
+ int con_versao
+}
+documentos {
+ int doc_id PK
+ int pes_id FK
+ int tpd_id FK
+ varchar doc_des
+ binary doc_cpf_hash UK
+ int doc_cpf_pes_id UK
+}
+responsaveis {
+ int res_id PK
+ int pes_id FK,UK
+}
+responsaveis_dependentes {
+ int res_id PK,FK
+ int pes_id PK,FK
+ varchar rde_parentesco
+}
+fichas_medicas {
+ int fim_id PK
+ int pes_id FK,UK
+ varbinary fim_condicoes
+ varbinary fim_alergias
+ varbinary fim_medicamentos
+ varbinary fim_restricoes
+ varbinary fim_emergencia_nome
+ varbinary fim_emergencia_telefone
+ timestamp fim_atualizada_em
+}
+profissionais {
+ int pes_id PK,FK
+ varchar pro_registro
+ varchar pro_especialidade
+ varchar pro_cargo
+ varchar pro_unidade
+ date pro_admissao
+ int pro_criado_por FK
+}
+recuperacoes_senha {
+ binary rec_hash PK
+ int con_id FK
+ timestamp rec_expira_em
+ timestamp rec_usado_em
+}
+enderecos {
+ int end_id PK
+ int pes_id FK
+ int pol_id FK
+ int ten_id FK
+ varchar end_cep
+ varchar end_rua
+ varchar end_numero
+ varchar end_complemento
+ varchar end_bairro
+ varchar end_cidade
+ char end_uf
+}
+pessoas ||--o| contas : titular
+pessoas ||--o{ documentos : possui
+pessoas ||--o| responsaveis : adulto
+responsaveis ||--o{ responsaveis_dependentes : representa
+pessoas ||--o{ responsaveis_dependentes : dependente
+pessoas ||--o| fichas_medicas : possui
+pessoas ||--o| profissionais : dados_profissionais
+contas ||--o{ profissionais : cadastra
+contas ||--o{ recuperacoes_senha : recupera
+pessoas ||--o{ enderecos : reside
+class pessoas,contas,documentos,responsaveis,responsaveis_dependentes,fichas_medicas,profissionais,recuperacoes_senha,enderecos entity

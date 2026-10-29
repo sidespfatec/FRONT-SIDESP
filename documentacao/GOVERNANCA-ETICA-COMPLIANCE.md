@@ -1,9 +1,3 @@
-> Revisão v0.4 (12/10/2026): ADR-005 e BACKEND-PARA-INICIANTES.md explicam a refatoração. Banco/contrato/regras de negócio preservados; SQL explicado separado, frontend anexado comparado e integração mantida. Estado e evidências atuais em VALIDACAO.md.
-
-> Atualização v0.3: implementação autorizada por Heitor, incluindo integração Angular. IMPLEMENTACAO.md e ADR-004 registram o estado efetivo; propostas antigas abaixo são histórico quando divergirem.
-
-> Revisão v0.2: DECISOES-HEITOR.md e ADR-003 prevalecem sobre propostas anteriores. Fontes literais do backlog preservam histórico, não aprovação técnica atual.
-
 # Governança, ética e compliance
 
 Documento de trabalho, não certificação de conformidade. Referência: LGPD, Lei 13.709/2018, texto oficial https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm . Dados de saúde, crianças/adolescentes e tratamento pelo poder público requerem definição específica de finalidade, base legal e proteção; consentimento não deve ser presumido como solução única.

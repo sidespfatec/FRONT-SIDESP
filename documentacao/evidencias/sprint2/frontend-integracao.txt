@@ -1,0 +1,26 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+❯ Building...
+✔ Building...
+Initial chunk files                | Names                           |  Raw size
+styles.css                         | styles                          |  36.23 kB | 
+chunk-CGZBV6BD.js                  | -                               |   4.07 kB | 
+spec-app-core-auth-auth.service.js | spec-app-core-auth-auth.service |   3.87 kB | 
+chunk-W75GIF6R.js                  | -                               |   3.21 kB | 
+spec-app-core-auth-validation.js   | spec-app-core-auth-validation   |   2.84 kB | 
+spec-app-core-auth-auth.guard.js   | spec-app-core-auth-auth.guard   |   2.34 kB | 
+init-testbed.js                    | init-testbed                    |   1.21 kB | 
+vitest-mock-patch.js               | vitest-mock-patch               | 974 bytes | 
+
+                                   | Initial total                   |  54.76 kB
+
+Application bundle generation complete. [1.336 seconds] - 2026-10-29T19:07:30.757Z
+
+
+ RUN  v4.1.11 /workspace/scratch/d7df34ea45f0/sidesp-sprint2
+
+
+ Test Files  3 passed (3)
+      Tests  19 passed (19)
+   Start at  20:07:30
+   Duration  1.04s (transform 79ms, setup 688ms, import 269ms, tests 101ms, environment 1.45s)
+

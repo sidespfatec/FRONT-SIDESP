@@ -1,7 +1,3 @@
-> Atualização v0.3: implementação autorizada por Heitor, incluindo integração Angular. IMPLEMENTACAO.md e ADR-004 registram o estado efetivo; propostas antigas abaixo são histórico quando divergirem.
-
-> Revisão v0.2: DECISOES-HEITOR.md e ADR-003 prevalecem sobre propostas anteriores. Fontes literais do backlog preservam histórico, não aprovação técnica atual.
-
 # Fontes e limites da análise
 Consulta em 05/10/2026.
 - GitHub issues: https://github.com/sidespfatec/FRONT-SIDESP/issues ; 54 itens, conteúdo completo em fontes/issues.json. Único comentário em #7 diz que layout administrativo levará mais de uma sprint, sem mudar regras de auth.
@@ -15,4 +11,8 @@ Consulta em 05/10/2026.
 Não houve conexão ao banco do usuário, acesso ao XAMPP, execução de migrations ou testes de autenticação. Checkboxes das issues foram preservados como declarações da fonte e não verificação própria.
 
 ## Revisão v0.2
-Heitor respondeu às decisões em 05/10/2026. Miro atualizado e relido: 3 itens, diagrama com contas, sem res_cpf/res_idade, 43 linhas de cardinalidades. Snapshot em fontes/modelo-miro-v0.2-verificado.svg. A geometria verificada mantém 132 px entre documento/diagrama e 123 px entre diagrama/tabela, sem sobreposição. Repositório e issues não foram escritos.
+a equipe respondeu às decisões em 05/10/2026. Miro atualizado e relido: 3 itens, diagrama com contas, sem res_cpf/res_idade, 43 linhas de cardinalidades. Snapshot em fontes/modelo-miro-v0.2-verificado.svg. A geometria verificada mantém 132 px entre documento/diagrama e 123 px entre diagrama/tabela, sem sobreposição. Repositório e issues não foram escritos.
+
+## Sprint 2 — 29/10/2026
+
+Frontend consultado na main: `6018b93e0367177e2b7bc142eef64b3a3a66ddb5`. As issues #8–#13 e #15–#21 foram lidas diretamente pelo conector do GitHub. A base de cadastro/login veio do pacote enviado. A solicitação desta implementação autoriza propor os campos adicionais ainda não enviados pela Secretaria; isso não equivale à homologação da Secretaria. Veja `SPRINT2.md`.

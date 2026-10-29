@@ -1,6 +1,6 @@
 # ADR-005 — backend didático, migrations preservadas e contribuição
 
-Data: 12/10/2026. Status: implementado. Heitor pediu frontend anexado, comentários em todos os métodos, SQL explicado, refatoração simples, documentação atualizada e preparação paraPR.
+Data: 12/10/2026. Status: implementado. a equipe pediu frontend anexado, comentários em todos os métodos, SQL explicado, refatoração simples, documentação atualizada e preparação paraPR.
 
 1. Anexo 137 arquivos e main remoto correspondem ao commit 2046d37; a integração já existente é mantida sobre essa base. Nenhum layout de nova versão diferente foi observado.
 2. Manter monólito Controller→Service→Repository/JDBC. Separar registerAdult/registerMinor/ensureGuardian e helpers curtos; trocar lógica comprimida/lambdas longas por if/for e nomes explícitos. Não adicionar ORM, mapeador de DTO ou microsserviço por conveniência.

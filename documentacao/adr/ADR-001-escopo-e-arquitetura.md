@@ -1,5 +1,3 @@
-> Atualização v0.3: implementação autorizada por Heitor, incluindo integração Angular. IMPLEMENTACAO.md e ADR-004 registram o estado efetivo; propostas antigas abaixo são histórico quando divergirem.
-
 # ADR-001 — escopo e arquitetura
 Estado: restrições do usuário confirmadas; escolhas técnicas propostas.
 

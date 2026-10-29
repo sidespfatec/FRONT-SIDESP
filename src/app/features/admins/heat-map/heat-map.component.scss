@@ -1,0 +1,200 @@
+@use '../../../../styles/breakpoints.scss' as *;
+
+.heat-page {
+    padding: 5rem 1rem 2rem 1rem;
+    margin-top: 4rem;
+
+    @include xl {
+        margin-top: 2rem;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 1100px;
+    }
+}
+
+.heat-title {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--color-text-primary);
+
+    @include xl {
+        font-size: 2.5rem;
+    }
+}
+
+.heat-subtitle {
+    margin: 0.375rem 0 0;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+/* ---------- filtros ---------- */
+.filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.625rem;
+    margin-top: 1.5rem;
+}
+
+.field-period,
+.field-select {
+    flex: 1 1 100%;
+
+    @include md {
+        flex: 0 1 14rem;
+    }
+}
+
+:host ::ng-deep {
+    .field-period .p-datepicker,
+    .field-select .p-multiselect {
+        width: 100%;
+    }
+
+    .filter-bar .p-button .p-badge {
+        margin-left: 0.25rem;
+    }
+}
+
+.active-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.875rem;
+}
+
+.more-filters {
+    width: min(20rem, 80vw);
+}
+
+.more-block {
+    margin-bottom: 1.25rem;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.more-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+}
+
+:host ::ng-deep .more-block .p-slider {
+    margin: 1.25rem 0.5rem 0;
+}
+
+.more-range {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.625rem 0 0;
+    font-size: 0.71875rem;
+    color: var(--color-text-secondary);
+}
+
+/* ---------- números ---------- */
+.figures {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem 2.5rem;
+    margin-top: 1.75rem;
+    padding: 1.125rem 0;
+    border-top: 1px solid var(--gray-300);
+    border-bottom: 1px solid var(--gray-300);
+}
+
+.figure {
+    b {
+        display: block;
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+
+        @include xl {
+            font-size: 1.875rem;
+        }
+    }
+
+    span {
+        display: block;
+        margin-top: 0.1rem;
+        font-size: 0.78125rem;
+        color: var(--color-text-secondary);
+    }
+
+    small {
+        display: block;
+        font-size: 0.6875rem;
+        color: var(--color-text-muted);
+    }
+}
+
+/* ---------- comparar por / separar por ---------- */
+.pivot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 2rem;
+    margin: 2rem 0 1.5rem;
+}
+
+.pivot-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.625rem;
+}
+
+.pivot-label {
+    font-size: 0.78125rem;
+    color: var(--color-text-secondary);
+}
+
+/* ---------- gráficos ---------- */
+.chart-section {
+    margin-top: 2rem;
+}
+
+.chart-title {
+    margin: 0 0 0.75rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+
+    &.small {
+        font-size: 0.8125rem;
+    }
+}
+
+.chart-area {
+    position: relative;
+    height: 16rem;
+
+    @include xl {
+        height: 20rem;
+    }
+
+    &.short {
+        height: 10rem;
+
+        @include xl {
+            height: 12rem;
+        }
+    }
+}
+
+:host ::ng-deep .chart-area .p-chart {
+    height: 100%;
+}
+
+.chart-note {
+    margin: 0.75rem 0 0;
+    font-size: 0.71875rem;
+    color: var(--color-text-muted);
+}

@@ -1,0 +1,65 @@
+classDiagram
+  Pessoa "1" --> "0..1" Conta : titular
+  Pessoa "1" --> "0..1" Responsavel : adulto
+  Responsavel "1" --> "0..*" VinculoDependente
+  Pessoa "1" --> "0..*" VinculoDependente : aluno
+  Pessoa "1" --> "0..1" FichaMedica
+  Pessoa "1" --> "0..1" Profissional
+  Conta "1" --> "0..*" RecuperacaoSenha
+  Polo "1" --> "0..*" Modalidade
+  Polo "1" --> "0..*" Turma
+  Modalidade "1" --> "0..*" Turma
+  Turma "1" --> "0..*" Horario
+  class Pessoa {
+    int id
+    string nome
+    date nascimento
+    string nomeSocial
+  }
+  class Conta {
+    int id
+    boolean ativo
+    int versao
+  }
+  class FichaMedica {
+    string condicoesCifradas
+    string alergiasCifradas
+    string medicamentosCifrados
+    string restricoesCifradas
+    string emergenciaCifrada
+  }
+  class Profissional {
+    string registro
+    string especialidade
+    string cargo
+    string unidade
+    date admissao
+  }
+  class RecuperacaoSenha {
+    bytes hash
+    timestamp expiraEm
+    timestamp usadoEm
+  }
+  class Modalidade {
+    string nome
+    int idadeMinima
+    int idadeMaxima
+    int limiteFaltasMensais
+    boolean ativo
+  }
+  class Polo {
+    string nome
+    decimal latitude
+    decimal longitude
+    boolean ativo
+  }
+  class Turma {
+    boolean processoSeletivo
+    date inicio
+    date fim
+  }
+  class Horario {
+    int diaSemana
+    time inicio
+    time fim
+  }

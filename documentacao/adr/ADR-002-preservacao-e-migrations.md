@@ -1,7 +1,5 @@
-> Atualização v0.3: implementação autorizada por Heitor, incluindo integração Angular. IMPLEMENTACAO.md e ADR-004 registram o estado efetivo; propostas antigas abaixo são histórico quando divergirem.
-
 # ADR-002 — preservação e migrations v0.2
-Estado: preservação obrigatória com exceções autorizadas por Heitor.
+Estado: preservação obrigatória com exceções autorizadas por a equipe.
 
 Base histórica 31 tabelas/41 relações; revisão 32 tabelas/43 relações. Exceções: contas, responsaveis.pes_id, remover res_cpf, substituir res_idade por nascimento, complementar documento/CPF e campos de cadastro UF/complemento/parentesco. Nenhuma outra remoção/renomeação autorizada.
 

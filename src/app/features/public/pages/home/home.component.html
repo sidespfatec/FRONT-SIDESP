@@ -1,5 +1,4 @@
-<app-session></app-session>
-@if(auth.isAdmin()){<app-navbar-desktop-admin></app-navbar-desktop-admin>}
+<app-navbar-desktop-admin></app-navbar-desktop-admin>
 <app-banner></app-banner>
 
 <div class="home-container">
@@ -10,19 +9,23 @@
         <h1 class="title-home">
             NOTÍCIAS
         </h1>
-        @if(auth.isAdmin()){<div class="button-container">
+        <div class="button-container">
             <button pButton type="button" class="p-button-sm" (click)="openModal()">
                 <i class="pi pi-plus"></i>
             </button>
-        </div>}
+        </div>
     </div>
     <div class="cards-container">
-        <app-card-news></app-card-news>
-        <app-card-news></app-card-news>
-        <app-card-news></app-card-news>
+        @for (item of newsList; track item.id) {
+        <app-card-news [news]="item" (openNews)="openNews($event)"></app-card-news>
+        }
     </div>
 </div>
 <app-footer></app-footer>
-@if(viewModal == true){
-<app-new-card-news (close)="closeModal()"></app-new-card-news>
+
+@if (selectedNews) {
+<app-news-detail-modal [news]="selectedNews" (close)="closeNews()"></app-news-detail-modal>
+}
+@if (viewModal == true) {
+<app-new-card-news (close)="closeModal()" (save)="addNews($event)"></app-new-card-news>
 }

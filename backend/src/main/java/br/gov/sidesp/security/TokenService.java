@@ -36,6 +36,7 @@ public class TokenService {
             .issuedAt(now)
             .expiresAt(now.plusSeconds(1800))
             .claim("perfil", a.role())
+            .claim("versao", a.version())
             .id(UUID.randomUUID().toString())
             .build();
     var header = JwsHeader.with(MacAlgorithm.HS256).build();

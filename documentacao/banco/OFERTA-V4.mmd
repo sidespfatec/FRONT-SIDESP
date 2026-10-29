@@ -1,0 +1,55 @@
+erDiagram
+classDef entity fill:#fff6b6,stroke:#af7e02,color:#574900
+polos {
+ int pol_id PK
+ varchar pol_des
+ decimal pol_latitude
+ decimal pol_longitude
+ boolean pol_ativo
+}
+modalidades {
+ int mdl_id PK
+ varchar mdl_des
+ int mdl_idade_minima
+ int mdl_idade_maxima
+ int mdl_faltas_mensais
+ boolean mdl_ativo
+ int pol_id FK
+}
+turmas {
+ int trm_id PK
+ varchar trm_nome
+ int mdl_id FK
+ int pol_id FK
+ int tst_id FK
+ int trm_vagas
+ int trm_faltas_maximas
+ boolean trm_processo_seletivo
+ date trm_data_inicio
+ date trm_data_fim
+}
+turmas_horarios {
+ int trm_id PK,FK
+ tinyint tho_dia_semana PK
+ time tho_inicio PK
+ time tho_fim
+}
+enderecos {
+ int end_id PK
+ int pol_id FK
+ varchar end_cep
+ varchar end_cidade
+ varchar end_bairro
+ varchar end_rua
+ varchar end_numero
+ varchar end_complemento
+ char end_uf
+ int ten_id FK
+ int pes_id FK
+}
+polos ||--o{ modalidades : oferece
+polos ||--o{ turmas : recebe
+polos ||--o{ enderecos : localizado
+modalidades ||--o{ turmas : organiza
+turmas ||--o{ turmas_horarios : horarios
+class polos,modalidades,turmas,turmas_horarios,enderecos entity

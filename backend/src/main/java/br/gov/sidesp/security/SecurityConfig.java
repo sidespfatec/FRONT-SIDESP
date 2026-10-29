@@ -111,9 +111,20 @@ public class SecurityConfig {
     http.authorizeHttpRequests(
         access ->
             access
-                .requestMatchers("/api/v1/auth/login", "/api/v1/auth/cadastros", "/api/v1/health")
+                .requestMatchers(
+                    "/api/v1/auth/login",
+                    "/api/v1/auth/cadastros",
+                    "/api/v1/health",
+                    "/api/v1/auth/recuperar-senha",
+                    "/api/v1/auth/redefinir-senha")
                 .permitAll()
-                .requestMatchers("/api/v1/auth/me")
+                .requestMatchers("/api/v1/admin/administradores/**")
+                .hasRole("ADMINISTRADOR_TOTAL")
+                .requestMatchers("/api/v1/admin/**")
+                .hasAnyRole("ADMINISTRADOR_TOTAL", "ADMINISTRADOR_PARCIAL")
+                .requestMatchers("/api/v1/fichas-medicas/**")
+                .hasAnyRole("ADMINISTRADOR_TOTAL", "ADMINISTRADOR_PARCIAL", "PROFESSOR")
+                .requestMatchers("/api/v1/auth/me", "/api/v1/perfil/**", "/api/v1/responsavel/**")
                 .authenticated()
                 .anyRequest()
                 .denyAll());
@@ -148,7 +159,10 @@ public class SecurityConfig {
     try {
       int accountId = Integer.parseInt(token.getSubject());
       Optional<AuthRepository.Account> found = repository.account(accountId);
-      if (found.isEmpty() || !found.get().active()) {
+      if (found.isEmpty()
+          || !found.get().active()
+          || token.getClaim("versao") == null
+          || ((Number) token.getClaim("versao")).intValue() != found.get().version()) {
         throw new InvalidBearerTokenException("Token inválido");
       }
       AuthRepository.Account account = found.get();
@@ -181,7 +195,7 @@ public class SecurityConfig {
   CorsConfigurationSource cors(@Value("${sidesp.cors-origins}") String origins) {
     CorsConfiguration configuration = new CorsConfiguration();
     configuration.setAllowedOrigins(Arrays.asList(origins.split(",")));
-    configuration.setAllowedMethods(List.of("GET", "POST", "OPTIONS"));
+    configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "OPTIONS"));
     configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
     configuration.setAllowCredentials(false);
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

@@ -1,0 +1,37 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> sidesp@0.0.0 test
+> ng test --watch=false
+
+❯ Building...
+✔ Building...
+Application bundle generation failed. [1.979 seconds] - 2026-10-29T18:59:31.576Z
+
+▲ [WARNING] NG8113: RouterLink is not used within the template of NavbarDesktopComponent [plugin angular-compiler]
+
+    src/app/component/navbar-desktop/navbar-desktop.component.ts:8:12:
+      8 │   imports: [RouterLink, RouterLinkActive, ButtonModule],
+        ╵             ~~~~~~~~~~
+
+
+▲ [WARNING] NG8113: RouterLinkActive is not used within the template of NavbarDesktopComponent [plugin angular-compiler]
+
+    src/app/component/navbar-desktop/navbar-desktop.component.ts:8:24:
+      8 │   imports: [RouterLink, RouterLinkActive, ButtonModule],
+        ╵                         ~~~~~~~~~~~~~~~~
+
+
+✘ [ERROR] TS2305: Module '"./navbar-desktop.component"' has no exported member 'NavbarDesktop'. [plugin angular-compiler]
+
+    src/app/component/navbar-desktop/navbar-desktop.spec.ts:3:9:
+      3 │ import { NavbarDesktop } from './navbar-desktop.component';
+        ╵          ~~~~~~~~~~~~~
+
+
+✘ [ERROR] TS2305: Module '"./home.component"' has no exported member 'Home'. [plugin angular-compiler]
+
+    src/app/features/public/pages/home/home.component.spec.ts:3:9:
+      3 │ import { Home } from './home.component';
+        ╵          ~~~~
+
+

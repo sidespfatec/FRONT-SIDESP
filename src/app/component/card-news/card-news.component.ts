@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CardModule } from 'primeng/card';
+import { NewsItem } from '../news.model';
 
 @Component({
     selector: 'app-card-news',
@@ -8,5 +9,7 @@ import { CardModule } from 'primeng/card';
     templateUrl: './card-news.component.html',
     styleUrl: './card-news.component.scss',
 })
-
-export class CardNewsComponent { } 
+export class CardNewsComponent {
+    @Input({ required: true }) news!: NewsItem;
+    @Output() openNews = new EventEmitter<NewsItem>();
+}

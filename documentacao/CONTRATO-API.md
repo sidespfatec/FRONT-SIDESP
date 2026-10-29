@@ -1,20 +1,82 @@
-> Revisão v0.4 (12/10/2026): ADR-005 e BACKEND-PARA-INICIANTES.md explicam a refatoração. Banco/contrato/regras de negócio preservados; SQL explicado separado, frontend anexado comparado e integração mantida. Estado e evidências atuais em VALIDACAO.md.
+# Contrato da API
 
-# Contrato API — implementado v0.3
+Prefixo: `/api/v1`. JSON usa as chaves abaixo. Datas: `YYYY-MM-DD`. Requisições autenticadas usam `Authorization: Bearer TOKEN`. Campos desconhecidos são recusados. Não enviar identificador de outra conta no perfil ou no cadastro autenticado de dependente.
 
-Base `/api/v1`; JSON; datas ISO yyyy-MM-dd. Contrato TypeScript: frontend/src/app/core/auth/auth.models.ts. DTOs Java: backend/src/main/java/br/gov/sidesp/auth/Requests.java.
+| Método | Caminho | Permissão | Resposta |
+|---|---|---|---|
+| POST | `/auth/cadastros` | Público | 201, `{id,mensagem}` |
+| POST | `/auth/login` | Público | 200, `{accessToken,tokenType,expiresIn,perfil,nome}` |
+| GET | `/auth/me` | Autenticado | `{id,nome,perfil,dependentes}` |
+| POST | `/auth/recuperar-senha` | Público | 202, mensagem genérica |
+| POST | `/auth/redefinir-senha` | Público, código válido | 204 |
+| GET / PUT | `/perfil` | Próprio titular | 200 / 204 |
+| POST | `/perfil/senha` | Próprio titular, senha atual | 204; exige novo login |
+| GET / POST | `/admin/administradores` | Administrador total | 200 lista / 201 cadastro |
+| GET / POST | `/admin/professores` | Administrador total ou parcial | 200 lista / 201 cadastro |
+| PATCH | `/admin/administradores/{pesId}/situacao` | Administrador total | 204 |
+| PATCH | `/admin/professores/{pesId}/situacao` | Administrador total ou parcial | 204 |
+| GET / POST | `/admin/polos` | Administrador total ou parcial | 200 lista / 201 `{id}` |
+| PATCH | `/admin/polos/{id}/situacao` | Administrador total ou parcial | 204 |
+| GET / POST | `/admin/modalidades` | Administrador total ou parcial | 200 lista / 201 `{id}` |
+| PATCH | `/admin/modalidades/{id}/situacao` | Administrador total ou parcial | 204 |
+| POST | `/responsavel/dependentes` | Titular adulto autenticado | 201, `{id,mensagem}` |
+| GET | `/fichas-medicas/{pesId}` | Administração ou professor vinculado | 200 ficha |
+| GET | `/health` | Público | `{status: "UP"}` |
 
-| Endpoint | Entrada/resultado |
-|---|---|
-| POST /auth/cadastros | Registration; 201 {id, mensagem} (id pessoa cadastrada) |
-| POST /auth/login | {identificador: CPF ou e-mail, senha}; 200 {accessToken, tokenType: Bearer, expiresIn:1800, perfil, nome} |
-| GET /auth/me | Authorization Bearer; 200 {id: conta, nome, perfil, dependentes:[{id:pessoa,nome}]} |
-| GET /health | Público, status do serviço; não diagnostica conectividade contínua com banco |
+Listas retornam no máximo 200 linhas, sem paginação nesta versão. Polos aceitam `?busca=texto&ativo=true`; omitir `ativo` inclui as duas situações. Modalidades aceitam `?ativo=true`, que também exige polo ativo. PATCH de situação recebe `{ "ativo": false }`. Não existe DELETE desses registros.
 
-Registration: dadosPessoais {nome,cpf,dataNascimento,genero M/F,telefone}; endereco {cep,rua,numero,complemento opcional,bairro,cidade,uf}; credenciais {email,senha,confirmacaoSenha,cpfLogin}; responsavel {nome,cpf,dataNascimento,telefone,parentesco} somente menor. Adulto: cpf obrigatório e cpfLogin próprio. Menor: cpf pode null/ausente; cpfLogin é CPF do responsável, que deve ser adulto com data obrigatória. Credenciais pertencem ao responsável. Nova criança de conta existente exige e-mail e senha atuais.
+## Cadastro público
 
-CPF: 11 dígitos ou máscara estrita, dígitos verificadores válidos e sem repetição. Unicidade no banco, um CPF por pessoa. E-mail obrigatório <=254 caracteres/bytes, normalizado lower-case/strip. Senha 8–128 pontos de código Unicode, confirmação igual, sem regra de símbolo/número e sem truncamento. Nascimento impossível/futuro inválido; idade implausível >130 anos inválida. Telefone10/11dígitos comDDD; CEP8dígitos/máscara e UF válida. O servidor nunca confia apenas na validação da tela.
+```json
+{
+  "dadosPessoais": {
+    "nome": "Pessoa de exemplo", "cpf": "CPF_VALIDO",
+    "dataNascimento": "2000-01-01", "genero": "M", "telefone": "12999999999"
+  },
+  "endereco": {
+    "cep": "12500000", "rua": "Rua de exemplo", "numero": "1", "complemento": null,
+    "bairro": "Centro", "cidade": "Lorena", "uf": "SP"
+  },
+  "credenciais": {
+    "email": "pessoa@example.invalid", "senha": "SENHA_LOCAL",
+    "confirmacaoSenha": "SENHA_LOCAL", "cpfLogin": "CPF_VALIDO"
+  }
+}
+```
 
-Erros controlados: {codigo,mensagem,errosCampos}, com 400 inválido, 409 conflito genérico, 401 login/sessão inválidos, 403 permissão, 429 tentativas, 500 erro genérico. Nunca reproduzir senha/CPF/token no erro. Campos desconhecidos são recusados. Limites padrão20cadastros/30logins por minuto/IP. Cadastro público não permite perfil/id livre. Todos os demais endpoints são negados nesta fase.
+Para menor, `dadosPessoais.cpf` pode ser nulo e `cpfLogin` é o do responsável. Acrescente `responsavel` com `nome`, `cpf`, `dataNascimento`, `telefone`, `parentesco`. `fichaMedica` é opcional no contrato público para compatibilidade; sua estrutura está abaixo. CPF é validado com dígitos verificadores, não com os textos ilustrativos acima.
 
-UI consome contrato, Bearer apenas na API, login/cadastro sem token anterior. Sessão de aba e navegação dependem do perfil consultado em /me. CORS apenas localhost/127.0.0.1:4200 padrão; produção configura origem explícita.
+## Profissional
+
+POST administrativo recebe `cadastro` com o objeto anterior, além de `nivel` (somente administrador: `ADMINISTRADOR_TOTAL` ou `ADMINISTRADOR_PARCIAL`), `rg`, `registro`, `especialidade`, `cargo`, `unidade`, `admissao`. Professor exige `registro` e `especialidade`; administrador exige `nivel`. Ambos exigem cadastro adulto e endereço. A resposta id é `pes_id`, não `con_id`.
+
+## Polo e modalidade
+
+Polo: `{ "nome": "Polo exemplo", "endereco": { ... }, "latitude": -22.8, "longitude": -45.1 }`. O endereço segue o cadastro público. Coordenadas são obrigatórias e validadas.
+
+Modalidade: `{ "nome": "Natação", "idadeMinima": 8, "idadeMaxima": 18, "limiteFaltasMensais": 3, "poloId": 1 }`. Idades entre zero e 130, mínimo não supera máximo, limite mensal entre zero e 31. Polo precisa estar ativo. Cadastro fica ativo por padrão.
+
+## Dependente e ficha
+
+POST autenticado recebe `dadosPessoais`, `endereco`, `parentesco` e `fichaMedica`. Não recebe outro titular nem credenciais.
+
+```json
+{
+  "condicoes": null, "alergias": null, "medicamentos": null, "restricoes": null,
+  "contatoEmergencia": "Contato de exemplo", "telefoneEmergencia": "12999999999"
+}
+```
+
+Nome e telefone de emergência são obrigatórios quando há ficha; os demais campos são opcionais. Professor só lê ficha de aluno com vínculo ativo na mesma turma. Dados de saúde não aparecem nas listagens.
+
+## Perfil e senhas
+
+PUT perfil recebe `nome`, `nomeSocial` opcional, `email`, `telefone` e `endereco`. É uma atualização completa desses campos; CPF, nascimento e perfil de acesso não são campos editáveis nesse endpoint. GET retorna esses dados, `dataNascimento`, `genero`, `perfil`, `cpfProtegido`, `telefones` e `enderecos`.
+
+- Troca de senha: `{ "senhaAtual": "...", "novaSenha": "...", "confirmacaoSenha": "..." }`.
+- Solicitação de recuperação: `{ "identificador": "CPF ou e-mail" }`.
+- Confirmação: `{ "token": "código recebido", "novaSenha": "...", "confirmacaoSenha": "..." }`.
+
+O código expira em 15 minutos e é consumido uma única vez. A nova senha segue a regra de oito a 128 caracteres. Após sucesso, descarte a sessão local e faça novo login. Nenhuma resposta contém código, hash ou senha.
+
+Erros: `{ "codigo": "VALIDACAO", "mensagem": "...", "errosCampos": {} }`. Status usados: 400 preenchimento/código inválido, 401 autenticação, 403 permissão/vínculo, 404 ausente, 409 duplicidade/integridade, 429 excesso de tentativas e 500 falha operacional sem detalhes internos.

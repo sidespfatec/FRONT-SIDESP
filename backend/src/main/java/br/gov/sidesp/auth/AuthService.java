@@ -19,6 +19,7 @@ public class AuthService {
   private final Clock clock;
   private final TokenService tokenService;
   private final String dummyPasswordHash;
+  private final br.gov.sidesp.management.MedicalRepository medical;
 
   /**
    * Recebe dependências do Spring e prepara um hash fictício para não revelar contas inexistentes
@@ -29,7 +30,9 @@ public class AuthService {
       Crypto crypto,
       PasswordEncoder passwordEncoder,
       Clock clock,
-      TokenService tokenService) {
+      TokenService tokenService,
+      br.gov.sidesp.management.MedicalRepository medical) {
+    this.medical = medical;
     this.repository = repository;
     this.crypto = crypto;
     this.passwordEncoder = passwordEncoder;
@@ -68,6 +71,8 @@ public class AuthService {
     }
     repository.contact(personId, null, phone);
     repository.address(personId, registration.endereco());
+    if (registration.fichaMedica() != null)
+      medical.saveMedical(personId, registration.fichaMedica());
     return new Registered(personId, "Cadastro concluído. Você já pode fazer login.");
   }
 
@@ -184,7 +189,7 @@ public class AuthService {
             repository.registrationType("RESPONSAVEL"));
     repository.cpf(personId, crypto.cpfHash(cpf));
     int guardianId = repository.createGuardian(personId, guardian);
-    repository.contact(null, guardianId, phone);
+    repository.contact(personId, guardianId, phone);
     createAccount(personId, email, password);
     return guardianId;
   }

@@ -7,9 +7,14 @@
   box-sizing: border-box;
 }
 
+:root {
+  --font-app: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Helvetica, Arial, sans-serif;
+}
+
 body {
   margin: 0;
-  font-family: 'Outfit';
+  font-family: var(--font-app);
   background: var(--color-bg-page);
   color: var(--color-text-primary);
 }
@@ -50,4 +55,60 @@ body {
 .p-drawer-mask {
   background: rgba(0, 0, 0, 0.5) !important;
   backdrop-filter: blur(2px);
+}
+
+
+.p-password-overlay {
+  font-family: var(--font-app);
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 0.75rem 1rem;
+
+  * {
+    font-family: inherit;
+  }
+
+  .p-password-meter-text {
+    margin-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-border-strong);
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-brand-primary);
+  }
+
+  &:has(.p-password-meter-weak) .p-password-meter-text {
+    color: #ef4444;
+  }
+
+  &:has(.p-password-meter-medium) .p-password-meter-text {
+    color: #f97316;
+  }
+
+  &:has(.p-password-meter-strong) .p-password-meter-text {
+    color: #22c55e;
+  }
+
+  ul {
+    margin: 0.25rem 0;
+    padding-left: 1.25rem;
+    line-height: 1.4;
+  }
+}
+
+.p-select-overlay,
+.p-multiselect-overlay,
+.p-datepicker-panel,
+.p-popover,
+.p-dialog,
+.p-toast,
+.p-confirmdialog,
+.p-tooltip {
+  font-family: var(--font-app);
+
+  *:not(.pi) {
+    font-family: inherit;
+  }
 }

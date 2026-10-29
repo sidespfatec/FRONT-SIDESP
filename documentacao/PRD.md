@@ -1,8 +1,4 @@
-> Revisão v0.4 (12/10/2026): ADR-005 e BACKEND-PARA-INICIANTES.md explicam a refatoração. Banco/contrato/regras de negócio preservados; SQL explicado separado, frontend anexado comparado e integração mantida. Estado e evidências atuais em VALIDACAO.md.
-
-> Atualização v0.3: implementação autorizada por Heitor, incluindo integração Angular. IMPLEMENTACAO.md e ADR-004 registram o estado efetivo; propostas antigas abaixo são histórico quando divergirem.
-
-> Revisão v0.2: DECISOES-HEITOR.md e ADR-003 prevalecem sobre propostas anteriores. Fontes literais do backlog preservam histórico, não aprovação técnica atual.
+> Registro anterior à Sprint 2. Para o estado implementado em 29/10/2026, consulte [SPRINT2.md](SPRINT2.md), [BACKEND.md](BACKEND.md), [CONTRATO-API.md](CONTRATO-API.md) e [VALIDACAO.md](VALIDACAO.md). As descrições abaixo documentam a base anterior e não substituem esses arquivos.
 
 # PRD — v0.3 implementado
 
@@ -29,4 +25,4 @@ Recuperação de senha #15, edição de perfil #16, criação de professores/adm
 Testes de cadastro válido/duplicado, idade-limite, senha, rollback, login por identificador, expiração/perfil e criação limpa do banco. ZIP com backend/, frontend/ integrado, banco/ (migrations/dicionário/roteiro) e docs/. Backend/banco devem iniciar com instruções reproduzíveis e credenciais via variáveis. Testar em pelo menos duas máquinas com a equipe (#1); esta sessão não substitui essa evidência.
 
 ## Decisões confirmadas v0.2
-Contas por pessoa titular, CPF hash canônico em documentos, responsável ligado à pessoa, e-mail obrigatório e senha mínima de 8 caracteres sem composição obrigatória. Anamnese adiada. Hash CPF não pode ser recuperado. Escopo exato e exceções estruturais em DECISOES-HEITOR.md; critérios de autenticação UI verificados em VALIDACAO.md.
+Contas por pessoa titular, CPF hash canônico em documentos, responsável ligado à pessoa, e-mail obrigatório e senha mínima de 8 caracteres sem composição obrigatória. Anamnese adiada. Hash CPF não pode ser recuperado. Escopo exato e exceções estruturais em adr/ADR-003-identidade-e-autorizacao.md; critérios de autenticação UI verificados em VALIDACAO.md.

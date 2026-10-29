@@ -1,7 +1,5 @@
-> Atualização v0.3: implementação autorizada por Heitor, incluindo integração Angular. IMPLEMENTACAO.md e ADR-004 registram o estado efetivo; propostas antigas abaixo são histórico quando divergirem.
-
 # ADR-003 — identidade, proteção e contas
-Estado: negócio aprovado por Heitor em 05/10/2026; detalhes técnicos definidos para revisão v0.2.
+Estado: negócio aprovado por a equipe em 05/10/2026; detalhes técnicos definidos para revisão v0.2.
 
 ## Decisão
 CPF canônico em documentos, exclusivamente como HMAC-SHA-256 (32 bytes). Nova coluna doc_cpf_hash nullable, UNIQUE global para valores não nulos; não usar SHA simples por ter baixo espaço de entradas. Validar CPF antes do hash. Um índice UNIQUE em doc_cpf_pes_id (coluna gerada: pes_id quando doc_cpf_hash não nulo, senão NULL) impede mais de um CPF por pessoa sem restringir RG/outros documentos. Regra adicional deve exigir hash exatamente nos documentos do tipo CPF e impedir CPF textual em doc_des. Como depende de catálogo em outra tabela, a migration deve usar trigger validado no motor real ou mecanismo equivalente; CHECK isolado não verifica catálogo estrangeiro. Catálogo CPF não pode ser renomeado/apagado depois sem migration.

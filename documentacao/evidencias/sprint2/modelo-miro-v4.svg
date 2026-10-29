@@ -1,0 +1,151 @@
+<svg viewBox="0 0 3840 2160" xmlns="http://www.w3.org/2000/svg">
+<foreignObject data-rendered-bounds="3800 -2700 1600 900" id="m3458764683284490091" data-miro-id="3458764683284490091" x="3800" y="-2700" width="1600" height="900" data-type="diagram" data-title="SIDESP V4 — Identidade, responsáveis, saúde e profissionais">
+erDiagram
+classDef entity fill:#fff6b6,stroke:#af7e02,color:#574900
+pessoas {
+ int pes_id PK
+ varchar pes_nome
+ varchar pes_nome_social
+ date pes_data_nascimento
+ char pes_sexo
+ int tpc_id FK
+ timestamp pes_criado_em
+}
+contas {
+ int con_id PK
+ int pes_id FK,UK
+ varbinary con_email_criptografado
+ binary con_email_hash UK
+ varchar con_senha_hash
+ boolean con_ativo
+ int con_versao
+}
+documentos {
+ int doc_id PK
+ int pes_id FK
+ int tpd_id FK
+ varchar doc_des
+ binary doc_cpf_hash UK
+ int doc_cpf_pes_id UK
+}
+responsaveis {
+ int res_id PK
+ int pes_id FK,UK
+}
+responsaveis_dependentes {
+ int res_id PK,FK
+ int pes_id PK,FK
+ varchar rde_parentesco
+}
+fichas_medicas {
+ int fim_id PK
+ int pes_id FK,UK
+ varbinary fim_condicoes
+ varbinary fim_alergias
+ varbinary fim_medicamentos
+ varbinary fim_restricoes
+ varbinary fim_emergencia_nome
+ varbinary fim_emergencia_telefone
+ timestamp fim_atualizada_em
+}
+profissionais {
+ int pes_id PK,FK
+ varchar pro_registro
+ varchar pro_especialidade
+ varchar pro_cargo
+ varchar pro_unidade
+ date pro_admissao
+ int pro_criado_por FK
+}
+recuperacoes_senha {
+ binary rec_hash PK
+ int con_id FK
+ timestamp rec_expira_em
+ timestamp rec_usado_em
+}
+enderecos {
+ int end_id PK
+ int pes_id FK
+ int pol_id FK
+ int ten_id FK
+ varchar end_cep
+ varchar end_rua
+ varchar end_numero
+ varchar end_complemento
+ varchar end_bairro
+ varchar end_cidade
+ char end_uf
+}
+pessoas ||--o| contas : titular
+pessoas ||--o{ documentos : possui
+pessoas ||--o| responsaveis : adulto
+responsaveis ||--o{ responsaveis_dependentes : representa
+pessoas ||--o{ responsaveis_dependentes : dependente
+pessoas ||--o| fichas_medicas : possui
+pessoas ||--o| profissionais : dados_profissionais
+contas ||--o{ profissionais : cadastra
+contas ||--o{ recuperacoes_senha : recupera
+pessoas ||--o{ enderecos : reside
+class pessoas,contas,documentos,responsaveis,responsaveis_dependentes,fichas_medicas,profissionais,recuperacoes_senha,enderecos entity
+</foreignObject>
+<textArea id="m3458764688879672309" data-miro-id="3458764688879672309" x="3800.1" y="-3051" width="886" height="84" fill="#1a1a1a" font-family="arial" font-size="30" text-align="left">Modelo implementado — Sprint 2 — migrations V1 a V4</textArea>
+<textArea id="m3458764688879672310" data-miro-id="3458764688879672310" x="3800" y="-2910" width="1600" height="46" fill="#1a1a1a" font-family="arial" font-size="20" text-align="left">V4 elimina nome, idade e CPF redundantes do responsável. CPF fica em documentos como HMAC. Saúde é cifrada; acesso por perfil e vínculo. O modelo anterior no quadro permanece como referência histórica.</textArea>
+<foreignObject data-rendered-bounds="3800 1800 1600 900" id="m3458764688879672311" data-miro-id="3458764688879672311" x="3800" y="1800" width="1600" height="900" data-type="diagram" data-title="SIDESP V4 — Polos, modalidades e horários">
+erDiagram
+classDef entity fill:#fff6b6,stroke:#af7e02,color:#574900
+polos {
+ int pol_id PK
+ varchar pol_des
+ decimal pol_latitude
+ decimal pol_longitude
+ boolean pol_ativo
+}
+modalidades {
+ int mdl_id PK
+ varchar mdl_des
+ int mdl_idade_minima
+ int mdl_idade_maxima
+ int mdl_faltas_mensais
+ boolean mdl_ativo
+ int pol_id FK
+}
+turmas {
+ int trm_id PK
+ varchar trm_nome
+ int mdl_id FK
+ int pol_id FK
+ int tst_id FK
+ int trm_vagas
+ int trm_faltas_maximas
+ boolean trm_processo_seletivo
+ date trm_data_inicio
+ date trm_data_fim
+}
+turmas_horarios {
+ int trm_id PK,FK
+ tinyint tho_dia_semana PK
+ time tho_inicio PK
+ time tho_fim
+}
+enderecos {
+ int end_id PK
+ int pol_id FK
+ varchar end_cep
+ varchar end_cidade
+ varchar end_bairro
+ varchar end_rua
+ varchar end_numero
+ varchar end_complemento
+ char end_uf
+ int ten_id FK
+ int pes_id FK
+}
+polos ||--o{ modalidades : oferece
+polos ||--o{ turmas : recebe
+polos ||--o{ enderecos : localizado
+modalidades ||--o{ turmas : organiza
+turmas ||--o{ turmas_horarios : horarios
+class polos,modalidades,turmas,turmas_horarios,enderecos entity
+</foreignObject>
+</svg>
+

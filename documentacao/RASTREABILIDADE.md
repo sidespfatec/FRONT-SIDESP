@@ -1,8 +1,4 @@
-> Revisão v0.4 (12/10/2026): ADR-005 e BACKEND-PARA-INICIANTES.md explicam a refatoração. Banco/contrato/regras de negócio preservados; SQL explicado separado, frontend anexado comparado e integração mantida. Estado e evidências atuais em VALIDACAO.md.
-
-> Atualização v0.3: implementação autorizada por Heitor, incluindo integração Angular. IMPLEMENTACAO.md e ADR-004 registram o estado efetivo; propostas antigas abaixo são histórico quando divergirem.
-
-> Revisão v0.2: DECISOES-HEITOR.md e ADR-003 prevalecem sobre propostas anteriores. Fontes literais do backlog preservam histórico, não aprovação técnica atual.
+> Registro anterior à Sprint 2. Para o estado implementado em 29/10/2026, consulte [SPRINT2.md](SPRINT2.md), [BACKEND.md](BACKEND.md), [CONTRATO-API.md](CONTRATO-API.md) e [VALIDACAO.md](VALIDACAO.md). As descrições abaixo documentam a base anterior e não substituem esses arquivos.
 
 # Rastreabilidade completa das issues
 

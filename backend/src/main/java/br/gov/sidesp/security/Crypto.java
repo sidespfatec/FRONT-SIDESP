@@ -100,4 +100,53 @@ public class Crypto {
       throw new IllegalStateException("Falha criptográfica", exception);
     }
   }
+
+  /** Decifra o envelope de e-mail existente para o próprio titular e para envio de recuperação. */
+  public String decryptEmail(byte[] value) {
+    return decrypt(value, "SIDESP:email:v1");
+  }
+
+  /** Cifra informações médicas com contexto separado do e-mail. */
+  public byte[] encryptMedical(String text) {
+    if (text == null) return null;
+    try {
+      byte[] nonce = new byte[12];
+      random.nextBytes(nonce);
+      Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+      cipher.init(
+          Cipher.ENCRYPT_MODE, new SecretKeySpec(aesKey, "AES"), new GCMParameterSpec(128, nonce));
+      cipher.updateAAD("SIDESP:medical:v1".getBytes(StandardCharsets.UTF_8));
+      byte[] encrypted = cipher.doFinal(text.getBytes(StandardCharsets.UTF_8));
+      return ByteBuffer.allocate(13 + encrypted.length)
+          .put((byte) 1)
+          .put(nonce)
+          .put(encrypted)
+          .array();
+    } catch (GeneralSecurityException e) {
+      throw new IllegalStateException("Falha criptográfica", e);
+    }
+  }
+
+  /** Decifra somente depois de o serviço conferir o vínculo e a permissão. */
+  public String decryptMedical(byte[] value) {
+    return decrypt(value, "SIDESP:medical:v1");
+  }
+
+  /** Confere versão, contexto e autenticação AES-GCM antes de devolver o texto. */
+  private String decrypt(byte[] value, String context) {
+    if (value == null) return null;
+    if (value.length < 29 || value[0] != 1) throw new IllegalStateException("Envelope inválido");
+    try {
+      Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+      cipher.init(
+          Cipher.DECRYPT_MODE,
+          new SecretKeySpec(aesKey, "AES"),
+          new GCMParameterSpec(128, Arrays.copyOfRange(value, 1, 13)));
+      cipher.updateAAD(context.getBytes(StandardCharsets.UTF_8));
+      return new String(
+          cipher.doFinal(Arrays.copyOfRange(value, 13, value.length)), StandardCharsets.UTF_8);
+    } catch (GeneralSecurityException e) {
+      throw new IllegalStateException("Falha criptográfica", e);
+    }
+  }
 }

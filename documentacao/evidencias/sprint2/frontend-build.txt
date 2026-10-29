@@ -1,0 +1,56 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> sidesp@0.0.0 build
+> ng build
+
+❯ Building...
+✔ Building...
+Initial chunk files | Names                     |  Raw size | Estimated transfer size
+chunk-RMZZFFH4.js   | -                         | 383.37 kB |                96.91 kB
+main-MN7BLZZP.js    | main                      | 182.45 kB |                27.04 kB
+chunk-ORROMZHI.js   | -                         | 150.45 kB |                37.89 kB
+chunk-RB5A6P2E.js   | -                         |  44.82 kB |                 9.46 kB
+chunk-FMZ6CYJ3.js   | -                         |  34.05 kB |                 8.53 kB
+styles-EWEICUMT.css | styles                    |  30.48 kB |                 6.11 kB
+chunk-SVG2KINN.js   | -                         |  20.36 kB |                 5.77 kB
+chunk-NIYNEU27.js   | -                         |  16.62 kB |                 4.09 kB
+chunk-63A6IB2T.js   | -                         |  16.44 kB |                 5.00 kB
+chunk-UF5WZ773.js   | -                         |   9.70 kB |                 2.63 kB
+chunk-IINWRXQ6.js   | -                         |   7.57 kB |                 2.56 kB
+chunk-GR5U7SVE.js   | -                         |   5.83 kB |                 1.79 kB
+chunk-4CFZ4FRZ.js   | -                         | 915 bytes |               915 bytes
+chunk-VMFPOQHJ.js   | -                         | 838 bytes |               838 bytes
+
+                    | Initial total             | 903.89 kB |               209.53 kB
+
+Lazy chunk files    | Names                     |  Raw size | Estimated transfer size
+chunk-QFD5GJW5.js   | heat-map-component        | 250.57 kB |                71.73 kB
+chunk-74JWISWP.js   | reports-component         | 207.28 kB |                38.64 kB
+chunk-JLTZCJPM.js   | manage-hubs-component     | 154.46 kB |                39.30 kB
+chunk-6IFQVLZD.js   | manage-teachers-component | 108.05 kB |                21.72 kB
+chunk-IODAPASY.js   | -                         | 102.62 kB |                19.32 kB
+chunk-4EWC7JWJ.js   | -                         |  75.42 kB |                15.19 kB
+chunk-4KX7ZF6L.js   | student-file-component    |  69.88 kB |                16.01 kB
+chunk-EB7WJ7KD.js   | -                         |  55.27 kB |                11.86 kB
+chunk-JFM6H2KM.js   | -                         |  49.76 kB |                11.79 kB
+chunk-EFMJY5LD.js   | -                         |  27.38 kB |                 6.64 kB
+chunk-ITXAH2C4.js   | -                         |  16.61 kB |                 3.34 kB
+chunk-3NBVXEFO.js   | -                         |  13.47 kB |                 3.74 kB
+chunk-37KAD4BX.js   | classes-component         |  11.43 kB |                 3.29 kB
+chunk-MJWDRD66.js   | -                         |   9.12 kB |                 2.36 kB
+chunk-JHVHJOBG.js   | -                         |   8.06 kB |                 2.43 kB
+...and 12 more lazy chunks files. Use "--verbose" to show all the files.
+
+Application bundle generation complete. [4.889 seconds] - 2026-10-29T19:07:28.509Z
+
+▲ [WARNING] src/app/features/public/pages/registration/registration.component.scss exceeded maximum budget. Budget 6.00 kB was not met by 1.04 kB with a total of 7.04 kB.
+
+
+▲ [WARNING] Module 'leaflet' used by 'src/app/features/admins/manage-hubs/manage-hubs.component.ts' is not ESM
+
+  CommonJS or AMD dependencies can cause optimization bailouts.
+  For more information see: https://angular.dev/tools/cli/build#configuring-commonjs-dependencies
+
+
+Output location: /workspace/scratch/d7df34ea45f0/sidesp-sprint2/dist/SIDESP
+

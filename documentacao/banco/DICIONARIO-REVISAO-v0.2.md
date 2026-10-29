@@ -1,7 +1,3 @@
-> Revisão v0.4 (12/10/2026): ADR-005 e BACKEND-PARA-INICIANTES.md explicam a refatoração. Banco/contrato/regras de negócio preservados; SQL explicado separado, frontend anexado comparado e integração mantida. Estado e evidências atuais em VALIDACAO.md.
-
-> Atualização v0.3: implementação autorizada por Heitor, incluindo integração Angular. IMPLEMENTACAO.md e ADR-004 registram o estado efetivo; propostas antigas abaixo são histórico quando divergirem.
-
 # Dicionário — alterações v0.2
 
 Esta especificação complementa o snapshot anterior DICIONARIO-OBSERVADO.md (histórico). Demais tabelas/colunas/relações permanecem. Não é SQL executável. Contagem após revisão: 32 tabelas, 43 relações.

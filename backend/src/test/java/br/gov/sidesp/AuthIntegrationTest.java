@@ -58,6 +58,9 @@ class AuthIntegrationTest {
   @Autowired JwtEncoder encoder;
   @Autowired Flyway flyway;
 
+  @org.springframework.test.context.bean.override.mockito.MockitoBean
+  org.springframework.mail.javamail.JavaMailSender mail;
+
   /**
    * Limpa somente as tabelas de autenticação do banco de teste antes de cada caso, respeitando as
    * FKs.
@@ -66,8 +69,17 @@ class AuthIntegrationTest {
   void reset() {
     for (String table :
         List.of(
+            "recuperacoes_senha",
+            "profissionais",
+            "fichas_medicas",
+            "turmas_horarios",
+            "turmas_professores",
+            "turmas_pessoas",
+            "turmas",
+            "modalidades",
             "responsaveis_dependentes",
             "enderecos",
+            "polos",
             "contatos",
             "contas",
             "documentos",
@@ -389,17 +401,276 @@ class AuthIntegrationTest {
    */
   @Test
   void migrationsCompleteAndRepeatSafe() {
-    assertThat(flyway.info().applied()).hasSize(3);
+    assertThat(flyway.info().applied()).hasSize(4);
     assertThat(flyway.migrate().migrationsExecuted).isZero();
     assertThat(
             db.queryForObject(
                 "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=DATABASE() AND"
                     + " table_type='BASE TABLE'",
                 Integer.class))
-        .isEqualTo(33);
+        .isEqualTo(36);
     assertThat(http.getForEntity("/api/v1/auth/me", JsonNode.class).getStatusCode())
         .isEqualTo(HttpStatus.UNAUTHORIZED);
     assertThat(http.getForEntity("/api/v1/admin/qualquer", JsonNode.class).getStatusCode())
         .isEqualTo(HttpStatus.UNAUTHORIZED);
+  }
+
+  /** Cria conta sintética e ajusta o perfil diretamente no banco exclusivo do teste. */
+  String roleToken(int seed, String role) {
+    assertThat(register(adult(seed)).getStatusCode()).isEqualTo(HttpStatus.CREATED);
+    db.update(
+        "UPDATE pessoas p JOIN contas c ON c.pes_id=p.pes_id SET p.tpc_id=(SELECT tpc_id FROM"
+            + " tipos_cadastros WHERE tpc_des=?) WHERE c.con_email_hash=?",
+        role,
+        crypto.emailHash(seed + "@example.invalid"));
+    return login(seed + "@example.invalid", "abcdefgh").getBody().get("accessToken").asText();
+  }
+
+  /** Executa chamada autenticada a qualquer endpoint do teste. */
+  ResponseEntity<JsonNode> call(String path, HttpMethod method, Object body, String token) {
+    var headers = new HttpHeaders();
+    headers.setBearerAuth(token);
+    return http.exchange("/api/v1" + path, method, new HttpEntity<>(body, headers), JsonNode.class);
+  }
+
+  /** Confere a matriz de permissão de cadastro por todos os perfis. */
+  @Test
+  void accessProfiles() {
+    int seed = 710000100;
+    for (String role :
+        List.of(
+            "ALUNO", "RESPONSAVEL", "PROFESSOR", "ADMINISTRADOR_PARCIAL", "ADMINISTRADOR_TOTAL")) {
+      String token = roleToken(seed++, role);
+      assertThat(
+              call("/admin/administradores", HttpMethod.GET, null, token).getStatusCode().value())
+          .isEqualTo(role.equals("ADMINISTRADOR_TOTAL") ? 200 : 403);
+      assertThat(call("/admin/professores", HttpMethod.GET, null, token).getStatusCode().value())
+          .isEqualTo(role.startsWith("ADMINISTRADOR_") ? 200 : 403);
+    }
+  }
+
+  /** Cadastra profissionais, recusa CPF duplicado e impede inativar a própria conta. */
+  @Test
+  void professionalRegistration() {
+    String token = roleToken(710000110, "ADMINISTRADOR_TOTAL");
+    var body = json.createObjectNode();
+    body.set("cadastro", adult(710000111));
+    body.put("nivel", "ADMINISTRADOR_PARCIAL");
+    var created = call("/admin/administradores", HttpMethod.POST, body, token);
+    assertThat(created.getStatusCode().value()).isEqualTo(201);
+    assertThat(login("710000111@example.invalid", "abcdefgh").getBody().get("perfil").asText())
+        .isEqualTo("ADMINISTRADOR_PARCIAL");
+    assertThat(call("/admin/administradores", HttpMethod.POST, body, token).getStatusCode().value())
+        .isEqualTo(409);
+    body.remove("nivel");
+    body.set("cadastro", adult(710000112));
+    body.put("registro", "CREF teste");
+    body.put("especialidade", "Natação");
+    assertThat(call("/admin/professores", HttpMethod.POST, body, token).getStatusCode().value())
+        .isEqualTo(201);
+    assertThat(count("turmas_professores")).isZero();
+    int own =
+        db.queryForObject(
+            "SELECT pes_id FROM contas WHERE con_email_hash=?",
+            Integer.class,
+            crypto.emailHash("710000110@example.invalid"));
+    assertThat(
+            call(
+                    "/admin/administradores/" + own + "/situacao",
+                    HttpMethod.PATCH,
+                    Map.of("ativo", false),
+                    token)
+                .getStatusCode()
+                .value())
+        .isEqualTo(400);
+  }
+
+  /** Verifica coordenadas, idade, vínculo de polo e exclusão lógica na oferta. */
+  @Test
+  void hubAndModality() {
+    String token = roleToken(710000120, "ADMINISTRADOR_PARCIAL");
+    var hub =
+        json.createObjectNode()
+            .put("nome", "Polo de teste")
+            .put("latitude", -22.8)
+            .put("longitude", -45.1);
+    hub.set("endereco", adult(710000121).get("endereco"));
+    int id = call("/admin/polos", HttpMethod.POST, hub, token).getBody().get("id").asInt();
+    var modality =
+        Map.of(
+            "nome",
+            "Natação",
+            "idadeMinima",
+            8,
+            "idadeMaxima",
+            18,
+            "limiteFaltasMensais",
+            3,
+            "poloId",
+            id);
+    assertThat(call("/admin/modalidades", HttpMethod.POST, modality, token).getStatusCode().value())
+        .isEqualTo(201);
+    assertThat(
+            call(
+                    "/admin/modalidades",
+                    HttpMethod.POST,
+                    Map.of(
+                        "nome",
+                        "Inválida",
+                        "idadeMinima",
+                        20,
+                        "idadeMaxima",
+                        8,
+                        "limiteFaltasMensais",
+                        3,
+                        "poloId",
+                        id),
+                    token)
+                .getStatusCode()
+                .value())
+        .isEqualTo(400);
+    assertThat(
+            call(
+                    "/admin/polos/" + id + "/situacao",
+                    HttpMethod.PATCH,
+                    Map.of("ativo", false),
+                    token)
+                .getStatusCode()
+                .value())
+        .isEqualTo(204);
+    assertThat(call("/admin/modalidades?ativo=true", HttpMethod.GET, null, token).getBody())
+        .isEmpty();
+    assertThat(call("/admin/modalidades", HttpMethod.POST, modality, token).getStatusCode().value())
+        .isEqualTo(400);
+    assertThat(count("polos")).isEqualTo(1);
+  }
+
+  /** Perfil não aceita CPF nem nível de acesso; senha antiga e JWT deixam de funcionar. */
+  @Test
+  void profileAndPassword() {
+    String token = roleToken(710000130, "ALUNO");
+    var body =
+        json.createObjectNode()
+            .put("nome", "Nome atualizado")
+            .put("email", "novo@example.invalid")
+            .put("telefone", "12999999999");
+    body.set("endereco", adult(710000130).get("endereco"));
+    assertThat(call("/perfil", HttpMethod.PUT, body, token).getStatusCode().value()).isEqualTo(204);
+    assertThat(call("/perfil", HttpMethod.GET, null, token).getBody().get("email").asText())
+        .isEqualTo("novo@example.invalid");
+    body.put("cpf", "12345678900");
+    assertThat(call("/perfil", HttpMethod.PUT, body, token).getStatusCode().value()).isEqualTo(400);
+    assertThat(
+            call(
+                    "/perfil/senha",
+                    HttpMethod.POST,
+                    Map.of(
+                        "senhaAtual",
+                        "incorreta",
+                        "novaSenha",
+                        "novasenha",
+                        "confirmacaoSenha",
+                        "novasenha"),
+                    token)
+                .getStatusCode()
+                .value())
+        .isEqualTo(400);
+    assertThat(
+            call(
+                    "/perfil/senha",
+                    HttpMethod.POST,
+                    Map.of(
+                        "senhaAtual",
+                        "abcdefgh",
+                        "novaSenha",
+                        "novasenha",
+                        "confirmacaoSenha",
+                        "novasenha"),
+                    token)
+                .getStatusCode()
+                .value())
+        .isEqualTo(204);
+    assertThat(me(token).getStatusCode().value()).isEqualTo(401);
+    assertThat(login("novo@example.invalid", "abcdefgh").getStatusCode().value()).isEqualTo(401);
+    assertThat(login("novo@example.invalid", "novasenha").getStatusCode().value()).isEqualTo(200);
+  }
+
+  /** Recuperação não enumera contas, envia código e permite apenas um consumo. */
+  @Test
+  void passwordRecovery() {
+    String token = roleToken(710000140, "ALUNO");
+    var absent =
+        http.postForEntity(
+            "/api/v1/auth/recuperar-senha",
+            Map.of("identificador", "ausente@example.invalid"),
+            JsonNode.class);
+    var present =
+        http.postForEntity(
+            "/api/v1/auth/recuperar-senha",
+            Map.of("identificador", "710000140@example.invalid"),
+            JsonNode.class);
+    assertThat(present.getStatusCode().value()).isEqualTo(202);
+    assertThat(present.getBody()).isEqualTo(absent.getBody());
+    var captured =
+        org.mockito.ArgumentCaptor.forClass(org.springframework.mail.SimpleMailMessage.class);
+    org.mockito.Mockito.verify(mail, org.mockito.Mockito.timeout(10000)).send(captured.capture());
+    String text = captured.getValue().getText();
+    String code = text.substring(text.indexOf(": ") + 2, text.indexOf("\n"));
+    var reset = Map.of("token", code, "novaSenha", "recuperada", "confirmacaoSenha", "recuperada");
+    db.update("UPDATE recuperacoes_senha SET rec_expira_em=DATE_SUB(NOW(),INTERVAL 1 MINUTE)");
+    assertThat(
+            http.postForEntity("/api/v1/auth/redefinir-senha", reset, JsonNode.class)
+                .getStatusCode()
+                .value())
+        .isEqualTo(400);
+    db.update("UPDATE recuperacoes_senha SET rec_expira_em=DATE_ADD(NOW(),INTERVAL 5 MINUTE)");
+    assertThat(
+            http.postForEntity("/api/v1/auth/redefinir-senha", reset, JsonNode.class)
+                .getStatusCode()
+                .value())
+        .isEqualTo(204);
+    assertThat(
+            http.postForEntity("/api/v1/auth/redefinir-senha", reset, JsonNode.class)
+                .getStatusCode()
+                .value())
+        .isEqualTo(400);
+    assertThat(me(token).getStatusCode().value()).isEqualTo(401);
+    assertThat(login("710000140@example.invalid", "recuperada").getStatusCode().value())
+        .isEqualTo(200);
+  }
+
+  /** Cadastra dependente autenticado, cifra a ficha e bloqueia professor sem vínculo. */
+  @Test
+  void childAndMedicalPrivacy() {
+    String owner = roleToken(710000150, "RESPONSAVEL");
+    var body = json.createObjectNode();
+    var person = adult(710000151).get("dadosPessoais").deepCopy();
+    ((ObjectNode) person).put("dataNascimento", "2015-01-01").putNull("cpf");
+    body.set("dadosPessoais", person);
+    body.set("endereco", adult(710000151).get("endereco"));
+    body.put("parentesco", "Mãe");
+    body.putObject("fichaMedica")
+        .put("condicoes", "Asma sintética")
+        .put("contatoEmergencia", "Contato de teste")
+        .put("telefoneEmergencia", "12999999999");
+    var created = call("/responsavel/dependentes", HttpMethod.POST, body, owner);
+    assertThat(created.getStatusCode().value()).isEqualTo(201);
+    int id = created.getBody().get("id").asInt();
+    assertThat(
+            new String(
+                db.queryForObject(
+                    "SELECT fim_condicoes FROM fichas_medicas WHERE pes_id=?", byte[].class, id)))
+        .doesNotContain("Asma");
+    String teacher = roleToken(710000152, "PROFESSOR");
+    assertThat(call("/fichas-medicas/" + id, HttpMethod.GET, null, teacher).getStatusCode().value())
+        .isEqualTo(403);
+    String admin = roleToken(710000153, "ADMINISTRADOR_TOTAL");
+    assertThat(
+            call("/fichas-medicas/" + id, HttpMethod.GET, null, admin)
+                .getBody()
+                .get("condicoes")
+                .asText())
+        .isEqualTo("Asma sintética");
+    assertThat(me(owner).getBody().get("dependentes")).hasSize(1);
   }
 }

@@ -1,0 +1,1752 @@
+{
+  "columns": [
+    {
+      "TABLE_NAME": "chamadas",
+      "COLUMN_NAME": "chm_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "chamadas",
+      "COLUMN_NAME": "dia_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "chamadas",
+      "COLUMN_NAME": "pes_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "chamadas",
+      "COLUMN_NAME": "trm_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "chamadas",
+      "COLUMN_NAME": "tpe_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "chamadas",
+      "COLUMN_NAME": "cst_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "chamadas",
+      "COLUMN_NAME": "jus_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "chamadas_status",
+      "COLUMN_NAME": "cst_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "chamadas_status",
+      "COLUMN_NAME": "cst_des",
+      "COLUMN_TYPE": "varchar(13)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "contas",
+      "COLUMN_NAME": "con_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "contas",
+      "COLUMN_NAME": "pes_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "UNI",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "contas",
+      "COLUMN_NAME": "con_email_criptografado",
+      "COLUMN_TYPE": "varbinary(512)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "contas",
+      "COLUMN_NAME": "con_email_hash",
+      "COLUMN_TYPE": "binary(32)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "UNI",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "contas",
+      "COLUMN_NAME": "con_senha_hash",
+      "COLUMN_TYPE": "varchar(255)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "contas",
+      "COLUMN_NAME": "con_ativo",
+      "COLUMN_TYPE": "tinyint(1)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": "1",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "contas",
+      "COLUMN_NAME": "con_versao",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": "0",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "contatos",
+      "COLUMN_NAME": "cnt_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "contatos",
+      "COLUMN_NAME": "tct_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "contatos",
+      "COLUMN_NAME": "cnt_des",
+      "COLUMN_TYPE": "varchar(30)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "contatos",
+      "COLUMN_NAME": "pes_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "contatos",
+      "COLUMN_NAME": "cnt_res",
+      "COLUMN_TYPE": "char(1)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "contatos",
+      "COLUMN_NAME": "res_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "diarios",
+      "COLUMN_NAME": "dia_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "diarios",
+      "COLUMN_NAME": "trm_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "diarios",
+      "COLUMN_NAME": "tpf_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "diarios",
+      "COLUMN_NAME": "dia_data",
+      "COLUMN_TYPE": "date",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "diarios",
+      "COLUMN_NAME": "dia_conteudo_aula",
+      "COLUMN_TYPE": "text",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "diarios",
+      "COLUMN_NAME": "dia_observacoes",
+      "COLUMN_TYPE": "text",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "documentos",
+      "COLUMN_NAME": "doc_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "documentos",
+      "COLUMN_NAME": "pes_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "documentos",
+      "COLUMN_NAME": "tpd_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "documentos",
+      "COLUMN_NAME": "doc_des",
+      "COLUMN_TYPE": "varchar(20)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "documentos",
+      "COLUMN_NAME": "doc_cpf_hash",
+      "COLUMN_TYPE": "binary(32)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "UNI",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "documentos",
+      "COLUMN_NAME": "doc_cpf_pes_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "UNI",
+      "EXTRA": "STORED GENERATED"
+    },
+    {
+      "TABLE_NAME": "enderecos",
+      "COLUMN_NAME": "end_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "enderecos",
+      "COLUMN_NAME": "end_cep",
+      "COLUMN_TYPE": "varchar(10)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "enderecos",
+      "COLUMN_NAME": "end_cidade",
+      "COLUMN_TYPE": "varchar(30)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "enderecos",
+      "COLUMN_NAME": "end_bairro",
+      "COLUMN_TYPE": "varchar(40)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "enderecos",
+      "COLUMN_NAME": "end_rua",
+      "COLUMN_TYPE": "varchar(50)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "enderecos",
+      "COLUMN_NAME": "end_numero",
+      "COLUMN_TYPE": "varchar(8)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "enderecos",
+      "COLUMN_NAME": "ten_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "enderecos",
+      "COLUMN_NAME": "pes_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "enderecos",
+      "COLUMN_NAME": "pol_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "enderecos",
+      "COLUMN_NAME": "end_complemento",
+      "COLUMN_TYPE": "varchar(100)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "enderecos",
+      "COLUMN_NAME": "end_uf",
+      "COLUMN_TYPE": "char(2)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "fichas_medicas",
+      "COLUMN_NAME": "fim_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "fichas_medicas",
+      "COLUMN_NAME": "pes_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "UNI",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "fichas_medicas",
+      "COLUMN_NAME": "fim_condicoes",
+      "COLUMN_TYPE": "varbinary(4096)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "fichas_medicas",
+      "COLUMN_NAME": "fim_alergias",
+      "COLUMN_TYPE": "varbinary(4096)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "fichas_medicas",
+      "COLUMN_NAME": "fim_medicamentos",
+      "COLUMN_TYPE": "varbinary(4096)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "fichas_medicas",
+      "COLUMN_NAME": "fim_restricoes",
+      "COLUMN_TYPE": "varbinary(4096)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "fichas_medicas",
+      "COLUMN_NAME": "fim_emergencia_nome",
+      "COLUMN_TYPE": "varbinary(512)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "fichas_medicas",
+      "COLUMN_NAME": "fim_emergencia_telefone",
+      "COLUMN_TYPE": "varbinary(512)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "fichas_medicas",
+      "COLUMN_NAME": "fim_atualizada_em",
+      "COLUMN_TYPE": "timestamp",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": "current_timestamp()",
+      "COLUMN_KEY": "",
+      "EXTRA": "on update current_timestamp()"
+    },
+    {
+      "TABLE_NAME": "inscricoes",
+      "COLUMN_NAME": "ins_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "inscricoes",
+      "COLUMN_NAME": "pes_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "inscricoes",
+      "COLUMN_NAME": "trm_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "inscricoes",
+      "COLUMN_NAME": "ins_data",
+      "COLUMN_TYPE": "date",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "inscricoes",
+      "COLUMN_NAME": "sin_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "inscricoes_status",
+      "COLUMN_NAME": "sin_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "inscricoes_status",
+      "COLUMN_NAME": "sin_des",
+      "COLUMN_TYPE": "varchar(20)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "justificativas",
+      "COLUMN_NAME": "jus_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "justificativas",
+      "COLUMN_NAME": "pes_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "justificativas",
+      "COLUMN_NAME": "doc_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "justificativas",
+      "COLUMN_NAME": "jus_des",
+      "COLUMN_TYPE": "varchar(20)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "justificativas",
+      "COLUMN_NAME": "jst_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "justificativas",
+      "COLUMN_NAME": "pes_adm_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "justificativas",
+      "COLUMN_NAME": "jus_data_falta",
+      "COLUMN_TYPE": "date",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "justificativas_situacoes",
+      "COLUMN_NAME": "jst_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "justificativas_situacoes",
+      "COLUMN_NAME": "jst_des",
+      "COLUMN_TYPE": "varchar(30)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "modalidades",
+      "COLUMN_NAME": "mdl_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "modalidades",
+      "COLUMN_NAME": "mdl_des",
+      "COLUMN_TYPE": "varchar(100)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "modalidades",
+      "COLUMN_NAME": "mdl_idade_minima",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "modalidades",
+      "COLUMN_NAME": "mdl_idade_maxima",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "modalidades",
+      "COLUMN_NAME": "mdl_faltas_mensais",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "modalidades",
+      "COLUMN_NAME": "mdl_ativo",
+      "COLUMN_TYPE": "tinyint(1)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": "1",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "modalidades",
+      "COLUMN_NAME": "pol_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "noticias",
+      "COLUMN_NAME": "ntc_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "noticias",
+      "COLUMN_NAME": "ntc_titulo",
+      "COLUMN_TYPE": "varchar(100)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "noticias",
+      "COLUMN_NAME": "ntc_conteudo_1",
+      "COLUMN_TYPE": "varchar(1000)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "noticias",
+      "COLUMN_NAME": "ntc_conteudo_2",
+      "COLUMN_TYPE": "varchar(1000)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "noticias",
+      "COLUMN_NAME": "ntc_data_publicacao",
+      "COLUMN_TYPE": "timestamp",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "noticias",
+      "COLUMN_NAME": "nst_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "noticias_status",
+      "COLUMN_NAME": "nst_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "noticias_status",
+      "COLUMN_NAME": "nst_des",
+      "COLUMN_TYPE": "varchar(13)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "notificacoes",
+      "COLUMN_NAME": "not_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "notificacoes",
+      "COLUMN_NAME": "ntp_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "notificacoes",
+      "COLUMN_NAME": "not_titulo",
+      "COLUMN_TYPE": "varchar(40)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "notificacoes",
+      "COLUMN_NAME": "not_des",
+      "COLUMN_TYPE": "varchar(60)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "notificacoes",
+      "COLUMN_NAME": "pes_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "notificacoes",
+      "COLUMN_NAME": "not_data_envio",
+      "COLUMN_TYPE": "date",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "notificacoes",
+      "COLUMN_NAME": "nfs_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "notificacoes_status",
+      "COLUMN_NAME": "nfs_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "notificacoes_status",
+      "COLUMN_NAME": "nfs_des",
+      "COLUMN_TYPE": "varchar(30)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "notificacoes_tipos",
+      "COLUMN_NAME": "ntp_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "notificacoes_tipos",
+      "COLUMN_NAME": "ntp_des",
+      "COLUMN_TYPE": "varchar(30)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "pessoas",
+      "COLUMN_NAME": "pes_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "pessoas",
+      "COLUMN_NAME": "pes_nome",
+      "COLUMN_TYPE": "varchar(150)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "pessoas",
+      "COLUMN_NAME": "pes_data_nascimento",
+      "COLUMN_TYPE": "date",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "pessoas",
+      "COLUMN_NAME": "pes_sexo",
+      "COLUMN_TYPE": "char(1)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "pessoas",
+      "COLUMN_NAME": "tpc_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "pessoas",
+      "COLUMN_NAME": "pes_nome_social",
+      "COLUMN_TYPE": "varchar(150)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "pessoas",
+      "COLUMN_NAME": "pes_criado_em",
+      "COLUMN_TYPE": "timestamp",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": "current_timestamp()",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "polos",
+      "COLUMN_NAME": "pol_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "polos",
+      "COLUMN_NAME": "pol_des",
+      "COLUMN_TYPE": "varchar(100)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "polos",
+      "COLUMN_NAME": "pol_latitude",
+      "COLUMN_TYPE": "decimal(10,7)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "polos",
+      "COLUMN_NAME": "pol_longitude",
+      "COLUMN_TYPE": "decimal(10,7)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "polos",
+      "COLUMN_NAME": "pol_ativo",
+      "COLUMN_TYPE": "tinyint(1)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": "1",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "profissionais",
+      "COLUMN_NAME": "pes_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "profissionais",
+      "COLUMN_NAME": "pro_registro",
+      "COLUMN_TYPE": "varchar(40)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "profissionais",
+      "COLUMN_NAME": "pro_especialidade",
+      "COLUMN_TYPE": "varchar(150)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "profissionais",
+      "COLUMN_NAME": "pro_cargo",
+      "COLUMN_TYPE": "varchar(100)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "profissionais",
+      "COLUMN_NAME": "pro_unidade",
+      "COLUMN_TYPE": "varchar(100)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "profissionais",
+      "COLUMN_NAME": "pro_admissao",
+      "COLUMN_TYPE": "date",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "profissionais",
+      "COLUMN_NAME": "pro_criado_por",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "recuperacoes_senha",
+      "COLUMN_NAME": "rec_hash",
+      "COLUMN_TYPE": "binary(32)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "recuperacoes_senha",
+      "COLUMN_NAME": "con_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "recuperacoes_senha",
+      "COLUMN_NAME": "rec_expira_em",
+      "COLUMN_TYPE": "timestamp(6)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "recuperacoes_senha",
+      "COLUMN_NAME": "rec_usado_em",
+      "COLUMN_TYPE": "timestamp(6)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "responsaveis",
+      "COLUMN_NAME": "res_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "responsaveis",
+      "COLUMN_NAME": "pes_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "UNI",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "responsaveis_dependentes",
+      "COLUMN_NAME": "res_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "responsaveis_dependentes",
+      "COLUMN_NAME": "pes_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "responsaveis_dependentes",
+      "COLUMN_NAME": "rde_parentesco",
+      "COLUMN_TYPE": "varchar(50)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "tipos_cadastros",
+      "COLUMN_NAME": "tpc_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "tipos_cadastros",
+      "COLUMN_NAME": "tpc_des",
+      "COLUMN_TYPE": "varchar(30)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "tipos_contatos",
+      "COLUMN_NAME": "tct_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "tipos_contatos",
+      "COLUMN_NAME": "tct_des",
+      "COLUMN_TYPE": "varchar(20)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "tipos_documentos",
+      "COLUMN_NAME": "tpd_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "tipos_documentos",
+      "COLUMN_NAME": "tpd_des",
+      "COLUMN_TYPE": "varchar(20)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "tipos_enderecos",
+      "COLUMN_NAME": "ten_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "tipos_enderecos",
+      "COLUMN_NAME": "ten_des",
+      "COLUMN_TYPE": "varchar(30)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "turmas",
+      "COLUMN_NAME": "trm_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "turmas",
+      "COLUMN_NAME": "trm_nome",
+      "COLUMN_TYPE": "varchar(30)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "turmas",
+      "COLUMN_NAME": "mdl_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "turmas",
+      "COLUMN_NAME": "trm_vagas",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "turmas",
+      "COLUMN_NAME": "trm_faltas_maximas",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "turmas",
+      "COLUMN_NAME": "tst_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "turmas",
+      "COLUMN_NAME": "pol_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "turmas",
+      "COLUMN_NAME": "trm_processo_seletivo",
+      "COLUMN_TYPE": "tinyint(1)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": "0",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "turmas",
+      "COLUMN_NAME": "trm_data_inicio",
+      "COLUMN_TYPE": "date",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "turmas",
+      "COLUMN_NAME": "trm_data_fim",
+      "COLUMN_TYPE": "date",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "turmas_horarios",
+      "COLUMN_NAME": "trm_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "turmas_horarios",
+      "COLUMN_NAME": "tho_dia_semana",
+      "COLUMN_TYPE": "tinyint(4)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "turmas_horarios",
+      "COLUMN_NAME": "tho_inicio",
+      "COLUMN_TYPE": "time",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "turmas_horarios",
+      "COLUMN_NAME": "tho_fim",
+      "COLUMN_TYPE": "time",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "turmas_pessoas",
+      "COLUMN_NAME": "tpe_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "turmas_pessoas",
+      "COLUMN_NAME": "pes_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "turmas_pessoas",
+      "COLUMN_NAME": "trm_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "turmas_pessoas",
+      "COLUMN_NAME": "tps_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "turmas_pessoas_status",
+      "COLUMN_NAME": "tps_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "turmas_pessoas_status",
+      "COLUMN_NAME": "tps_des",
+      "COLUMN_TYPE": "varchar(13)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "turmas_professores",
+      "COLUMN_NAME": "tpf_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "turmas_professores",
+      "COLUMN_NAME": "pes_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "turmas_professores",
+      "COLUMN_NAME": "trm_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "turmas_professores",
+      "COLUMN_NAME": "tpfs_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "MUL",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "turmas_professores_status",
+      "COLUMN_NAME": "tpfs_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "turmas_professores_status",
+      "COLUMN_NAME": "tpfs_des",
+      "COLUMN_TYPE": "varchar(13)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    },
+    {
+      "TABLE_NAME": "turmas_status",
+      "COLUMN_NAME": "tst_id",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "PRI",
+      "EXTRA": "auto_increment"
+    },
+    {
+      "TABLE_NAME": "turmas_status",
+      "COLUMN_NAME": "tst_des",
+      "COLUMN_TYPE": "varchar(13)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLUMN_KEY": "",
+      "EXTRA": ""
+    }
+  ],
+  "foreignKeys": [
+    {
+      "TABLE_NAME": "chamadas",
+      "COLUMN_NAME": "dia_id",
+      "REFERENCED_TABLE_NAME": "diarios",
+      "REFERENCED_COLUMN_NAME": "dia_id"
+    },
+    {
+      "TABLE_NAME": "chamadas",
+      "COLUMN_NAME": "trm_id",
+      "REFERENCED_TABLE_NAME": "diarios",
+      "REFERENCED_COLUMN_NAME": "trm_id"
+    },
+    {
+      "TABLE_NAME": "chamadas",
+      "COLUMN_NAME": "pes_id",
+      "REFERENCED_TABLE_NAME": "pessoas",
+      "REFERENCED_COLUMN_NAME": "pes_id"
+    },
+    {
+      "TABLE_NAME": "chamadas",
+      "COLUMN_NAME": "trm_id",
+      "REFERENCED_TABLE_NAME": "turmas",
+      "REFERENCED_COLUMN_NAME": "trm_id"
+    },
+    {
+      "TABLE_NAME": "chamadas",
+      "COLUMN_NAME": "tpe_id",
+      "REFERENCED_TABLE_NAME": "turmas_pessoas",
+      "REFERENCED_COLUMN_NAME": "tpe_id"
+    },
+    {
+      "TABLE_NAME": "chamadas",
+      "COLUMN_NAME": "pes_id",
+      "REFERENCED_TABLE_NAME": "turmas_pessoas",
+      "REFERENCED_COLUMN_NAME": "pes_id"
+    },
+    {
+      "TABLE_NAME": "chamadas",
+      "COLUMN_NAME": "trm_id",
+      "REFERENCED_TABLE_NAME": "turmas_pessoas",
+      "REFERENCED_COLUMN_NAME": "trm_id"
+    },
+    {
+      "TABLE_NAME": "chamadas",
+      "COLUMN_NAME": "cst_id",
+      "REFERENCED_TABLE_NAME": "chamadas_status",
+      "REFERENCED_COLUMN_NAME": "cst_id"
+    },
+    {
+      "TABLE_NAME": "chamadas",
+      "COLUMN_NAME": "jus_id",
+      "REFERENCED_TABLE_NAME": "justificativas",
+      "REFERENCED_COLUMN_NAME": "jus_id"
+    },
+    {
+      "TABLE_NAME": "contas",
+      "COLUMN_NAME": "pes_id",
+      "REFERENCED_TABLE_NAME": "pessoas",
+      "REFERENCED_COLUMN_NAME": "pes_id"
+    },
+    {
+      "TABLE_NAME": "contatos",
+      "COLUMN_NAME": "tct_id",
+      "REFERENCED_TABLE_NAME": "tipos_contatos",
+      "REFERENCED_COLUMN_NAME": "tct_id"
+    },
+    {
+      "TABLE_NAME": "contatos",
+      "COLUMN_NAME": "pes_id",
+      "REFERENCED_TABLE_NAME": "pessoas",
+      "REFERENCED_COLUMN_NAME": "pes_id"
+    },
+    {
+      "TABLE_NAME": "contatos",
+      "COLUMN_NAME": "res_id",
+      "REFERENCED_TABLE_NAME": "responsaveis",
+      "REFERENCED_COLUMN_NAME": "res_id"
+    },
+    {
+      "TABLE_NAME": "diarios",
+      "COLUMN_NAME": "trm_id",
+      "REFERENCED_TABLE_NAME": "turmas",
+      "REFERENCED_COLUMN_NAME": "trm_id"
+    },
+    {
+      "TABLE_NAME": "diarios",
+      "COLUMN_NAME": "tpf_id",
+      "REFERENCED_TABLE_NAME": "turmas_professores",
+      "REFERENCED_COLUMN_NAME": "tpf_id"
+    },
+    {
+      "TABLE_NAME": "diarios",
+      "COLUMN_NAME": "trm_id",
+      "REFERENCED_TABLE_NAME": "turmas_professores",
+      "REFERENCED_COLUMN_NAME": "trm_id"
+    },
+    {
+      "TABLE_NAME": "documentos",
+      "COLUMN_NAME": "pes_id",
+      "REFERENCED_TABLE_NAME": "pessoas",
+      "REFERENCED_COLUMN_NAME": "pes_id"
+    },
+    {
+      "TABLE_NAME": "documentos",
+      "COLUMN_NAME": "tpd_id",
+      "REFERENCED_TABLE_NAME": "tipos_documentos",
+      "REFERENCED_COLUMN_NAME": "tpd_id"
+    },
+    {
+      "TABLE_NAME": "enderecos",
+      "COLUMN_NAME": "ten_id",
+      "REFERENCED_TABLE_NAME": "tipos_enderecos",
+      "REFERENCED_COLUMN_NAME": "ten_id"
+    },
+    {
+      "TABLE_NAME": "enderecos",
+      "COLUMN_NAME": "pes_id",
+      "REFERENCED_TABLE_NAME": "pessoas",
+      "REFERENCED_COLUMN_NAME": "pes_id"
+    },
+    {
+      "TABLE_NAME": "enderecos",
+      "COLUMN_NAME": "pol_id",
+      "REFERENCED_TABLE_NAME": "polos",
+      "REFERENCED_COLUMN_NAME": "pol_id"
+    },
+    {
+      "TABLE_NAME": "fichas_medicas",
+      "COLUMN_NAME": "pes_id",
+      "REFERENCED_TABLE_NAME": "pessoas",
+      "REFERENCED_COLUMN_NAME": "pes_id"
+    },
+    {
+      "TABLE_NAME": "inscricoes",
+      "COLUMN_NAME": "pes_id",
+      "REFERENCED_TABLE_NAME": "pessoas",
+      "REFERENCED_COLUMN_NAME": "pes_id"
+    },
+    {
+      "TABLE_NAME": "inscricoes",
+      "COLUMN_NAME": "trm_id",
+      "REFERENCED_TABLE_NAME": "turmas",
+      "REFERENCED_COLUMN_NAME": "trm_id"
+    },
+    {
+      "TABLE_NAME": "inscricoes",
+      "COLUMN_NAME": "sin_id",
+      "REFERENCED_TABLE_NAME": "inscricoes_status",
+      "REFERENCED_COLUMN_NAME": "sin_id"
+    },
+    {
+      "TABLE_NAME": "justificativas",
+      "COLUMN_NAME": "pes_id",
+      "REFERENCED_TABLE_NAME": "pessoas",
+      "REFERENCED_COLUMN_NAME": "pes_id"
+    },
+    {
+      "TABLE_NAME": "justificativas",
+      "COLUMN_NAME": "doc_id",
+      "REFERENCED_TABLE_NAME": "documentos",
+      "REFERENCED_COLUMN_NAME": "doc_id"
+    },
+    {
+      "TABLE_NAME": "justificativas",
+      "COLUMN_NAME": "jst_id",
+      "REFERENCED_TABLE_NAME": "justificativas_situacoes",
+      "REFERENCED_COLUMN_NAME": "jst_id"
+    },
+    {
+      "TABLE_NAME": "justificativas",
+      "COLUMN_NAME": "pes_adm_id",
+      "REFERENCED_TABLE_NAME": "pessoas",
+      "REFERENCED_COLUMN_NAME": "pes_id"
+    },
+    {
+      "TABLE_NAME": "modalidades",
+      "COLUMN_NAME": "pol_id",
+      "REFERENCED_TABLE_NAME": "polos",
+      "REFERENCED_COLUMN_NAME": "pol_id"
+    },
+    {
+      "TABLE_NAME": "noticias",
+      "COLUMN_NAME": "nst_id",
+      "REFERENCED_TABLE_NAME": "noticias_status",
+      "REFERENCED_COLUMN_NAME": "nst_id"
+    },
+    {
+      "TABLE_NAME": "notificacoes",
+      "COLUMN_NAME": "ntp_id",
+      "REFERENCED_TABLE_NAME": "notificacoes_tipos",
+      "REFERENCED_COLUMN_NAME": "ntp_id"
+    },
+    {
+      "TABLE_NAME": "notificacoes",
+      "COLUMN_NAME": "pes_id",
+      "REFERENCED_TABLE_NAME": "pessoas",
+      "REFERENCED_COLUMN_NAME": "pes_id"
+    },
+    {
+      "TABLE_NAME": "notificacoes",
+      "COLUMN_NAME": "nfs_id",
+      "REFERENCED_TABLE_NAME": "notificacoes_status",
+      "REFERENCED_COLUMN_NAME": "nfs_id"
+    },
+    {
+      "TABLE_NAME": "pessoas",
+      "COLUMN_NAME": "tpc_id",
+      "REFERENCED_TABLE_NAME": "tipos_cadastros",
+      "REFERENCED_COLUMN_NAME": "tpc_id"
+    },
+    {
+      "TABLE_NAME": "profissionais",
+      "COLUMN_NAME": "pes_id",
+      "REFERENCED_TABLE_NAME": "pessoas",
+      "REFERENCED_COLUMN_NAME": "pes_id"
+    },
+    {
+      "TABLE_NAME": "profissionais",
+      "COLUMN_NAME": "pro_criado_por",
+      "REFERENCED_TABLE_NAME": "contas",
+      "REFERENCED_COLUMN_NAME": "con_id"
+    },
+    {
+      "TABLE_NAME": "recuperacoes_senha",
+      "COLUMN_NAME": "con_id",
+      "REFERENCED_TABLE_NAME": "contas",
+      "REFERENCED_COLUMN_NAME": "con_id"
+    },
+    {
+      "TABLE_NAME": "responsaveis",
+      "COLUMN_NAME": "pes_id",
+      "REFERENCED_TABLE_NAME": "pessoas",
+      "REFERENCED_COLUMN_NAME": "pes_id"
+    },
+    {
+      "TABLE_NAME": "responsaveis_dependentes",
+      "COLUMN_NAME": "res_id",
+      "REFERENCED_TABLE_NAME": "responsaveis",
+      "REFERENCED_COLUMN_NAME": "res_id"
+    },
+    {
+      "TABLE_NAME": "responsaveis_dependentes",
+      "COLUMN_NAME": "pes_id",
+      "REFERENCED_TABLE_NAME": "pessoas",
+      "REFERENCED_COLUMN_NAME": "pes_id"
+    },
+    {
+      "TABLE_NAME": "turmas",
+      "COLUMN_NAME": "mdl_id",
+      "REFERENCED_TABLE_NAME": "modalidades",
+      "REFERENCED_COLUMN_NAME": "mdl_id"
+    },
+    {
+      "TABLE_NAME": "turmas",
+      "COLUMN_NAME": "tst_id",
+      "REFERENCED_TABLE_NAME": "turmas_status",
+      "REFERENCED_COLUMN_NAME": "tst_id"
+    },
+    {
+      "TABLE_NAME": "turmas",
+      "COLUMN_NAME": "pol_id",
+      "REFERENCED_TABLE_NAME": "polos",
+      "REFERENCED_COLUMN_NAME": "pol_id"
+    },
+    {
+      "TABLE_NAME": "turmas_horarios",
+      "COLUMN_NAME": "trm_id",
+      "REFERENCED_TABLE_NAME": "turmas",
+      "REFERENCED_COLUMN_NAME": "trm_id"
+    },
+    {
+      "TABLE_NAME": "turmas_pessoas",
+      "COLUMN_NAME": "pes_id",
+      "REFERENCED_TABLE_NAME": "pessoas",
+      "REFERENCED_COLUMN_NAME": "pes_id"
+    },
+    {
+      "TABLE_NAME": "turmas_pessoas",
+      "COLUMN_NAME": "trm_id",
+      "REFERENCED_TABLE_NAME": "turmas",
+      "REFERENCED_COLUMN_NAME": "trm_id"
+    },
+    {
+      "TABLE_NAME": "turmas_pessoas",
+      "COLUMN_NAME": "tps_id",
+      "REFERENCED_TABLE_NAME": "turmas_pessoas_status",
+      "REFERENCED_COLUMN_NAME": "tps_id"
+    },
+    {
+      "TABLE_NAME": "turmas_professores",
+      "COLUMN_NAME": "pes_id",
+      "REFERENCED_TABLE_NAME": "pessoas",
+      "REFERENCED_COLUMN_NAME": "pes_id"
+    },
+    {
+      "TABLE_NAME": "turmas_professores",
+      "COLUMN_NAME": "trm_id",
+      "REFERENCED_TABLE_NAME": "turmas",
+      "REFERENCED_COLUMN_NAME": "trm_id"
+    },
+    {
+      "TABLE_NAME": "turmas_professores",
+      "COLUMN_NAME": "tpfs_id",
+      "REFERENCED_TABLE_NAME": "turmas_professores_status",
+      "REFERENCED_COLUMN_NAME": "tpfs_id"
+    }
+  ]
+}
