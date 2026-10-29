@@ -1,5 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { BannerComponent } from '../../../component/banner/banner.component';
 import { FooterComponent } from '../../../component/footer/footer.component';
@@ -8,58 +9,61 @@ import { NavbarDesktopAdminComponent } from '../../../component/navbar-desktop-a
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
-import { FormsModule } from '@angular/forms';
 import { SelectButtonModule } from 'primeng/selectbutton';
-
-interface Modality {
-    id: string;
-    name: string;
-    icon: string;
-    iconBg: string;
-    iconColor: string;
-    classesCount: number;
-    studentsCount: number;
-    active: boolean;
-}
+import { Modality, ModalityDemoStore } from './modality-demo.store';
 
 @Component({
-    selector: 'app-manage-modalites',
-    imports: [
-        BannerComponent, FooterComponent, NavbarDesktopAdminComponent,
-        CardModule, ButtonModule, InputTextModule, FormsModule, SelectButtonModule
-    ],
-    templateUrl: './manage-modalites.component.html',
-    styleUrl: './manage-modalites.component.scss'
+  selector: 'app-manage-modalites',
+  imports: [
+    BannerComponent, FooterComponent, NavbarDesktopAdminComponent,
+    CardModule, ButtonModule, InputTextModule, FormsModule, SelectButtonModule
+  ],
+  templateUrl: './manage-modalites.component.html',
+  styleUrl: './manage-modalites.component.scss'
 })
-export class ManageModalitesComponent {
-    private router = inject(Router);
+export class ManageModalitesComponent implements OnInit {
+  private readonly router = inject(Router);
+  private readonly store = inject(ModalityDemoStore);
 
-    filter: 'active' | 'inactive' = 'active';
+  filter: 'active' | 'inactive' = 'active';
+  search = '';
+  errorMessage = '';
+  modalities: Modality[] = [];
 
-    modalities: Modality[] = [
-        { id: '1', name: 'Futsal Sub-15', icon: 'pi pi-circle-fill', iconBg: '#EAF1FB', iconColor: '#2563A8', classesCount: 3, studentsCount: 45, active: true },
-        { id: '2', name: 'Natação Adulto', icon: 'pi pi-circle-fill', iconBg: '#E1F5EE', iconColor: '#0F7A4E', classesCount: 2, studentsCount: 43, active: true },
-        { id: '3', name: 'Vôlei', icon: 'pi pi-circle-fill', iconBg: '#FAEEDA', iconColor: '#8A5A00', classesCount: 2, studentsCount: 31, active: true },
-        { id: '4', name: 'Ginástica', icon: 'pi pi-circle-fill', iconBg: '#F1EFEC', iconColor: '#6B6558', classesCount: 2, studentsCount: 30, active: false },
-        { id: '5', name: 'Tênis', icon: 'pi pi-circle-fill', iconBg: '#FAEEDA', iconColor: '#8A5A00', classesCount: 2, studentsCount: 31, active: true },
-        { id: '6', name: 'Basquete', icon: 'pi pi-circle-fill', iconBg: '#FAEEDA', iconColor: '#8A5A00', classesCount: 2, studentsCount: 31, active: false },
-        { id: '7', name: 'Xadrez', icon: 'pi pi-circle-fill', iconBg: '#FAEEDA', iconColor: '#8A5A00', classesCount: 2, studentsCount: 31, active: true }
-    ];
+  readonly filterOptions = [
+    { label: 'Ativas', value: 'active' },
+    { label: 'Inativas', value: 'inactive' }
+  ];
 
-    get filteredModalities(): Modality[] {
-        return this.modalities.filter(m => m.active === (this.filter === 'active'));
+  ngOnInit(): void {
+    this.modalities = this.store.list();
+  }
+
+  get filteredModalities(): Modality[] {
+    const query = this.search.trim().toLocaleLowerCase('pt-BR');
+    return this.modalities.filter(item =>
+      item.active === (this.filter === 'active') &&
+      (!query || item.name.toLocaleLowerCase('pt-BR').includes(query))
+    );
+  }
+
+  openModality(modality: Modality): void {
+    if (modality.classesCount > 0) {
+      this.router.navigate(['/manage-modalites', modality.id, 'classes']);
     }
+  }
 
-    filterOptions = [
-        { label: 'Ativas', value: 'active' },
-        { label: 'Inativas', value: 'inactive' }
-    ];
+  openNew(): void {
+    this.router.navigate(['/manage-modalites/new-modality']);
+  }
 
-    openModality(modality: Modality) {
-        this.router.navigate(['/manage-modalites', modality.id, 'classes']);
+  toggleStatus(modality: Modality): void {
+    this.errorMessage = '';
+    try {
+      this.store.setActive(modality.id, !modality.active);
+      this.modalities = this.store.list();
+    } catch (error) {
+      this.errorMessage = error instanceof Error ? error.message : 'Falha ao mudar o status.';
     }
-
-    openNew() {
-        this.router.navigate(['/manage-modalites/new-modality']);
-    }
+  }
 }

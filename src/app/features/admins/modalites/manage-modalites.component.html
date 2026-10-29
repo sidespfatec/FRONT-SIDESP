@@ -2,44 +2,57 @@
 <app-banner></app-banner>
 
 <div class="card-container">
-    <p-card>
-        <h1 class="title-modality">Modalidades</h1>
+  <p-card>
+    <h1 class="title-modality">Modalidades</h1>
+    <p class="demo-tip">Demonstração local: os cadastros ficam somente neste navegador, até a integração com o backend.</p>
 
-        <div class="search-modality-container">
-            <input pInputText type="text" placeholder="Buscar..." aria-label="Buscar modalidade" />
-            <button pButton aria-label="Nova modalidade" (click)="openNew()">
-                <i class="pi pi-plus"></i>
-            </button>
-        </div>
+    @if (errorMessage) {
+      <p class="modality-alert" role="alert">{{ errorMessage }}</p>
+    }
 
-        <div class="modality-filter">
-            <p-selectbutton [options]="filterOptions" [(ngModel)]="filter" optionLabel="label" optionValue="value"
-                [allowEmpty]="false" aria-label="Filtrar modalidades" />
-        </div>
+    <div class="search-modality-container">
+      <input pInputText type="search" placeholder="Buscar..." aria-label="Buscar modalidade" [(ngModel)]="search" />
+      <button pButton type="button" aria-label="Nova modalidade" (click)="openNew()">
+        <i class="pi pi-plus" aria-hidden="true"></i>
+      </button>
+    </div>
 
-        <ul class="modality-list">
-            @for (modality of filteredModalities; track modality.id) {
-            <li>
-                <button type="button" class="modality-item" (click)="openModality(modality)">
-                    <span class="modality-icon" [style.background]="modality.iconBg" [style.color]="modality.iconColor">
-                        <i [class]="modality.icon"></i>
-                    </span>
+    <div class="modality-filter">
+      <p-selectbutton [options]="filterOptions" [(ngModel)]="filter" optionLabel="label" optionValue="value"
+        [allowEmpty]="false" aria-label="Filtrar modalidades" />
+    </div>
 
-                    <span class="modality-info">
-                        <strong>{{ modality.name }}</strong>
-                        <span class="modality-meta">
-                            {{ modality.classesCount }} turmas · {{ modality.studentsCount }} alunos
-                        </span>
-                    </span>
-
-                    <i class="pi pi-chevron-right"></i>
-                </button>
-            </li>
-            } @empty {
-            <li class="modality-empty">Nenhuma modalidade encontrada.</li>
+    <ul class="modality-list">
+      @for (modality of filteredModalities; track modality.id) {
+        <li class="modality-row">
+          <button type="button" class="modality-item" [disabled]="modality.classesCount === 0"
+            (click)="openModality(modality)" [attr.aria-label]="'Ver turmas de ' + modality.name">
+            <span class="modality-icon" [style.background]="modality.iconBg" [style.color]="modality.iconColor">
+              <i [class]="modality.icon" aria-hidden="true"></i>
+            </span>
+            <span class="modality-info">
+              <strong>{{ modality.name }}</strong>
+              <span class="modality-meta">
+                {{ modality.classesCount }} turmas · {{ modality.studentsCount }} alunos
+              </span>
+              @if (modality.hubName) {
+                <span class="modality-meta">{{ modality.hubName }} · {{ modality.minAge }} a {{ modality.maxAge }} anos</span>
+              }
+            </span>
+            @if (modality.classesCount > 0) {
+              <i class="pi pi-chevron-right" aria-hidden="true"></i>
             }
-        </ul>
-    </p-card>
+          </button>
+          <button type="button" class="status-button" (click)="toggleStatus(modality)"
+            [attr.aria-label]="(modality.active ? 'Inativar ' : 'Reativar ') + modality.name">
+            {{ modality.active ? 'Inativar' : 'Reativar' }}
+          </button>
+        </li>
+      } @empty {
+        <li class="modality-empty">Nenhuma modalidade encontrada.</li>
+      }
+    </ul>
+  </p-card>
 </div>
 
 <app-footer></app-footer>

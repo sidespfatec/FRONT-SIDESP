@@ -2,32 +2,57 @@
 <app-banner></app-banner>
 
 <div class="card-container">
-    <p-card>
-        <h1 class="title-modality">Nova modalidade</h1>
+  <p-card>
+    <h1 class="title-modality">Nova modalidade</h1>
+    <p class="demo-tip">Demonstração: os dados serão armazenados apenas neste navegador.</p>
 
-        <form class="modality-form">
-            <div class="modality-field">
-                <label for="name">Nome</label>
-                <input id="name" name="name" pInputText [(ngModel)]="name" />
-            </div>
+    @if (errorMessage) {
+      <p class="modality-alert" role="alert">{{ errorMessage }}</p>
+    }
 
-            <div class="modality-field">
-                <label for="icon">Ícone</label>
-                <p-select inputId="icon" name="icon" [options]="icons" optionLabel="label" optionValue="value"
-                    [(ngModel)]="icon" appendTo="body" />
-            </div>
+    <form class="modality-form" (ngSubmit)="save()">
+      <div class="modality-field">
+        <label for="name">Nome da modalidade</label>
+        <input pInputText id="name" name="name" [(ngModel)]="name" required maxlength="80" placeholder="Ex.: Futsal Sub-15" />
+      </div>
 
-            <div class="modality-field-switch">
-                <p-toggleswitch inputId="active" name="active" [(ngModel)]="active" />
-                <label for="active">Modalidade ativa</label>
-            </div>
+      <div class="form-grid">
+        <div class="modality-field">
+          <label for="minAge">Idade mínima</label>
+          <input pInputText id="minAge" name="minAge" type="number" min="0" max="120" step="1" [(ngModel)]="minAge" required />
+        </div>
+        <div class="modality-field">
+          <label for="maxAge">Idade máxima</label>
+          <input pInputText id="maxAge" name="maxAge" type="number" min="0" max="120" step="1" [(ngModel)]="maxAge" required />
+        </div>
+      </div>
 
-            <div class="modality-actions">
-                <p-button label="Cancelar" severity="secondary" [text]="true" (onClick)="cancel()" />
-                <p-button label="Cadastrar" icon="pi pi-check" (onClick)="save()" />
-            </div>
-        </form>
-    </p-card>
+      <div class="form-grid">
+        <div class="modality-field">
+          <label for="monthlyAbsenceLimit">Limite de faltas mensais</label>
+          <input pInputText id="monthlyAbsenceLimit" name="monthlyAbsenceLimit" type="number" min="0" max="31" step="1" [(ngModel)]="monthlyAbsenceLimit" required />
+        </div>
+        <div class="modality-field">
+          <label for="hub">Polo esportivo</label>
+          <p-select inputId="hub" name="hub" [options]="hubs" optionLabel="name" optionValue="id"
+            [(ngModel)]="hubId" placeholder="Selecione um polo" appendTo="body" />
+        </div>
+      </div>
+
+      <div class="modality-field">
+        <label for="icon">Ícone (opcional)</label>
+        <p-select inputId="icon" name="icon" [options]="icons" optionLabel="label" optionValue="value"
+          [(ngModel)]="icon" appendTo="body" />
+      </div>
+
+      <p class="active-tip">A modalidade será cadastrada como <strong>ativa</strong> e poderá ser inativada na listagem.</p>
+
+      <div class="modality-actions">
+        <p-button label="Cancelar" severity="secondary" [text]="true" type="button" (onClick)="cancel()" />
+        <p-button label="Cadastrar" icon="pi pi-check" type="submit" />
+      </div>
+    </form>
+  </p-card>
 </div>
 
 <app-footer></app-footer>

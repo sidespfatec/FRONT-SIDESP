@@ -119,3 +119,42 @@
     text-align: center;
     color: var(--color-text-secondary);
 }
+
+.demo-tip {
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 1rem;
+}
+
+.modality-alert {
+  color: #9f1b1b;
+  margin: 0 0 1rem;
+}
+
+.modality-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.modality-row .modality-item {
+  flex: 1;
+  min-width: 0;
+}
+
+.modality-item:disabled {
+  cursor: default;
+  opacity: 0.85;
+}
+
+.status-button {
+  background: #fff;
+  border: 1px solid var(--color-brand-primary);
+  color: var(--color-brand-primary);
+  border-radius: 0.5rem;
+  font: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0.5rem;
+}

@@ -74,3 +74,25 @@
         }
     }
 }
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.demo-tip, .active-tip {
+  color: var(--color-text-secondary);
+  font-size: 0.8125rem;
+}
+
+.modality-alert {
+  color: #9f1b1b;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 560px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
