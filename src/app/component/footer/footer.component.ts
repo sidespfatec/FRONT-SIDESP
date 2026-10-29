@@ -1,6 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { NavigationEnd, NavigationSkipped, Router, RouterLink } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { DrawerModule } from 'primeng/drawer';
 
 @Component({
@@ -11,22 +13,33 @@ import { DrawerModule } from 'primeng/drawer';
     styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
+    private router = inject(Router);
+
     menuAberto = false;
+
+    constructor() {
+        this.router.events
+            .pipe(
+                filter(evento => evento instanceof NavigationEnd || evento instanceof NavigationSkipped),
+                takeUntilDestroyed()
+            )
+            .subscribe(() => this.fecharMenu());
+    }
 
     grupos = [
         {
             titulo: 'Cadastros',
             itens: [
-                { icone: 'pi pi-map-marker', nome: 'Polos', rota: '../manage-hubs' },
-                { icone: 'pi pi-user-plus', nome: 'Professores', rota: '../manage-teachers' },
-                { icone: 'pi pi-list', nome: 'Modalidades', rota: '../manage-modalites' }
+                { icone: 'pi pi-map-marker', nome: 'Polos', rota: '/manage-hubs' },
+                { icone: 'pi pi-user-plus', nome: 'Professores', rota: '/manage-teachers' },
+                { icone: 'pi pi-list', nome: 'Modalidades', rota: '/manage-modalites' }
             ]
         },
         {
             titulo: 'Gestão',
             itens: [
                 { icone: 'pi pi-users', nome: 'Alunos', rota: '/admin/alunos' },
-                { icone: 'pi pi-shield', nome: 'Administradores', rota: '../manage-admin' }
+                { icone: 'pi pi-shield', nome: 'Administradores', rota: '/manage-admin' }
             ]
         },
         {

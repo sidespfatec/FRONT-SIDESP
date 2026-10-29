@@ -23,7 +23,7 @@
         <section *ngFor="let grupo of grupos" class="grupo">
             <h3 class="grupo-titulo">{{ grupo.titulo }}</h3>
             <div class="grupo-itens">
-                <a *ngFor="let item of grupo.itens" [routerLink]="item.rota" class="menu-item" (click)="fecharMenu()">
+                <a *ngFor="let item of grupo.itens" [routerLink]="item.rota" class="menu-item">
                     <div class="menu-item-icone">
                         <i [class]="item.icone"></i>
                     </div>
