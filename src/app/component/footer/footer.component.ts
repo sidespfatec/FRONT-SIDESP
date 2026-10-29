@@ -1,7 +1,10 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { DrawerModule } from 'primeng/drawer';
+
+import { AuthService } from '../../core/auth/auth.service';
+import { gruposDoPerfil } from '../menu.model';
 
 @Component({
     selector: 'app-footer',
@@ -11,32 +14,14 @@ import { DrawerModule } from 'primeng/drawer';
     styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
+
+    auth = inject(AuthService);
+
     menuAberto = false;
 
-    grupos = [
-        {
-            titulo: 'Cadastros',
-            itens: [
-                { icone: 'pi pi-map-marker', nome: 'Polos', rota: '../manage-hubs' },
-                { icone: 'pi pi-user-plus', nome: 'Professores', rota: '../manage-teachers' },
-                { icone: 'pi pi-list', nome: 'Modalidades', rota: '../manage-modalites' }
-            ]
-        },
-        {
-            titulo: 'Gestão',
-            itens: [
-                { icone: 'pi pi-users', nome: 'Alunos', rota: '/admin/alunos' },
-                { icone: 'pi pi-shield', nome: 'Administradores', rota: '../manage-admin' }
-            ]
-        },
-        {
-            titulo: 'Análise',
-            itens: [
-                { icone: 'pi pi-chart-bar', nome: 'Relatórios', rota: '/admin/relatorios' },
-                { icone: 'pi pi-map', nome: 'Mapa de Calor', rota: '/admin/mapa-calor' }
-            ]
-        }
-    ];
+    readonly grupos = computed(() => gruposDoPerfil(this.auth.user()?.perfil));
+
+    readonly rotaPerfil = computed(() => this.auth.user() ? '/perfil' : '/login');
 
     abrirMenu() {
         this.menuAberto = true;

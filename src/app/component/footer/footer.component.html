@@ -1,15 +1,18 @@
 <footer>
     <a [routerLink]="['/home']" class="nav-item" aria-label="Início">
-        <i class="pi pi-home"></i>
+        <i class="pi pi-home" aria-hidden="true"></i>
     </a>
 
-    <a [routerLink]="['/login']" class="nav-item" aria-label="Perfil">
-        <i class="pi pi-user"></i>
+    <a [routerLink]="[rotaPerfil()]" class="nav-item" aria-label="Perfil">
+        <i class="pi pi-user" aria-hidden="true"></i>
     </a>
 
-    <button type="button" class="nav-item" (click)="abrirMenu()" aria-label="Menu">
-        <i class="pi pi-bars"></i>
+    @if (grupos().length) {
+    <button type="button" class="nav-item" (click)="abrirMenu()" aria-label="Abrir menu de gestão"
+        [attr.aria-expanded]="menuAberto">
+        <i class="pi pi-bars" aria-hidden="true"></i>
     </button>
+    }
 </footer>
 
 <p-drawer [(visible)]="menuAberto" position="right" styleClass="menu-admin-drawer">
@@ -20,17 +23,21 @@
     </ng-template>
 
     <div class="drawer-conteudo">
-        <section *ngFor="let grupo of grupos" class="grupo">
+        @for (grupo of grupos(); track grupo.titulo) {
+        <section class="grupo">
             <h3 class="grupo-titulo">{{ grupo.titulo }}</h3>
             <div class="grupo-itens">
-                <a *ngFor="let item of grupo.itens" [routerLink]="item.rota" class="menu-item" (click)="fecharMenu()">
+                @for (item of grupo.itens; track item.rota) {
+                <a [routerLink]="item.rota" class="menu-item" (click)="fecharMenu()">
                     <div class="menu-item-icone">
-                        <i [class]="item.icone"></i>
+                        <i [class]="item.icone" aria-hidden="true"></i>
                     </div>
                     <span class="menu-item-nome">{{ item.nome }}</span>
-                    <i class="pi pi-chevron-right menu-item-seta"></i>
+                    <i class="pi pi-chevron-right menu-item-seta" aria-hidden="true"></i>
                 </a>
+                }
             </div>
         </section>
+        }
     </div>
 </p-drawer>

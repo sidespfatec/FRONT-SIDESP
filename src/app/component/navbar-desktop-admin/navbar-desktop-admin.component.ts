@@ -1,7 +1,10 @@
-import { Component, signal, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { filter } from 'rxjs/operators';
+
+import { AuthService } from '../../core/auth/auth.service';
+import { itensDoPerfil } from '../menu.model';
 
 @Component({
   selector: 'app-navbar-desktop-admin',
@@ -12,19 +15,14 @@ import { filter } from 'rxjs/operators';
 })
 export class NavbarDesktopAdminComponent {
   private router = inject(Router);
+  auth = inject(AuthService);
 
   isMenuOpen = signal(false);
   currentPageLabel = signal<string | null>(null);
 
-  adminPages = [
-    { path: '/manage-teachers', label: 'Cadastrar Professores' },
-    { path: '/manage-admin', label: 'Gerenciar Administradores' },
-    { path: '/manage-modalites', label: 'Gerenciar Modalidades' },
-    { path: '/admin/alunos', label: 'Gerenciar Alunos' },
-    { path: '/manage-hubs', label: 'Gerenciar Polos' },
-    { path: '/admin/relatorios', label: 'Relatórios' },
-    { path: '/admin/mapa-calor', label: 'Mapa de Calor' },
-  ];
+  readonly adminPages = computed(() =>
+    itensDoPerfil(this.auth.user()?.perfil).map(item => ({ path: item.rota, label: item.nome }))
+  );
 
   constructor() {
     this.updateCurrentPage(this.router.url);
@@ -33,12 +31,21 @@ export class NavbarDesktopAdminComponent {
       .subscribe((e: any) => this.updateCurrentPage(e.urlAfterRedirects));
   }
 
-  private updateCurrentPage(url: string): void {
-    const match = this.adminPages.find((p) => p.path && url.startsWith(p.path));
-    this.currentPageLabel.set(match ? match.label : null);
+  toggleMenu(): void {
+    this.isMenuOpen.update((aberto) => !aberto);
   }
 
-  toggleMenu(): void {
-    this.isMenuOpen.update((open) => !open);
+  fecharMenu(): void {
+    this.isMenuOpen.set(false);
+  }
+
+  sair(): void {
+    this.fecharMenu();
+    this.auth.logout();
+  }
+
+  private updateCurrentPage(url: string): void {
+    const pagina = this.adminPages().find((p) => p.path && url.startsWith(p.path));
+    this.currentPageLabel.set(pagina ? pagina.label : null);
   }
 }

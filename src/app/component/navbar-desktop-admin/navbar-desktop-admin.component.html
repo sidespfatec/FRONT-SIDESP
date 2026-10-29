@@ -6,29 +6,35 @@
     <div class="navbar-right">
         <ul class="navbar-links">
             <li><a routerLink="/home" routerLinkActive="active">INICIAL</a></li>
-            <li><a routerLink="/esportes" routerLinkActive="active">ESPORTES</a></li>
-            <li><a routerLink="/perfil" routerLinkActive="active">PERFIL</a></li>
         </ul>
 
         @if (currentPageLabel()) {
-            <span class="current-page-badge">{{ currentPageLabel() }}</span>
+        <span class="current-page-badge">{{ currentPageLabel() }}</span>
         }
 
-        <button type="button" class="menu-toggle-btn" [class.active]="isMenuOpen()" (click)="toggleMenu()">
-            <i class="pi pi-bars"></i>
+        @if (adminPages().length) {
+        <button type="button" class="menu-toggle-btn" [class.active]="isMenuOpen()" (click)="toggleMenu()"
+            [attr.aria-expanded]="isMenuOpen()" aria-controls="menu-admin" aria-label="Abrir menu de gestão">
+            <i class="pi pi-bars" aria-hidden="true"></i>
         </button>
+        }
 
+        @if (auth.user(); as usuario) {
+        <span class="navbar-user">{{ usuario.nome }}</span>
+        <button pButton type="button" label="SAIR" icon="pi pi-sign-out" class="navbar-login-btn"
+            (click)="sair()"></button>
+        } @else {
         <button pButton type="button" label="LOGIN" icon="pi pi-user" routerLink="/login"
             class="navbar-login-btn"></button>
-    </div>
-
-    <div class="admin-submenu" [class.open]="isMenuOpen()">
-        @for (page of adminPages; track page.label) {
-            @if (page.path) {
-                <a [routerLink]="page.path" routerLinkActive="active-pill" class="submenu-pill">{{ page.label }}</a>
-            } @else {
-                <a class="submenu-pill">{{ page.label }}</a>
-            }
         }
     </div>
+
+    @if (adminPages().length) {
+    <div class="admin-submenu" id="menu-admin" [class.open]="isMenuOpen()">
+        @for (page of adminPages(); track page.path) {
+        <a [routerLink]="page.path" routerLinkActive="active-pill" class="submenu-pill"
+            (click)="fecharMenu()">{{ page.label }}</a>
+        }
+    </div>
+    }
 </nav>

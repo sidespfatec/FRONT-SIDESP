@@ -1,5 +1,4 @@
 import { AuthService } from '../../../../core/auth/auth.service';
-import { SessionComponent } from '../../../../core/auth/session.component';
 import { Component, inject } from '@angular/core';
 import { BannerComponent } from '../../../../component/banner/banner.component';
 import { FooterComponent } from '../../../../component/footer/footer.component';
@@ -12,7 +11,7 @@ import { NewsItem } from '../../../../component/news.model';
 @Component({
   selector: 'app-home',
   imports: [
-    SessionComponent, BannerComponent, FooterComponent, NewCardNewsComponent,
+    BannerComponent, FooterComponent, NewCardNewsComponent,
     CardNewsComponent, NavbarDesktopAdminComponent, NewsDetailModalComponent
   ],
   templateUrl: './home.component.html',
