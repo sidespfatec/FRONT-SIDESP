@@ -1,36 +1,41 @@
+<app-banner />
 <main class="account-card">
-  <a routerLink="/perfil">Meu perfil</a>
-  <h1>Consultar ficha médica</h1>
-  <p>
-    Use o identificador real da pessoa cadastrada. Professores só podem consultar alunos de suas
-    turmas ativas. A listagem de alunos ainda não está disponível na API.
-  </p>
-  <form #medicalForm="ngForm" class="integration-form" (ngSubmit)="load(medicalForm)">
-    <label for="medical-id"
-      >Identificador da pessoa<input
-        id="medical-id"
-        type="number"
-        name="id"
-        [(ngModel)]="id"
-        required
-        min="1"
-        step="1"
-    /></label>
-    <div class="form-actions">
-      <button type="submit" [disabled]="busy()">
-        {{ busy() ? 'Consultando...' : 'Consultar' }}
-      </button>
-    </div>
-  </form>
-  @if (error()) {
-    <p role="alert">{{ error() }}</p>
-  }
-  @if (medical(); as m) {
-    <dl>
-      @for (field of fields; track field.key) {
-        <dt>{{ field.label }}</dt>
-        <dd>{{ m[field.key] || 'Não informado' }}</dd>
-      }
-    </dl>
-  }
+  <p-card>
+    <a routerLink="/perfil">Meu perfil</a>
+    <h1>Consultar ficha médica</h1>
+    <p>
+      Use o identificador real da pessoa cadastrada. Professores só podem consultar alunos de suas
+      turmas ativas. A listagem de alunos ainda não está disponível na API.
+    </p>
+    <form #medicalForm="ngForm" class="integration-form" (ngSubmit)="load(medicalForm)">
+      <label for="medical-id"
+        >Identificador da pessoa<input
+          pInputText
+          id="medical-id"
+          type="number"
+          name="id"
+          [(ngModel)]="id"
+          required
+          min="1"
+          step="1"
+      /></label>
+      <div class="form-actions">
+        <button pButton type="submit" [disabled]="busy()">
+          {{ busy() ? 'Consultando...' : 'Consultar' }}
+        </button>
+      </div>
+    </form>
+    @if (error()) {
+      <p role="alert">{{ error() }}</p>
+    }
+    @if (medical(); as m) {
+      <dl>
+        @for (field of fields; track field.key) {
+          <dt>{{ field.label }}</dt>
+          <dd>{{ m[field.key] || 'Não informado' }}</dd>
+        }
+      </dl>
+    }
+  </p-card>
 </main>
+<app-footer />

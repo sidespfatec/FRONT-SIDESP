@@ -1,3 +1,7 @@
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { TagModule } from 'primeng/tag';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -13,7 +17,17 @@ import { apiError } from '../../../core/services/api-error';
 @Component({
   selector: 'app-manage-modalites',
   standalone: true,
-  imports: [FormsModule, BannerComponent, FooterComponent, NavbarDesktopAdminComponent, CardModule],
+  imports: [
+    SelectButtonModule,
+    ButtonModule,
+    InputTextModule,
+    TagModule,
+    FormsModule,
+    BannerComponent,
+    FooterComponent,
+    NavbarDesktopAdminComponent,
+    CardModule,
+  ],
   templateUrl: './manage-modalites.component.html',
   styleUrls: ['./manage-modalites.component.scss', '../../../component/integration-form.scss'],
 })
@@ -27,16 +41,19 @@ export class ManageModalitesComponent implements OnInit {
   error = signal('');
   message = signal('');
   search = '';
+  readonly filterOptions = [
+    { label: 'Ativas', value: 'active' },
+    { label: 'Inativas', value: 'inactive' },
+    { label: 'Todas', value: 'all' },
+  ];
   status = 'active';
   /** Carrega modalidades e nomes de polos reais sem inventar contagens de turmas ou alunos. */
   ngOnInit(): void {
     this.load();
-    this.hubService
-      .list()
-      .subscribe({
-        next: (r) => this.hubs.set(new Map(r.map((h) => [h.id, h.nome]))),
-        error: (e) => this.error.set(apiError(e)),
-      });
+    this.hubService.list().subscribe({
+      next: (r) => this.hubs.set(new Map(r.map((h) => [h.id, h.nome]))),
+      error: (e) => this.error.set(apiError(e)),
+    });
   }
   /** Aplica filtros na listagem recebida. */
   get filteredModalities(): Modality[] {

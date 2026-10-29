@@ -1,12 +1,17 @@
 <app-navbar-desktop-admin /><app-banner />
 <div class="card-container">
   <p-card
-    ><h1>Nova modalidade</h1>
-    <form #modalityForm="ngForm" (ngSubmit)="save(modalityForm)" class="integration-form">
+    ><h1 class="title-modality">Nova modalidade</h1>
+    <form
+      #modalityForm="ngForm"
+      (ngSubmit)="save(modalityForm)"
+      class="integration-form modality-form"
+    >
       <fieldset [disabled]="busy()">
-        <div class="field-grid">
+        <div class="modality-fields">
           <label for="modality-name"
             >Nome *<input
+              pInputText
               id="modality-name"
               name="nome"
               [(ngModel)]="model.nome"
@@ -14,6 +19,7 @@
               required /></label
           ><label for="modality-min"
             >Idade mínima *<input
+              pInputText
               id="modality-min"
               name="idadeMinima"
               type="number"
@@ -24,6 +30,7 @@
               step="1" /></label
           ><label for="modality-max"
             >Idade máxima *<input
+              pInputText
               id="modality-max"
               name="idadeMaxima"
               type="number"
@@ -34,6 +41,7 @@
               step="1" /></label
           ><label for="modality-absences"
             >Limite de faltas mensais *<input
+              pInputText
               id="modality-absences"
               name="limiteFaltasMensais"
               type="number"
@@ -57,15 +65,23 @@
       }
       @if (!loading() && !hubs().length) {
         <p>Cadastre ou reative um polo antes de cadastrar a modalidade.</p>
-        <button type="button" (click)="loadHubs()">Atualizar polos</button>
+        <button pButton type="button" (click)="loadHubs()">Atualizar polos</button>
       }
       @if (error()) {
         <p role="alert">{{ error() }}</p>
       }
       <p>A modalidade será criada ativa. A situação pode ser alterada na listagem.</p>
       <div class="form-actions">
-        <button type="button" (click)="cancel()" [disabled]="busy()">Cancelar</button
-        ><button type="submit" [disabled]="busy() || loading() || !hubs().length">
+        <button
+          pButton
+          severity="secondary"
+          [text]="true"
+          type="button"
+          (click)="cancel()"
+          [disabled]="busy()"
+        >
+          Cancelar</button
+        ><button pButton type="submit" [disabled]="busy() || loading() || !hubs().length">
           {{ busy() ? 'Salvando...' : 'Cadastrar' }}
         </button>
       </div>

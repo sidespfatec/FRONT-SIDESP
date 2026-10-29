@@ -2,20 +2,38 @@
 <div class="card-container">
   <p-card
     ><h1 class="title-modality">Modalidades</h1>
-    <div class="field-grid">
-      <label for="modality-search"
-        >Buscar modalidade<input id="modality-search" [(ngModel)]="search" /></label
-      ><label for="modality-status"
-        >Situação<select id="modality-status" [(ngModel)]="status">
-          <option value="active">Ativas</option>
-          <option value="inactive">Inativas</option>
-          <option value="all">Todas</option>
-        </select></label
+    <div class="search-modality-container">
+      <input
+        pInputText
+        id="modality-search"
+        [(ngModel)]="search"
+        placeholder="Buscar..."
+        aria-label="Buscar modalidade"
+      />
+      <button
+        pButton
+        type="button"
+        [text]="true"
+        [rounded]="true"
+        aria-label="Atualizar"
+        (click)="load()"
+        [disabled]="busy()"
       >
+        <i class="pi pi-refresh"></i>
+      </button>
+      <button pButton type="button" aria-label="Nova modalidade" (click)="openNew()">
+        <i class="pi pi-plus"></i>
+      </button>
     </div>
-    <div class="form-actions">
-      <button type="button" (click)="load()" [disabled]="busy()">Atualizar</button
-      ><button type="button" (click)="openNew()">Nova modalidade</button>
+    <div class="modality-filter">
+      <p-selectbutton
+        [options]="filterOptions"
+        [(ngModel)]="status"
+        optionLabel="label"
+        optionValue="value"
+        [allowEmpty]="false"
+        aria-label="Filtrar modalidades"
+      />
     </div>
     @if (error()) {
       <p role="alert">{{ error() }}</p>
@@ -29,20 +47,30 @@
     <ul class="modality-list">
       @for (m of filteredModalities; track m.id) {
         <li class="modality-item">
-          <span class="modality-info"
+          <span class="modality-icon"><i class="pi pi-trophy"></i></span
+          ><span class="modality-info"
             ><strong>{{ m.nome }}</strong
-            ><span
+            ><span class="modality-meta"
               >{{ m.ativo ? 'Ativa' : 'Inativa' }} ·
               {{
                 (m.poloId === null ? undefined : hubs().get(m.poloId)) || 'Polo não informado'
               }}</span
-            ><span
+            ><span class="modality-meta"
               >Idades: {{ m.idadeMinima ?? 'Não informada' }} a
               {{ m.idadeMaxima ?? 'Não informada' }} · Faltas mensais:
               {{ m.limiteFaltasMensais ?? 'Não informado' }}</span
             ></span
-          ><button type="button" (click)="toggle(m)" [disabled]="busy()">
-            {{ m.ativo ? 'Inativar' : 'Reativar' }}
+          ><button
+            pButton
+            type="button"
+            [text]="true"
+            [rounded]="true"
+            [severity]="m.ativo ? 'danger' : 'success'"
+            [attr.aria-label]="m.ativo ? 'Inativar' : 'Reativar'"
+            (click)="toggle(m)"
+            [disabled]="busy()"
+          >
+            <i [class]="m.ativo ? 'pi pi-ban' : 'pi pi-check'"></i>
           </button>
         </li>
       } @empty {

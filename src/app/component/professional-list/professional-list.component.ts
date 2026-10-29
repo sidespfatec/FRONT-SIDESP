@@ -1,3 +1,6 @@
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { TagModule } from 'primeng/tag';
 import { Component, Input, OnInit, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
@@ -10,9 +13,17 @@ import { ProfessionalFormComponent } from '../professional-form/professional-for
 @Component({
   selector: 'app-professional-list',
   standalone: true,
-  imports: [FormsModule, DialogModule, CardModule, ProfessionalFormComponent],
+  imports: [
+    ButtonModule,
+    InputTextModule,
+    TagModule,
+    FormsModule,
+    DialogModule,
+    CardModule,
+    ProfessionalFormComponent,
+  ],
   templateUrl: './professional-list.component.html',
-  styleUrl: '../professional-form/professional-form.component.scss',
+  styleUrl: './professional-list.component.scss',
 })
 export class ProfessionalListComponent implements OnInit {
   @Input() administrator = false;

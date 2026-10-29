@@ -9,6 +9,7 @@
         <label [for]="'professional-' + field.key"
           >{{ field.label }} *
           <input
+            pInputText
             [id]="'professional-' + field.key"
             [type]="field.type"
             [formControlName]="field.key"
@@ -26,6 +27,7 @@
       >
       <label for="professional-complemento"
         >Complemento<input
+          pInputText
           id="professional-complemento"
           formControlName="complemento"
           maxlength="100"
@@ -43,16 +45,21 @@
           </select></label
         >
         <label for="professional-rg"
-          >RG<input id="professional-rg" formControlName="rg" maxlength="20"
+          >RG<input pInputText id="professional-rg" formControlName="rg" maxlength="20"
         /></label>
         <label for="professional-cargo"
-          >Cargo<input id="professional-cargo" formControlName="cargo" maxlength="100"
+          >Cargo<input pInputText id="professional-cargo" formControlName="cargo" maxlength="100"
         /></label>
         <label for="professional-unidade"
-          >Unidade<input id="professional-unidade" formControlName="unidade" maxlength="100"
+          >Unidade<input
+            pInputText
+            id="professional-unidade"
+            formControlName="unidade"
+            maxlength="100"
         /></label>
         <label for="professional-admissao"
           >Admissão<input
+            pInputText
             id="professional-admissao"
             type="date"
             formControlName="admissao"
@@ -61,12 +68,14 @@
       } @else {
         <label for="professional-registro"
           >Registro profissional<input
+            pInputText
             id="professional-registro"
             formControlName="registro"
             maxlength="40"
         /></label>
         <label for="professional-especialidade"
           >Especialidade<input
+            pInputText
             id="professional-especialidade"
             formControlName="especialidade"
             maxlength="150"
@@ -74,6 +83,7 @@
       }
       <label for="professional-senha"
         >Senha inicial *<input
+          pInputText
           id="professional-senha"
           type="password"
           formControlName="senha"
@@ -83,6 +93,7 @@
       /></label>
       <label for="professional-confirmacao"
         >Confirmar senha *<input
+          pInputText
           id="professional-confirmacao"
           type="password"
           formControlName="confirmacao"
@@ -99,7 +110,17 @@
     }}
   </p>
   <div class="form-actions">
-    <button type="button" (click)="cancel.emit()" [disabled]="busy()">Cancelar</button
-    ><button type="submit" [disabled]="busy()">{{ busy() ? 'Salvando...' : 'Cadastrar' }}</button>
+    <button
+      pButton
+      severity="secondary"
+      [text]="true"
+      type="button"
+      (click)="cancel.emit()"
+      [disabled]="busy()"
+    >
+      Cancelar</button
+    ><button pButton type="submit" [disabled]="busy()">
+      {{ busy() ? 'Salvando...' : 'Cadastrar' }}
+    </button>
   </div>
 </form>

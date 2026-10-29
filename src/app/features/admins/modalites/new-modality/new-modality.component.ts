@@ -1,3 +1,6 @@
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { TagModule } from 'primeng/tag';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -13,7 +16,16 @@ import { apiError } from '../../../../core/services/api-error';
 @Component({
   selector: 'app-new-modality',
   standalone: true,
-  imports: [FormsModule, BannerComponent, FooterComponent, NavbarDesktopAdminComponent, CardModule],
+  imports: [
+    ButtonModule,
+    InputTextModule,
+    TagModule,
+    FormsModule,
+    BannerComponent,
+    FooterComponent,
+    NavbarDesktopAdminComponent,
+    CardModule,
+  ],
   templateUrl: './new-modality.component.html',
   styleUrls: ['./new-modality.component.scss', '../../../../component/integration-form.scss'],
 })

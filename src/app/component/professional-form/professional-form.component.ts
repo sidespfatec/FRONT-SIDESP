@@ -1,3 +1,6 @@
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { TagModule } from 'primeng/tag';
 import { Component, EventEmitter, Input, Output, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { finalize } from 'rxjs';
@@ -8,7 +11,7 @@ import { apiError } from '../../core/services/api-error';
 @Component({
   selector: 'app-professional-form',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ButtonModule, InputTextModule, TagModule, ReactiveFormsModule],
   templateUrl: './professional-form.component.html',
   styleUrl: './professional-form.component.scss',
 })

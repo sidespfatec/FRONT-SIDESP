@@ -1,3 +1,6 @@
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { TagModule } from 'primeng/tag';
 import { AfterViewInit, Component, OnDestroy, inject, signal } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { finalize } from 'rxjs';
@@ -14,6 +17,9 @@ import { apiError } from '../../../core/services/api-error';
   selector: 'app-manage-hubs',
   standalone: true,
   imports: [
+    ButtonModule,
+    InputTextModule,
+    TagModule,
     FormsModule,
     BannerComponent,
     FooterComponent,

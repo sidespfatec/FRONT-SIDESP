@@ -1,3 +1,9 @@
+import { BannerComponent } from '../../component/banner/banner.component';
+import { FooterComponent } from '../../component/footer/footer.component';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { TagModule } from 'primeng/tag';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -9,7 +15,16 @@ import { apiError } from '../../core/services/api-error';
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [
+    BannerComponent,
+    FooterComponent,
+    CardModule,
+    ButtonModule,
+    InputTextModule,
+    TagModule,
+    FormsModule,
+    RouterLink,
+  ],
   templateUrl: './profile.component.html',
   styleUrls: ['../../component/integration-form.scss', './account.scss'],
 })

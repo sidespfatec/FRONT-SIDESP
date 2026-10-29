@@ -35,3 +35,7 @@ O ambiente desta validação usa o último build na porta 4200, com proxy da API
 
 - Playwright no Codespace: 3 testes aprovados em 12,8 segundos. Incluem cadastro e persistência de professor/administrador parcial, inativação/reativação, polo/modalidade com vínculo real e validação de faixa etária, filtros, consulta de perfil e cartão branco. Registros sintéticos de teste foram inativados ao concluir, sem excluir dados.
 - Recuperação por e-mail não foi testada de ponta a ponta por ausência de SMTP. Cadastro de dependente, consulta médica e alteração de senha estão integrados, mas não foram exercitados por esses três testes de navegador.
+
+## Ajuste visual conforme o site existente
+
+Restaurados os componentes PrimeNG e as classes originais das listagens de professores, administradores, polos e modalidades. Foram recuperados largura e espaçamento dos cartões, ícones de ação, tags de situação, filtro original de modalidades e o diálogo responsivo de cadastro. Os campos novos usam o mesmo tema e tipografia; foram removidas as regras genéricas que sobrescreviam botões. As páginas de conta usam os cartões, banner e rodapé do site. As chamadas HTTP, validações, permissões e dados reais permanecem integrados. Build e 32 testes locais aprovados; validação visual e Playwright no Codespace em andamento.

@@ -1,0 +1,12 @@
+@use '../../features/admins/manage-admin/manage-admin.component.scss';
+@use '../../features/admins/teacher/manage-teachers/manage.teachers.component.scss';
+@use '../../features/admins/teacher/new-teacher-modal/new-teacher-modal.component.scss';
+:host { display: block; }
+.list-toolbar { display: flex; align-items: end; gap: .75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.list-toolbar > input { flex: 1; min-width: 10rem; }
+.status-filter { display: flex; flex-direction: column; gap: .25rem; font-size: .75rem; color: var(--color-text-secondary); }
+.status-filter select { padding: .5rem .75rem; border: 1px solid var(--p-inputtext-border-color); border-radius: var(--p-inputtext-border-radius); background: #fff; color: var(--color-text-primary); font: inherit; }
+.teacher-title, .admin-title { flex-wrap: wrap; }
+.teacher-actions button, .admin-buttons button { flex-shrink: 0; }
+[role='alert'] { color: var(--p-red-700, #a01414); }
+[role='status'] { font-size: .875rem; }

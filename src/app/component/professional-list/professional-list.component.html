@@ -1,21 +1,47 @@
 <div class="card-container">
-  <p-card
-    ><h1>{{ administrator ? 'Administradores' : 'Professores' }}</h1>
-    <div class="field-grid">
-      <label for="professional-search"
-        >Buscar por nome<input id="professional-search" [(ngModel)]="search" /></label
-      ><label for="professional-status"
-        >Situação<select id="professional-status" [(ngModel)]="status">
+  <p-card>
+    <h1 [class]="administrator ? 'title-admin' : 'title-teacher'">
+      {{ administrator ? 'Administradores' : 'Professores' }}
+    </h1>
+    <div
+      class="list-toolbar"
+      [class.search-admin-container]="administrator"
+      [class.search-teacher-container]="!administrator"
+    >
+      <input
+        pInputText
+        id="professional-search"
+        [(ngModel)]="search"
+        placeholder="Buscar..."
+        aria-label="Buscar por nome"
+      />
+      <label class="status-filter" for="professional-status"
+        >Situação
+        <select id="professional-status" [(ngModel)]="status">
           <option value="all">Todos</option>
           <option value="active">Ativos</option>
           <option value="inactive">Inativos</option>
-        </select></label
+        </select>
+      </label>
+      <button
+        pButton
+        type="button"
+        [text]="true"
+        [rounded]="true"
+        aria-label="Atualizar"
+        (click)="load()"
+        [disabled]="busy()"
       >
-    </div>
-    <div class="form-actions">
-      <button type="button" (click)="load()" [disabled]="busy()">Atualizar</button
-      ><button type="button" (click)="message.set(''); visible = true" [disabled]="busy()">
-        {{ administrator ? 'Novo administrador' : 'Novo professor' }}
+        <i class="pi pi-refresh"></i>
+      </button>
+      <button
+        pButton
+        type="button"
+        [attr.aria-label]="administrator ? 'Novo administrador' : 'Novo professor'"
+        (click)="message.set(''); visible = true"
+        [disabled]="busy()"
+      >
+        <i class="pi pi-plus"></i>
       </button>
     </div>
     @if (error()) {
@@ -27,35 +53,49 @@
     @if (busy()) {
       <p role="status">Carregando...</p>
     }
-    <ul>
+    <ul [class]="administrator ? 'admin-list' : 'teacher-list'">
       @for (row of filtered; track row.id) {
-        <li
-          style="
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1rem 0;
-            border-bottom: 1px solid #ddd;
-          "
-        >
-          <div>
-            <strong>{{ row.nome }}</strong>
-            <p>
-              {{ row.ativo ? 'Ativo' : 'Inativo' }} ·
-              {{
-                administrator
-                  ? row.perfil === 'ADMINISTRADOR_TOTAL'
-                    ? 'Administrador total'
-                    : 'Administrador parcial'
-                  : row.especialidade || 'Especialidade não informada'
-              }}
-            </p>
+        <li [class]="administrator ? 'admin-item' : 'teacher-item'">
+          <div [class]="administrator ? 'admin-info' : 'teacher-info'">
+            <div [class]="administrator ? 'admin-title' : 'teacher-title'">
+              <strong>{{ row.nome }}</strong
+              ><p-tag
+                [value]="row.ativo ? 'Ativo' : 'Inativo'"
+                [severity]="row.ativo ? 'success' : 'secondary'"
+              />
+            </div>
+            <span [class]="administrator ? 'admin-cpf' : 'teacher-modality'">{{
+              administrator
+                ? row.perfil === 'ADMINISTRADOR_TOTAL'
+                  ? 'Administrador total'
+                  : 'Administrador parcial'
+                : row.especialidade || 'Especialidade não informada'
+            }}</span>
           </div>
-          <div class="form-actions">
-            <button type="button" (click)="selected = row">Ver dados</button
-            ><button type="button" (click)="toggle(row)" [disabled]="busy()">
-              {{ row.ativo ? 'Inativar' : 'Reativar' }}
+          <div [class]="administrator ? 'admin-buttons' : 'teacher-actions'">
+            <button
+              pButton
+              type="button"
+              size="small"
+              [text]="true"
+              [rounded]="true"
+              aria-label="Ver dados"
+              (click)="selected = row"
+            >
+              <i class="pi pi-eye"></i>
+            </button>
+            <button
+              pButton
+              type="button"
+              size="small"
+              [text]="true"
+              [rounded]="true"
+              [severity]="row.ativo ? 'danger' : 'success'"
+              [attr.aria-label]="row.ativo ? 'Inativar' : 'Reativar'"
+              (click)="toggle(row)"
+              [disabled]="busy()"
+            >
+              <i [class]="row.ativo ? 'pi pi-ban' : 'pi pi-check'"></i>
             </button>
           </div>
         </li>
@@ -72,7 +112,8 @@
   (visibleChange)="visible = $event"
   [modal]="true"
   [draggable]="false"
-  [style]="{ width: '46rem', maxWidth: '95vw' }"
+  styleClass="teacher-dialog"
+  [resizable]="false"
   [header]="administrator ? 'Novo administrador' : 'Novo professor'"
 >
   @if (visible) {

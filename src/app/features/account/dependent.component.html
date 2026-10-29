@@ -1,116 +1,128 @@
+<app-banner />
 <main class="account-card">
-  <a routerLink="/perfil">Voltar ao perfil</a>
-  <h1>Cadastrar dependente</h1>
-  <p>
-    O cadastro será vinculado à conta autenticada. Informe somente dados necessários para o
-    atendimento.
-  </p>
-  @if (error()) {
-    <p role="alert">{{ error() }}</p>
-  }
-  @if (message()) {
-    <p role="status">{{ message() }}</p>
-  }
-  <form #dependentForm="ngForm" class="integration-form" (ngSubmit)="save(dependentForm)">
-    <fieldset [disabled]="busy()">
-      <legend>Dados pessoais</legend>
-      <div class="field-grid">
-        <label for="child-name"
-          >Nome *<input
-            id="child-name"
-            name="nome"
-            [(ngModel)]="model.dadosPessoais.nome"
-            required
-            maxlength="150" /></label
-        ><label for="child-cpf"
-          >CPF (opcional)<input
-            id="child-cpf"
-            name="cpf"
-            [(ngModel)]="model.dadosPessoais.cpf"
-            maxlength="14" /></label
-        ><label for="child-birth"
-          >Nascimento *<input
-            id="child-birth"
-            name="nascimento"
-            type="date"
-            [(ngModel)]="model.dadosPessoais.dataNascimento"
-            required
-            [max]="today" /></label
-        ><label for="child-gender"
-          >Gênero *<select
-            id="child-gender"
-            name="genero"
-            [(ngModel)]="model.dadosPessoais.genero"
-            required
-          >
-            <option value="">Selecione</option>
-            <option value="M">Masculino</option>
-            <option value="F">Feminino</option>
-          </select></label
-        ><label for="child-phone"
-          >Telefone *<input
-            id="child-phone"
-            name="telefone"
-            [(ngModel)]="model.dadosPessoais.telefone"
-            required
-            maxlength="20" /></label
-        ><label for="child-kinship"
-          >Parentesco *<input
-            id="child-kinship"
-            name="parentesco"
-            [(ngModel)]="model.parentesco"
-            required
-            maxlength="50"
-        /></label>
-      </div>
-      <legend>Endereço</legend>
-      <div class="field-grid">
-        @for (field of addressFields; track field.key) {
-          <label [for]="'child-' + field.key"
-            >{{ field.label
-            }}<input
-              [id]="'child-' + field.key"
-              [name]="field.key"
-              [(ngModel)]="model.endereco[field.key]"
-              [required]="field.key !== 'complemento'"
-              [maxlength]="field.max"
+  <p-card>
+    <a routerLink="/perfil">Voltar ao perfil</a>
+    <h1>Cadastrar dependente</h1>
+    <p>
+      O cadastro será vinculado à conta autenticada. Informe somente dados necessários para o
+      atendimento.
+    </p>
+    @if (error()) {
+      <p role="alert">{{ error() }}</p>
+    }
+    @if (message()) {
+      <p role="status">{{ message() }}</p>
+    }
+    <form #dependentForm="ngForm" class="integration-form" (ngSubmit)="save(dependentForm)">
+      <fieldset [disabled]="busy()">
+        <legend>Dados pessoais</legend>
+        <div class="field-grid">
+          <label for="child-name"
+            >Nome *<input
+              pInputText
+              id="child-name"
+              name="nome"
+              [(ngModel)]="model.dadosPessoais.nome"
+              required
+              maxlength="150" /></label
+          ><label for="child-cpf"
+            >CPF (opcional)<input
+              pInputText
+              id="child-cpf"
+              name="cpf"
+              [(ngModel)]="model.dadosPessoais.cpf"
+              maxlength="14" /></label
+          ><label for="child-birth"
+            >Nascimento *<input
+              pInputText
+              id="child-birth"
+              name="nascimento"
+              type="date"
+              [(ngModel)]="model.dadosPessoais.dataNascimento"
+              required
+              [max]="today" /></label
+          ><label for="child-gender"
+            >Gênero *<select
+              id="child-gender"
+              name="genero"
+              [(ngModel)]="model.dadosPessoais.genero"
+              required
+            >
+              <option value="">Selecione</option>
+              <option value="M">Masculino</option>
+              <option value="F">Feminino</option>
+            </select></label
+          ><label for="child-phone"
+            >Telefone *<input
+              pInputText
+              id="child-phone"
+              name="telefone"
+              [(ngModel)]="model.dadosPessoais.telefone"
+              required
+              maxlength="20" /></label
+          ><label for="child-kinship"
+            >Parentesco *<input
+              pInputText
+              id="child-kinship"
+              name="parentesco"
+              [(ngModel)]="model.parentesco"
+              required
+              maxlength="50"
           /></label>
-        }
+        </div>
+        <legend>Endereço</legend>
+        <div class="field-grid">
+          @for (field of addressFields; track field.key) {
+            <label [for]="'child-' + field.key"
+              >{{ field.label
+              }}<input
+                pInputText
+                [id]="'child-' + field.key"
+                [name]="field.key"
+                [(ngModel)]="model.endereco[field.key]"
+                [required]="field.key !== 'complemento'"
+                [maxlength]="field.max"
+            /></label>
+          }
+        </div>
+        <legend>Ficha médica</legend>
+        <div class="field-grid">
+          @for (field of medicalFields; track field.key) {
+            <label [for]="'child-medical-' + field.key"
+              >{{ field.label
+              }}<textarea
+                [id]="'child-medical-' + field.key"
+                [name]="field.key"
+                [(ngModel)]="model.fichaMedica[field.key]"
+                maxlength="1000"
+              ></textarea>
+            </label>
+          }
+          <label for="child-emergency-name"
+            >Contato de emergência *<input
+              pInputText
+              id="child-emergency-name"
+              name="contatoEmergencia"
+              [(ngModel)]="model.fichaMedica.contatoEmergencia"
+              required
+              maxlength="100" /></label
+          ><label for="child-emergency-phone"
+            >Telefone de emergência *<input
+              pInputText
+              id="child-emergency-phone"
+              name="telefoneEmergencia"
+              [(ngModel)]="model.fichaMedica.telefoneEmergencia"
+              required
+              maxlength="20"
+          /></label>
+        </div>
+      </fieldset>
+      <div class="form-actions">
+        <button pButton type="submit" [disabled]="busy()">
+          {{ busy() ? 'Salvando...' : 'Cadastrar dependente' }}
+        </button>
       </div>
-      <legend>Ficha médica</legend>
-      <div class="field-grid">
-        @for (field of medicalFields; track field.key) {
-          <label [for]="'child-medical-' + field.key"
-            >{{ field.label
-            }}<textarea
-              [id]="'child-medical-' + field.key"
-              [name]="field.key"
-              [(ngModel)]="model.fichaMedica[field.key]"
-              maxlength="1000"
-            ></textarea>
-          </label>
-        }
-        <label for="child-emergency-name"
-          >Contato de emergência *<input
-            id="child-emergency-name"
-            name="contatoEmergencia"
-            [(ngModel)]="model.fichaMedica.contatoEmergencia"
-            required
-            maxlength="100" /></label
-        ><label for="child-emergency-phone"
-          >Telefone de emergência *<input
-            id="child-emergency-phone"
-            name="telefoneEmergencia"
-            [(ngModel)]="model.fichaMedica.telefoneEmergencia"
-            required
-            maxlength="20"
-        /></label>
-      </div>
-    </fieldset>
-    <div class="form-actions">
-      <button type="submit" [disabled]="busy()">
-        {{ busy() ? 'Salvando...' : 'Cadastrar dependente' }}
-      </button>
-    </div>
-  </form>
+    </form>
+  </p-card>
 </main>
+<app-footer />

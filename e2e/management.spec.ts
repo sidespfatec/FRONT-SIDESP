@@ -87,7 +87,7 @@ test('cadastra polo, usa polo ativo na modalidade e persiste os filtros',async({
   await page.getByLabel('Idade máxima *',{exact:true}).fill('80');await page.getByRole('button',{name:'Cadastrar',exact:true}).click();await expect(page).toHaveURL(/manage-modalites$/);
   await page.reload();const row=page.getByRole('listitem').filter({hasText:modalityName});await expect(row).toContainText(hubName);
   const modalities=await request.get(api+'/admin/modalidades',{headers:{Authorization:'Bearer '+token}});const modality=(await modalities.json()).find((m:{nome:string})=>m.nome===modalityName);expect(modality.poloId).toBe(hub.id);created.push({domain:'modalidades',id:modality.id});
-  await row.getByRole('button',{name:'Inativar',exact:true}).click();await page.locator('#modality-status').selectOption('inactive');await expect(row).toBeVisible();
+  await row.getByRole('button',{name:'Inativar',exact:true}).click();await page.getByRole('button',{name:'Inativas',exact:true}).click();await expect(row).toBeVisible();
 });
 
 test('consulta perfil real e mostra o cartão branco do cadastro',async({page})=>{
