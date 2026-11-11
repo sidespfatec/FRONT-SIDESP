@@ -16,6 +16,11 @@ export const routes: Routes = [
     },
 
     {
+        path: 'noticias/:id',
+        loadComponent: () => import('./features/public/pages/news-detail/news-detail.component').then(m => m.NewsDetailComponent)
+    },
+
+    {
         path: 'login',
         component: LoginComponent
     },

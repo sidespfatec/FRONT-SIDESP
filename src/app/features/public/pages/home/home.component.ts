@@ -1,53 +1,43 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { BannerComponent } from '../../../../component/banner/banner.component';
 import { FooterComponent } from '../../../../component/footer/footer.component';
 import { NewCardNewsComponent } from '../../../../component/new-card-news/new-card-news.component';
 import { CardNewsComponent } from '../../../../component/card-news/card-news.component';
 import { NavbarDesktopAdminComponent } from '../../../../component/navbar-desktop-admin/navbar-desktop-admin.component';
-import { NewsDetailModalComponent } from '../../../../component/news-detail-modal/news-detail-modal.component';
 import { NewsItem } from '../../../../component/news.model';
+import { NewsService } from '../../../../services/news.service';
 
 @Component({
   selector: 'app-home',
   imports: [
     BannerComponent, FooterComponent, NewCardNewsComponent,
-    CardNewsComponent, NavbarDesktopAdminComponent, NewsDetailModalComponent
+    CardNewsComponent, NavbarDesktopAdminComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
+  private readonly router = inject(Router);
+  private readonly newsService = inject(NewsService);
 
-  viewModal: boolean = false;
-  selectedNews: NewsItem | null = null;
+  viewModal = false;
+  readonly newsList = this.newsService.publishedNews;
 
-  newsList: NewsItem[] = [
-    {
-      id: 1,
-      title: 'Venha conhecer o novo sistema da Secretaria de Esportes!',
-      description: 'Agora você pode se inscrever nas modalidades, acompanhar sua frequência e muito mais, tudo em um só lugar.',
-      image: 'https://tse3.mm.bing.net/th/id/OIP.3y6O6dX2lJJMUbb8OZJvNQHaEK?r=0&rs=1&pid=ImgDetMain&o=7&rm=3',
-      date: new Date(),
-    },
-  ];
-
-  openModal() {
+  openModal(): void {
     this.viewModal = true;
   }
 
-  closeModal() {
+  closeModal(): void {
     this.viewModal = false;
   }
 
-  openNews(news: NewsItem) {
-    this.selectedNews = news;
+  openNews(news: NewsItem): void {
+    // Página com endereço próprio para compartilhamento (PB26).
+    void this.router.navigate(['/noticias', news.id]);
   }
 
-  closeNews() {
-    this.selectedNews = null;
-  }
-
-  addNews(news: NewsItem) {
-    this.newsList = [news, ...this.newsList];
+  addNews(news: NewsItem): void {
+    this.newsService.addDemoNews(news);
   }
 }

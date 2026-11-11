@@ -1,0 +1,53 @@
+<app-navbar-desktop-admin></app-navbar-desktop-admin>
+
+<main class="news-page">
+    <div class="news-page-content">
+        <a routerLink="/home" class="back-link">
+            <i class="pi pi-arrow-left" aria-hidden="true"></i> Voltar para a página inicial
+        </a>
+
+        @if (status() === 'loading') {
+        <div class="state-message" role="status" aria-live="polite">
+            <i class="pi pi-spin pi-spinner" aria-hidden="true"></i>
+            <p>Carregando notícia...</p>
+        </div>
+        } @else if (status() === 'error') {
+        <div class="state-message" role="alert">
+            <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+            <h1>Não foi possível carregar a notícia.</h1>
+            <p>Ocorreu um problema ao consultar os dados. Tente novamente.</p>
+            <button type="button" class="action-button" (click)="retry()">Tentar novamente</button>
+        </div>
+        } @else if (news(); as article) {
+        <article class="news-article">
+            <figure class="news-image">
+                <img [src]="article.image" [alt]="article.title">
+            </figure>
+            <div class="news-body">
+                <h1 class="news-title">{{ article.title }}</h1>
+                <p class="news-date">
+                    <i class="pi pi-calendar" aria-hidden="true"></i>
+                    Publicado em {{ article.date | date:'dd/MM/yyyy' }}
+                </p>
+                <div class="news-description">{{ article.description }}</div>
+                <div class="news-actions">
+                    <button type="button" class="action-button" (click)="shareNews()">
+                        <i class="pi pi-share-alt" aria-hidden="true"></i> Compartilhar notícia
+                    </button>
+                    @if (shareFeedback()) {
+                    <p class="share-feedback" role="status" aria-live="polite">{{ shareFeedback() }}</p>
+                    }
+                </div>
+            </div>
+        </article>
+        } @else {
+        <div class="state-message" role="status">
+            <i class="pi pi-info-circle" aria-hidden="true"></i>
+            <h1>Notícia não encontrada</h1>
+            <p>A notícia não existe ou ainda não foi publicada.</p>
+        </div>
+        }
+    </div>
+</main>
+
+<app-footer></app-footer>

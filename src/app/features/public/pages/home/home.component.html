@@ -16,16 +16,15 @@
         </div>
     </div>
     <div class="cards-container">
-        @for (item of newsList; track item.id) {
+        @for (item of newsList(); track item.id) {
         <app-card-news [news]="item" (openNews)="openNews($event)"></app-card-news>
+        } @empty {
+        <p>Nenhuma notícia publicada no momento.</p>
         }
     </div>
 </div>
 <app-footer></app-footer>
 
-@if (selectedNews) {
-<app-news-detail-modal [news]="selectedNews" (close)="closeNews()"></app-news-detail-modal>
-}
 @if (viewModal == true) {
 <app-new-card-news (close)="closeModal()" (save)="addNews($event)"></app-new-card-news>
 }
