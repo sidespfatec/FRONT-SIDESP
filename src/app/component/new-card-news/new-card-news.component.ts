@@ -37,6 +37,8 @@ export class NewCardNewsComponent {
             description: this.description.trim(),
             image: this.imagePreview ?? 'https://placehold.co/800x450?text=Noticia',
             date: new Date(),
+            // Publicação imediata apenas na demonstração local (sem backend).
+            published: true,
         });
         this.close.emit();
     }
