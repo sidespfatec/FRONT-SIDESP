@@ -13,3 +13,13 @@ O CPF é validado e deve ser único. O e-mail é obrigatório. A senha precisa t
 Na inscrição de menor, a conta pertence ao responsável. Para vincular outro dependente a uma conta existente, é necessário comprovar o acesso com as credenciais exigidas pela API. O cadastro público não concede perfil de professor ou administrador. A API aceita ficha médica opcional, mas os campos de anamnese ainda não estão na interface preservada.
 
 A página envia os dados para `POST /api/v1/auth/cadastros` e deve apresentar erros e confirmação de forma clara. O contrato completo está em [CONTRATO-API.md](../CONTRATO-API.md). Consulte também as issues #11, #17, #18 e #28 antes de alterar o fluxo.
+
+
+## Integração visual da main — novembro de 2026
+
+Estilos e apresentação alinhados à main, preservando os campos, validações e chamadas HTTP já integrados. Consulte [o guia da integração](../INTEGRACAO-FRONTEND-MAIN.md).
+
+
+## Revisão visual da main
+
+Templates e estilos da main preservados, com dados demonstrativos removidos e integrações existentes conectadas à estrutura original. Campos obrigatórios da API e ações ainda indisponíveis estão detalhados no [guia atualizado da integração](../INTEGRACAO-FRONTEND-MAIN.md). Este registro prevalece sobre descrições visuais históricas acima.

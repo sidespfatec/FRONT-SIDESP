@@ -1,4 +1,5 @@
-package br.gov.sidesp.auth;
+package br.gov.sidesp.perfil;
+import br.gov.sidesp.auth.*;
 
 import br.gov.sidesp.security.Crypto;
 import java.util.*;

@@ -1,85 +1,134 @@
-<app-navbar-desktop-admin /><app-banner />
+<app-navbar-desktop-admin></app-navbar-desktop-admin>
+<app-banner></app-banner>
+
 <div class="card-container">
-  <p-card
-    ><h1 class="title-modality">Modalidades</h1>
-    <div class="search-modality-container">
-      <input
-        pInputText
-        id="modality-search"
-        [(ngModel)]="search"
-        placeholder="Buscar..."
-        aria-label="Buscar modalidade"
-      />
-      <button
-        pButton
-        type="button"
-        [text]="true"
-        [rounded]="true"
-        aria-label="Atualizar"
-        (click)="load()"
-        [disabled]="busy()"
-      >
-        <i class="pi pi-refresh"></i>
-      </button>
-      <button pButton type="button" aria-label="Nova modalidade" (click)="openNew()">
-        <i class="pi pi-plus"></i>
-      </button>
-    </div>
-    <div class="modality-filter">
-      <p-selectbutton
-        [options]="filterOptions"
-        [(ngModel)]="status"
-        optionLabel="label"
-        optionValue="value"
-        [allowEmpty]="false"
-        aria-label="Filtrar modalidades"
-      />
-    </div>
-    @if (error()) {
-      <p role="alert">{{ error() }}</p>
-    }
-    @if (message()) {
-      <p role="status">{{ message() }}</p>
-    }
-    @if (busy()) {
-      <p role="status">Carregando...</p>
-    }
-    <ul class="modality-list">
-      @for (m of filteredModalities; track m.id) {
-        <li class="modality-item">
-          <span class="modality-icon"><i class="pi pi-trophy"></i></span
-          ><span class="modality-info"
-            ><strong>{{ m.nome }}</strong
-            ><span class="modality-meta"
-              >{{ m.ativo ? 'Ativa' : 'Inativa' }} ·
-              {{
-                (m.poloId === null ? undefined : hubs().get(m.poloId)) || 'Polo não informado'
-              }}</span
-            ><span class="modality-meta"
-              >Idades: {{ m.idadeMinima ?? 'Não informada' }} a
-              {{ m.idadeMaxima ?? 'Não informada' }} · Faltas mensais:
-              {{ m.limiteFaltasMensais ?? 'Não informado' }}</span
-            ></span
-          ><button
-            pButton
-            type="button"
-            [text]="true"
-            [rounded]="true"
-            [severity]="m.ativo ? 'danger' : 'success'"
-            [attr.aria-label]="m.ativo ? 'Inativar' : 'Reativar'"
-            (click)="toggle(m)"
-            [disabled]="busy()"
-          >
-            <i [class]="m.ativo ? 'pi pi-ban' : 'pi pi-check'"></i>
-          </button>
-        </li>
-      } @empty {
-        @if (!busy() && !error()) {
-          <li>Nenhuma modalidade encontrada.</li>
+    <p-card>
+        <h1 class="title-modality">Modalidades</h1>
+
+        @if (errorMessage && !detailsVisible) {
+        <p class="modality-alert" role="alert">{{ errorMessage }}</p>
         }
-      }
-    </ul>
-    <p>A consulta e gestão de turmas ainda não estão disponíveis na API.</p></p-card
-  >
+
+        <div class="search-modality-container">
+            <input pInputText type="search" placeholder="Buscar..." aria-label="Buscar modalidade"
+                [(ngModel)]="search" />
+            <button pButton type="button" aria-label="Nova modalidade" (click)="openNew()">
+                <i class="pi pi-plus"></i>
+            </button>
+        </div>
+
+        <div class="modality-filter">
+            <p-selectbutton [options]="filterOptions" [(ngModel)]="filter" optionLabel="label" optionValue="value"
+                [allowEmpty]="false" aria-label="Filtrar modalidades" />
+        </div>
+
+        <ul class="modality-list">
+            @for (modality of filteredModalities; track modality.id) {
+            <li class="modality-row">
+                <button type="button" class="modality-item" (click)="openDetails(modality)">
+                    <span class="modality-icon" [style.background]="modality.iconBg" [style.color]="modality.iconColor">
+                        <i [class]="modality.icon"></i>
+                    </span>
+
+                    <span class="modality-info">
+                        <strong>{{ modality.name }}</strong>
+                        <span class="modality-meta">
+                            {{ modality.classesCount ?? '—' }} turmas · {{ modality.studentsCount ?? '—' }} alunos
+                        </span>
+                        @if (modality.hubName) {
+                        <span class="modality-meta">
+                            {{ modality.hubName }} · {{ modality.minAge }} a {{ modality.maxAge }} anos
+                        </span>
+                        }
+                    </span>
+
+                    <i class="pi pi-chevron-right"></i>
+                </button>
+
+                <button type="button" class="status-button" [class.reactivate]="!modality.active"
+                    (click)="toggleStatus(modality)">
+                    <i class="pi" [class.pi-ban]="modality.active" [class.pi-replay]="!modality.active"></i>
+                    {{ modality.active ? 'Inativar' : 'Reativar' }}
+                </button>
+            </li>
+            } @empty {
+            <li class="modality-empty">Nenhuma modalidade encontrada.</li>
+            }
+        </ul>
+    </p-card>
 </div>
-<app-footer />
+
+<p-dialog header="Detalhes da modalidade" [(visible)]="detailsVisible" [modal]="true" [draggable]="false"
+    [style]="{ width: '30rem' }" [breakpoints]="{ '575px': '92vw' }" (onHide)="closeDetails()">
+    @if (selected) {
+    <div class="details-head">
+        <span class="modality-icon" [style.background]="selected.iconBg" [style.color]="selected.iconColor">
+            <i [class]="selected.icon"></i>
+        </span>
+        <div class="details-title">
+            <strong>{{ selected.name }}</strong>
+            <span class="details-status" [class.off]="!selected.active">
+                {{ selected.active ? 'Ativa' : 'Inativa' }}
+            </span>
+        </div>
+    </div>
+
+    <dl class="details-list">
+        <div>
+            <dt>Turmas</dt>
+            <dd>{{ selected.classesCount ?? '—' }}</dd>
+        </div>
+        <div>
+            <dt>Alunos</dt>
+            <dd>{{ selected.studentsCount ?? '—' }}</dd>
+        </div>
+        <div>
+            <dt>Polo esportivo</dt>
+            <dd>{{ selected.hubName || 'Não informado' }}</dd>
+        </div>
+        <div>
+            <dt>Faixa etária</dt>
+            <dd>
+                @if (selected.minAge != null) {
+                {{ selected.minAge }} a {{ selected.maxAge }} anos
+                } @else {
+                Não informada
+                }
+            </dd>
+        </div>
+        <div>
+            <dt>Limite de faltas mensais</dt>
+            <dd>{{ selected.monthlyAbsenceLimit != null ? selected.monthlyAbsenceLimit : 'Não informado' }}</dd>
+        </div>
+    </dl>
+
+    @if (errorMessage) {
+    <p class="modality-alert" role="alert">{{ errorMessage }}</p>
+    }
+
+    @if (confirmingDelete) {
+    <p class="delete-warning">Deseja excluir <strong>{{ selected.name }}</strong>? Essa ação não pode ser desfeita.</p>
+    }
+    }
+
+    <ng-template #footer>
+        @if (selected) {
+        @if (confirmingDelete) {
+        <p-button label="Cancelar" icon="pi pi-times" severity="secondary" [outlined]="true" styleClass="btn-neutral"
+            (onClick)="confirmingDelete = false" />
+        <p-button label="Confirmar exclusão" icon="pi pi-trash" severity="danger" (onClick)="deleteSelected()" />
+        } @else {
+        @if (selected.classesCount == null || selected.classesCount === 0) {
+        <p-button label="Excluir" icon="pi pi-trash" severity="danger" [outlined]="true"
+            [disabled]="true" title="Modalidades são inativadas para preservar o histórico" (onClick)="confirmingDelete = true" />
+        } @else {
+        <p-button label="Ver turmas" icon="pi pi-arrow-right" iconPos="right" (onClick)="viewClasses()" />
+        }
+        <p-button label="Fechar" icon="pi pi-times" severity="secondary" [outlined]="true" styleClass="btn-neutral"
+            (onClick)="closeDetails()" />
+        }
+        }
+    </ng-template>
+</p-dialog>
+
+<app-footer></app-footer>

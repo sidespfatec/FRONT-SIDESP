@@ -9,7 +9,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
-import { GuardianService } from '../../core/services/guardian.service';
+import { GuardianService } from './services/guardian.service';
 import { Medical } from '../../core/models/management.models';
 import { apiError } from '../../core/services/api-error';
 @Component({

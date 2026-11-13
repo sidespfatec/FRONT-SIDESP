@@ -1,4 +1,5 @@
-package br.gov.sidesp.management;
+package br.gov.sidesp.fichamedica;
+import br.gov.sidesp.management.ManagementRequests;
 
 import br.gov.sidesp.auth.Rules;
 import br.gov.sidesp.security.Crypto;

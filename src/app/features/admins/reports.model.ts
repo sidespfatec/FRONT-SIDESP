@@ -54,35 +54,8 @@ export const RELATORIOS: Relatorio[] = [
     }
 ];
 
-export const EXPORTACOES_RECENTES: ExportacaoRecente[] = [
-    {
-        relatorio: 'Lista de presença',
-        recorte: 'Futsal Sub-15, Turma A, outubro',
-        quando: 'hoje, 09:14',
-        autor: 'Lívia Andrade'
-    },
-    {
-        relatorio: 'Inscrições do período',
-        recorte: 'Todos os polos, 2º semestre',
-        quando: 'ontem, 16:02',
-        autor: 'Ana Martins'
-    },
-    {
-        relatorio: 'Ocupação de vagas',
-        recorte: 'Pedregulho, setembro',
-        quando: '3 de outubro',
-        autor: 'Lívia Andrade'
-    }
-];
+export const EXPORTACOES_RECENTES: ExportacaoRecente[] = [];
 
-export const TURMAS_OPCOES = [
-    'Futsal Sub-15, Turma A',
-    'Futsal Sub-15, Turma B',
-    'Natação Infantil, Turma A',
-    'Vôlei Sub-17, Turma única',
-    'Judô Iniciante, Turma A'
-].map(nome => ({ label: nome, value: nome }));
+export const TURMAS_OPCOES = [] as {label: string; value: string}[];
 
-export const POLOS_OPCOES = [
-    'Pedregulho', 'Campo do Galvão', 'Centro', 'Pedrinhas', 'Jardim do Vale'
-].map(nome => ({ label: nome, value: nome }));
+export const POLOS_OPCOES = [] as {label: string; value: string}[];

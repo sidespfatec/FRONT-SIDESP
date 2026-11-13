@@ -7,7 +7,7 @@ import { DialogModule } from 'primeng/dialog';
 import { CardModule } from 'primeng/card';
 import { finalize } from 'rxjs';
 import { ProfessionalSummary } from '../../core/models/management.models';
-import { ProfessionalService } from '../../core/services/professional.service';
+import { ProfessionalService } from '../../features/admins/professionals/services/professional.service';
 import { apiError } from '../../core/services/api-error';
 import { ProfessionalFormComponent } from '../professional-form/professional-form.component';
 @Component({

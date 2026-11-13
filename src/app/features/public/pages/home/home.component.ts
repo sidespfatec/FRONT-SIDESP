@@ -21,15 +21,7 @@ export class HomeComponent {
   viewModal: boolean = false;
   selectedNews: NewsItem | null = null;
 
-  newsList: NewsItem[] = [
-    {
-      id: 1,
-      title: 'Venha conhecer o novo sistema da Secretaria de Esportes!',
-      description: 'Agora você pode se inscrever nas modalidades, acompanhar sua frequência e muito mais, tudo em um só lugar.',
-      image: 'https://tse3.mm.bing.net/th/id/OIP.3y6O6dX2lJJMUbb8OZJvNQHaEK?r=0&rs=1&pid=ImgDetMain&o=7&rm=3',
-      date: new Date(),
-    },
-  ];
+  newsList: NewsItem[] = [];
 
   openModal() {
     this.viewModal = true;
@@ -48,6 +40,6 @@ export class HomeComponent {
   }
 
   addNews(news: NewsItem) {
-    this.newsList = [news, ...this.newsList];
+    // A listagem só será atualizada após publicação confirmada pelo servidor.
   }
 }

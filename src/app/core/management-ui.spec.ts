@@ -4,6 +4,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { ProfessionalFormComponent } from '../component/professional-form/professional-form.component';
 import { ProfessionalListComponent } from '../component/professional-list/professional-list.component';
 import { NewModalityComponent } from '../features/admins/modalites/new-modality/new-modality.component';
+import { ManageModalitesComponent } from '../features/admins/modalites/manage-modalites.component';
 import { provideRouter } from '@angular/router';
 
 /** CPF calculado exclusivamente para os testes, sem usar cadastro de pessoa real. */
@@ -136,6 +137,35 @@ describe('Integração das telas administrativas', () => {
     expect(component.rows()[0].ativo).toBe(false);
   });
 
+  it('envia a nova modalidade à API e preserva os campos se o servidor recusar', () => {
+    const component = TestBed.createComponent(NewModalityComponent).componentInstance;
+    Object.assign(component, {name: 'Natação', minAge: 8, maxAge: 16, monthlyAbsenceLimit: 3, hubId: 12});
+    component.save();
+    const request = http.expectOne('/api/v1/admin/modalidades');
+    expect(request.request.method).toBe('POST');
+    expect(request.request.body).toEqual({nome: 'Natação', idadeMinima: 8, idadeMaxima: 16, limiteFaltasMensais: 3, poloId: 12});
+    request.flush({mensagem: 'Escolha um polo ativo.'}, {status: 400, statusText: 'Bad Request'});
+    expect(component.name).toBe('Natação');
+    expect(component.errorMessage).toContain('polo ativo');
+    expect(component.busy).toBe(false);
+  });
+
+  it('carrega modalidades reais e mantém a situação quando a API recusa a alteração', () => {
+    const component = TestBed.createComponent(ManageModalitesComponent).componentInstance;
+    component.ngOnInit();
+    http.expectOne('/api/v1/admin/modalidades').flush([{id: 7, nome: 'Natação', ativo: true, poloId: 12, idadeMinima: 8, idadeMaxima: 16, limiteFaltasMensais: 3}]);
+    http.expectOne(r => r.url === '/api/v1/admin/polos').flush([{id: 12, nome: 'Polo de teste'}]);
+    const modality = component.modalities[0];
+    expect(modality.hubName).toBe('Polo de teste');
+    component.toggleStatus(modality);
+    const request = http.expectOne('/api/v1/admin/modalidades/7/situacao');
+    expect(request.request.method).toBe('PATCH');
+    expect(request.request.body).toEqual({ativo: false});
+    request.flush({mensagem: 'Operação recusada.'}, {status: 400, statusText: 'Bad Request'});
+    expect(component.modalities[0].active).toBe(true);
+    expect(component.errorMessage).toContain('recusada');
+  });
+
   it('carrega somente polos ativos para o cadastro de modalidade', () => {
     const component = TestBed.createComponent(NewModalityComponent).componentInstance;
     component.ngOnInit();
@@ -145,7 +175,7 @@ describe('Integração das telas administrativas', () => {
           request.url === '/api/v1/admin/polos' && request.params.get('ativo') === 'true',
       )
       .flush([]);
-    expect(component.hubs()).toEqual([]);
-    expect(component.loading()).toBe(false);
+    expect(component.hubs).toEqual([]);
+    expect(component.busy).toBe(false);
   });
 });

@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-import { Child, Medical, Registered } from '../models/management.models';
+import { environment } from '../../../../environments/environment';
+import { Child, Medical, Registered } from '../../../core/models/management.models';
 @Injectable({ providedIn: 'root' })
 export class GuardianService {
   private http = inject(HttpClient);

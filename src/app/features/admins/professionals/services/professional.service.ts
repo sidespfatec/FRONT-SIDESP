@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-import { Professional, ProfessionalSummary, Registered } from '../models/management.models';
+import { environment } from '../../../../../environments/environment';
+import { Professional, ProfessionalSummary, Registered } from '../../../../core/models/management.models';
 @Injectable({ providedIn: 'root' })
 export class ProfessionalService {
   private http = inject(HttpClient);

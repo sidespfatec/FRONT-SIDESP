@@ -8,7 +8,7 @@ import { Router, RouterLink } from '@angular/router';
 import { InputMaskModule } from 'primeng/inputmask';
 import { finalize, switchMap } from 'rxjs';
 import { AuthService } from '../../../../core/auth/auth.service';
-import { AccountService } from '../../../../core/services/account.service';
+import { AccountService } from '../../../account/services/account.service';
 
 @Component({
   selector: 'app-login',

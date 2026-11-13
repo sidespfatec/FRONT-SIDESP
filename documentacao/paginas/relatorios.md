@@ -60,3 +60,8 @@ Como gestor, quero relatórios de participação, frequência e evasão com expo
 
 ## Orientação para IA
 Implementar somente quando autorizada a issue. Contrato HTTP deve ser derivado dos critérios, sem inventar endpoints nesta fase. Usar entidades/relacionamentos do Miro, validar autorização de titular/perfil/vínculo e entrada no servidor, proteger transações e testar regras citadas. Perguntar por pontos em aberto; nenhum critério de frontend está autorizado nesta entrega. Registrar qualquer complemento em ADR e migration incremental.
+
+
+## Revisão visual da main
+
+Templates e estilos da main preservados, com dados demonstrativos removidos e integrações existentes conectadas à estrutura original. Campos obrigatórios da API e ações ainda indisponíveis estão detalhados no [guia atualizado da integração](../INTEGRACAO-FRONTEND-MAIN.md). Este registro prevalece sobre descrições visuais históricas acima.

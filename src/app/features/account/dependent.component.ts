@@ -9,7 +9,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
-import { GuardianService } from '../../core/services/guardian.service';
+import { GuardianService } from './services/guardian.service';
 import { AuthService } from '../../core/auth/auth.service';
 import { Child } from '../../core/models/management.models';
 import { todayIso, isMinor, validCpf } from '../../core/auth/validation';

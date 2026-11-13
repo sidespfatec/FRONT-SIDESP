@@ -4,7 +4,7 @@ import { TagModule } from 'primeng/tag';
 import { Component, EventEmitter, Input, Output, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { finalize } from 'rxjs';
-import { ProfessionalService } from '../../core/services/professional.service';
+import { ProfessionalService } from '../../features/admins/professionals/services/professional.service';
 import { Professional } from '../../core/models/management.models';
 import { cpfValidator, passwordValidator, todayIso } from '../../core/auth/validation';
 import { apiError } from '../../core/services/api-error';

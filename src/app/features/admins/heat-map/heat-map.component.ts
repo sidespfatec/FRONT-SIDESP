@@ -50,7 +50,7 @@ export class HeatMapComponent {
     readonly maioresFaltas = MAIORES_FALTAS;
 
     periodo: Date[] = [new Date(2026, 0, 1), new Date(2026, 11, 1)];
-    polosSelecionados: string[] = ['Pedregulho', 'Centro'];
+    polosSelecionados: string[] = [];
     modalidadesSelecionadas: string[] = [];
     genero = 'todos';
     situacao = 'ativas';

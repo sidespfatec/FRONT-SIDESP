@@ -1,4 +1,5 @@
-package br.gov.sidesp.auth;
+package br.gov.sidesp.perfil;
+import br.gov.sidesp.auth.*;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;

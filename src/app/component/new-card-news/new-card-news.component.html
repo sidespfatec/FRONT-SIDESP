@@ -30,7 +30,7 @@
 
         <div class="actions">
             <button type="button" pButton severity="secondary" (click)="close.emit()">Cancelar</button>
-            <button type="button" pButton [disabled]="!title.trim()" (click)="onSave()">Salvar</button>
+            <button type="button" pButton [disabled]="true" title="Publicação de notícias ainda não disponível" (click)="onSave()">Salvar</button>
         </div>
     </div>
 </p-dialog>

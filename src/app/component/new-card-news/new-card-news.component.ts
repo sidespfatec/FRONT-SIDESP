@@ -31,13 +31,6 @@ export class NewCardNewsComponent {
     }
 
     onSave(): void {
-        this.save.emit({
-            id: Date.now(),
-            title: this.title.trim(),
-            description: this.description.trim(),
-            image: this.imagePreview ?? 'https://placehold.co/800x450?text=Noticia',
-            date: new Date(),
-        });
-        this.close.emit();
+        // O botão permanece no layout, mas só será habilitado quando houver persistência.
     }
 }

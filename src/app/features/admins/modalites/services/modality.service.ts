@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-import { Modality, ModalityInput } from '../models/management.models';
+import { environment } from '../../../../../environments/environment';
+import { Modality, ModalityInput } from '../../../../core/models/management.models';
 @Injectable({ providedIn: 'root' })
 export class ModalityService {
   private http = inject(HttpClient);

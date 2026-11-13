@@ -1,4 +1,5 @@
 package br.gov.sidesp.auth;
+import br.gov.sidesp.fichamedica.MedicalRepository;
 
 import br.gov.sidesp.security.Crypto;
 import br.gov.sidesp.security.TokenService;
@@ -19,7 +20,7 @@ public class AuthService {
   private final Clock clock;
   private final TokenService tokenService;
   private final String dummyPasswordHash;
-  private final br.gov.sidesp.management.MedicalRepository medical;
+  private final br.gov.sidesp.fichamedica.MedicalRepository medical;
 
   /**
    * Recebe dependências do Spring e prepara um hash fictício para não revelar contas inexistentes
@@ -31,7 +32,7 @@ public class AuthService {
       PasswordEncoder passwordEncoder,
       Clock clock,
       TokenService tokenService,
-      br.gov.sidesp.management.MedicalRepository medical) {
+      br.gov.sidesp.fichamedica.MedicalRepository medical) {
     this.medical = medical;
     this.repository = repository;
     this.crypto = crypto;

@@ -1,4 +1,5 @@
-package br.gov.sidesp.auth;
+package br.gov.sidesp.perfil;
+import br.gov.sidesp.auth.*;
 
 import br.gov.sidesp.security.AttemptLimiter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,14 +14,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1")
 public class AccountController {
   private final AccountService service;
-  private final RecoveryService recovery;
   private final AttemptLimiter limiter;
 
   /** Recebe os serviços da conta e o limitador de tentativas. */
   public AccountController(
-      AccountService service, RecoveryService recovery, AttemptLimiter limiter) {
+      AccountService service, AttemptLimiter limiter) {
     this.service = service;
-    this.recovery = recovery;
     this.limiter = limiter;
   }
 
@@ -48,24 +47,4 @@ public class AccountController {
     service.password((Integer) a.getPrincipal(), r);
   }
 
-  /** Responde igualmente exista ou não uma conta ativa para o identificador. */
-  @PostMapping("/auth/recuperar-senha")
-  @ResponseStatus(HttpStatus.ACCEPTED)
-  public Map<String, String> recover(
-      @Valid @RequestBody AccountRequests.Recovery r, HttpServletRequest request) {
-    limiter.check("recovery", request.getRemoteAddr());
-    recovery.request(r.identificador());
-    return Map.of(
-        "mensagem",
-        "Se houver uma conta cadastrada, enviaremos as instruções para o e-mail informado no"
-            + " cadastro.");
-  }
-
-  /** Aplica nova senha para código válido e de uso único. */
-  @PostMapping("/auth/redefinir-senha")
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void reset(@Valid @RequestBody AccountRequests.Reset r, HttpServletRequest request) {
-    limiter.check("reset", request.getRemoteAddr());
-    recovery.reset(r);
-  }
 }

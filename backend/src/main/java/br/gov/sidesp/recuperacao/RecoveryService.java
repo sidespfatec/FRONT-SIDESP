@@ -1,4 +1,6 @@
-package br.gov.sidesp.auth;
+package br.gov.sidesp.recuperacao;
+import br.gov.sidesp.perfil.AccountRequests;
+import br.gov.sidesp.auth.*;
 
 import br.gov.sidesp.security.Crypto;
 import java.nio.charset.StandardCharsets;

@@ -40,25 +40,12 @@ export class ClassesComponent implements OnInit {
     readonly weekDays = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'];
     readonly dayNames = ['segunda', 'terça', 'quarta', 'quinta', 'sexta'];
 
-    modalityName = 'Futsal Sub-15';
+    modalityName = '';
     modalityIcon = 'pi pi-flag';
     modalityIconBg = '#EAF1FB';
     modalityIconColor = '#2563A8';
 
-    classes: ClassGroup[] = [
-        {
-            id: '1', name: 'Turma A, manhã', teacher: 'Carlos Souza', location: 'Quadra 1',
-            start: '08:00', end: '09:00', days: [0, 2], enrolled: 20, capacity: 20, waiting: 8
-        },
-        {
-            id: '2', name: 'Turma B, tarde', teacher: 'Ana Martins', location: 'Quadra 2',
-            start: '14:00', end: '15:00', days: [1, 3], enrolled: 15, capacity: 20, waiting: 0
-        },
-        {
-            id: '3', name: 'Turma C, noite', teacher: 'Carlos Souza', location: 'Quadra 1',
-            start: '19:00', end: '20:00', days: [4], enrolled: 10, capacity: 20, waiting: 0
-        }
-    ];
+    classes: ClassGroup[] = [];
 
     constructor(private route: ActivatedRoute, private router: Router) { }
 

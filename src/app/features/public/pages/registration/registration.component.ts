@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { StepperModule } from 'primeng/stepper';
@@ -44,7 +44,6 @@ const maskedBirthValidator: ValidatorFn = (control) => {
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    RouterLink,
     ButtonModule,
     InputTextModule,
     StepperModule,

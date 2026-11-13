@@ -68,3 +68,7 @@ Para executar também os testes reais de HTTP/banco, configure `TEST_DB_URL` com
 A suíte completa de frontend (`npm test -- --watch=false`) tem imports antigos na `main` que não compilam. O teste separado acima cobre a integração entregue. Detalhes em [VALIDACAO.md](documentacao/VALIDACAO.md).
 
 Leia [AGENTS.md](AGENTS.md) e a [documentação](documentacao/README.md) antes de alterar o projeto.
+
+## Organização e integração do frontend
+
+Consulte [o guia de integração](documentacao/INTEGRACAO-FRONTEND-MAIN.md) para localizar controllers, serviços e páginas por funcionalidade.

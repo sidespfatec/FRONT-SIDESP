@@ -9,7 +9,7 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
-import { AccountService } from '../../core/services/account.service';
+import { AccountService } from './services/account.service';
 import { AuthService } from '../../core/auth/auth.service';
 import { Profile, ProfileInput } from '../../core/models/management.models';
 import { apiError } from '../../core/services/api-error';

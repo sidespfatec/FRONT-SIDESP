@@ -11,7 +11,7 @@ import { NavbarDesktopAdminComponent } from '../../../component/navbar-desktop-a
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { Hub, HubInput } from '../../../core/models/management.models';
-import { HubService } from '../../../core/services/hub.service';
+import { HubService } from './services/hub.service';
 import { apiError } from '../../../core/services/api-error';
 @Component({
   selector: 'app-manage-hubs',
@@ -55,7 +55,7 @@ export class ManageHubsComponent implements AfterViewInit, OnDestroy {
   ] as const;
   /** Inicia o mapa e carrega apenas polos retornados pelo banco. */
   ngAfterViewInit(): void {
-    this.map = L.map('hub-map').setView([-22.816, -45.193], 12);
+    this.map = L.map('hub-map', { zoomControl: false }).setView([-22.816, -45.193], 12);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap',
     }).addTo(this.map);
@@ -100,7 +100,7 @@ export class ManageHubsComponent implements AfterViewInit, OnDestroy {
       points.push(point);
       const label = document.createElement('span');
       label.textContent = hub.nome;
-      L.circleMarker(point, { radius: 8, color: hub.ativo ? '#0D1282' : '#71717A' })
+      L.circleMarker(point, { radius: 8, color: '#fff', fillColor: hub.ativo ? '#0D1282' : '#71717A', fillOpacity: 1 })
         .bindTooltip(label)
         .addTo(this.markers!);
     }

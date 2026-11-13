@@ -1,4 +1,5 @@
-package br.gov.sidesp.auth;
+package br.gov.sidesp.recuperacao;
+import br.gov.sidesp.auth.*;
 
 import java.util.concurrent.Executor;
 import org.springframework.context.annotation.*;

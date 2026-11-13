@@ -1,83 +1,49 @@
-<app-navbar-desktop-admin /><app-banner />
+<app-navbar-desktop-admin></app-navbar-desktop-admin>
+<app-banner></app-banner>
+
 <div class="card-container">
-  <p-card
-    ><h1 class="title-hub">Polos</h1>
-    <form class="field-grid list-filters" (ngSubmit)="load()">
-      <label for="hub-search"
-        >Buscar polo<input pInputText id="hub-search" name="search" [(ngModel)]="search" /></label
-      ><label for="hub-status"
-        >Situação<select
-          id="hub-status"
-          name="status"
-          [(ngModel)]="status"
-          (ngModelChange)="load()"
-        >
-          <option value="all">Todos</option>
-          <option value="active">Ativos</option>
-          <option value="inactive">Inativos</option>
-        </select></label
-      ><button pButton type="submit" [disabled]="busy()">Buscar</button
-      ><button pButton type="button" aria-label="Novo polo" (click)="open()">
-        <i class="pi pi-plus"></i>
-      </button>
-    </form>
-    @if (error()) {
-      <p role="alert">{{ error() }}</p>
-    }
-    @if (message()) {
-      <p role="status">{{ message() }}</p>
-    }
-    @if (busy()) {
-      <p role="status">Carregando...</p>
-    }
-    <div id="hub-map" class="hub-map" aria-label="Localização dos polos cadastrados"></div>
-    <ul class="hub-list">
-      @for (hub of hubs(); track hub.id) {
-        <li class="hub-item">
-          <div class="hub-info">
-            <div class="hub-title">
-              <strong>{{ hub.nome }}</strong
-              ><p-tag
-                [value]="hub.ativo ? 'Ativo' : 'Inativo'"
-                [severity]="hub.ativo ? 'success' : 'secondary'"
-              />
-            </div>
-            <span class="hub-neighborhood">{{ hub.bairro }} · {{ hub.cidade }} / {{ hub.uf }}</span>
-          </div>
-          <div class="hub-buttons">
-            <button
-              pButton
-              type="button"
-              size="small"
-              [text]="true"
-              [rounded]="true"
-              aria-label="Ver endereço"
-              (click)="selected = hub"
-            >
-              <i class="pi pi-eye"></i></button
-            ><button
-              pButton
-              type="button"
-              size="small"
-              [text]="true"
-              [rounded]="true"
-              [severity]="hub.ativo ? 'danger' : 'success'"
-              [attr.aria-label]="hub.ativo ? 'Inativar' : 'Reativar'"
-              (click)="toggle(hub)"
-              [disabled]="busy()"
-            >
-              <i [class]="hub.ativo ? 'pi pi-ban' : 'pi pi-check'"></i>
+    <p-card>
+        <h1 class="title-hub">Polos</h1>
+
+        <div class="search-hub-container">
+            <input pInputText type="text" placeholder="Buscar..." aria-label="Buscar polo" [(ngModel)]="search" (ngModelChange)="load()" />
+            <button pButton aria-label="Novo polo" (click)="open()">
+                <i class="pi pi-plus"></i>
             </button>
-          </div>
-        </li>
-      } @empty {
-        @if (!busy() && !error()) {
-          <li>Nenhum polo encontrado.</li>
-        }
-      }
-    </ul></p-card
-  >
+        </div>
+
+        <div id="hub-map" class="hub-map"></div>
+
+        @if (busy()) { <p role="status">Carregando...</p> }
+        @if (error()) { <p role="alert">{{ error() }}</p> }
+        <ul class="hub-list">
+            @for (hub of hubs(); track hub.id) {
+            <li class="hub-item">
+                <div class="hub-info">
+                    <div class="hub-title">
+                        <strong>{{ hub.nome }}</strong>
+                        <p-tag [value]="hub.ativo ? 'Ativo' : 'Inativo'"
+                            [severity]="hub.ativo ? 'success' : 'secondary'" />
+                    </div>
+                    <span class="hub-neighborhood">{{ hub.bairro }}</span>
+                </div>
+
+                <div class="hub-buttons">
+                    <button pButton size="small" [text]="true" [rounded]="true" aria-label="Editar" (click)="selected = hub">
+                        <i class="pi pi-pencil"></i>
+                    </button>
+                    <button pButton size="small" [text]="true" [rounded]="true"
+                        [severity]="hub.ativo ? 'danger' : 'success'"
+                        [attr.aria-label]="hub.ativo ? 'Desativar' : 'Reativar'" (click)="toggle(hub)">
+                        <i [class]="hub.ativo ? 'pi pi-ban' : 'pi pi-check'"></i>
+                    </button>
+                </div>
+            </li>
+            }
+        </ul>
+    </p-card>
 </div>
+
 <p-dialog
   [visible]="visible"
   (visibleChange)="visible = $event"
@@ -177,4 +143,5 @@
     <p>Coordenadas: {{ hub.latitude }}, {{ hub.longitude }}</p>
     <p>A edição do endereço ainda não está disponível na API.</p>
   }</p-dialog
-><app-footer />
+>
+<app-footer></app-footer>

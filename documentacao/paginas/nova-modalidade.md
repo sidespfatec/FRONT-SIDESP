@@ -115,3 +115,13 @@ Como administrador, quero cadastrar modalidades definindo faixa etária e limite
 
 ## Orientação para IA
 Ler CONTEXTO/AGENTS/SEGURANCA e critérios acima. Propor contrato antes do código, validar DTO no servidor, aplicar autorização por perfil e vínculo, transação nas escritas e testes da regra citada. Não alterar frontend fora do escopo autorizado nem estrutura fora das exceções aprovadas; não executar esta página no escopo de cadastro/login. Pontos em aberto da issue continuam pendentes, ainda que a página exista.
+
+
+## Integração visual da main — novembro de 2026
+
+Layout da main conectado à API existente. A interface utiliza cadastro, consulta e inativação/reativação reais; não apresenta exclusão, ícones persistidos ou contagens simuladas sem suporte da API. Consulte [o guia da integração](../INTEGRACAO-FRONTEND-MAIN.md).
+
+
+## Revisão visual da main
+
+Templates e estilos da main preservados, com dados demonstrativos removidos e integrações existentes conectadas à estrutura original. Campos obrigatórios da API e ações ainda indisponíveis estão detalhados no [guia atualizado da integração](../INTEGRACAO-FRONTEND-MAIN.md). Este registro prevalece sobre descrições visuais históricas acima.

@@ -67,9 +67,9 @@ export class ReportsComponent {
 
         this.aberto.set(false);
         this.messageService.add({
-            severity: 'success',
-            summary: 'Exportação iniciada',
-            detail: `${relatorio.nome} em .xls`,
+            severity: 'info',
+            summary: 'Relatório indisponível',
+            detail: 'A geração deste relatório ainda não está disponível.',
             life: 4000
         });
     }

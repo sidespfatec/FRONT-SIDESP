@@ -1,9 +1,9 @@
 import { tap } from 'rxjs';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../../core/auth/auth.service';
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-import { Profile, ProfileInput } from '../models/management.models';
+import { environment } from '../../../../environments/environment';
+import { Profile, ProfileInput } from '../../../core/models/management.models';
 @Injectable({ providedIn: 'root' })
 export class AccountService {
   private http = inject(HttpClient);
