@@ -6,7 +6,6 @@ import { providePrimeNG } from 'primeng/config';
 import { definePreset } from '@primeng/themes';
 import Aura from '@primeng/themes/aura';
 import { routes } from './app.routes';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
 const SidespPreset = definePreset(Aura, {
     semantic: {
@@ -41,7 +40,6 @@ export const appConfig: ApplicationConfig = {
         provideBrowserGlobalErrorListeners(),
         provideRouter(routes),
         provideHttpClient(withInterceptors([authInterceptor])),
-        provideClientHydration(withEventReplay()),
 
         providePrimeNG({
             theme: {

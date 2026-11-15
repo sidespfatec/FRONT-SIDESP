@@ -58,17 +58,21 @@ Saia e faça login novamente. A criação de outros administradores pela API exi
 
 ```bash
 npm run build
-npx ng test --watch=false --ts-config=tsconfig.integration.spec.json --include='src/app/core/**/*.spec.ts'
+npm test -- --watch=false
 cd backend
 mvn test
 ```
 
 Para executar também os testes reais de HTTP/banco, configure `TEST_DB_URL` com um banco exclusivo cujo nome contenha `sidesp_test`, além de `TEST_DB_USERNAME` e `TEST_DB_PASSWORD`. A suíte limpa dados desse banco e cria/remove um segundo banco temporário para testar V3 → V4. A conta de teste precisa dessas permissões. Nunca aponte os testes para desenvolvimento ou produção.
 
-A suíte completa de frontend (`npm test -- --watch=false`) tem imports antigos na `main` que não compilam. O teste separado acima cobre a integração entregue. Detalhes em [VALIDACAO.md](documentacao/VALIDACAO.md).
+A suíte completa de frontend foi validada na limpeza desta branch: 38 testes aprovados. Para executar somente os testes de integração dos componentes e services, use `npx ng test --watch=false --ts-config=tsconfig.integration.spec.json --include='src/app/core/**/*.spec.ts'`. Detalhes em [VALIDACAO.md](documentacao/VALIDACAO.md) e [LIMPEZA-REPOSITORIO.md](documentacao/LIMPEZA-REPOSITORIO.md).
 
 Leia [AGENTS.md](AGENTS.md) e a [documentação](documentacao/README.md) antes de alterar o projeto.
 
 ## Organização e integração do frontend
 
 Consulte [o guia de integração](documentacao/INTEGRACAO-FRONTEND-MAIN.md) para localizar controllers, serviços e páginas por funcionalidade.
+
+## Limpeza do repositório
+
+O frontend é executado no navegador; não há um servidor Angular SSR nesta configuração. O Express continua sendo usado pela prévia do Codespaces. Os builds antigos sem referência foram removidos de `docs/`, preservando a distribuição usada pelo GitHub Pages. Detalhes e validação em [LIMPEZA-REPOSITORIO.md](documentacao/LIMPEZA-REPOSITORIO.md).

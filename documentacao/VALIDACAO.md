@@ -19,3 +19,7 @@ O envio SMTP foi simulado. Os testes confirmam a mensagem entregue ao componente
 A migration V4 foi aplicada do zero com V1–V3 e sobre banco V3 com responsável/polo já gravados. O Flyway também confirmou que uma segunda execução não reaplica as mudanças. Os relatórios desta execução estão em `evidencias/sprint2/`; os outros relatórios dessa pasta pertencem a entregas anteriores.
 
 Não foram feitos push, publicação, alteração de um banco real nem fechamento de issues. As pendências funcionais da interface estão em [SPRINT2.md](SPRINT2.md).
+
+## Limpeza do repositório — 15/11/2026
+
+Build Angular e 38 testes de frontend aprovados na branch `backend/integracao-sidesp-completa` após a limpeza. Backend: 21 testes unitários aprovados e 21 testes de integração/migrations ignorados por falta de banco de teste configurado. A suíte completa do frontend agora compila e passa; registros anteriores de imports incompatíveis são históricos. Confira escopo, comandos e limites em [LIMPEZA-REPOSITORIO.md](LIMPEZA-REPOSITORIO.md).
