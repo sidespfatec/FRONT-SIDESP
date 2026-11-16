@@ -13,7 +13,8 @@
         <div class="teacher-field-row">
             <div class="teacher-field">
                 <label for="cpf">CPF</label>
-                <input id="cpf" pInputText placeholder="000.000.000-00" />
+                <p-inputmask maskCaret inputId="cpf" mask="999.999.999-99" placeholder="000.000.000-00"
+                    [autoClear]="false" />
             </div>
             <div class="teacher-field">
                 <label for="nascimento">Data de nascimento</label>
@@ -28,7 +29,7 @@
 
         <div class="teacher-field">
             <label for="telefone">Telefone</label>
-            <input id="telefone" pInputText placeholder="(12) 90000-0000" />
+            <p-inputmask maskCaret inputId="telefone" mask="(99) 99999-9999" placeholder="(12) 90000-0000" [autoClear]="false" />
         </div>
 
         <h2 class="teacher-form-title">Endereço</h2>
@@ -36,7 +37,7 @@
         <div class="teacher-field-row">
             <div class="teacher-field teacher-field-grow">
                 <label for="cep">CEP</label>
-                <input id="cep" pInputText placeholder="00000-000" />
+                <p-inputmask maskCaret inputId="cep" mask="99999-999" placeholder="00000-000" [autoClear]="false" />
             </div>
             <div class="teacher-field teacher-field-small">
                 <label for="numero">Número</label>
@@ -60,17 +61,40 @@
             </div>
         </div>
 
+        <h2 class="teacher-form-title">Dados profissionais</h2>
+
+        <div class="teacher-field">
+            <label>Tipo de vínculo</label>
+            <p-selectbutton [options]="contractTypes" [(ngModel)]="contractType" name="contractType" optionLabel="label"
+                optionValue="value" [allowEmpty]="false" />
+        </div>
+
+        <div class="teacher-field-row">
+            <div class="teacher-field teacher-field-grow">
+                <label for="cref">CREF</label>
+                <p-inputmask maskCaret inputId="cref" mask="999999-a/aa" placeholder="000000-G/SP"
+                    styleClass="uppercase" [autoClear]="false" />
+            </div>
+            <div class="teacher-field teacher-field-small">
+                <label for="camiseta">Camiseta</label>
+                <p-select inputId="camiseta" [options]="shirtSizes" [(ngModel)]="shirtSize" name="shirtSize"
+                    optionLabel="label" optionValue="value" placeholder="Tam." appendTo="body" />
+            </div>
+        </div>
+
         <h2 class="teacher-form-title">Atuação</h2>
 
         <div class="teacher-field">
-            <label for="modalidade">Modalidade</label>
-            <p-select inputId="modalidade" [options]="modalities" optionLabel="label" optionValue="value"
-                appendTo="body" />
+            <label for="modalidades">Modalidades</label>
+            <p-multiselect inputId="modalidades" [options]="modalities" [(ngModel)]="selectedModalities"
+                name="selectedModalities" optionLabel="label" optionValue="value" display="chip"
+                placeholder="Selecione as modalidades" appendTo="body" />
         </div>
 
         <div class="teacher-field">
             <label for="turma">Turma</label>
-            <p-select inputId="turma" [options]="classGroups" optionLabel="label" optionValue="value" appendTo="body" />
+            <p-select inputId="turma" [options]="classGroups" optionLabel="label" optionValue="value"
+                placeholder="Selecione uma turma" appendTo="body" />
         </div>
 
         <h2 class="teacher-form-title">Currículo</h2>

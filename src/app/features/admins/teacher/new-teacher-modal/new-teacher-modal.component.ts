@@ -4,16 +4,39 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';
+import { FormsModule } from '@angular/forms';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { InputMaskModule } from 'primeng/inputmask';
+import { MaskCaretDirective } from '../../../../directives/mask-caret.directive';
 
 @Component({
     selector: 'app-new-teacher-modal',
-    imports: [DialogModule, InputTextModule, SelectModule, FileUploadModule, ButtonModule],
+    imports: [DialogModule, InputTextModule, InputMaskModule, SelectModule, FileUploadModule, ButtonModule, FormsModule, MaskCaretDirective, MultiSelectModule, SelectButtonModule],
     templateUrl: './new-teacher-modal.component.html',
     styleUrl: './new-teacher-modal.component.scss'
 })
+
 export class NewTeacherModalComponent {
     @Input() visible = false;
     @Output() visibleChange = new EventEmitter<boolean>();
+    selectedModalities: string[] = [];
+    shirtSize: string | null = null;
+    contractType: 'contratado' | 'concursado' = 'contratado';
+
+    shirtSizes = [
+        { label: 'PP', value: 'PP' },
+        { label: 'P', value: 'P' },
+        { label: 'M', value: 'M' },
+        { label: 'G', value: 'G' },
+        { label: 'GG', value: 'GG' },
+        { label: 'XG', value: 'XG' }
+    ];
+
+    contractTypes = [
+        { label: 'Contratado', value: 'contratado' },
+        { label: 'Concursado', value: 'concursado' }
+    ];
 
     modalities = [
         { label: 'Educação física', value: 'educacao-fisica' },

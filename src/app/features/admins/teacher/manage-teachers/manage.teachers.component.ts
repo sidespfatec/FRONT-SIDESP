@@ -6,7 +6,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FooterComponent } from '../../../../component/footer/footer.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { CardModule } from 'primeng/card';
-import { NewTeacherModalComponent } from '../new-teacher-modal/new-teacher-modal.component';
+import { NewTeacherModalComponent } from '../new-teacher-modal/new-teacher-modal.component'; 
 import { NavbarDesktopAdminComponent } from '../../../../component/navbar-desktop-admin/navbar-desktop-admin.component';
 
 interface Teacher {
