@@ -24,10 +24,35 @@
     input {
         flex: 1;
     }
+}
 
+.teacher-filter {
+    margin-bottom: 1rem;
+
+    ::ng-deep .p-selectbutton {
+        display: flex;
+
+        .p-togglebutton {
+            flex: 1;
+            border-color: transparent;
+        }
+
+        .p-togglebutton-checked {
+            border-color: transparent;
+            color: var(--color-bg-page);
+
+            .p-togglebutton-content {
+                background: var(--color-brand-primary);
+                box-shadow: none;
+            }
+        }
+    }
 }
 
 .teacher-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -35,17 +60,60 @@
     @include xl {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        column-gap: 2rem;
+        align-items: stretch;
+        gap: 1rem;
     }
+}
 
+.teacher-row {
+    display: flex;
+    align-items: stretch;
+    min-width: 0;
+    border: 0.0625rem solid var(--gray-300);
+    border-radius: 0.75rem;
+    background: #fff;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+
+    &:hover {
+        box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.08);
+    }
 }
 
 .teacher-item {
     display: flex;
+    flex: 1;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.875rem 0;
-    border-bottom: 0.0625rem solid var(--gray-300);
+    min-width: 0;
+    padding: 0.875rem 1rem;
+    border: none;
+    background: transparent;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+
+    &:hover {
+        background: var(--gray-100);
+    }
+
+    .pi-chevron-right {
+        color: var(--color-text-secondary);
+    }
+}
+
+.teacher-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background: #eaf1fb;
+    color: #2563a8;
+    font-size: 0.9rem;
+    font-weight: 600;
 }
 
 .teacher-info {
@@ -58,18 +126,74 @@
 
 .teacher-title {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 0.5rem;
+
+    strong {
+        font-size: 1rem;
+        color: var(--color-text-primary);
+    }
 }
 
-.teacher-modality {
-    font-size: 0.875rem;
+.contract-tag {
+    padding: 0.125rem 0.625rem;
+    border-radius: 999px;
+    background: #faeeda;
+    color: #8a5a00;
+    font-size: 0.6875rem;
+    font-weight: 600;
+
+    &.concursado {
+        background: #eaf1fb;
+        color: #2563a8;
+    }
+}
+
+.teacher-meta {
+    font-size: 0.8125rem;
     color: var(--color-text-secondary);
 }
 
-.teacher-actions {
+.status-button {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 0.25rem;
-    flex-shrink: 0;
+    min-width: 5.5rem;
+    padding: 0 0.75rem;
+    border: none;
+    border-left: 0.0625rem solid var(--gray-300);
+    background: transparent;
+    color: var(--color-brand-secondary);
+    font: inherit;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    .pi {
+        font-size: 1.1rem;
+    }
+
+    &:hover {
+        background: var(--color-brand-secondary);
+        color: #fff;
+    }
+
+    &.reactivate {
+        color: #0f7a4e;
+
+        &:hover {
+            background: #0f7a4e;
+            color: #fff;
+        }
+    }
+}
+
+.teacher-empty {
+    padding: 1.5rem 0;
+    text-align: center;
+    color: var(--color-text-secondary);
 }

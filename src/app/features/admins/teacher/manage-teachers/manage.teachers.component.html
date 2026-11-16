@@ -8,47 +8,53 @@
         <h1 class="title-teacher">Professores</h1>
 
         <div class="search-teacher-container">
-            <input pInputText type="text" placeholder="Buscar..." aria-label="Buscar professor" />
+            <input pInputText type="text" placeholder="Buscar..." aria-label="Buscar professor"
+                [(ngModel)]="search" />
 
             <button pButton aria-label="Novo professor" (click)="openNew()">
                 <i class="pi pi-plus"></i>
             </button>
         </div>
 
+        <div class="teacher-filter">
+            <p-selectbutton [options]="filterOptions" [(ngModel)]="filter" optionLabel="label" optionValue="value"
+                [allowEmpty]="false" />
+        </div>
+
         <ul class="teacher-list">
 
-            @for (teacher of teachers; track teacher.id) {
+            @for (teacher of filteredTeachers; track teacher.id) {
 
-            <li class="teacher-item">
+            <li class="teacher-row">
 
-                <div class="teacher-info">
+                <button type="button" class="teacher-item" (click)="edit(teacher)">
 
-                    <div class="teacher-title">
-                        <strong>{{ teacher.name }}</strong>
-                    </div>
+                    <span class="teacher-avatar">{{ initials(teacher.name) }}</span>
 
-                    <span class="teacher-modality">
-                        Modalidade: {{ teacher.modality }}
+                    <span class="teacher-info">
+                        <span class="teacher-title">
+                            <strong>{{ teacher.name }}</strong>
+                            <span class="contract-tag" [class.concursado]="teacher.contractType === 'concursado'">
+                                {{ teacher.contractType === 'concursado' ? 'Concursado' : 'Contratado' }}
+                            </span>
+                        </span>
+                        <span class="teacher-meta">Modalidade: {{ teacher.modality }}</span>
                     </span>
 
-                </div>
+                    <i class="pi pi-chevron-right"></i>
 
-                <div class="teacher-actions">
+                </button>
 
-                    <button pButton size="small" [text]="true" [rounded]="true" aria-label="Editar professor"
-                        (click)="edit(teacher)">
-                        <i class="pi pi-pencil"></i>
-                    </button>
-
-                    <button pButton size="small" [text]="true" [rounded]="true" severity="danger"
-                        aria-label="Excluir professor" (click)="delete(teacher)">
-                        <i class="pi pi-trash"></i>
-                    </button>
-
-                </div>
+                <button type="button" class="status-button" [class.reactivate]="!teacher.active"
+                    (click)="toggleStatus(teacher)">
+                    <i class="pi" [class.pi-ban]="teacher.active" [class.pi-replay]="!teacher.active"></i>
+                    {{ teacher.active ? 'Inativar' : 'Reativar' }}
+                </button>
 
             </li>
 
+            } @empty {
+            <li class="teacher-empty">Nenhum professor encontrado.</li>
             }
 
         </ul>
