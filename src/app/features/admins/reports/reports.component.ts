@@ -11,9 +11,6 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 
-import { BannerComponent } from '../../../component/banner/banner.component';
-import { FooterComponent } from '../../../component/footer/footer.component';
-import { NavbarDesktopAdminComponent } from '../../../component/navbar-desktop-admin/navbar-desktop-admin.component';
 
 import {
     EXPORTACOES_RECENTES, ExportacaoRecente, POLOS_OPCOES, RELATORIOS, Relatorio, TURMAS_OPCOES
@@ -24,7 +21,6 @@ import {
     standalone: true,
     imports: [
         CommonModule, FormsModule,
-        BannerComponent, FooterComponent, NavbarDesktopAdminComponent,
         ButtonModule, DatePickerModule, DialogModule, MultiSelectModule,
         TableModule, TagModule, ToastModule
     ],

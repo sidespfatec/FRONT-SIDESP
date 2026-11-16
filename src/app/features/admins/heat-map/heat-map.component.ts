@@ -12,9 +12,6 @@ import { PopoverModule } from 'primeng/popover';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { SliderModule } from 'primeng/slider';
 
-import { BannerComponent } from '../../../component/banner/banner.component';
-import { FooterComponent } from '../../../component/footer/footer.component';
-import { NavbarDesktopAdminComponent } from '../../../component/navbar-desktop-admin/navbar-desktop-admin.component';
 
 import {
     COMPARAR_POR, DADOS, Eixo, GENERO_OPCOES, MAIORES_FALTAS, MODALIDADES_OPCOES,
@@ -32,7 +29,6 @@ const GRADE = '#E4E4E7';
     standalone: true,
     imports: [
         CommonModule, FormsModule,
-        BannerComponent, FooterComponent, NavbarDesktopAdminComponent,
         ButtonModule, ChartModule, ChipModule, DatePickerModule,
         IftaLabelModule, MultiSelectModule, PopoverModule, SelectButtonModule, SliderModule
     ],

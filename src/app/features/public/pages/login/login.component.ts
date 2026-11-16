@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BannerComponent } from '../../../../component/banner/banner.component';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { RouterLink } from '@angular/router';
@@ -9,7 +8,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, BannerComponent, ButtonModule, InputTextModule, RouterLink, InputMaskModule],
+  imports: [CommonModule, ButtonModule, InputTextModule, RouterLink, InputMaskModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

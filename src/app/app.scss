@@ -1,0 +1,8 @@
+// O app.html vinha com um bloco <style> gigante que o "ng new" deixa de exemplo.
+// Ele foi removido junto com a casca global. Aquele bloco definia
+// :host { font-family: Inter ... }, que brigava com o --font-app do styles.scss.
+
+:host {
+    display: block;
+    min-height: 100dvh;
+}

@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
 
-import { BannerComponent } from '../../../component/banner/banner.component';
-import { FooterComponent } from '../../../component/footer/footer.component';
-import { NavbarDesktopAdminComponent } from '../../../component/navbar-desktop-admin/navbar-desktop-admin.component';
 import { NewAdminModalComponent } from '../new-admin-modal/new-admin-modal.component';
 import { Administrador, ModoFicha } from '../admin.model';
 
@@ -14,7 +11,7 @@ import { TagModule } from 'primeng/tag';
 @Component({
     selector: 'app-manage-admin',
     imports: [
-        BannerComponent, FooterComponent, NavbarDesktopAdminComponent, NewAdminModalComponent,
+        NewAdminModalComponent,
         CardModule, ButtonModule, InputTextModule, TagModule
     ],
     templateUrl: './manage-admin.component.html',

@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-import { FooterComponent } from '../../../../component/footer/footer.component';
-import { BannerComponent } from '../../../../component/banner/banner.component';
-import { NavbarDesktopAdminComponent } from '../../../../component/navbar-desktop-admin/navbar-desktop-admin.component';
 
 export interface ClassGroup {
     id: string;
@@ -31,7 +28,7 @@ interface ScheduleRow {
 @Component({
     selector: 'app-classes',
     standalone: true,
-    imports: [CommonModule, BannerComponent, FooterComponent, NavbarDesktopAdminComponent, ButtonModule],
+    imports: [CommonModule, ButtonModule],
     templateUrl: './classes.component.html',
     styleUrl: './classes.component.scss'
 })

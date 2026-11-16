@@ -1,35 +1,30 @@
 @use '../../../styles/breakpoints' as *;
 
+// Sticky, e não fixed: a faixa ocupa o próprio espaço no fluxo, então a tela
+// de cadastro não precisa de margin-top adivinhando a altura dela.
 :host {
-    @include xl { display: none; }
-}
-
-.banner {
-    background-color: var(--color-bg-header);
-    text-align: center;
-    padding-top: 0.5rem;
-    position: fixed;
+    display: block;
+    position: sticky;
     top: 0;
-    left: 0;
-    right: 0;
     z-index: 1000;
-    border-bottom: 1px solid var(--color-border-strong);
-}
 
-.banner-image {
-    margin: 0 auto 0.5rem;
-    width: 25%;
-
-    img {
-        width: 100%;
-        height: auto;
-        object-fit: contain;
+    @include xl {
+        display: none;
     }
 }
 
-@include md {
-    .banner-image img {
-        width: 100%;
-        height: auto;
+.banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+    background-color: var(--blue-50);
+    border-bottom: 1px solid var(--blue-100);
+
+    img {
+        height: 3.25rem;
+        width: auto;
+        max-width: 100%;
+        object-fit: contain;
     }
 }

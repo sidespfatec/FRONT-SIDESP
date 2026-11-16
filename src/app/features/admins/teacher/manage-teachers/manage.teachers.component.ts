@@ -1,14 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { BannerComponent } from '../../../../component/banner/banner.component';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { FooterComponent } from '../../../../component/footer/footer.component';
 import { CardModule } from 'primeng/card';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { NewTeacherModalComponent } from '../new-teacher-modal/new-teacher-modal.component';
-import { NavbarDesktopAdminComponent } from '../../../../component/navbar-desktop-admin/navbar-desktop-admin.component';
 
 interface Teacher {
     id: number;
@@ -22,9 +19,7 @@ interface Teacher {
     selector: 'app-manage-teachers',
     standalone: true,
     imports: [
-        CommonModule, FormsModule, BannerComponent,
-        ButtonModule, InputTextModule, FooterComponent,
-        CardModule, SelectButtonModule, NewTeacherModalComponent, NavbarDesktopAdminComponent
+        CommonModule, FormsModule, ButtonModule, InputTextModule, CardModule, SelectButtonModule, NewTeacherModalComponent
     ],
     templateUrl: './manage.teachers.component.html',
     styleUrl: './manage.teachers.component.scss'

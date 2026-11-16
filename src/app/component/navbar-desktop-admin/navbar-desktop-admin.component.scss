@@ -5,15 +5,13 @@
 
     @include xl {
         display: block;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
     }
 }
 
 .navbar-admin {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -27,7 +25,9 @@
 
 .navbar-logo {
     margin: 0;
-    height: 55px;
+    // A marca nova é horizontal (3,4:1). Em 55px ela ficaria larga demais e
+    // empurraria os links; 44px mantém "Secretaria Municipal" legível.
+    height: 44px;
 
     img {
         height: 100%;

@@ -2,9 +2,6 @@ import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
-import { BannerComponent } from '../../../../component/banner/banner.component';
-import { FooterComponent } from '../../../../component/footer/footer.component';
-import { NavbarDesktopAdminComponent } from '../../../../component/navbar-desktop-admin/navbar-desktop-admin.component';
 
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -15,8 +12,7 @@ import { ModalityDemoStore } from '../modality-demo.store';
 @Component({
     selector: 'app-new-modality',
     imports: [
-        FormsModule, BannerComponent, FooterComponent, NavbarDesktopAdminComponent,
-        CardModule, ButtonModule, InputTextModule, SelectModule
+        FormsModule, CardModule, ButtonModule, InputTextModule, SelectModule
     ],
     templateUrl: './new-modality.component.html',
     styleUrl: './new-modality.component.scss'

@@ -1,54 +1,36 @@
 @use '../../../styles/breakpoints' as *;
 
+// Sticky, e não fixed: assim a faixa ocupa o próprio espaço no fluxo e nenhuma
+// tela precisa adivinhar a altura dela com margin-top.
 :host {
-    @include xl { display: none; }
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    @include xl {
+        display: none;
+    }
 }
 
 .banner {
-  background-color: var(--color-bg-header);
-  padding: 1rem 1rem;
-  text-align: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  border-bottom: 1px solid var(--color-border-strong);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-}
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1rem;
 
-.banner-image {
-  margin: 0 auto 0.5rem;
-  width: 20%;
+    // Fundo azul claro em vez do branco do --color-bg-header: aquele token
+    // também pinta cards e modais, então a cor da faixa fica aqui, local.
+    background-color: var(--blue-50);
+    border-bottom: 1px solid var(--blue-100);
 
-  img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-  }
-}
-
-.banner-title {
-  font-size: 1rem;
-  color: var(--color-brand-primary);
-  margin-top: 0.5rem;
-  text-align: start;
-}
-
-@include md {
-  .banner {
-    padding: 10rem;
-  }
-
-  .banner-title {
-    font-size: 1rem;
-  }
-
-  .banner-image img {
-    width: 100%;
-    height: auto;
-  }
+    img {
+        // 52px é o mínimo em que a linha "Secretaria Municipal" do logo
+        // continua legível. Abaixo disso ela vira borrão.
+        height: 3.25rem;
+        width: auto;
+        max-width: 100%;
+        object-fit: contain;
+    }
 }

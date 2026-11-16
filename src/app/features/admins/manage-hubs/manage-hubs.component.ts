@@ -1,9 +1,6 @@
 import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
 
-import { BannerComponent } from '../../../component/banner/banner.component';
-import { FooterComponent } from '../../../component/footer/footer.component';
-import { NavbarDesktopAdminComponent } from '../../../component/navbar-desktop-admin/navbar-desktop-admin.component';
 
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -22,7 +19,6 @@ interface Hub {
 @Component({
     selector: 'app-manage-hubs',
     imports: [
-        BannerComponent, FooterComponent, NavbarDesktopAdminComponent,
         CardModule, ButtonModule, InputTextModule, TagModule
     ],
     templateUrl: './manage-hubs.component.html',

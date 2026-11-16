@@ -12,9 +12,6 @@ import { SelectModule } from 'primeng/select';
 import { TagModule } from 'primeng/tag';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 
-import { BannerComponent } from '../../../../component/banner/banner.component';
-import { FooterComponent } from '../../../../component/footer/footer.component';
-import { NavbarDesktopAdminComponent } from '../../../../component/navbar-desktop-admin/navbar-desktop-admin.component';
 
 import {
     ALUNOS, Aluno, idadeDe, matriculaAtual, pendenciasDe, POLOS_OPCOES, TURMAS_OPCOES
@@ -25,7 +22,6 @@ import {
     standalone: true,
     imports: [
         CommonModule, FormsModule,
-        BannerComponent, FooterComponent, NavbarDesktopAdminComponent,
         ButtonModule, CardModule, InputTextModule, IconFieldModule, InputIconModule,
         SelectModule, TagModule, ToggleButtonModule
     ],

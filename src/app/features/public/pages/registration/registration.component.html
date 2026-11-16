@@ -1,6 +1,14 @@
 <app-simple-banner></app-simple-banner>
 
 <div class="main-container">
+
+    <!-- Saída da tela. Sem isso, quem entra aqui por engano só volta para o
+         login terminando os três passos do cadastro. -->
+    <a routerLink="/login" class="voltar-login">
+        <i class="pi pi-chevron-left" aria-hidden="true"></i>
+        Voltar para o login
+    </a>
+
     <div class="registration-card">
 
         <header class="register-header">

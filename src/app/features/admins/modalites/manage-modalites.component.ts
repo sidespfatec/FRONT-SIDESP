@@ -2,9 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
-import { BannerComponent } from '../../../component/banner/banner.component';
-import { FooterComponent } from '../../../component/footer/footer.component';
-import { NavbarDesktopAdminComponent } from '../../../component/navbar-desktop-admin/navbar-desktop-admin.component';
 
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -16,7 +13,6 @@ import { Modality, ModalityDemoStore } from './modality-demo.store';
 @Component({
     selector: 'app-manage-modalites',
     imports: [
-        BannerComponent, FooterComponent, NavbarDesktopAdminComponent,
         CardModule, ButtonModule, DialogModule, InputTextModule, FormsModule, SelectButtonModule
     ],
     templateUrl: './manage-modalites.component.html',

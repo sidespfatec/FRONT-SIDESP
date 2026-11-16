@@ -1,8 +1,8 @@
 @use '../../../../../styles/breakpoints.scss' as *;
 
 .classes-page {
-    padding: 5rem 1rem 2rem 1rem;
-    margin-top: 4rem;
+    padding: 1.5rem 1rem 2rem 1rem;
+    margin-top: 0;
 
     @include xl {
         margin-top: 2rem;

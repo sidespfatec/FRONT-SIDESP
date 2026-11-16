@@ -16,9 +16,6 @@ import { TabsModule } from 'primeng/tabs';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 
-import { BannerComponent } from '../../../../component/banner/banner.component';
-import { FooterComponent } from '../../../../component/footer/footer.component';
-import { NavbarDesktopAdminComponent } from '../../../../component/navbar-desktop-admin/navbar-desktop-admin.component';
 
 import {
     ALUNOS, Aluno, Documento, GENERO_OPCOES, GENERO_ROTULO, idadeDe, Matricula,
@@ -32,7 +29,6 @@ const TELEFONE = /^\(\d{2}\) \d{5}-\d{4}$/;
     standalone: true,
     imports: [
         CommonModule, ReactiveFormsModule,
-        BannerComponent, FooterComponent, NavbarDesktopAdminComponent,
         ButtonModule, CardModule, IftaLabelModule, ImageModule, InputMaskModule,
         InputTextModule, MessageModule, SelectButtonModule, TabsModule, TagModule, ToastModule
     ],

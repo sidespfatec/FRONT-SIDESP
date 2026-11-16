@@ -9,10 +9,42 @@
     align-items: center;
 }
 
+// Mesma largura do cartão, para a seta nascer alinhada com a borda dele.
+.voltar-login {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    width: 100%;
+    max-width: 440px;
+    margin-bottom: 0.375rem;
+    // Alvo de toque: só o texto dava 17px de altura, menos da metade do
+    // mínimo confortável para o dedo.
+    padding: 0.6875rem 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-on-brand);
+    text-decoration: none;
+
+    i {
+        font-size: 0.75rem;
+    }
+
+    &:hover {
+        text-decoration: underline;
+        text-underline-offset: 0.1875rem;
+    }
+
+    &:focus-visible {
+        outline: 0.1875rem solid var(--white);
+        outline-offset: 0.25rem;
+        border-radius: 0.25rem;
+    }
+}
+
 .registration-card {
     width: 100%;
     max-width: 440px;
-    margin-top: 7rem; 
+    margin-top: 0; 
     background-color: var(--color-bg-card);
     border-radius: 16px;
     box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
