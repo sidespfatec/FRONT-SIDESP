@@ -1,0 +1,57 @@
+<ul class="lista-turmas">
+    @for (turma of turmas(); track turma.id) {
+    <li>
+        <a [routerLink]="['/professor/turmas', turma.id]" class="cartao-turma"
+            [class.pendente]="turma.chamadaPendente">
+
+            <div class="topo">
+                <div class="titulo">
+                    <h3>{{ turma.nome }}</h3>
+                    <p class="polo">{{ turma.modalidade }} &middot; {{ turma.polo }}</p>
+                </div>
+
+                @if (turma.chamadaPendente) {
+                <span class="selo-pendente">chamada pendente</span>
+                }
+            </div>
+
+            <dl class="horario">
+                <div>
+                    <dt>Dias</dt>
+                    <dd>{{ rotuloDias(turma.diasSemana) }}</dd>
+                </div>
+                <div>
+                    <dt>Horário</dt>
+                    <dd>{{ turma.horaInicio }} – {{ turma.horaFim }}</dd>
+                </div>
+            </dl>
+
+            <ul class="medidas">
+                <li>
+                    <strong>{{ turma.totalAlunos }}</strong>
+                    <span>alunos</span>
+                </li>
+                <li>
+                    <strong>{{ turma.vagas - turma.totalAlunos }}</strong>
+                    <span>vagas livres</span>
+                </li>
+                <li>
+                    <strong>{{ turma.frequenciaMedia }}%</strong>
+                    <span>frequência</span>
+                </li>
+            </ul>
+
+            <!-- Aviso de evasao: aparece exatamente onde o professor pode agir. -->
+            @if (turma.alunosEmRisco > 0) {
+            <p class="risco">
+                <i class="pi pi-exclamation-triangle" aria-hidden="true"></i>
+                {{ turma.alunosEmRisco }} aluno{{ turma.alunosEmRisco > 1 ? 's' : '' }}
+                com 3 faltas seguidas ou mais.
+            </p>
+            }
+        </a>
+    </li>
+    } @empty {
+    <li class="vazio">Você ainda não tem turmas atribuídas.</li>
+    }
+</ul>

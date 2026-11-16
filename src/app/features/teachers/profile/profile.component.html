@@ -1,0 +1,60 @@
+<section class="perfil">
+
+    @if (perfil(); as p) {
+    <article class="cartao-identidade">
+        <div class="foto" aria-hidden="true">
+            <i class="pi pi-user"></i>
+        </div>
+
+        <div class="identidade">
+            <h1>{{ p.nome }}</h1>
+            <p class="atuacao">{{ p.especialidade }} &middot; {{ p.registroProfissional }}</p>
+
+            <ul class="selos">
+                <li class="selo selo-ativo">Ativo</li>
+                <li class="selo selo-neutro">{{ totalTurmas() }} turmas</li>
+                <li class="selo selo-neutro">{{ totalAlunos() }} alunos</li>
+            </ul>
+        </div>
+    </article>
+
+    <!-- A faixa so existe quando ha pendencia. Tela limpa quando esta tudo em dia. -->
+    @if (chamadasPendentes() > 0) {
+    <button type="button" class="faixa-pendencia" (click)="irParaTurmas()">
+        <span class="texto">
+            <strong>
+                {{ chamadasPendentes() }} chamada{{ chamadasPendentes() > 1 ? 's' : '' }}
+                pendente{{ chamadasPendentes() > 1 ? 's' : '' }}
+            </strong>
+            {{ nomesPendentes() }}
+        </span>
+        <i class="pi pi-chevron-right" aria-hidden="true"></i>
+    </button>
+    }
+
+    <!-- [(value)] funciona com signal porque 'value' do p-tabs e um ModelSignal. -->
+    <p-tabs [(value)]="abaAtiva" styleClass="abas-perfil">
+        <p-tablist>
+            <p-tab value="turmas">Turmas</p-tab>
+            <p-tab value="agenda">Agenda</p-tab>
+            <p-tab value="dados">Dados</p-tab>
+        </p-tablist>
+
+        <p-tabpanels>
+            <p-tabpanel value="turmas">
+                <app-my-classes [turmas]="turmas()" />
+            </p-tabpanel>
+
+            <p-tabpanel value="agenda">
+                <app-schedule [turmas]="turmas()" />
+            </p-tabpanel>
+
+            <p-tabpanel value="dados">
+                <app-personal-data [perfil]="p" />
+            </p-tabpanel>
+        </p-tabpanels>
+    </p-tabs>
+    }
+
+</section>
+

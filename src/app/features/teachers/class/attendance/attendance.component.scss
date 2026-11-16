@@ -1,0 +1,533 @@
+@use '../../../../../styles/breakpoints' as *;
+
+.tira-topo {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin: 0.75rem 0 0.375rem;
+
+    h2 {
+        margin: 0;
+        font-size: 0.71875rem;
+        font-weight: 700;
+        letter-spacing: 0.03125rem;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+    }
+}
+
+.link {
+    padding: 0.25rem 0;
+    font-family: var(--font-app);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-brand-primary);
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+
+.tira {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding: 0.1875rem 0 0.5625rem;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+
+    // Encaixa o chip inteiro na posicao: sem isso a tira para no meio de uma
+    // data e aparece "ÁB 4/11" cortado na borda.
+    scroll-snap-type: x mandatory;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+// Alvo de toque confortavel: 68x74. As setinhas antigas tinham 32px,
+// menos da metade do minimo recomendado para dedo.
+.chip {
+    flex: none;
+    width: 4rem;
+    min-height: 4.125rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.1875rem;
+    padding: 0.5625rem 0.25rem;
+    font-family: var(--font-app);
+    background: var(--white);
+    border: 0.09375rem solid var(--color-border);
+    border-radius: 0.875rem;
+    cursor: pointer;
+    scroll-snap-align: center;
+
+    .sem {
+        font-size: 0.65625rem;
+        font-weight: 700;
+        letter-spacing: 0.03125rem;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+    }
+
+    .num {
+        font-size: 0.96875rem;
+        font-weight: 700;
+        line-height: 1.1;
+        color: var(--color-text-primary);
+    }
+
+    &.hoje {
+        border-color: var(--blue-100);
+
+        .sem {
+            color: var(--color-brand-primary);
+        }
+    }
+
+    &[aria-current="true"] {
+        background: var(--color-brand-primary);
+        border-color: var(--color-brand-primary);
+
+        .sem {
+            color: var(--blue-100);
+        }
+
+        .num {
+            color: var(--white);
+        }
+
+        .bolinha {
+            box-shadow: 0 0 0 0.125rem rgba(255, 255, 255, 0.85);
+        }
+    }
+
+    &:focus-visible {
+        outline: 0.1875rem solid var(--color-border-focus);
+        outline-offset: 0.125rem;
+    }
+}
+
+.bolinha {
+    display: block;
+    flex: none;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+}
+
+.b-PENDENTE {
+    background: var(--color-status-espera);
+}
+
+.b-SALVA {
+    background: var(--color-success);
+}
+
+.b-CANCELADA {
+    background: var(--gray-300);
+}
+
+.rotulo-dia {
+    display: flex;
+    align-items: center;
+    gap: 0.5625rem;
+    margin: 0.125rem 0 0;
+
+    strong {
+        font-size: 0.9375rem;
+        color: var(--color-text-primary);
+    }
+}
+
+.selo {
+    padding: 0.1875rem 0.5625rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    white-space: nowrap;
+    border-radius: 999px;
+}
+
+.s-PENDENTE {
+    background: var(--yellow-100);
+    color: var(--yellow-700);
+}
+
+.s-SALVA {
+    background: var(--green-100);
+    color: var(--green-700);
+}
+
+.s-CANCELADA {
+    background: var(--gray-200);
+    color: var(--color-text-secondary);
+}
+
+.legenda {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.875rem;
+    margin: 0 0 0.75rem;
+    padding: 0;
+    list-style: none;
+    font-size: 0.71875rem;
+    color: var(--color-text-secondary);
+
+    li {
+        display: flex;
+        align-items: center;
+        gap: 0.3125rem;
+    }
+}
+
+.atrasada {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 0.625rem;
+    padding: 0.5rem 0.75rem;
+    font-family: var(--font-app);
+    font-size: 0.78125rem;
+    font-weight: 600;
+    text-align: left;
+    color: var(--yellow-700);
+    background: var(--yellow-100);
+    border: 1px solid var(--yellow-500);
+    border-left-width: 0.25rem;
+    border-radius: 0.625rem;
+    cursor: pointer;
+}
+
+.cancelada-aviso {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4375rem;
+    margin-top: 1rem;
+    padding: 1.125rem 0.9375rem;
+    text-align: center;
+    background: var(--white);
+    border: 1px solid var(--color-border);
+    border-radius: 0.8125rem;
+
+    strong {
+        font-size: 1rem;
+        color: var(--color-text-primary);
+    }
+
+    span {
+        font-size: 0.8125rem;
+        color: var(--color-text-secondary);
+    }
+}
+
+.contadores {
+    display: flex;
+    gap: 0.5rem;
+    margin: 0.625rem 0 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+        flex: 1;
+        padding: 0.4375rem 0.25rem;
+        text-align: center;
+        background: var(--white);
+        border: 1px solid var(--color-border);
+        border-radius: 0.6875rem;
+    }
+
+    strong {
+        display: block;
+        font-size: 1.125rem;
+        font-weight: 700;
+        line-height: 1.1;
+        color: var(--color-text-primary);
+    }
+
+    span {
+        display: block;
+        font-size: 0.625rem;
+        line-height: 1.3;
+        white-space: nowrap;
+        color: var(--color-text-secondary);
+    }
+}
+
+.verde {
+    color: var(--green-700) !important;
+}
+
+.vermelho {
+    color: var(--color-danger) !important;
+}
+
+.amarelo {
+    color: var(--yellow-700) !important;
+}
+
+.massa {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5625rem;
+
+    button {
+        flex: 1;
+        padding: 0.5rem;
+        font-family: var(--font-app);
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: var(--color-text-primary);
+        background: var(--white);
+        border: 1px solid var(--color-border);
+        border-radius: 0.5625rem;
+        cursor: pointer;
+    }
+}
+
+.alunos {
+    margin: 0.6875rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.aluno {
+    display: flex;
+    align-items: center;
+    gap: 0.6875rem;
+    margin-bottom: 0.5625rem;
+    padding: 0.6875rem 0.75rem;
+    background: var(--white);
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+}
+
+.ini {
+    position: relative;
+    flex: none;
+    width: 2.375rem;
+    height: 2.375rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-brand-primary);
+    background: var(--blue-50);
+    border-radius: 50%;
+}
+
+.cruz {
+    position: absolute;
+    right: -0.1875rem;
+    bottom: -0.1875rem;
+    width: 1.0625rem;
+    height: 1.0625rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6875rem;
+    font-style: normal;
+    font-weight: 700;
+    color: var(--white);
+    background: var(--color-danger);
+    border: 0.125rem solid var(--white);
+    border-radius: 50%;
+}
+
+.nome {
+    flex: 1;
+    min-width: 0;
+
+    strong {
+        display: block;
+        font-size: 0.90625rem;
+        font-weight: 600;
+        color: var(--color-text-primary);
+    }
+}
+
+.risco {
+    display: inline-block;
+    margin-top: 0.1875rem;
+    padding: 0.125rem 0.4375rem;
+    font-size: 0.6875rem;
+    font-style: normal;
+    font-weight: 700;
+    color: var(--yellow-700);
+    background: var(--yellow-100);
+    border-radius: 999px;
+}
+
+.pfj {
+    display: flex;
+    gap: 0.3125rem;
+    flex: none;
+
+    button {
+        width: 2.375rem;
+        height: 2.375rem;
+        font-family: var(--font-app);
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: var(--color-text-muted);
+        background: var(--white);
+        border: 1px solid var(--color-border);
+        border-radius: 0.625rem;
+        cursor: pointer;
+    }
+
+    .p[aria-pressed="true"] {
+        color: var(--white);
+        background: var(--color-success);
+        border-color: var(--color-success);
+    }
+
+    .f[aria-pressed="true"] {
+        color: var(--white);
+        background: var(--color-danger);
+        border-color: var(--color-danger);
+    }
+
+    .j[aria-pressed="true"] {
+        color: var(--white);
+        background: var(--color-warning);
+        border-color: var(--color-warning);
+    }
+
+    button:focus-visible {
+        outline: 0.1875rem solid var(--color-border-focus);
+        outline-offset: 0.125rem;
+    }
+}
+
+// Barra de salvar colada embaixo. No celular o footer do app e fixo com 70px,
+// entao ela para em cima dele; no desktop o footer some e ela vai ate o fim.
+.barra-salvar {
+    position: sticky;
+    bottom: 4.375rem;
+    margin-top: 0.75rem;
+    padding: 0.625rem 0 0.75rem;
+    background: var(--color-bg-page);
+    border-top: 1px solid var(--color-border);
+    box-shadow: 0 -0.5rem 0.75rem var(--color-bg-page);
+
+    @include xl {
+        bottom: 0;
+    }
+}
+
+:host ::ng-deep .barra-salvar .p-button {
+    width: 100%;
+    justify-content: center;
+    padding: 0.8125rem;
+    font-size: 0.9375rem;
+    font-weight: 700;
+}
+
+// Acao rara, fora da barra fixa: so o icone, ao lado de "Limpar".
+.nao-houve {
+    flex: 0 0 2.75rem !important;
+    color: var(--color-text-secondary) !important;
+
+    i {
+        font-size: 0.9375rem;
+    }
+}
+
+.sem-aulas {
+    margin-top: 2rem;
+    padding: 1.25rem 1rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    text-align: center;
+    color: var(--color-text-secondary);
+    background: var(--white);
+    border: 1px solid var(--color-border);
+    border-radius: 0.8125rem;
+}
+
+.mes {
+    margin: 1rem 0 0.125rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.03125rem;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+}
+
+.linha-data {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    width: 100%;
+    margin-top: 0.4375rem;
+    padding: 0.75rem 0.8125rem;
+    font-family: var(--font-app);
+    text-align: left;
+    background: var(--white);
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    cursor: pointer;
+
+    &[aria-current="true"] {
+        background: var(--blue-50);
+        border-color: var(--color-brand-primary);
+    }
+
+    .esq {
+        display: flex;
+        align-items: center;
+        gap: 0.6875rem;
+        min-width: 0;
+    }
+
+    strong {
+        display: block;
+        font-size: 0.90625rem;
+        font-weight: 600;
+        color: var(--color-text-primary);
+    }
+
+    small {
+        display: block;
+        margin-top: 0.0625rem;
+        font-size: 0.71875rem;
+        color: var(--color-text-secondary);
+    }
+}
+
+.explica {
+    margin: 0 0 0.75rem;
+    font-size: 0.84375rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+}
+
+.motivo {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.4375rem;
+    padding: 0.8125rem;
+    font-family: var(--font-app);
+    font-size: 0.875rem;
+    text-align: left;
+    color: var(--color-text-primary);
+    background: var(--white);
+    border: 1px solid var(--color-border);
+    border-radius: 0.625rem;
+    cursor: pointer;
+
+    &:hover {
+        border-color: var(--color-brand-primary);
+    }
+}
+
+:host ::ng-deep .folha {
+    height: auto !important;
+    max-height: 85vh;
+    border-radius: 1.125rem 1.125rem 0 0;
+}

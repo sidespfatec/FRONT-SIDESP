@@ -79,6 +79,18 @@ export const routes: Routes = [
         loadComponent: () => import('./features/admins/manage-hubs/manage-hubs.component').then(m => m.ManageHubsComponent)
     },
     {
+        path: 'professor/turmas/:id',
+        loadComponent: () => import('./features/teachers/class/class.component')
+            .then(m => m.ClassComponent)
+    },
+
+    {
+        path: 'professor',
+        loadComponent: () => import('./features/teachers/profile/profile.component')
+            .then(m => m.ProfileComponent)
+    },
+
+    {
         path: '**',
         redirectTo: 'home'
     }

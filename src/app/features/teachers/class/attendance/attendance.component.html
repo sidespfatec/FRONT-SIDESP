@@ -1,0 +1,150 @@
+<p-toast position="bottom-center" />
+
+@if (aulaAtual(); as aula) {
+
+<!-- Tira de aulas: as setinhas antigas mostravam uma data por vez; aqui ele ve
+     quatro ou cinco de uma vez e enxerga os buracos pela cor da bolinha. -->
+<div class="tira-topo">
+    <h2>Aulas da turma</h2>
+    <button type="button" class="link" (click)="listaAberta.set(true)">ver todas</button>
+</div>
+
+<div class="tira" #tira role="tablist" aria-label="Escolher a aula">
+    @for (item of aulas(); track item.id) {
+    <button type="button" class="chip" [class.hoje]="ehHoje(item.data)"
+        [attr.aria-current]="item.id === aula.id"
+        [attr.aria-label]="diaPorExtenso(item.data) + ', ' + diaMes(item.data) + ', ' + rotuloSituacao[item.situacao]"
+        (click)="selecionar(item.id)">
+        <span class="sem">{{ ehHoje(item.data) ? 'hoje' : diaCurto(item.data) }}</span>
+        <span class="num">{{ diaMes(item.data) }}</span>
+        <span class="bolinha" [class]="'b-' + item.situacao"></span>
+    </button>
+    }
+</div>
+
+<p class="rotulo-dia">
+    <strong>
+        @if (ehHoje(aula.data)) { Hoje &middot; }
+        {{ diaPorExtenso(aula.data) }}, {{ diaMes(aula.data) }}
+    </strong>
+    <span class="selo" [class]="'s-' + aula.situacao">{{ rotuloSituacao[aula.situacao] }}</span>
+</p>
+
+@if (atrasadas().length > 0 && ehHoje(aula.data)) {
+<button type="button" class="atrasada" (click)="irParaAtrasada()">
+    {{ atrasadas().length }} chamada{{ atrasadas().length > 1 ? 's' : '' }}
+    de outro dia sem fazer
+    <i class="pi pi-chevron-right" aria-hidden="true"></i>
+</button>
+}
+
+@if (cancelada()) {
+<div class="cancelada-aviso">
+    <strong>Não houve aula neste dia</strong>
+    <span>Motivo registrado: {{ aula.motivoCancelamento }}. Ninguém recebeu falta.</span>
+    <p-button label="Desfazer e fazer a chamada" severity="secondary" [outlined]="true"
+        (onClick)="desfazerCancelamento()" />
+</div>
+} @else {
+
+<ul class="contadores">
+    <li><strong class="verde">{{ presentes() }}</strong><span>presentes</span></li>
+    <li><strong class="vermelho">{{ faltas() }}</strong><span>faltas</span></li>
+    <li><strong class="amarelo">{{ justificadas() }}</strong><span>justificadas</span></li>
+    <li><strong>{{ semMarcar() }}</strong><span>a marcar</span></li>
+</ul>
+
+<div class="massa">
+    <button type="button" (click)="todosPresentes()">Todos presentes</button>
+    <button type="button" (click)="limpar()">Limpar</button>
+    @if (!jaSalva()) {
+    <button type="button" class="nao-houve" (click)="motivosAbertos.set(true)"
+        aria-label="Não houve aula neste dia" title="Não houve aula neste dia">
+        <i class="pi pi-ban" aria-hidden="true"></i>
+    </button>
+    }
+</div>
+
+<ul class="alunos">
+    @for (aluno of alunos(); track aluno.id) {
+    <li class="aluno">
+        <span class="ini">
+            {{ iniciais(aluno.nome) }}
+            @if (aluno.fichaSaude) {
+            <!-- Marcador de ficha de saude visivel ANTES de precisar dela. -->
+            <i class="cruz" aria-label="Tem ficha de saúde">+</i>
+            }
+        </span>
+
+        <span class="nome">
+            <strong>{{ aluno.nome }}</strong>
+            @if (aluno.faltasSeguidas >= 3) {
+            <em class="risco">{{ aluno.faltasSeguidas }} faltas seguidas</em>
+            }
+        </span>
+
+        <span class="pfj">
+            <button type="button" class="p" [attr.aria-pressed]="marcacoes()[aluno.id] === 'PRESENTE'"
+                (click)="marcar(aluno.id, 'PRESENTE')" aria-label="Presente">P</button>
+            <button type="button" class="f" [attr.aria-pressed]="marcacoes()[aluno.id] === 'FALTA'"
+                (click)="marcar(aluno.id, 'FALTA')" aria-label="Falta">F</button>
+            <button type="button" class="j" [attr.aria-pressed]="marcacoes()[aluno.id] === 'JUSTIFICADA'"
+                (click)="marcar(aluno.id, 'JUSTIFICADA')" aria-label="Falta justificada">J</button>
+        </span>
+    </li>
+    }
+</ul>
+
+<div class="barra-salvar">
+    <p-button styleClass="w-full" [disabled]="semMarcar() > 0" (onClick)="salvar()"
+        [label]="semMarcar() > 0
+            ? 'Falta marcar ' + semMarcar() + (semMarcar() > 1 ? ' alunos' : ' aluno')
+            : (jaSalva() ? 'Salvar correção' : 'Salvar chamada')" />
+</div>
+
+}
+
+<!-- Escolher a aula: uma por linha, agrupada por mes. Com quarenta aulas no
+     historico, rolar sem marco de mes e se perder. -->
+<p-drawer [(visible)]="listaAberta" position="bottom" header="Escolher a aula" styleClass="folha">
+    <ul class="legenda">
+        <li><i class="bolinha b-PENDENTE"></i> pendente</li>
+        <li><i class="bolinha b-SALVA"></i> feita</li>
+        <li><i class="bolinha b-CANCELADA"></i> cancelada</li>
+    </ul>
+
+    @for (grupo of aulasPorMes(); track grupo.mes) {
+    <p class="mes">{{ grupo.mes }}</p>
+
+    @for (item of grupo.aulas; track item.id) {
+    <button type="button" class="linha-data" [attr.aria-current]="item.id === aulaAtual()?.id"
+        (click)="selecionar(item.id)">
+        <span class="esq">
+            <i class="bolinha" [class]="'b-' + item.situacao"></i>
+            <span>
+                <strong>{{ diaPorExtenso(item.data) }}, {{ diaMes(item.data) }}</strong>
+                @if (ehHoje(item.data)) { <small>hoje</small> }
+                @else if (item.motivoCancelamento) { <small>{{ item.motivoCancelamento }}</small> }
+            </span>
+        </span>
+        <span class="selo" [class]="'s-' + item.situacao">{{ rotuloSituacao[item.situacao] }}</span>
+    </button>
+    }
+    }
+</p-drawer>
+
+<p-drawer [(visible)]="motivosAbertos" position="bottom" header="Não houve aula" styleClass="folha">
+    <p class="explica">
+        A aula entra como cancelada para todos os alunos, sem contar falta. Qual o motivo?
+    </p>
+    @for (motivo of motivos; track motivo) {
+    <button type="button" class="motivo" (click)="confirmarCancelamento(motivo)">{{ motivo }}</button>
+    }
+</p-drawer>
+
+} @else {
+<p class="sem-aulas">
+    Esta turma ainda não tem aulas registradas.<br>
+    A chamada aparece aqui assim que a primeira aula for agendada.
+</p>
+}

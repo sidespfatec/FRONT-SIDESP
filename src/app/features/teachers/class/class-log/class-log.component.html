@@ -1,0 +1,54 @@
+<p-toast position="bottom-center" />
+
+<section class="formulario">
+    <h3>Registrar a aula</h3>
+
+    @if (aulaDeHoje(); as aula) {
+    <p class="quando">{{ diaPorExtenso(aula.data) }}, {{ diaMes(aula.data) }}</p>
+    }
+
+    <label class="rotulo" for="conteudo">O que foi dado</label>
+    <textarea id="conteudo" [value]="conteudo()" (input)="escrever($event.target, 'conteudo')"
+        placeholder="Ex.: Nado crawl, respiração lateral, 6 séries de 25m."></textarea>
+
+    <label class="rotulo">Houve alguma ocorrência?</label>
+    <div class="tipos">
+        @for (tipo of tipos; track tipo) {
+        <button type="button" class="tipo" [attr.aria-pressed]="selecionado(tipo)"
+            (click)="alternarTipo(tipo)">{{ rotuloOcorrencia[tipo] }}</button>
+        }
+    </div>
+
+    <!-- O campo de descricao so aparece depois que ele marca um tipo:
+         formulario curto por padrao, cresce so quando precisa. -->
+    @if (tiposSelecionados().length > 0) {
+    <label class="rotulo" for="ocorrencia">Descreva a ocorrência</label>
+    <textarea id="ocorrencia" [value]="descricao()" (input)="escrever($event.target, 'descricao')"
+        placeholder="Ex.: Bola de hidroginástica furada durante o aquecimento."></textarea>
+    }
+
+    <p-button styleClass="w-full" label="Salvar registro" (onClick)="salvar()" />
+</section>
+
+<h3 class="titulo-historico">Aulas anteriores</h3>
+
+<ul class="historico">
+    @for (registro of registros(); track registro.aulaId) {
+    <li class="registro">
+        <p class="data">{{ dataDoRegistro(registro.aulaId) }}</p>
+
+        <p class="conteudo" [class.vazio]="!registro.conteudo">
+            {{ registro.conteudo || 'Sem registro de conteúdo.' }}
+        </p>
+
+        @for (ocorrencia of registro.ocorrencias; track $index) {
+        <p class="ocorrencia" [class.aluno]="ocorrencia.tipo === 'ALUNO'">
+            {{ ocorrencia.descricao }}
+            <span class="status">{{ rotuloStatus[ocorrencia.status] }}</span>
+        </p>
+        }
+    </li>
+    } @empty {
+    <li class="vazio-lista">Nenhuma aula registrada ainda.</li>
+    }
+</ul>

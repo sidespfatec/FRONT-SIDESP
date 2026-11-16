@@ -1,0 +1,115 @@
+.grupo {
+    margin-top: 1rem;
+    padding: 0.875rem 0.9375rem;
+    background: var(--white);
+    border: 1px solid var(--color-border);
+    border-radius: 0.875rem;
+}
+
+.grupo-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.625rem;
+
+    h3 {
+        margin: 0;
+        font-size: 0.9375rem;
+        font-weight: 700;
+        color: var(--color-text-primary);
+    }
+}
+
+.link {
+    padding: 0.25rem 0.125rem;
+    font-family: var(--font-app);
+    font-size: 0.84375rem;
+    font-weight: 600;
+    color: var(--color-brand-primary);
+    background: none;
+    border: 0;
+    cursor: pointer;
+
+    &:focus-visible {
+        outline: 0.1875rem solid var(--color-border-focus);
+        outline-offset: 0.125rem;
+    }
+}
+
+.nota {
+    margin: 0.25rem 0 0;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+dl {
+    margin: 0;
+}
+
+.campo {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.6875rem 0;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 0.875rem;
+
+    &:last-child {
+        border-bottom: 0;
+    }
+
+    dt {
+        color: var(--color-text-secondary);
+    }
+
+    dd {
+        margin: 0;
+        text-align: right;
+        font-weight: 500;
+        color: var(--color-text-primary);
+    }
+}
+
+// Marca o campo que o professor nao altera sozinho.
+.fixo {
+    margin-left: 0.3125rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+.form-campo {
+    padding: 0.5625rem 0 0;
+
+    label {
+        display: block;
+        margin-bottom: 0.3125rem;
+        font-size: 0.78125rem;
+        font-weight: 600;
+        color: var(--color-text-secondary);
+    }
+}
+
+:host ::ng-deep .form-campo .p-inputmask {
+    width: 100%;
+}
+
+.erro {
+    display: block;
+    margin-top: 0.3125rem;
+    font-size: 0.78125rem;
+    font-weight: 500;
+    color: var(--color-danger);
+}
+
+.acoes {
+    display: flex;
+    gap: 0.5625rem;
+    margin-top: 0.875rem;
+}
+
+:host ::ng-deep .acoes .p-button {
+    flex: 1;
+    justify-content: center;
+}

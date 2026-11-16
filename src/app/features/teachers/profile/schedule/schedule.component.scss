@@ -1,0 +1,123 @@
+.resumo {
+    margin-top: 0.875rem;
+    padding: 0.9375rem;
+    background: var(--white);
+    border: 1px solid var(--color-border);
+    border-radius: 0.875rem;
+}
+
+.rotulo {
+    margin: 0 0 0.6875rem;
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+}
+
+.numeros {
+    display: flex;
+    gap: 0.625rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+
+    li {
+        flex: 1;
+    }
+
+    strong {
+        display: block;
+        font-size: 1.3125rem;
+        font-weight: 700;
+        line-height: 1.1;
+        color: var(--color-text-primary);
+    }
+
+    span {
+        font-size: 0.6875rem;
+        color: var(--color-text-secondary);
+    }
+}
+
+.dia {
+    margin-top: 1rem;
+}
+
+.dia-titulo {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin: 0 0 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.025rem;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+
+    em {
+        font-style: normal;
+        font-size: 0.71875rem;
+        font-weight: 600;
+        text-transform: none;
+        letter-spacing: 0;
+        color: var(--color-text-secondary);
+    }
+}
+
+.bloco {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    padding: 0.75rem;
+    background: var(--white);
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+}
+
+.hora {
+    flex: none;
+    width: 3.875rem;
+    margin: 0;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--color-brand-primary);
+
+    small {
+        display: block;
+        font-weight: 500;
+        color: var(--color-text-muted);
+    }
+}
+
+.bloco-nome {
+    margin: 0;
+    font-size: 0.90625rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.bloco-onde {
+    margin: 0.125rem 0 0;
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+}
+
+.troca {
+    display: flex;
+    align-items: center;
+    gap: 0.4375rem;
+    margin: 0 0 0.5rem;
+    padding: 0.4375rem 0.6875rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--yellow-700);
+    background: var(--yellow-100);
+    border-radius: 0.5625rem;
+}
+
+.sem-aula {
+    margin: 0;
+    padding-top: 0.25rem;
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+}

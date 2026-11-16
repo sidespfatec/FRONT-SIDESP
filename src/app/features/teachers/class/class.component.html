@@ -1,0 +1,42 @@
+<section class="turma">
+
+    <a routerLink="/professor" class="voltar">
+        <i class="pi pi-chevron-left" aria-hidden="true"></i>
+        Minhas turmas
+    </a>
+
+    @if (turma(); as t) {
+    <header class="cabeca">
+        <h1>{{ t.nome }}</h1>
+        <p class="resumo">
+            {{ t.modalidade }} &middot; {{ t.polo }} &middot;
+            {{ rotuloDias(t.diasSemana) }}, {{ t.horaInicio }}
+        </p>
+    </header>
+
+    <p-tabs value="chamada" styleClass="abas-turma">
+        <p-tablist>
+            <p-tab value="chamada">Chamada</p-tab>
+            <p-tab value="alunos">Alunos</p-tab>
+            <p-tab value="diario">Diário</p-tab>
+        </p-tablist>
+
+        <p-tabpanels>
+            <p-tabpanel value="chamada">
+                <app-attendance [turmaId]="t.id" />
+            </p-tabpanel>
+
+            <p-tabpanel value="alunos">
+                <app-class-students [turmaId]="t.id" />
+            </p-tabpanel>
+
+            <p-tabpanel value="diario">
+                <app-class-log [turmaId]="t.id" />
+            </p-tabpanel>
+        </p-tabpanels>
+    </p-tabs>
+    } @else {
+    <p class="nao-achou">Turma não encontrada.</p>
+    }
+
+</section>
