@@ -11,14 +11,18 @@
                 } @else {
                 <i class="pi pi-image"></i>
                 <span>Clique para escolher uma imagem</span>
-                <small>PNG ou JPG</small>
+                <small>JPG, PNG ou WEBP, até 10 MB</small>
                 }
             </div>
         </div>
 
+        @if (erroImagem) {
+        <small class="erro-imagem" role="alert">{{ erroImagem }}</small>
+        }
+
         <div class="field">
             <label for="news-title">Título</label>
-            <input pInputText id="news-title" [(ngModel)]="title" maxlength="100"
+            <input pInputText id="news-title" [(ngModel)]="title" [maxlength]="tituloMax"
                 placeholder="Digite o título da notícia" />
         </div>
 
@@ -28,9 +32,25 @@
                 placeholder="Escreva os detalhes da notícia"></textarea>
         </div>
 
+        <div class="field">
+            <label>Publicação</label>
+            <p-selectbutton [options]="opcoesQuando" optionLabel="label" optionValue="value"
+                [(ngModel)]="quando" [allowEmpty]="false" />
+        </div>
+
+        <!-- data futura entra como EM ESPERA no banco; o back decide pelo horário -->
+        @if (quando === 'AGENDAR') {
+        <div class="field">
+            <label for="news-date">Publicar em</label>
+            <p-datepicker inputId="news-date" [(ngModel)]="dataAgendada" [showTime]="true"
+                dateFormat="dd/mm/yy" [minDate]="agora" [showIcon]="true" appendTo="body"
+                placeholder="dd/mm/aaaa hh:mm" />
+        </div>
+        }
+
         <div class="actions">
             <button type="button" pButton severity="secondary" (click)="close.emit()">Cancelar</button>
-            <button type="button" pButton [disabled]="!title.trim()" (click)="onSave()">Salvar</button>
+            <button type="button" pButton [disabled]="!podeSalvar" (click)="onSave()">Salvar</button>
         </div>
     </div>
 </p-dialog>

@@ -7,15 +7,27 @@
         <h1 class="title-home">
             NOTÍCIAS
         </h1>
+        @if (podePublicar) {
         <div class="button-container">
             <button pButton type="button" class="p-button-sm" (click)="openModal()">
                 <i class="pi pi-plus"></i>
             </button>
         </div>
+        }
     </div>
+    @if (erro) {
+    <p class="news-aviso" role="alert">{{ erro }}</p>
+    }
+
     <div class="cards-container">
         @for (item of newsList; track item.id) {
         <app-card-news [news]="item" (openNews)="openNews($event)"></app-card-news>
+        } @empty {
+            @if (carregando) {
+            <p class="news-aviso">Carregando notícias...</p>
+            } @else {
+            <p class="news-aviso">Nenhuma notícia publicada no momento.</p>
+            }
         }
     </div>
 </div>
@@ -23,6 +35,6 @@
 @if (selectedNews) {
 <app-news-detail-modal [news]="selectedNews" (close)="closeNews()"></app-news-detail-modal>
 }
-@if (viewModal == true) {
+@if (viewModal && podePublicar) {
 <app-new-card-news (close)="closeModal()" (save)="addNews($event)"></app-new-card-news>
 }
