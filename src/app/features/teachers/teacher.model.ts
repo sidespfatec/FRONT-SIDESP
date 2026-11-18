@@ -236,7 +236,7 @@ export const TURMAS_PROVISORIAS: TurmaDoProfessor[] = [
     {
         id: 3, modalidade: 'Natação', nome: 'Sub-18 Competição', polo: 'Polo Pedregulho',
         diasSemana: [2, 4, 6], horaInicio: '17h00', horaFim: '19h00',
-        totalAlunos: 11, vagas: 18, frequenciaMedia: 95, alunosEmRisco: 0, chamadaPendente: false
+        totalAlunos: 8, vagas: 18, frequenciaMedia: 95, alunosEmRisco: 0, chamadaPendente: false
     }
 ];
 
