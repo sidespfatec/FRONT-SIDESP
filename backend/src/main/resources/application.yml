@@ -28,6 +28,10 @@ spring:
   jackson:
     deserialization:
       fail-on-unknown-properties: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 11MB
 sidesp:
   mail-from: ${SMTP_FROM:sidesp@example.invalid}
   cpf-key: ${CPF_HMAC_KEY}
@@ -35,6 +39,7 @@ sidesp:
   email-encryption-key: ${EMAIL_ENCRYPTION_KEY}
   jwt-key: ${JWT_KEY}
   cors-origins: ${CORS_ORIGINS:http://localhost:4200,http://127.0.0.1:4200}
+  upload-dir: ${SIDESP_UPLOAD_DIR:./uploads/noticias}
 
 # Evita que o driver MariaDB registre valores de índices HMAC ao avisar duplicidade.
 logging:
