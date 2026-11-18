@@ -11,7 +11,12 @@ export class NewsService {
 
   noticias = signal<NewsItem[]>([]);
   carregando = signal(false);
+
+  /** Erro ao PUBLICAR. Aparece em cima da lista. */
   erro = signal<string | null>(null);
+
+  /** O GET não respondeu. Não é erro do usuário, então não vira alerta. */
+  indisponivel = signal(false);
 
   constructor(private http: HttpClient) { }
 
@@ -26,8 +31,11 @@ export class NewsService {
         this.carregando.set(false);
       },
       error: (falha: HttpErrorResponse) => {
-        this.erro.set(this.explicarErro(falha));
+        //ler notícia é público: 401/403/404 aqui só quer dizer que o
+        //endpoint ainda não existe, não que a pessoa fez algo errado
+        this.indisponivel.set(true);
         this.carregando.set(false);
+        console.warn('GET /noticias falhou com', falha.status);
       }
     });
   }

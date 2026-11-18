@@ -15,19 +15,16 @@
         </div>
         }
     </div>
+    <!-- só erro de publicação vira alerta vermelho -->
     @if (erro) {
-    <p class="news-aviso" role="alert">{{ erro }}</p>
+    <p class="news-erro" role="alert">{{ erro }}</p>
     }
 
     <div class="cards-container">
         @for (item of newsList; track item.id) {
         <app-card-news [news]="item" (openNews)="openNews($event)"></app-card-news>
         } @empty {
-            @if (carregando) {
-            <p class="news-aviso">Carregando notícias...</p>
-            } @else {
-            <p class="news-aviso">Nenhuma notícia publicada no momento.</p>
-            }
+        <p class="news-aviso">{{ avisoDaLista }}</p>
         }
     </div>
 </div>

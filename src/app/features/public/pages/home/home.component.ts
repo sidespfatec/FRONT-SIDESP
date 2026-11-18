@@ -44,6 +44,13 @@ export class HomeComponent implements OnInit {
     return this.service.erro();
   }
 
+  //a lista vazia tem dois motivos diferentes, e o texto muda
+  get avisoDaLista(): string {
+    if (this.carregando) { return 'Carregando notícias...'; }
+    if (this.service.indisponivel()) { return 'As notícias ainda não estão disponíveis.'; }
+    return 'Nenhuma notícia publicada no momento.';
+  }
+
   //so administrador publica: /api/v1/admin/** exige esse papel no back
   get podePublicar(): boolean {
     return this.auth.ehAdministrador;
