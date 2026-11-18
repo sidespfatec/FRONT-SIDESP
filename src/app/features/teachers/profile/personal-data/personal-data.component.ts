@@ -1,81 +1,59 @@
-import { Component, inject, input, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { InputMaskModule } from 'primeng/inputmask';
-import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
+import { Component, Input } from '@angular/core';
 
-import { PerfilProfessor, dataLocal } from '../../teacher.model';
+import { PerfilProfessor } from '../../teacher.model';
 import { TeacherService } from '../../teacher.service';
 
-/**
- * Aba "Dados": cadastro do professor.
- *
- * Regra de edicao adotada: ele altera o proprio telefone, e so isso.
- * Nome, CPF, nascimento, sexo, especialidade e registro profissional sao
- * mantidos pela administracao -- registro profissional e credencial, nao preferencia.
- */
 @Component({
     selector: 'app-personal-data',
-    imports: [ReactiveFormsModule, ButtonModule, InputMaskModule, ToastModule],
-    providers: [MessageService],
+    imports: [],
     templateUrl: './personal-data.component.html',
     styleUrl: './personal-data.component.scss'
 })
 export class PersonalDataComponent {
 
-    readonly perfil = input.required<PerfilProfessor>();
+    // @Input = o dado vem do componente PAI (o perfil), pelo HTML:
+    //     <app-personal-data [perfil]="perfil" />
+    // O '!' promete ao TypeScript que o pai sempre manda.
+    @Input() perfil!: PerfilProfessor;
 
-    private readonly fb = inject(FormBuilder);
-    private readonly service = inject(TeacherService);
-    private readonly mensagens = inject(MessageService);
+    /** false = mostrando; true = editando. Propriedade comum: só muda em clique. */
+    editando = false;
 
-    /** Controla se a secao Contato esta em modo leitura ou em modo formulario. */
-    readonly editando = signal(false);
+    /** O que está sendo digitado. Só vai pro service quando ele salva. */
+    rascunho = '';
 
-    // nonNullable evita que o controle volte null depois de um reset.
-    readonly formulario = this.fb.nonNullable.group({
-        telefone: ['', [Validators.required, Validators.pattern(/^\(\d{2}\) \d{5}-\d{4}$/)]]
-    });
-
-    get telefone() {
-        return this.formulario.controls.telefone;
-    }
+    constructor(private service: TeacherService) { }
 
     abrirEdicao(): void {
-        // Carrega o valor atual antes de mostrar o formulario.
-        this.formulario.setValue({ telefone: this.perfil().telefone });
-        this.editando.set(true);
+        // Leva o valor atual pro campo, senão ele abre vazio
+        this.rascunho = this.perfil.telefone;
+        this.editando = true;
     }
 
     cancelar(): void {
-        this.editando.set(false);
+        // Não precisa desfazer nada: o rascunho nunca encostou no perfil
+        this.editando = false;
     }
 
     salvar(): void {
-        if (this.formulario.invalid) {
-            // markAllAsTouched faz as mensagens de erro aparecerem mesmo nos
-            // campos que o usuario nunca tocou.
-            this.formulario.markAllAsTouched();
+        // Validação simples: (12) 99999-9999
+        if (!this.telefoneValido) {
             return;
         }
 
-        this.service.atualizarTelefone(this.formulario.getRawValue().telefone);
-        this.editando.set(false);
-        this.mensagens.add({
-            severity: 'success',
-            summary: 'Dados atualizados',
-            detail: 'Seu telefone foi alterado.'
-        });
+        this.service.atualizarTelefone(this.rascunho);
+        this.editando = false;
     }
 
-    /** '1988-07-04' vira '04/07/1988'. */
-    protected dataBr(iso: string): string {
-        const d = dataLocal(iso);
-        return d.toLocaleDateString('pt-BR');
+    get telefoneValido(): boolean {
+        // Isto é uma expressão regular: o desenho de um formato.
+        //   \( \)  = os parênteses literais     \d{2} = dois dígitos
+        //   ^ $    = começo e fim do texto, pra não aceitar lixo em volta
+        return /^\(\d{2}\) \d{5}-\d{4}$/.test(this.rascunho);
     }
 
-    protected sexoPorExtenso(sexo: string): string {
-        return sexo === 'F' ? 'Feminino' : 'Masculino';
+    /** '1988-07-04' -> '04/07/1988' */
+    get nascimento(): string {
+        return this.perfil.dataNascimento.split('-').reverse().join('/');
     }
 }

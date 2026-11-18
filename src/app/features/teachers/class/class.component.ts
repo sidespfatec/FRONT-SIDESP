@@ -1,39 +1,49 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { TabsModule } from 'primeng/tabs';
 
 import { TurmaDoProfessor, rotuloDias } from '../teacher.model';
 import { TeacherService } from '../teacher.service';
 import { AttendanceComponent } from './attendance/attendance.component';
-import { ClassLogComponent } from './class-log/class-log.component';
 import { ClassStudentsComponent } from './class-students/class-students.component';
+import { ClassLogComponent } from './class-log/class-log.component';
 
-/**
- * Tela da turma pelo olhar do professor: cabecalho + tres abas.
- *
- * Igual ao perfil, esta casca nao guarda estado proprio. Ela so descobre
- * QUAL turma esta aberta e passa o id para os filhos.
- */
 @Component({
     selector: 'app-class',
-    imports: [RouterLink, TabsModule, AttendanceComponent, ClassStudentsComponent, ClassLogComponent],
+    // Tudo que o template usa tem que estar aqui: a diretiva routerLink
+    // e os três componentes filhos.
+    imports: [RouterLink, AttendanceComponent, ClassStudentsComponent, ClassLogComponent],
     templateUrl: './class.component.html',
     styleUrl: './class.component.scss'
 })
-export class ClassComponent {
+export class ClassComponent implements OnInit {
 
-    private readonly rota = inject(ActivatedRoute);
-    private readonly service = inject(TeacherService);
+    /** Id que veio no endereço: /professor/turmas/3 -> 3 */
+    turmaId = 0;
 
-    readonly turma = signal<TurmaDoProfessor | undefined>(undefined);
+    rotuloDias = rotuloDias;
 
-    // Expoe a funcao do model para o template, que so enxerga membros da classe.
-    protected readonly rotuloDias = rotuloDias;
+    constructor(
+        private rota: ActivatedRoute,
+        private service: TeacherService
+    ) { }
 
-    constructor() {
-        // snapshot basta porque sair de uma turma e entrar em outra recria o componente.
-        // Se um dia a navegacao for entre ids sem recriar, trocar por paramMap.subscribe.
-        const id = Number(this.rota.snapshot.paramMap.get('id'));
-        this.turma.set(this.service.turmaPorId(id));
+    ngOnInit(): void {
+        // paramMap guarda os pedaços variáveis do endereço — o ':id' da rota.
+        // Vem sempre como TEXTO ('3'), por isso o Number(...).
+        this.turmaId = Number(this.rota.snapshot.paramMap.get('id'));
+
+        // Busca uma vez aqui; as três abas leem do mesmo service.
+        this.service.buscarTurmas();
+        this.service.buscarAulas(this.turmaId);
+        this.service.buscarAlunos(this.turmaId);
+        this.service.buscarRegistros(this.turmaId);
     }
+
+    get turma(): TurmaDoProfessor | undefined {
+        return this.service.turmas().find(t => t.id === this.turmaId);
+    }
+
+    get alunos() { return this.service.alunos(); }
+    get carregando() { return this.service.carregando(); }
+    get erro() { return this.service.erro(); }
 }

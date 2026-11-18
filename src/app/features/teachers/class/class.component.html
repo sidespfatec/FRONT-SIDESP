@@ -1,42 +1,44 @@
 <section class="turma">
 
-    <a routerLink="/professor" class="voltar">
-        <i class="pi pi-chevron-left" aria-hidden="true"></i>
-        Minhas turmas
-    </a>
+    <!-- Rota absoluta, com a barra na frente. Sem a barra ela seria relativa
+         e daria /professor/turmas/professor — erro chato de achar. -->
+    <a routerLink="/professor" class="voltar">← Minhas turmas</a>
 
-    @if (turma(); as t) {
-    <header class="cabeca">
+    <app-attendance [turmaId]="turmaId" />
+    <app-class-students />
+    <app-class-log [turmaId]="turmaId" />
+
+    @if (erro) {
+    <p class="aviso erro" role="alert">{{ erro }}</p>
+    }
+
+    @if (turma; as t) {
+
+    <header>
         <h1>{{ t.nome }}</h1>
         <p class="resumo">
-            {{ t.modalidade }} &middot; {{ t.polo }} &middot;
-            {{ rotuloDias(t.diasSemana) }}, {{ t.horaInicio }}
+            {{ t.modalidade }} &middot; {{ t.polo }} &middot; {{ rotuloDias(t.diasSemana) }}
         </p>
     </header>
 
-    <p-tabs value="chamada" styleClass="abas-turma">
-        <p-tablist>
-            <p-tab value="chamada">Chamada</p-tab>
-            <p-tab value="alunos">Alunos</p-tab>
-            <p-tab value="diario">Diário</p-tab>
-        </p-tablist>
+    <h2>Alunos</h2>
 
-        <p-tabpanels>
-            <p-tabpanel value="chamada">
-                <app-attendance [turmaId]="t.id" />
-            </p-tabpanel>
+    <ul class="lista">
+        @for (aluno of alunos; track aluno.id) {
+        <li class="aluno">
+            <strong>{{ aluno.nome }}</strong>
+            <small>{{ aluno.idade }} anos</small>
+        </li>
+        } @empty {
+        @if (!carregando) {
+        <li class="vazio">Nenhum aluno matriculado nesta turma.</li>
+        }
+        }
+    </ul>
 
-            <p-tabpanel value="alunos">
-                <app-class-students [turmaId]="t.id" />
-            </p-tabpanel>
-
-            <p-tabpanel value="diario">
-                <app-class-log [turmaId]="t.id" />
-            </p-tabpanel>
-        </p-tabpanels>
-    </p-tabs>
-    } @else {
-    <p class="nao-achou">Turma não encontrada.</p>
+    } @else if (!carregando) {
+    <!-- A turma não veio: id errado no endereço, ou turma de outro professor -->
+    <p class="aviso">Turma não encontrada.</p>
     }
 
 </section>

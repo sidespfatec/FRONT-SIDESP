@@ -1,60 +1,23 @@
-<div class="resumo">
-    <p class="rotulo">Semana padrão</p>
+@if (dias.length > 0) {
+<p class="resumo">{{ horasNaSemana }}h de aula por semana</p>
+}
 
-    <ul class="numeros">
-        <li>
-            <strong>{{ horasNaSemana() }}h</strong>
-            <span>por semana</span>
-        </li>
-        <li>
-            <strong>{{ aulasNaSemana() }}</strong>
-            <span>aulas</span>
-        </li>
-        <li>
-            <strong>{{ totalPolos() }}</strong>
-            <span>polos</span>
-        </li>
-        <li>
-            <strong>{{ totalAlunos() }}</strong>
-            <span>alunos</span>
-        </li>
-    </ul>
-</div>
-
-@for (dia of semana(); track dia.numero) {
+@for (dia of dias; track dia.nome) {
 <section class="dia">
-    <h3 class="dia-titulo">
-        {{ dia.nome }}
-        @if (dia.horas > 0) {
-        <em>{{ dia.horas }}h</em>
+    <h3>{{ dia.nome }}</h3>
+
+    <ul>
+        @for (turma of dia.turmas; track turma.id) {
+        <li>
+            <span class="hora">{{ horaBonita(turma.horaInicio) }}</span>
+            <span class="qual">
+                <strong>{{ turma.nome }}</strong>
+                <small>{{ turma.polo }}</small>
+            </span>
+        </li>
         }
-    </h3>
-
-    @for (bloco of dia.blocos; track bloco.turma.id) {
-
-    <!-- Aviso calculado, nao cadastrado: so aparece quando a aula anterior
-         do mesmo dia era em outro polo. -->
-    @if (bloco.poloAnterior) {
-    <p class="troca">
-        <i class="pi pi-car" aria-hidden="true"></i>
-        Troca de polo: {{ bloco.fimAnterior }} em {{ curto(bloco.poloAnterior) }}
-        → {{ bloco.turma.horaInicio }} em {{ curto(bloco.turma.polo) }}
-    </p>
-    }
-
-    <article class="bloco">
-        <p class="hora">
-            {{ bloco.turma.horaInicio }}
-            <small>{{ bloco.turma.horaFim }}</small>
-        </p>
-        <div>
-            <p class="bloco-nome">{{ bloco.turma.modalidade }} — {{ bloco.turma.nome }}</p>
-            <p class="bloco-onde">{{ bloco.turma.polo }} &middot; {{ bloco.turma.totalAlunos }} alunos</p>
-        </div>
-    </article>
-
-    } @empty {
-    <p class="sem-aula">Sem aula.</p>
-    }
+    </ul>
 </section>
+} @empty {
+<p class="vazio">Sua agenda aparece aqui quando você tiver turmas.</p>
 }

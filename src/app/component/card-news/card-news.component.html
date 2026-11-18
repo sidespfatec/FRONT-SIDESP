@@ -1,11 +1,17 @@
-<p-card class="card" (click)="openNews.emit(news)">
+<!-- Card que carrega as notícias para a tela da home-->
+<p-card class="card">
+
     <figure>
+        <!-- vindo do model, temos o news.model-->
         <img [src]="news.image" [alt]="news.title">
     </figure>
+
     <div class="description-card">
         <h2>{{ news.title }}</h2>
     </div>
+
     <div class="footer-card">
-        <button pButton type="button" class="p-button-sm">Saiba mais</button>
+        <!-- Com o click expande a notícia aparecendo sua descrição chamando o news-detail-->
+        <button pButton type="button" class="p-button-sm" (click)="openNews.emit(news)">Saiba mais</button>
     </div>
 </p-card>

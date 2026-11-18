@@ -3,48 +3,17 @@
 :host {
     display: block;
     background: var(--color-bg-page);
-    min-height: 100%;
 }
 
 .perfil {
     max-width: 60rem;
     margin: 0 auto;
-    padding: 1rem;
-}
-
-.cartao-identidade {
-    display: flex;
-    gap: 0.875rem;
-    padding: 1rem;
-    background: var(--white);
-    border: 1px solid var(--color-border);
-    border-radius: 0.875rem;
-}
-
-.foto {
-    flex: none;
-    width: 4.625rem;
-    height: 4.625rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--blue-50);
-    color: var(--color-brand-primary);
-    border-radius: 0.75rem;
-
-    i {
-        font-size: 1.75rem;
-    }
-}
-
-.identidade {
-    min-width: 0;
+    padding: 1rem 1rem 6rem;
 
     h1 {
         margin: 0;
         font-size: 1.25rem;
         font-weight: 700;
-        line-height: 1.2;
         color: var(--color-text-primary);
     }
 }
@@ -55,110 +24,40 @@
     color: var(--color-text-secondary);
 }
 
-.selos {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.375rem;
-    margin: 0.5625rem 0 0;
-    padding: 0;
-    list-style: none;
+.aviso {
+    margin-top: 1.5rem;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+
+    &.erro {
+        padding: 0.75rem 0.875rem;
+        color: var(--red-700);
+        background: var(--red-100);
+        border-radius: 0.625rem;
+    }
 }
 
-.selo {
-    padding: 0.1875rem 0.5625rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    border-radius: 999px;
-}
+.dados {
+    margin: 1.125rem 0 0;
+    padding: 1rem;
+    background: var(--white);
+    border: 1px solid var(--color-border);
+    border-radius: 0.875rem;
 
-.selo-ativo {
-    background: var(--green-100);
-    color: var(--green-700);
-}
+    dt {
+        font-size: 0.65625rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+    }
 
-.selo-neutro {
-    background: var(--blue-50);
-    color: var(--color-brand-primary);
-}
-
-.faixa-pendencia {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.625rem;
-    width: 100%;
-    margin-top: 0.75rem;
-    padding: 0.6875rem 0.8125rem;
-    font-family: var(--font-app);
-    font-size: 0.84375rem;
-    text-align: left;
-    color: var(--yellow-700);
-    background: var(--yellow-100);
-    border: 1px solid var(--yellow-500);
-    border-left-width: 0.25rem;
-    border-radius: 0.625rem;
-    cursor: pointer;
-
-    .texto strong {
-        display: block;
+    dd {
+        margin: 0.1875rem 0 0.875rem;
         font-size: 0.875rem;
-    }
+        color: var(--color-text-primary);
 
-    i {
-        flex: none;
-        font-size: 0.75rem;
-    }
-
-    &:focus-visible {
-        outline: 0.1875rem solid var(--color-border-focus);
-        outline-offset: 0.125rem;
-    }
-}
-
-// O tema do PrimeNG e injetado em tempo de execucao, DEPOIS do styles.scss.
-// Sem ::ng-deep estas regras perdem a disputa de especificidade para o tema.
-:host ::ng-deep .abas-perfil {
-    margin-top: 1.125rem;
-
-    .p-tablist-tab-list {
-        background: transparent;
-        border-bottom: 1px solid var(--color-border);
-    }
-
-    .p-tab {
-        flex: 1;
-        justify-content: center;
-        padding: 0.75rem 0.25rem;
-        font-family: var(--font-app);
-        font-size: 0.84375rem;
-        font-weight: 600;
-        color: var(--color-text-secondary);
-        background: transparent;
-        border-bottom-width: 0.1875rem;
-    }
-
-    .p-tab-active {
-        color: var(--color-brand-primary);
-        border-bottom-color: var(--color-brand-primary);
-    }
-
-    .p-tabpanels {
-        padding: 0;
-        background: transparent;
-    }
-}
-
-@include md {
-    .perfil {
-        padding: 1.5rem;
-    }
-
-    .identidade h1 {
-        font-size: 1.5rem;
-    }
-
-    :host ::ng-deep .abas-perfil .p-tab {
-        flex: 0 0 auto;
-        padding: 0.75rem 1.5rem;
+        &:last-child {
+            margin-bottom: 0;
+        }
     }
 }

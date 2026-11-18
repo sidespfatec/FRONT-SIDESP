@@ -1,132 +1,260 @@
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 
-import {
-    Aula, AlunoDaTurma, Presenca, PerfilProfessor, RegistroDeAula, TurmaDoProfessor,
-    ALUNOS_PROVISORIOS, AULAS_PROVISORIAS, PERFIL_PROVISORIO, REGISTROS_PROVISORIOS, TURMAS_PROVISORIAS
-} from './teacher.model';
+import { PerfilProfessor } from './teacher.model';
+import { TurmaDoProfessor } from './teacher.model';
+import { AlunoDaTurma } from './teacher.model';
+import { Aula, Presenca, RegistroDeAula } from './teacher.model';
 
-/**
- * Fonte unica de dados da area do professor.
- *
- * Hoje tudo vive em memoria, em signals. Quando os endpoints existirem:
- *   - cada signal de leitura vira o resultado de um this.http.get(...)
- *   - cada metodo de gravacao vira um this.http.post(...) / patch(...)
- * As telas nao mudam, porque elas so conversam com este service.
- */
+
+interface MarcacaoDaApi {
+    alunoId: number;
+    presenca: Presenca;
+}
+
+const API = '/api/v1';
+
+
+// providedIn: 'root' = existe um só deste service no app inteiro.
 @Injectable({ providedIn: 'root' })
 export class TeacherService {
 
-    // O underline marca o signal "de dentro", que so o service altera.
-    // Para fora expomos a versao readonly, assim nenhuma tela escreve no estado por engano.
-    private readonly _perfil = signal<PerfilProfessor>(PERFIL_PROVISORIO);
-    private readonly _turmas = signal<TurmaDoProfessor[]>(TURMAS_PROVISORIAS);
-    private readonly _aulas = signal<Aula[]>(AULAS_PROVISORIAS);
-    private readonly _alunos = signal<AlunoDaTurma[]>(ALUNOS_PROVISORIOS);
-    private readonly _registros = signal<RegistroDeAula[]>(REGISTROS_PROVISORIOS);
 
-    // Chamada guardada por aula: { [aulaId]: { [alunoId]: 'PRESENTE' | ... } }
-    private readonly _chamadas = signal<Record<number, Record<number, Presenca>>>({});
+    // ESTADO
 
-    readonly perfil = this._perfil.asReadonly();
-    readonly turmas = this._turmas.asReadonly();
-    readonly aulas = this._aulas.asReadonly();
+    perfil = signal<PerfilProfessor | null>(null);   // null = ainda não chegou
+    carregando = signal(false);
+    erro = signal<string | null>(null);
+    alunos = signal<AlunoDaTurma[]>([]);
+    aulas = signal<Aula[]>([]);
+    registros = signal<RegistroDeAula[]>([]);
 
-    constructor() {
-        this.preencherChamadasJaSalvas();
+    // Presenças por aula: { 101: { 1: 'PRESENTE', 2: 'FALTA' } }
+    // A chave de fora é o id da aula; a de dentro, o id do aluno.
+    // Objeto em vez de lista porque consultar por id fica imediato.
+    chamadas = signal<Record<number, Record<number, Presenca>>>({});
+
+    constructor(private http: HttpClient) { }
+
+
+    // BUSCAR (GET)
+
+    buscarPerfil(): void {
+        this.carregando.set(true);
+        this.erro.set(null);
+
+        // O <PerfilProfessor> avisa o TypeScript do que vem na resposta.
+        // O subscribe é o que DISPARA a chamada — sem ele nada é enviado.
+        this.http.get<PerfilProfessor>(`${API}/professores/me`).subscribe({
+
+            next: (perfil) => {              // deu certo
+                this.perfil.set(perfil);
+                this.carregando.set(false);
+            },
+
+            error: (falha: HttpErrorResponse) => {   // deu errado
+                this.erro.set(this.explicarErro(falha));
+                this.carregando.set(false);
+            }
+        });
+    }
+
+
+    // GRAVAR (PATCH)
+
+    // O segundo parâmetro é o corpo que vai no JSON: { "telefone": "..." }
+    atualizarTelefone(telefone: string): void {
+        const antes = this.perfil();
+        if (!antes) { return; }
+
+        // Mostra na tela ANTES da rede responder. Se o servidor recusar,
+        // desfaz no error. O professor não fica esperando 3s por um toque.
+        this.perfil.set({ ...antes, telefone });
+
+        this.http.patch<PerfilProfessor>(`${API}/professores/me`, { telefone }).subscribe({
+            // Usa o que o servidor devolveu, não o que mandamos:
+
+            next: (perfil) => this.perfil.set(perfil),
+
+            error: (falha: HttpErrorResponse) => {
+                this.perfil.set(antes);      // desfaz
+                this.erro.set(this.explicarErro(falha));
+            }
+        });
+    }
+
+
+
+    // Transforma o erro técnico numa frase que o professor entende.
+
+    private explicarErro(falha: HttpErrorResponse): string {
+        if (falha.status === 0) { return 'Sem conexão com o servidor.'; }
+        if (falha.status === 401) { return 'Sua sessão expirou. Entre novamente.'; }
+        if (falha.status === 403) { return 'Você não tem permissão para ver isto.'; }
+
+        // O back manda { codigo, mensagem } nos erros de negócio.
+        // O ?? usa o texto da direita quando o da esquerda não existe.
+        return falha.error?.mensagem ?? 'Não foi possível carregar os dados.';
+    }
+
+    turmas = signal<TurmaDoProfessor[]>([]);
+
+    // Busca as turmas do professor logado. 
+    buscarTurmas(): void {
+        this.carregando.set(true);
+        this.erro.set(null);
+
+        // Repare no [] em TurmaDoProfessor[]: a API devolve um array.
+        this.http.get<TurmaDoProfessor[]>(`${API}/professores/me/turmas`).subscribe({
+
+            next: (turmas) => {
+                this.turmas.set(turmas);
+                this.carregando.set(false);
+            },
+
+            error: (falha: HttpErrorResponse) => {
+                this.erro.set(this.explicarErro(falha));
+                this.carregando.set(false);
+            }
+        });
     }
 
     /**
-     * Atualiza o telefone do professor.
-     * Por enquanto so mexe no signal; vira um PATCH quando o endpoint existir.
+     * Busca os alunos de uma turma.
+     *
+     * Recebe o turmaId por parâmetro porque, ao contrário do perfil e das
+     * turmas, aqui a API precisa saber DE QUAL turma. O `me` dos outros
+     * endpoints o back descobre sozinho, pelo token.
      */
-    atualizarTelefone(telefone: string): void {
-        this._perfil.update(perfil => ({ ...perfil, telefone }));
+
+
+    buscarAlunos(turmaId: number): void {
+        this.alunos.set([]);        // limpa o que era de outra turma
+        this.carregando.set(true);
+        this.erro.set(null);
+
+        // Crase (`) e não aspas: é só com crase que o ${turmaId} é trocado
+        // pelo valor. Com aspas, a URL iria literalmente com '${turmaId}'.
+
+        this.http.get<AlunoDaTurma[]>(`${API}/turmas/${turmaId}/alunos`).subscribe({
+
+            next: (alunos) => {
+                this.alunos.set(alunos);
+                this.carregando.set(false);
+            },
+
+            error: (falha: HttpErrorResponse) => {
+                this.erro.set(this.explicarErro(falha));
+                this.carregando.set(false);
+            }
+        });
     }
 
-    turmaPorId(id: number): TurmaDoProfessor | undefined {
-        return this._turmas().find(turma => turma.id === id);
+    buscarAulas(turmaId: number): void {
+        this.aulas.set([]);
+        this.http.get<Aula[]>(`${API}/turmas/${turmaId}/aulas`).subscribe({
+            next: (aulas) => this.aulas.set(aulas),
+            error: (f: HttpErrorResponse) => this.erro.set(this.explicarErro(f))
+        });
     }
 
-    /** Aulas da turma em ordem cronologica (a mais antiga primeiro). */
-    aulasDaTurma(turmaId: number): Aula[] {
-        return this._aulas()
-            .filter(aula => aula.turmaId === turmaId)
-            .sort((a, b) => a.data.localeCompare(b.data));
+    buscarRegistros(turmaId: number): void {
+        this.registros.set([]);
+        this.http.get<RegistroDeAula[]>(`${API}/turmas/${turmaId}/diario`).subscribe({
+            next: (registros) => this.registros.set(registros),
+            error: (f: HttpErrorResponse) => this.erro.set(this.explicarErro(f))
+        });
     }
 
-    aulaPorId(aulaId: number): Aula | undefined {
-        return this._aulas().find(aula => aula.id === aulaId);
+    /**
+     * Busca as presenças já gravadas de UMA aula.
+     * A tela chama isto toda vez que o professor troca de data — assim não
+     * trazemos o semestre inteiro de presenças de uma vez.
+     */
+
+    buscarChamada(aulaId: number): void {
+        this.http.get<MarcacaoDaApi[]>(`${API}/aulas/${aulaId}/chamada`).subscribe({
+            next: (lista) => {
+                // A API manda LISTA; a tela usa OBJETO indexado pelo id do aluno.
+                // Converter formato é justamente o trabalho do service.
+                const marcacoes: Record<number, Presenca> = {};
+                for (const item of lista) {
+                    marcacoes[item.alunoId] = item.presenca;
+                }
+                this.chamadas.update(todas => ({ ...todas, [aulaId]: marcacoes }));
+            },
+            error: (f: HttpErrorResponse) => {
+                // 404 aqui é normal: quer dizer "esta aula ainda não teve chamada"
+                if (f.status === 404) { return; }
+                this.erro.set(this.explicarErro(f));
+            }
+        });
     }
 
-    // Provisorio: devolve a mesma lista para qualquer turma, porque os dados de exemplo
-    // nao tem vinculo aluno-turma. O endpoint real vai filtrar pelo turmaId.
-    alunosDaTurma(turmaId: number): AlunoDaTurma[] {
-        return this._alunos();
-    }
-
-    /** Marcacoes ja gravadas daquela aula. Vazio = chamada ainda nao feita. */
-    marcacoesDaAula(aulaId: number): Record<number, Presenca> {
-        return this._chamadas()[aulaId] ?? {};
-    }
-
+    /** Salva a chamada. */
     salvarChamada(aulaId: number, marcacoes: Record<number, Presenca>): void {
-        // update() recebe o valor atual e devolve um NOVO objeto. Trocar o objeto inteiro
-        // (em vez de alterar o antigo) e o que faz o Angular perceber a mudanca.
-        this._chamadas.update(todas => ({ ...todas, [aulaId]: { ...marcacoes } }));
-        this.mudarSituacao(aulaId, aula => ({ ...aula, situacao: 'SALVA', motivoCancelamento: undefined }));
-    }
+        const antes = this.chamadas();
 
-    cancelarAula(aulaId: number, motivo: string): void {
-        this.mudarSituacao(aulaId, aula => ({ ...aula, situacao: 'CANCELADA', motivoCancelamento: motivo }));
-    }
+        // Mostra na tela antes da rede responder; desfaz se o servidor recusar.
+        this.chamadas.update(todas => ({ ...todas, [aulaId]: { ...marcacoes } }));
+        this.trocarSituacao(aulaId, 'SALVA');
 
-    desfazerCancelamento(aulaId: number): void {
-        this.mudarSituacao(aulaId, aula => ({ ...aula, situacao: 'PENDENTE', motivoCancelamento: undefined }));
-    }
+        // Object.keys devolve as chaves como TEXTO, por isso o Number(...)
+        const corpo = {
+            marcacoes: Object.keys(marcacoes).map(alunoId => ({
+                alunoId: Number(alunoId),
+                presenca: marcacoes[Number(alunoId)]
+            }))
+        };
 
-    registroDaAula(aulaId: number): RegistroDeAula | undefined {
-        return this._registros().find(registro => registro.aulaId === aulaId);
-    }
-
-    registrosDaTurma(turmaId: number): RegistroDeAula[] {
-        const idsDaTurma = this.aulasDaTurma(turmaId).map(aula => aula.id);
-        return this._registros()
-            .filter(registro => idsDaTurma.includes(registro.aulaId))
-            .sort((a, b) => b.aulaId - a.aulaId);
+        this.http.post(`${API}/aulas/${aulaId}/chamada`, corpo).subscribe({
+            next: () => { },
+            error: (f: HttpErrorResponse) => {
+                this.chamadas.set(antes);
+                this.trocarSituacao(aulaId, 'PENDENTE');
+                this.erro.set(this.explicarErro(f));
+            }
+        });
     }
 
     salvarRegistro(registro: RegistroDeAula): void {
-        this._registros.update(lista => [
+        const antes = this.registros();
+
+        // Tira o registro antigo daquela aula e põe o novo na frente
+        this.registros.update(lista => [
             registro,
             ...lista.filter(item => item.aulaId !== registro.aulaId)
         ]);
+
+        this.http.post(`${API}/aulas/${registro.aulaId}/diario`, registro).subscribe({
+            next: () => { },
+            error: (f: HttpErrorResponse) => {
+                this.registros.set(antes);
+                this.erro.set(this.explicarErro(f));
+            }
+        });
     }
 
-    /** Aplica uma mudanca em UMA aula, mantendo o resto da lista intacto. */
-    private mudarSituacao(aulaId: number, mudanca: (aula: Aula) => Aula): void {
-        this._aulas.update(lista => lista.map(aula => aula.id === aulaId ? mudanca(aula) : aula));
+
+    // ---- consultas na memória (não chamam a API) ----
+
+    aulasDaTurma(turmaId: number): Aula[] {
+        return this.aulas()
+            .filter(aula => aula.turmaId === turmaId)
+            // a data é 'aaaa-mm-dd': ordem alfabética = ordem cronológica
+            .sort((a, b) => a.data.localeCompare(b.data));
     }
 
-    /**
-     * So para a demonstracao: as aulas que ja nascem com situacao SALVA precisam ter
-     * marcacoes, senao abrir uma delas mostraria a chamada em branco.
-     * Some junto com os dados provisorios.
-     */
-    private preencherChamadasJaSalvas(): void {
-        const geradas: Record<number, Record<number, Presenca>> = {};
+    /** O que já está gravado daquela aula. {} = chamada não feita. */
+    marcacoesDaAula(aulaId: number): Record<number, Presenca> {
+        return this.chamadas()[aulaId] ?? {};
+    }
 
-        for (const aula of this._aulas()) {
-            if (aula.situacao !== 'SALVA') {
-                continue;
-            }
-            const marcacoes: Record<number, Presenca> = {};
-            for (const aluno of this._alunos()) {
-                const sorteio = (aula.id * 31 + aluno.id * 7) % 100;
-                marcacoes[aluno.id] = sorteio < 80 ? 'PRESENTE' : sorteio < 93 ? 'FALTA' : 'JUSTIFICADA';
-            }
-            geradas[aula.id] = marcacoes;
-        }
-
-        this._chamadas.set(geradas);
+    private trocarSituacao(aulaId: number, situacao: Aula['situacao']): void {
+        // map devolve lista NOVA. Trocar a lista inteira é o que avisa o signal;
+        // mexer dentro do objeto antigo não avisaria.
+        this.aulas.update(lista => lista.map(aula =>
+            aula.id === aulaId ? { ...aula, situacao } : aula
+        ));
     }
 }

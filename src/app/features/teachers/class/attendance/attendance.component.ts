@@ -1,218 +1,119 @@
-import { AfterViewInit, Component, ElementRef, OnInit, computed, inject, input, signal, viewChild } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
-import { DrawerModule } from 'primeng/drawer';
-import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
+import { Component, Input, OnInit } from '@angular/core';
 
-import {
-    Aula, Presenca, MOTIVOS_CANCELAMENTO, ROTULO_SITUACAO,
-    diaCurto, diaMes, diaPorExtenso, ehFuturo, ehHoje, mesAno
-} from '../../teacher.model';
+import { Aula, AlunoDaTurma, Presenca, diaCurto, diaMes, diaPorExtenso, ehHoje }
+    from '../../teacher.model';
 import { TeacherService } from '../../teacher.service';
 
-/**
- * Aba "Chamada".
- *
- * A ideia da tela: o professor faz isso de pe, na beira da piscina. Entao
- * "Todos presentes" resolve a maioria num toque e ele so vira as excecoes,
- * e o botao de salvar fica travado enquanto faltar alguem -- chamada pela
- * metade viraria buraco no calendario de frequencia do aluno.
- */
 @Component({
     selector: 'app-attendance',
-    imports: [ButtonModule, DrawerModule, ToastModule],
-    providers: [MessageService],
+    imports: [],
     templateUrl: './attendance.component.html',
     styleUrl: './attendance.component.scss'
 })
-export class AttendanceComponent implements OnInit, AfterViewInit {
+export class AttendanceComponent implements OnInit {
 
-    readonly turmaId = input.required<number>();
-
-    private readonly service = inject(TeacherService);
-    private readonly mensagens = inject(MessageService);
-
-    // Referencia da tira de chips, usada para centralizar a aula selecionada.
-    private readonly tira = viewChild<ElementRef<HTMLElement>>('tira');
-
-    // Como aulasDaTurma() le um signal la dentro, este computed refaz sozinho
-    // quando uma aula muda de situacao.
-    readonly aulas = computed(() => this.service.aulasDaTurma(this.turmaId()));
-
-    readonly alunos = computed(() => this.service.alunosDaTurma(this.turmaId()));
-
-    /** Guardamos o id, nao o indice: a lista pode mudar de tamanho. */
-    readonly aulaSelecionadaId = signal<number | null>(null);
-
-    readonly aulaAtual = computed<Aula | undefined>(() => {
-        const lista = this.aulas();
-        const id = this.aulaSelecionadaId();
-        return lista.find(aula => aula.id === id) ?? lista[lista.length - 1];
-    });
-
-    /** Marcacoes em edicao. So vao para o service quando ele salva. */
-    readonly marcacoes = signal<Record<number, Presenca>>({});
-
-    readonly presentes = computed(() => this.contar('PRESENTE'));
-    readonly faltas = computed(() => this.contar('FALTA'));
-    readonly justificadas = computed(() => this.contar('JUSTIFICADA'));
-
-    readonly semMarcar = computed(() =>
-        this.alunos().length - this.presentes() - this.faltas() - this.justificadas()
-    );
-
-    readonly jaSalva = computed(() => this.aulaAtual()?.situacao === 'SALVA');
-
-    readonly cancelada = computed(() => this.aulaAtual()?.situacao === 'CANCELADA');
+    @Input() turmaId = 0;
 
     /**
-     * Aulas que ja aconteceram e continuam sem chamada.
-     * E o aviso mais importante da tela: sem ele, um dia esquecido nunca mais
-     * seria preenchido.
+     * Qual aula está aberta. Guardamos o ID, não a posição na lista,
+     * porque a lista muda de tamanho quando a API responde.
+     * 0 = ainda não escolheu.
      */
-    readonly atrasadas = computed(() =>
-        this.aulas().filter(aula =>
-            aula.situacao === 'PENDENTE' && !ehHoje(aula.data) && !ehFuturo(aula.data)
-        )
-    );
+    aulaSelecionadaId = 0;
 
-    readonly listaAberta = signal(false);
-    readonly motivosAbertos = signal(false);
+    /**
+     * O que ele marcou AGORA, nesta sessão. { 1: 'PRESENTE', 2: 'FALTA' }
+     * Propriedade comum, não signal: só muda dentro de clique.
+     */
+    marcacoes: Record<number, Presenca> = {};
 
-    protected readonly motivos = MOTIVOS_CANCELAMENTO;
-    protected readonly rotuloSituacao = ROTULO_SITUACAO;
-    protected readonly diaCurto = diaCurto;
-    protected readonly diaMes = diaMes;
-    protected readonly diaPorExtenso = diaPorExtenso;
-    protected readonly ehHoje = ehHoje;
-    protected readonly mesAno = mesAno;
+    diaCurto = diaCurto;
+    diaMes = diaMes;
+    diaPorExtenso = diaPorExtenso;
+    ehHoje = ehHoje;
+
+    constructor(private service: TeacherService) { }
 
     ngOnInit(): void {
-        // Abre sempre na aula mais recente, que e a que ele quer na maioria das vezes.
-        this.carregarMarcacoes();
+        // Nada aqui: quem busca aulas e alunos é a tela da turma (o pai).
+        // Mas a primeira aula precisa ser escolhida — ver 'aulaAtual'.
     }
 
-    ngAfterViewInit(): void {
-        this.centralizarTira();
+    // LEITURA
+
+
+    get aulas(): Aula[] { return this.service.aulasDaTurma(this.turmaId); }
+    get alunos(): AlunoDaTurma[] { return this.service.alunos(); }
+
+    /** A aula aberta. Se ele ainda não escolheu, a mais recente. */
+    get aulaAtual(): Aula | undefined {
+        const lista = this.aulas;
+        if (lista.length === 0) { return undefined; }
+
+        return lista.find(a => a.id === this.aulaSelecionadaId)
+            ?? lista[lista.length - 1];       // ?? = se não achou, usa esta
     }
+
+    /**
+     * O estado real da chamada: o que veio do servidor, com o que ele
+     * marcou agora POR CIMA.
+     *
+     * A ordem do spread importa: o que vem depois ganha. Por isso
+     * `this.marcacoes` fica por último — a escolha de agora manda.
+     */
+    get marcacoesAtuais(): Record<number, Presenca> {
+        const aula = this.aulaAtual;
+        if (!aula) { return {}; }
+
+        return { ...this.service.marcacoesDaAula(aula.id), ...this.marcacoes };
+    }
+
+    marcacaoDe(alunoId: number): Presenca | undefined {
+        return this.marcacoesAtuais[alunoId];
+    }
+
+    // Contadores. São `get` porque recalculam sozinhos a cada repintada.
+    get presentes(): number { return this.contar('PRESENTE'); }
+    get faltas(): number { return this.contar('FALTA'); }
+    get justificadas(): number { return this.contar('JUSTIFICADA'); }
+
+    /** Quantos alunos ainda não foram marcados. */
+    get semMarcar(): number {
+        return this.alunos.filter(a => !this.marcacaoDe(a.id)).length;
+    }
+
+    private contar(presenca: Presenca): number {
+        return this.alunos.filter(a => this.marcacaoDe(a.id) === presenca).length;
+    }
+
+
+    // AÇÕES
+
 
     selecionar(aulaId: number): void {
-        this.aulaSelecionadaId.set(aulaId);
-        this.carregarMarcacoes();
-        this.listaAberta.set(false);
-        this.centralizarTira();
-    }
-
-    irParaAtrasada(): void {
-        const primeira = this.atrasadas()[0];
-        if (primeira) {
-            this.selecionar(primeira.id);
-        }
+        this.aulaSelecionadaId = aulaId;
+        this.marcacoes = {};                 // limpa o que ele marcou na outra aula
+        this.service.buscarChamada(aulaId);  // e pede o que já está gravado
     }
 
     marcar(alunoId: number, presenca: Presenca): void {
-        this.marcacoes.update(atual => {
-            const copia = { ...atual };
-            // Tocar de novo no mesmo botao desmarca: erro de dedo tem volta.
-            if (copia[alunoId] === presenca) {
-                delete copia[alunoId];
-            } else {
-                copia[alunoId] = presenca;
-            }
-            return copia;
-        });
+        // Objeto NOVO, não mexer no antigo — mesma regra dos signals.
+        this.marcacoes = { ...this.marcacoes, [alunoId]: presenca };
     }
 
     todosPresentes(): void {
         const todos: Record<number, Presenca> = {};
-        for (const aluno of this.alunos()) {
+        for (const aluno of this.alunos) {
             todos[aluno.id] = 'PRESENTE';
         }
-        this.marcacoes.set(todos);
-    }
-
-    limpar(): void {
-        this.marcacoes.set({});
+        this.marcacoes = todos;
     }
 
     salvar(): void {
-        const aula = this.aulaAtual();
-        if (!aula || this.semMarcar() > 0) {
-            return;
-        }
+        const aula = this.aulaAtual;
+        if (!aula || this.semMarcar > 0) { return; }
 
-        const corrigindo = aula.situacao === 'SALVA';
-        this.service.salvarChamada(aula.id, this.marcacoes());
-
-        this.mensagens.add({
-            severity: 'success',
-            summary: corrigindo ? 'Correção salva' : 'Chamada salva',
-            detail: corrigindo
-                ? `Aula de ${this.diaPorExtenso(aula.data)}, ${this.diaMes(aula.data)}.`
-                : this.faltas() > 0
-                    ? `${this.faltas()} falta${this.faltas() > 1 ? 's' : ''} registrada${this.faltas() > 1 ? 's' : ''}.`
-                    : 'Turma completa.'
-        });
-    }
-
-    confirmarCancelamento(motivo: string): void {
-        const aula = this.aulaAtual();
-        if (!aula) {
-            return;
-        }
-        this.service.cancelarAula(aula.id, motivo);
-        this.motivosAbertos.set(false);
-        this.mensagens.add({
-            severity: 'info',
-            summary: 'Aula cancelada',
-            detail: `Motivo: ${motivo.toLowerCase()}. Ninguém recebeu falta.`
-        });
-    }
-
-    desfazerCancelamento(): void {
-        const aula = this.aulaAtual();
-        if (aula) {
-            this.service.desfazerCancelamento(aula.id);
-        }
-    }
-
-    /** Agrupa as aulas por mes para a lista "ver todas", da mais nova para a mais velha. */
-    readonly aulasPorMes = computed(() => {
-        const grupos: { mes: string; aulas: Aula[] }[] = [];
-        for (const aula of [...this.aulas()].reverse()) {
-            const mes = mesAno(aula.data);
-            const ultimo = grupos[grupos.length - 1];
-            if (ultimo && ultimo.mes === mes) {
-                ultimo.aulas.push(aula);
-            } else {
-                grupos.push({ mes, aulas: [aula] });
-            }
-        }
-        return grupos;
-    });
-
-    private contar(presenca: Presenca): number {
-        const marcadas = this.marcacoes();
-        return this.alunos().filter(aluno => marcadas[aluno.id] === presenca).length;
-    }
-
-    private carregarMarcacoes(): void {
-        const aula = this.aulaAtual();
-        // Copia o objeto do service: editar aqui nao pode mexer no que esta salvo.
-        this.marcacoes.set(aula ? { ...this.service.marcacoesDaAula(aula.id) } : {});
-    }
-
-    /** Deixa o chip selecionado no meio da tira, para ele nao nascer fora da tela. */
-    private centralizarTira(): void {
-        const elemento = this.tira()?.nativeElement;
-        const alvo = elemento?.querySelector<HTMLElement>('[aria-current="true"]');
-        if (elemento && alvo) {
-            elemento.scrollLeft = alvo.offsetLeft - elemento.clientWidth / 2 + alvo.clientWidth / 2;
-        }
-    }
-
-    protected iniciais(nome: string): string {
-        const partes = nome.split(' ');
-        return `${partes[0][0]}${partes[partes.length - 1][0]}`.toUpperCase();
+        this.service.salvarChamada(aula.id, this.marcacoesAtuais);
+        this.marcacoes = {};   // agora o servidor é a fonte da verdade
     }
 }

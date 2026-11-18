@@ -1,5 +1,8 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
+
+import { autenticacaoInterceptor } from './core/auth/auth.interceptor';
 import { providePrimeNG } from 'primeng/config';
 import { definePreset } from '@primeng/themes';
 import Aura from '@primeng/themes/aura';
@@ -39,6 +42,7 @@ export const appConfig: ApplicationConfig = {
         provideBrowserGlobalErrorListeners(),
         provideRouter(routes),
         provideClientHydration(withEventReplay()),
+        provideHttpClient(withFetch(), withInterceptors([autenticacaoInterceptor])),
 
         providePrimeNG({
             theme: {

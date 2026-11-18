@@ -1,86 +1,40 @@
-<p-toast position="bottom-center" />
+<dl class="dados">
+    <dt>Nome</dt>
+    <dd>{{ perfil.nome }}</dd>
 
-@if (perfil(); as p) {
+    <dt>CPF</dt>
+    <dd>{{ perfil.cpf }}</dd>
 
-<section class="grupo">
-    <div class="grupo-topo">
-        <h3>Identificação</h3>
-    </div>
-    <p class="nota">Para corrigir, procure a secretaria.</p>
+    <dt>Nascimento</dt>
+    <dd>{{ nascimento }}</dd>
 
-    <dl>
-        <div class="campo">
-            <dt>Nome completo</dt>
-            <dd>{{ p.nome }} <span class="fixo">FIXO</span></dd>
-        </div>
-        <div class="campo">
-            <dt>CPF</dt>
-            <dd>{{ p.cpf }} <span class="fixo">FIXO</span></dd>
-        </div>
-        <div class="campo">
-            <dt>Data de nascimento</dt>
-            <dd>{{ dataBr(p.dataNascimento) }} <span class="fixo">FIXO</span></dd>
-        </div>
-        <div class="campo">
-            <dt>Sexo</dt>
-            <dd>{{ sexoPorExtenso(p.sexo) }} <span class="fixo">FIXO</span></dd>
-        </div>
-    </dl>
-</section>
+    <dt>Registro profissional</dt>
+    <dd>{{ perfil.registroProfissional }}</dd>
+</dl>
 
-<section class="grupo">
-    <div class="grupo-topo">
-        <h3>Atuação</h3>
-    </div>
-    <p class="nota">Registro e especialidade são mantidos pela administração.</p>
+<section class="contato">
+    <h3>Telefone</h3>
 
-    <dl>
-        <div class="campo">
-            <dt>Especialidade</dt>
-            <dd>{{ p.especialidade }} <span class="fixo">FIXO</span></dd>
-        </div>
-        <div class="campo">
-            <dt>Registro profissional</dt>
-            <dd>{{ p.registroProfissional }} <span class="fixo">FIXO</span></dd>
-        </div>
-    </dl>
-</section>
+    @if (editando) {
 
-<section class="grupo">
-    <div class="grupo-topo">
-        <h3>Contato</h3>
-        @if (!editando()) {
-        <button type="button" class="link" (click)="abrirEdicao()">Editar</button>
-        }
+    <!-- [value] põe o valor no campo; (input) traz de volta o que foi digitado.
+         O $any(...) é porque o TypeScript não sabe que esse alvo tem .value. -->
+    <input type="tel" class="campo" placeholder="(12) 99999-9999" [value]="rascunho"
+        (input)="rascunho = $any($event.target).value">
+
+    @if (rascunho && !telefoneValido) {
+    <p class="erro-campo">Use o formato (12) 99999-9999</p>
+    }
+
+    <div class="botoes">
+        <button type="button" class="secundario" (click)="cancelar()">Cancelar</button>
+        <button type="button" [disabled]="!telefoneValido" (click)="salvar()">Salvar</button>
     </div>
 
-    <!-- Duas faces da mesma secao: leitura por padrao, formulario quando editando. -->
-    @if (editando()) {
-    <form [formGroup]="formulario" (ngSubmit)="salvar()">
-        <div class="form-campo">
-            <label for="telefone">Telefone</label>
-            <p-inputmask id="telefone" formControlName="telefone" mask="(99) 99999-9999"
-                placeholder="(12) 99999-9999" />
-
-            @if (telefone.touched && telefone.invalid) {
-            <small class="erro">Informe um telefone completo, com DDD.</small>
-            }
-        </div>
-
-        <div class="acoes">
-            <p-button type="button" label="Cancelar" severity="secondary" [outlined]="true"
-                (onClick)="cancelar()" />
-            <p-button type="submit" label="Salvar" />
-        </div>
-    </form>
     } @else {
-    <dl>
-        <div class="campo">
-            <dt>Telefone</dt>
-            <dd>{{ p.telefone }}</dd>
-        </div>
-    </dl>
+
+    <p class="valor">{{ perfil.telefone }}</p>
+    <button type="button" class="secundario" (click)="abrirEdicao()">Alterar</button>
+
     }
 </section>
-
-}

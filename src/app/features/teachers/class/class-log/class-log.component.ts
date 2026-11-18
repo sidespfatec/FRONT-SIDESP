@@ -1,117 +1,78 @@
-import { Component, computed, inject, input, signal } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
-import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
+import { Component, Input } from '@angular/core';
 
-import {
-    Aula, Ocorrencia, RegistroDeAula, TipoOcorrencia,
-    OCORRENCIAS_QUE_ABREM_CHAMADO, ROTULO_OCORRENCIA, ROTULO_STATUS,
-    diaMes, diaPorExtenso, ehHoje
-} from '../../teacher.model';
+import { Aula, RegistroDeAula, dataLocal, diaMes, diaPorExtenso, ehHoje }
+    from '../../teacher.model';
 import { TeacherService } from '../../teacher.service';
 
-/**
- * Aba "Diário".
- *
- * Sao duas coisas diferentes no mesmo lugar, de proposito separadas:
- *   - o conteudo da aula, que e memoria pedagogica e fica no historico;
- *   - a ocorrencia, que pode virar chamado de manutencao para a secretaria.
- *
- * Material e estrutura abrem chamado com status. Se a lampada queimada virar
- * so um texto no diario, ninguem conserta e o professor para de registrar.
- */
 @Component({
     selector: 'app-class-log',
-    imports: [ButtonModule, ToastModule],
-    providers: [MessageService],
+    imports: [],
     templateUrl: './class-log.component.html',
     styleUrl: './class-log.component.scss'
 })
 export class ClassLogComponent {
 
-    readonly turmaId = input.required<number>();
+    @Input() turmaId = 0;
 
-    private readonly service = inject(TeacherService);
-    private readonly mensagens = inject(MessageService);
+    /** O que está sendo digitado. Só vira registro quando ele salva. */
+    conteudo = '';
+    ocorrencia = '';
 
-    readonly aulas = computed(() => this.service.aulasDaTurma(this.turmaId()));
+    diaPorExtenso = diaPorExtenso;
+    diaMes = diaMes;
 
-    /** Aula que o formulario preenche: a de hoje, ou a mais recente que houve. */
-    readonly aulaDeHoje = computed<Aula | undefined>(() => {
-        const lista = this.aulas();
-        return lista.find(aula => ehHoje(aula.data)) ?? lista[lista.length - 1];
-    });
+    constructor(private service: TeacherService) { }
 
-    readonly registros = computed(() => this.service.registrosDaTurma(this.turmaId()));
+    get registros(): RegistroDeAula[] { return this.service.registros(); }
 
-    readonly conteudo = signal('');
-    readonly descricao = signal('');
-    readonly tiposSelecionados = signal<TipoOcorrencia[]>([]);
+    /**
+     * A aula que o registro vai gravar: a de hoje, ou a última que já
+     * aconteceu. Aula futura não entra — não dá pra registrar o que ainda
+     * não foi dado.
+     */
+    get aulaAlvo(): Aula | undefined {
+        const hoje = new Date();
 
-    protected readonly tipos = Object.keys(ROTULO_OCORRENCIA) as TipoOcorrencia[];
-    protected readonly rotuloOcorrencia = ROTULO_OCORRENCIA;
-    protected readonly rotuloStatus = ROTULO_STATUS;
-    protected readonly diaMes = diaMes;
-    protected readonly diaPorExtenso = diaPorExtenso;
+        const passadas = this.service.aulasDaTurma(this.turmaId)
+            .filter(aula => dataLocal(aula.data) <= hoje);
 
-    alternarTipo(tipo: TipoOcorrencia): void {
-        this.tiposSelecionados.update(atuais =>
-            atuais.includes(tipo) ? atuais.filter(item => item !== tipo) : [...atuais, tipo]
-        );
+        // A lista vem da mais antiga pra mais nova: a última é a mais recente
+        return passadas[passadas.length - 1];
     }
 
-    selecionado(tipo: TipoOcorrencia): boolean {
-        return this.tiposSelecionados().includes(tipo);
-    }
+    /** Lê o que foi digitado e guarda no campo certo. */
+    escrever(alvo: EventTarget | null, campo: 'conteudo' | 'ocorrencia'): void {
+        // O alvo chega como EventTarget, o tipo genérico de "coisa que recebeu
+        // um evento". O TypeScript não sabe que ali tem .value — daí o 'as'.
+        const texto = (alvo as HTMLTextAreaElement).value;
 
-    salvar(): void {
-        const aula = this.aulaDeHoje();
-        const texto = this.conteudo().trim();
-
-        if (!aula || (!texto && this.tiposSelecionados().length === 0)) {
-            this.mensagens.add({
-                severity: 'warn',
-                summary: 'Nada para salvar',
-                detail: 'Escreva o conteúdo da aula ou marque uma ocorrência.'
-            });
-            return;
+        if (campo === 'conteudo') {
+            this.conteudo = texto;
+        } else {
+            this.ocorrencia = texto;
         }
-
-        const ocorrencias: Ocorrencia[] = this.tiposSelecionados().map(tipo => ({
-            tipo,
-            descricao: this.descricao().trim() || ROTULO_OCORRENCIA[tipo],
-            status: 'ABERTO'
-        }));
-
-        const registro: RegistroDeAula = { aulaId: aula.id, conteudo: texto, ocorrencias };
-        this.service.salvarRegistro(registro);
-
-        const abriuChamado = ocorrencias.some(o => OCORRENCIAS_QUE_ABREM_CHAMADO.includes(o.tipo));
-
-        this.conteudo.set('');
-        this.descricao.set('');
-        this.tiposSelecionados.set([]);
-
-        this.mensagens.add({
-            severity: 'success',
-            summary: 'Registro salvo',
-            detail: abriuChamado ? 'Chamado aberto para a secretaria.' : 'Aula registrada no diário.'
-        });
     }
 
-    /** Acha a data da aula a partir do id guardado no registro. */
-    protected dataDoRegistro(aulaId: number): string {
-        const aula = this.aulas().find(item => item.id === aulaId);
+    /** Mostra a data de um registro antigo. */
+    dataDoRegistro(aulaId: number): string {
+        const aula = this.service.aulasDaTurma(this.turmaId).find(a => a.id === aulaId);
         return aula ? `${diaPorExtenso(aula.data)}, ${diaMes(aula.data)}` : '';
     }
 
-    /** Textarea nao tem binding de signal pronto: lemos o valor do evento. */
-    protected escrever(alvo: EventTarget | null, destino: 'conteudo' | 'descricao'): void {
-        const valor = (alvo as HTMLTextAreaElement).value;
-        if (destino === 'conteudo') {
-            this.conteudo.set(valor);
-        } else {
-            this.descricao.set(valor);
-        }
+    salvar(): void {
+        const aula = this.aulaAlvo;
+
+        // trim() tira os espaços das pontas: só espaço não conta como texto
+        if (!aula || this.conteudo.trim() === '') { return; }
+
+        this.service.salvarRegistro({
+            aulaId: aula.id,
+            conteudo: this.conteudo.trim(),
+            // || undefined: campo vazio não vai como '' pro back
+            ocorrencia: this.ocorrencia.trim() || undefined
+        });
+
+        this.conteudo = '';
+        this.ocorrencia = '';
     }
 }

@@ -206,3 +206,13 @@
         border-color: var(--color-action-hover) !important;
     }
 }
+// Mensagem de erro do login (CPF/senha errados, servidor fora).
+.login-erro {
+    margin: 0.25rem 0 0;
+    padding: 0.625rem 0.75rem;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: var(--red-700);
+    background: var(--red-100);
+    border-radius: 0.5rem;
+}

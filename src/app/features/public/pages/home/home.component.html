@@ -1,28 +1,56 @@
-
 <div class="home-container">
+
     <section class="hero-banner">
     </section>
+
     <div class="header-container">
 
         <h1 class="title-home">
             NOTÍCIAS
         </h1>
+
+        <!-- botão para adicionar uma nova notícia que chama o if com o viewModal-->
+        @if (podePublicar) {
         <div class="button-container">
-            <button pButton type="button" class="p-button-sm" (click)="openModal()">
+            <button pButton type="button" class="p-button-sm" (click)="openModal()"
+                aria-label="Adicionar notícia">
                 <i class="pi pi-plus"></i>
             </button>
         </div>
+        }
     </div>
+
+    @if (erro) {
+    <p class="news-aviso" role="alert">{{ erro }}</p>
+    }
+
+    <!-- card de notícias -->
     <div class="cards-container">
+        <!-- carregando as notícias mokadas: newsList -->
+
+        <!-- através do for ele percorre o array até o final, com o track para 
+              identificar de forma única cada item de uma lista -->
+
         @for (item of newsList; track item.id) {
+        <!-- informações vindas do componente card-news-->
         <app-card-news [news]="item" (openNews)="openNews($event)"></app-card-news>
+        } @empty {
+            @if (carregando) {
+            <p class="news-aviso">Carregando notícias...</p>
+            } @else {
+            <p class="news-aviso">Nenhuma notícia publicada no momento.</p>
+            }
         }
     </div>
 </div>
 
+
+<!-- Se o botão de saiba mais for acionado abre a modal com as informações da modal -->
 @if (selectedNews) {
 <app-news-detail-modal [news]="selectedNews" (close)="closeNews()"></app-news-detail-modal>
 }
-@if (viewModal == true) {
+
+<!-- Se o botão de pi pi-plus for acionado abre a modal do app-new-card-news -->
+@if (viewModal && podePublicar) {
 <app-new-card-news (close)="closeModal()" (save)="addNews($event)"></app-new-card-news>
 }

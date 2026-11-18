@@ -1,83 +1,43 @@
-<ul class="resumo">
-    <li><strong>{{ alunos().length }}</strong><span>matriculados</span></li>
-    <li><strong>{{ frequenciaMedia() }}%</strong><span>frequência média</span></li>
-    <li><strong class="vermelho">{{ comFichaSaude() }}</strong><span>com ficha de saúde</span></li>
-</ul>
+@if (alunos.length > 0) {
+<p class="resumo">
+    {{ alunos.length }} matriculados &middot; {{ frequenciaMedia }}% de frequência média
+</p>
+}
 
 <ul class="lista">
-    @for (aluno of alunos(); track aluno.id) {
-    <li>
-        <button type="button" class="aluno" (click)="abrirFicha(aluno)">
-            <span class="ini">
-                {{ iniciais(aluno.nome) }}
-                @if (aluno.fichaSaude) {
-                <i class="cruz" aria-label="Tem ficha de saúde">+</i>
-                }
-            </span>
+    @for (aluno of alunos; track aluno.id) {
+    <li class="cartao">
 
+        <button type="button" class="linha" (click)="alternar(aluno.id)" [attr.aria-expanded]="abertoId === aluno.id">
             <span class="dados">
                 <strong>{{ aluno.nome }}</strong>
-                <small>{{ aluno.idade }} anos &middot; {{ aluno.frequencia }}% de frequência</small>
-
-                @if (aluno.fichaSaude) {
-                <em class="etiq vermelha">{{ etiquetaSaude(aluno) }}</em>
-                }
-                @if (aluno.faltasSeguidas >= 3) {
-                <em class="etiq amarela">{{ aluno.faltasSeguidas }} faltas seguidas</em>
-                }
+                <small>{{ aluno.idade }} anos &middot; {{ aluno.frequencia }}%</small>
             </span>
 
-            <i class="pi pi-chevron-right seta" aria-hidden="true"></i>
+            @if (aluno.faltasSeguidas >= 3) {
+            <span class="risco">{{ aluno.faltasSeguidas }} faltas seguidas</span>
+            }
         </button>
+
+        <!-- Só existe no HTML quando está aberto. @if não esconde: ele
+             tira do DOM mesmo, e põe de volta quando a condição vira true. -->
+        @if (abertoId === aluno.id) {
+        <div class="detalhe">
+            <dl>
+                <dt>Responsável</dt>
+                <dd>{{ aluno.responsavel }} ({{ aluno.parentesco }})</dd>
+                <dt>Telefone</dt>
+                <dd>{{ aluno.telefone }}</dd>
+            </dl>
+
+            <a class="ligar" [href]="linkTelefone(aluno.telefone)">
+                Ligar para {{ aluno.parentesco.toLowerCase() }}
+            </a>
+        </div>
+        }
+
     </li>
     } @empty {
     <li class="vazio">Nenhum aluno matriculado nesta turma.</li>
     }
 </ul>
-
-<!-- Ficha do aluno. Abre de baixo para cima, como as outras folhas do app. -->
-<p-drawer [(visible)]="fichaAberta" position="bottom" styleClass="folha-ficha">
-
-    @if (selecionado(); as aluno) {
-    <h3 class="ficha-nome">{{ aluno.nome }}</h3>
-    <p class="ficha-sub">{{ aluno.idade }} anos &middot; {{ aluno.frequencia }}% de frequência</p>
-
-    @if (aluno.fichaSaude; as saude) {
-    <section class="bloco saude">
-        <h4>Ficha de saúde</h4>
-        <dl>
-            <div><dt>Condições</dt><dd>{{ saude.condicoes }}</dd></div>
-            <div><dt>Alergias</dt><dd>{{ saude.alergias }}</dd></div>
-            <div><dt>Medicação</dt><dd>{{ saude.medicacao }}</dd></div>
-            <div><dt>Atendimento</dt><dd>{{ saude.atendimento }}</dd></div>
-        </dl>
-    </section>
-    } @else {
-    <section class="bloco">
-        <h4>Ficha de saúde</h4>
-        <p class="sem-restricao">Sem restrições registradas.</p>
-    </section>
-    }
-
-    <section class="bloco">
-        <h4>Em caso de emergência</h4>
-        <dl>
-            <div><dt>Responsável</dt><dd>{{ aluno.responsavel }}</dd></div>
-            <div><dt>Parentesco</dt><dd>{{ aluno.parentesco }}</dd></div>
-            <div><dt>Telefone</dt><dd>{{ aluno.telefone }}</dd></div>
-        </dl>
-    </section>
-
-    <section class="bloco">
-        <h4>Endereço</h4>
-        <dl>
-            <div><dt>Logradouro</dt><dd>{{ aluno.endereco }}</dd></div>
-        </dl>
-    </section>
-
-    <a class="ligar" [href]="linkTelefone(aluno.telefone)">
-        <i class="pi pi-phone" aria-hidden="true"></i>
-        Ligar para {{ aluno.parentesco.toLowerCase() }} — {{ aluno.telefone }}
-    </a>
-    }
-</p-drawer>

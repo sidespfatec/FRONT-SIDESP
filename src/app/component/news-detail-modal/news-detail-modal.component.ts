@@ -11,6 +11,7 @@ import { NewsItem } from '../news.model';
   styleUrl: './news-detail-modal.component.scss',
 })
 export class NewsDetailModalComponent {
+  //com o click abre a detail 
   @Input({ required: true }) news!: NewsItem;
   @Output() close = new EventEmitter<void>();
 }

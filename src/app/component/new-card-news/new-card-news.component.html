@@ -1,16 +1,23 @@
+<!-- Ao ser chamado pelo if na home com o view modal acionado, é chamado esse p-dialog-->
 <p-dialog header="Adicionar Notícia" [(visible)]="viewModal" [modal]="true" [style]="{ width: '32rem' }"
     [breakpoints]="{ '640px': '90vw' }" [draggable]="false" (onHide)="close.emit()">
+
+    <!-- form de notícia para cadastro-->
     <div class="news-form">
+
         <div class="field">
             <label>Imagem</label>
             <input #fileInput type="file" accept="image/*" hidden (change)="onFileSelected($event)" />
+
             <div class="dropzone" [class.has-image]="imagePreview" (click)="fileInput.click()">
                 @if (imagePreview) {
                 <img [src]="imagePreview" alt="Pré-visualização">
                 <span class="change-hint"><i class="pi pi-pencil"></i> Trocar imagem</span>
                 } @else {
                 <i class="pi pi-image"></i>
+
                 <span>Clique para escolher uma imagem</span>
+
                 <small>PNG ou JPG</small>
                 }
             </div>
@@ -28,9 +35,24 @@
                 placeholder="Escreva os detalhes da notícia"></textarea>
         </div>
 
+        <div class="field">
+            <label>Tempo no ar</label>
+            <p-selectbutton [options]="duracoes" optionLabel="label" optionValue="value"
+                [(ngModel)]="duration" [allowEmpty]="false" />
+        </div>
+
+        <!-- o campo de data só aparece quando a notícia tem prazo -->
+        @if (duration === 'TEMPORARIA') {
+        <div class="field">
+            <label for="news-expires">Fica no ar até</label>
+            <p-datepicker inputId="news-expires" [(ngModel)]="expiresAt" dateFormat="dd/mm/yy"
+                [minDate]="hoje" [showIcon]="true" appendTo="body" placeholder="dd/mm/aaaa" />
+        </div>
+        }
+
         <div class="actions">
             <button type="button" pButton severity="secondary" (click)="close.emit()">Cancelar</button>
-            <button type="button" pButton [disabled]="!title.trim()" (click)="onSave()">Salvar</button>
+            <button type="button" pButton [disabled]="!podeSalvar" (click)="onSave()">Salvar</button>
         </div>
     </div>
 </p-dialog>

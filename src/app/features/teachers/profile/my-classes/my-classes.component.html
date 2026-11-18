@@ -1,57 +1,59 @@
-<ul class="lista-turmas">
-    @for (turma of turmas(); track turma.id) {
-    <li>
-        <a [routerLink]="['/professor/turmas', turma.id]" class="cartao-turma"
-            [class.pendente]="turma.chamadaPendente">
+<section class="minhas-turmas">
 
-            <div class="topo">
-                <div class="titulo">
-                    <h3>{{ turma.nome }}</h3>
-                    <p class="polo">{{ turma.modalidade }} &middot; {{ turma.polo }}</p>
-                </div>
-
-                @if (turma.chamadaPendente) {
-                <span class="selo-pendente">chamada pendente</span>
-                }
-            </div>
-
-            <dl class="horario">
-                <div>
-                    <dt>Dias</dt>
-                    <dd>{{ rotuloDias(turma.diasSemana) }}</dd>
-                </div>
-                <div>
-                    <dt>Horário</dt>
-                    <dd>{{ turma.horaInicio }} – {{ turma.horaFim }}</dd>
-                </div>
-            </dl>
-
-            <ul class="medidas">
-                <li>
-                    <strong>{{ turma.totalAlunos }}</strong>
-                    <span>alunos</span>
-                </li>
-                <li>
-                    <strong>{{ turma.vagas - turma.totalAlunos }}</strong>
-                    <span>vagas livres</span>
-                </li>
-                <li>
-                    <strong>{{ turma.frequenciaMedia }}%</strong>
-                    <span>frequência</span>
-                </li>
-            </ul>
-
-            <!-- Aviso de evasao: aparece exatamente onde o professor pode agir. -->
-            @if (turma.alunosEmRisco > 0) {
-            <p class="risco">
-                <i class="pi pi-exclamation-triangle" aria-hidden="true"></i>
-                {{ turma.alunosEmRisco }} aluno{{ turma.alunosEmRisco > 1 ? 's' : '' }}
-                com 3 faltas seguidas ou mais.
-            </p>
-            }
-        </a>
-    </li>
-    } @empty {
-    <li class="vazio">Você ainda não tem turmas atribuídas.</li>
+    @if (carregando) {
+    <p class="aviso">Carregando suas turmas...</p>
     }
-</ul>
+
+    @if (erro) {
+    <p class="aviso erro" role="alert">{{ erro }}</p>
+    }
+
+    <!-- Só mostra o resumo quando já tem turma, senão apareceria '0 turmas'
+         durante o carregamento. -->
+    @if (turmas.length > 0) {
+    <p class="resumo">
+        {{ turmas.length }} turma{{ turmas.length > 1 ? 's' : '' }}
+        &middot; {{ totalAlunos }} alunos
+    </p>
+    }
+
+    <ul class="lista">
+
+        <!-- @for precisa do track: é ele que diz ao Angular como reconhecer
+             cada item. Com o id, quando a lista muda ele mexe só na linha que
+             mudou em vez de redesenhar tudo. Nunca use $index aqui: se a lista
+             reordenar, ele embaralha as linhas. -->
+        @for (turma of turmas; track turma.id) {
+        <li>
+            <!-- O [routerLink] com colchetes recebe um array, que o Angular
+                 junta em /professor/turmas/3. Sem colchetes seria texto fixo. -->
+            <a [routerLink]="['/professor/turmas', turma.id]" class="cartao">
+
+                <h3>{{ turma.modalidade }} — {{ turma.nome }}</h3>
+                <p class="polo">{{ turma.polo }}</p>
+
+                <p class="horario">
+                    {{ rotuloDias(turma.diasSemana) }} &middot;
+                    {{ horaBonita(turma.horaInicio) }} às {{ horaBonita(turma.horaFim) }}
+                </p>
+
+                <p class="vagas">
+                    {{ turma.totalAlunos }} de {{ turma.vagas }} vagas
+                </p>
+            </a>
+        </li>
+        }
+
+        <!-- @empty roda quando a lista está vazia. É um bloco do próprio @for,
+             não um @if separado — por isso vem logo depois, sem nada no meio.
+             Repare que só aparece quando NÃO está carregando: senão a tela
+             diria 'nenhuma turma' antes de a API responder. -->
+        @empty {
+        @if (!carregando) {
+        <li class="vazio">Você ainda não tem turmas atribuídas.</li>
+        }
+        }
+
+    </ul>
+
+</section>
