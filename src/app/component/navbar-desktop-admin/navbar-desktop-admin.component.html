@@ -6,30 +6,45 @@
 
     <div class="navbar-right">
         <ul class="navbar-links">
+            <!-- Públicas: aparecem logado ou não -->
             <li><a routerLink="/home" routerLinkActive="active">INICIAL</a></li>
             <li><a routerLink="/esportes" routerLinkActive="active">ESPORTES</a></li>
-            <li><a routerLink="/perfil" routerLinkActive="active">PERFIL</a></li>
+
+            <!-- PERFIL só depois de entrar, e só para quem tem tela de perfil.
+                 'as rota' guarda o valor: dentro do bloco ele existe com
+                 certeza, então o routerLink não recebe null. -->
+            @if (estaLogado && rotaPerfil; as rota) {
+            <li><a [routerLink]="rota" routerLinkActive="active">PERFIL</a></li>
+            }
         </ul>
 
         @if (currentPageLabel()) {
             <span class="current-page-badge">{{ currentPageLabel() }}</span>
         }
 
-        <button type="button" class="menu-toggle-btn" [class.active]="isMenuOpen()" (click)="toggleMenu()">
+        <!-- O menu sanduíche é das telas de gestão: só administrador vê -->
+        @if (estaLogado && ehAdministrador) {
+        <button type="button" class="menu-toggle-btn" [class.active]="isMenuOpen()"
+            (click)="toggleMenu()" aria-label="Abrir menu de gestão">
             <i class="pi pi-bars"></i>
         </button>
+        }
 
+        @if (estaLogado) {
+        <span class="navbar-usuario">{{ primeiroNome }}</span>
+        <button pButton type="button" label="SAIR" icon="pi pi-sign-out"
+            class="navbar-login-btn" (click)="sair()"></button>
+        } @else {
         <button pButton type="button" label="LOGIN" icon="pi pi-user" routerLink="/login"
             class="navbar-login-btn"></button>
-    </div>
-
-    <div class="admin-submenu" [class.open]="isMenuOpen()">
-        @for (page of adminPages; track page.label) {
-            @if (page.path) {
-                <a [routerLink]="page.path" routerLinkActive="active-pill" class="submenu-pill">{{ page.label }}</a>
-            } @else {
-                <a class="submenu-pill">{{ page.label }}</a>
-            }
         }
     </div>
+
+    @if (estaLogado && ehAdministrador) {
+    <div class="admin-submenu" [class.open]="isMenuOpen()">
+        @for (page of adminPages; track page.label) {
+            <a [routerLink]="page.path" routerLinkActive="active-pill" class="submenu-pill">{{ page.label }}</a>
+        }
+    </div>
+    }
 </nav>

@@ -10,12 +10,21 @@
                 <p class="subtitle-login">Acesse sua conta com CPF e senha</p>
             </header>
 
-            <form class="login-form">
+            <!-- (ngSubmit) faz o Enter funcionar, que é como se usa um login.
+                 O $event.preventDefault() não é preciso: ngSubmit já segura
+                 o recarregamento da página. -->
+            <form class="login-form" (ngSubmit)="entrar()">
                 <div class="input-login">
                     <label for="cpf">CPF</label>
                     <div class="input-wrap">
                         <i class="pi pi-id-card"></i>
-                        <p-inputmask id="cpf" mask="999.999.999-99" placeholder="000.000.000-00" [autoClear]="false" styleClass="w-full" />
+                        <!-- [(ngModel)] é ligação de mão dupla: o que é digitado
+                             vai para a variável, e o valor da variável aparece
+                             no campo. O standalone: true dispensa o 'name',
+                             que o Angular exigiria dentro de um <form>. -->
+                        <p-inputmask inputId="cpf" mask="999.999.999-99" placeholder="000.000.000-00"
+                            [autoClear]="false" styleClass="w-full"
+                            [(ngModel)]="cpf" [ngModelOptions]="{ standalone: true }" />
                     </div>
                 </div>
 
@@ -23,12 +32,24 @@
                     <label for="password">Senha</label>
                     <div class="input-wrap">
                         <i class="pi pi-lock"></i>
-                        <input pInputText id="password" type="password" placeholder="Digite sua senha" />
+                        <input pInputText id="password" type="password" placeholder="Digite sua senha"
+                            [(ngModel)]="senha" [ngModelOptions]="{ standalone: true }" />
                     </div>
                     <a class="forgot-link">Esqueci minha senha</a>
                 </div>
 
-                <p-button class="button-login" label="ENTRAR" icon="pi pi-sign-in" routerLink="/home" />
+                <!-- role="alert" faz o leitor de tela anunciar o erro assim
+                     que ele aparece, sem a pessoa precisar procurar. -->
+                @if (erro) {
+                <p class="login-erro" role="alert">{{ erro }}</p>
+                }
+
+                <!-- type="submit" para o Enter cair no (ngSubmit) do form.
+                     O routerLink saiu: agora quem decide para onde ir é o
+                     perfil que voltou do back. -->
+                <p-button class="button-login" type="submit"
+                    [label]="entrando ? 'ENTRANDO...' : 'ENTRAR'"
+                    icon="pi pi-sign-in" [disabled]="entrando" />
             </form>
 
             <div class="register-area">

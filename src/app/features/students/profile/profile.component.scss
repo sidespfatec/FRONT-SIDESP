@@ -1,0 +1,58 @@
+@use '../../../../styles/breakpoints' as *;
+
+:host {
+    display: block;
+}
+
+.perfil-aluno {
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: 1rem 1rem 6rem;
+
+    h1 {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--color-text-primary);
+    }
+
+    h2 {
+        margin: 1.5rem 0 0.625rem;
+        font-size: 0.9375rem;
+        font-weight: 700;
+        color: var(--color-text-primary);
+    }
+}
+
+.papel {
+    margin: 0.25rem 0 0;
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary);
+}
+
+.dependentes {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+        padding: 0.75rem 0.9375rem;
+        margin-bottom: 0.5rem;
+        font-size: 0.875rem;
+        color: var(--color-text-primary);
+        background: var(--white);
+        border: 1px solid var(--color-border);
+        border-radius: 0.75rem;
+    }
+}
+
+.aviso {
+    color: var(--color-text-secondary) !important;
+}
+
+.em-breve {
+    margin: 1.5rem 0 0;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+}

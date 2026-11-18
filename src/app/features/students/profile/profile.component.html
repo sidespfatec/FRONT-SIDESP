@@ -1,0 +1,29 @@
+<section class="perfil-aluno">
+
+    <header>
+        <h1>{{ nome }}</h1>
+        <p class="papel">{{ ehResponsavel ? 'Responsável' : 'Aluno' }}</p>
+    </header>
+
+    @if (ehResponsavel) {
+    <h2>Quem está sob sua responsabilidade</h2>
+
+    <ul class="dependentes">
+        @for (dependente of dependentes; track dependente.id) {
+        <li>{{ dependente.nome }}</li>
+        } @empty {
+            @if (carregando) {
+            <li class="aviso">Carregando...</li>
+            } @else {
+            <li class="aviso">Nenhum dependente vinculado à sua conta.</li>
+            }
+        }
+    </ul>
+    }
+
+    <p class="em-breve">
+        Suas matrículas, turmas e frequência aparecem aqui assim que a API
+        dessa parte existir.
+    </p>
+
+</section>
