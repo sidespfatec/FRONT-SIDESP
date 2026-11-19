@@ -89,7 +89,7 @@ export class HomeComponent implements OnInit {
           id: criada.id,
           title: envio.dados.titulo,
           description: envio.dados.conteudo,
-          image: envio.previa,
+          image: `http://localhost:8080/api/v1/noticias/imagens/${encodeURIComponent(criada.imagem)}`,
           date: envio.dados.dataPublicacao,
         });
       },
