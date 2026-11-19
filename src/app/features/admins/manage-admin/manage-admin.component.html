@@ -1,39 +1,44 @@
-
 <div class="card-container">
     <p-card>
         <h1 class="title-admin">Administradores</h1>
 
         <div class="search-admin-container">
-            <input pInputText type="text" placeholder="Buscar..." aria-label="Buscar administrador" />
+            <input pInputText type="text" placeholder="Buscar..." aria-label="Buscar administrador"
+                [(ngModel)]="busca" />
             <button pButton aria-label="Novo administrador" (click)="abrirNovo()">
                 <i class="pi pi-plus"></i>
             </button>
         </div>
 
-        <ul class="admin-list">
-            @for (admin of administradores; track admin.id) {
-            <li class="admin-item">
-                <div class="admin-info">
-                    <div class="admin-title">
-                        <strong>{{ admin.nome }}</strong>
-                        <p-tag [value]="admin.ativo ? 'Ativo' : 'Inativo'"
-                            [severity]="admin.ativo ? 'success' : 'secondary'" />
-                    </div>
-                    <span class="admin-cpf">{{ admin.cpf }}</span>
-                </div>
+        <div class="admin-filter">
+            <p-selectbutton [options]="opcoesFiltro" [(ngModel)]="filtro" optionLabel="label" optionValue="value"
+                [allowEmpty]="false" />
+        </div>
 
-                <div class="admin-buttons">
-                    <button pButton size="small" [text]="true" [rounded]="true" aria-label="Editar"
-                        (click)="abrirFicha(admin)">
-                        <i class="pi pi-pencil"></i>
-                    </button>
-                    <button pButton size="small" [text]="true" [rounded]="true"
-                        [severity]="admin.ativo ? 'danger' : 'success'"
-                        [attr.aria-label]="admin.ativo ? 'Desativar' : 'Reativar'" (click)="alternarSituacao(admin)">
-                        <i [class]="admin.ativo ? 'pi pi-ban' : 'pi pi-check'"></i>
-                    </button>
-                </div>
+        <ul class="admin-list">
+            @for (admin of administradoresFiltrados; track admin.id) {
+            <li class="admin-row">
+
+                <button type="button" class="admin-item" (click)="abrirFicha(admin)">
+                    <span class="admin-avatar">{{ iniciais(admin.nome) }}</span>
+
+                    <span class="admin-info">
+                        <strong>{{ admin.nome }}</strong>
+                        <span class="admin-meta">{{ admin.cpf }}</span>
+                    </span>
+
+                    <i class="pi pi-chevron-right"></i>
+                </button>
+
+                <button type="button" class="status-button" [class.reactivate]="!admin.ativo"
+                    (click)="alternarSituacao(admin)">
+                    <i class="pi" [class.pi-ban]="admin.ativo" [class.pi-replay]="!admin.ativo"></i>
+                    {{ admin.ativo ? 'Inativar' : 'Reativar' }}
+                </button>
+
             </li>
+            } @empty {
+            <li class="admin-empty">Nenhum administrador encontrado.</li>
             }
         </ul>
     </p-card>
@@ -41,4 +46,3 @@
 
 <app-new-admin-modal [(visible)]="showModal" [modo]="modo" [admin]="selecionado" (salvar)="salvar($event)"
     (editar)="modo = 'editar'" (desativar)="alternarSituacao(selecionado!)" />
-

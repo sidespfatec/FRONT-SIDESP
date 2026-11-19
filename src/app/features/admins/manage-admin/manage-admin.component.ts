@@ -6,13 +6,14 @@ import { Administrador, ModoFicha } from '../admin.model';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
-import { TagModule } from 'primeng/tag';
+import { FormsModule } from '@angular/forms';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 @Component({
     selector: 'app-manage-admin',
     imports: [
         NewAdminModalComponent,
-        CardModule, ButtonModule, InputTextModule, TagModule
+        CardModule, ButtonModule, InputTextModule, FormsModule, SelectButtonModule
     ],
     templateUrl: './manage-admin.component.html',
     styleUrl: './manage-admin.component.scss'
@@ -21,6 +22,14 @@ export class ManageAdminComponent {
     showModal = false;
     modo: ModoFicha = 'ver';
     selecionado: Administrador | null = null;
+
+    busca = '';
+    filtro = 'ativos';
+
+    opcoesFiltro = [
+        { label: 'Ativos', value: 'ativos' },
+        { label: 'Inativos', value: 'inativos' }
+    ];
 
     administradores: Administrador[] = [
         {
@@ -66,6 +75,19 @@ export class ManageAdminComponent {
             doisFatores: false, ativo: false, cadastradoPor: 'Lívia Andrade'
         }
     ];
+
+    get administradoresFiltrados() {
+        const texto = this.busca.toLowerCase();
+        return this.administradores.filter(admin =>
+            admin.ativo === (this.filtro === 'ativos') &&
+            (admin.nome.toLowerCase().includes(texto) || admin.cpf.includes(texto))
+        );
+    }
+
+    iniciais(nome: string) {
+        const palavras = nome.trim().split(' ');
+        return (palavras[0][0] + (palavras.length > 1 ? palavras[palavras.length - 1][0] : '')).toUpperCase();
+    }
 
     abrirNovo() {
         this.selecionado = null;
