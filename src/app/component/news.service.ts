@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { NewsItem, NoticiaCriada, NoticiaDados, ordenarPorData } from './news.model';
 
 const API = '/api/v1';
-const API_IMAGENS = 'http://localhost:8080/api/v1/noticias/imagens';
+const API_IMAGENS = `${API}/noticias/imagens`;
 
 interface NoticiaApi {
   id: number;

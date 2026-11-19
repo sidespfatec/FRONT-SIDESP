@@ -190,9 +190,29 @@
             }
         }
     }
-}
-.erro-imagem {
-    display: block;
-    margin-top: -0.5rem;
-    color: var(--red-700);
+
+    .erro-imagem {
+        display: block;
+        margin-top: -0.5rem;
+        color: var(--color-danger);
+    }
+
+    //o calendário e os botões ocupam a largura do campo, como os inputs
+    .field .p-datepicker {
+        width: 100%;
+    }
+
+    .field .p-selectbutton {
+        display: flex;
+
+        .p-togglebutton {
+            flex: 1;
+            justify-content: center;
+        }
+    }
+
+    .dica {
+        font-size: 0.75rem;
+        color: var(--color-text-muted);
+    }
 }

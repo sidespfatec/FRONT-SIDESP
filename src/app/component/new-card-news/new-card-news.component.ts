@@ -27,14 +27,20 @@ export class NewCardNewsComponent {
     imagemArquivo: File | null = null;
     erroImagem = '';
 
-    //o back olha a dataPublicacao: futura = EM ESPERA, passada = PUBLICADA
-    quando: 'AGORA' | 'AGENDAR' = 'AGORA';
-    dataAgendada: Date | null = null;
+    //Fixa = fica no ar para sempre. Com prazo = tem data para sair.
+    periodo: 'FIXA' | 'PRAZO' = 'FIXA';
+
+    //usado quando é FIXA. Vazio = publicar agora.
+    publicarEm: Date | null = null;
+
+    //usado quando é PRAZO. O calendário em modo range devolve [inicio, fim].
+    intervalo: Date[] | null = null;
+
     agora = new Date();
 
-    opcoesQuando = [
-        { label: 'Publicar agora', value: 'AGORA' as const },
-        { label: 'Agendar', value: 'AGENDAR' as const },
+    opcoesPeriodo = [
+        { label: 'Fixa', value: 'FIXA' as const },
+        { label: 'Com prazo', value: 'PRAZO' as const },
     ];
 
     @Output() close = new EventEmitter<void>();
@@ -74,8 +80,18 @@ export class NewCardNewsComponent {
     get podeSalvar(): boolean {
         if (!this.title.trim() || !this.description.trim()) return false;
         if (!this.imagemArquivo) return false;
-        if (this.quando === 'AGENDAR' && !this.dataAgendada) return false;
+
+        //com prazo só vale quando os dois cliques já aconteceram
+        if (this.periodo === 'PRAZO' && !this.temIntervaloCompleto) return false;
+
         return true;
+    }
+
+
+    //o calendário em range preenche a posição 0 no primeiro clique
+    //e a 1 no segundo; antes disso a segunda vem indefinida
+    get temIntervaloCompleto(): boolean {
+        return !!this.intervalo && !!this.intervalo[0] && !!this.intervalo[1];
     }
 
 
@@ -84,15 +100,24 @@ export class NewCardNewsComponent {
     onSave(): void {
         if (!this.podeSalvar || !this.imagemArquivo) return;
 
-        const data = this.quando === 'AGENDAR' && this.dataAgendada
-            ? this.dataAgendada
-            : new Date();
+        //quando a notícia entra no ar
+        const inicio = this.periodo === 'PRAZO' && this.intervalo
+            ? this.intervalo[0]
+            : (this.publicarEm ?? new Date());
+
+        // ⚠ LIGAR QUANDO O BACK ACEITAR dataExpiracao
+        // Hoje o NoticiaRequests.Create só tem titulo, conteudo e
+        // dataPublicacao. Mandar o fim agora seria ignorado em silêncio.
+        // const fim = this.periodo === 'PRAZO' && this.intervalo
+        //     ? paraDataHoraLocal(this.intervalo[1])
+        //     : undefined;
 
         this.save.emit({
             dados: {
                 titulo: this.title.trim(), //trim serve para tirar espaços
                 conteudo: this.description.trim(),
-                dataPublicacao: paraDataHoraLocal(data),
+                dataPublicacao: paraDataHoraLocal(inicio),
+                // dataExpiracao: fim,
             },
             imagem: this.imagemArquivo,
             previa: this.imagePreview ?? '',

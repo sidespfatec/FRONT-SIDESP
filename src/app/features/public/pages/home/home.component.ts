@@ -80,18 +80,13 @@ export class HomeComponent implements OnInit {
     this.salvando = true;
 
     this.service.criarNoticia(envio.dados, envio.imagem).subscribe({
-      next: (criada) => {
+      next: () => {
         this.salvando = false;
         this.viewModal = false;
 
-        //o POST devolve só { id, imagem }: o resto a tela já tem
-        this.service.adicionarNaLista({
-          id: criada.id,
-          title: envio.dados.titulo,
-          description: envio.dados.conteudo,
-          image: `http://localhost:8080/api/v1/noticias/imagens/${encodeURIComponent(criada.imagem)}`,
-          date: envio.dados.dataPublicacao,
-        });
+        //busca de novo em vez de montar o card aqui: assim a tela mostra
+        //o que o back realmente salvou, com a imagem servida por ele
+        this.service.buscarNoticias();
       },
       error: (falha: HttpErrorResponse) => {
         this.salvando = false;

@@ -33,18 +33,32 @@
         </div>
 
         <div class="field">
-            <label>Publicação</label>
-            <p-selectbutton [options]="opcoesQuando" optionLabel="label" optionValue="value"
-                [(ngModel)]="quando" [allowEmpty]="false" />
+            <label>Período no ar</label>
+            <p-selectbutton [options]="opcoesPeriodo" optionLabel="label" optionValue="value"
+                [(ngModel)]="periodo" [allowEmpty]="false" />
         </div>
 
         <!-- data futura entra como EM ESPERA no banco; o back decide pelo horário -->
-        @if (quando === 'AGENDAR') {
+        @if (periodo === 'FIXA') {
         <div class="field">
             <label for="news-date">Publicar em</label>
-            <p-datepicker inputId="news-date" [(ngModel)]="dataAgendada" [showTime]="true"
+            <p-datepicker inputId="news-date" [(ngModel)]="publicarEm" [showTime]="true"
                 dateFormat="dd/mm/yy" [minDate]="agora" [showIcon]="true" appendTo="body"
-                placeholder="dd/mm/aaaa hh:mm" />
+                placeholder="Deixe vazio para publicar agora" />
+        </div>
+        }
+
+        <!-- selectionMode range: o primeiro clique marca o início, o segundo o fim -->
+        @if (periodo === 'PRAZO') {
+        <div class="field">
+            <label for="news-range">No ar de / até</label>
+            <p-datepicker inputId="news-range" [(ngModel)]="intervalo" selectionMode="range"
+                dateFormat="dd/mm/yy" [minDate]="agora" [showIcon]="true" appendTo="body"
+                [readonlyInput]="true" placeholder="Escolha o início e o fim" />
+
+            @if (!temIntervaloCompleto) {
+            <small class="dica">Clique no primeiro dia e depois no último.</small>
+            }
         </div>
         }
 
