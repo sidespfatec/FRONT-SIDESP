@@ -1,0 +1,92 @@
+<p-toast position="bottom-center" />
+
+@if (perfil(); as p) {
+
+<div class="perfil-admin">
+
+    <div class="acoes-topo">
+        <button [routerLink]="['/login']" type="button" class="sair" (click)="sair()">
+            <i class="pi pi-sign-out" aria-hidden="true"></i>
+            Sair
+        </button>
+    </div>
+
+    <header class="cabecalho">
+        <div class="perfilFoto" aria-hidden="true">
+            <i class="pi pi-user"></i>
+        </div>
+        <div class="identidade">
+            <h2>{{ p.nome }}</h2>
+            <span class="nivel">{{ p.nivel }}</span>
+        </div>
+    </header>
+
+    <section class="grupo">
+        <div class="grupo-topo">
+            <h3>Identificação</h3>
+        </div>
+        <p class="nota">Para corrigir, procure a secretaria.</p>
+
+        <dl>
+            <div class="campo">
+                <dt>Nome completo</dt>
+                <dd>{{ p.nome }}</dd>
+            </div>
+            <div class="campo">
+                <dt>CPF</dt>
+                <dd>{{ p.cpf }}</dd>
+            </div>
+            <div class="campo">
+                <dt>RG</dt>
+                <dd>{{ p.rg }}</dd>
+            </div>
+            <div class="campo">
+                <dt>Data de nascimento</dt>
+                <dd>{{ dataBr(p.nascimento) }}</dd>
+            </div>
+        </dl>
+    </section>
+
+    <section class="grupo">
+        <div class="grupo-topo">
+            <h3>Atuação</h3>
+        </div>
+        <p class="nota">Cargo e unidade são mantidos pela administração.</p>
+
+        <dl>
+            <div class="campo">
+                <dt>Cargo</dt>
+                <dd>{{ p.cargo }}</dd>
+            </div>
+            <div class="campo">
+                <dt>Admissão</dt>
+                <dd>{{ dataBr(p.admissao) }}</dd>
+            </div>
+            <div class="campo">
+                <dt>Unidade</dt>
+                <dd>{{ p.unidade }}</dd>
+            </div>
+        </dl>
+    </section>
+
+    <!-- o dl estava dentro do grupo-topo: por isso o telefone subia para a
+         linha do título -->
+    <section class="grupo">
+        <div class="grupo-topo">
+            <h3>Contato</h3>
+        </div>
+
+        <dl>
+            <div class="campo">
+                <dt>Telefone</dt>
+                <dd>{{ p.telefone }}</dd>
+            </div>
+            <div class="campo">
+                <dt>E-mail</dt>
+                <dd>{{ p.email }}</dd>
+            </div>
+        </dl>
+    </section>
+
+</div>
+}
