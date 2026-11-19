@@ -1,18 +1,17 @@
 <nav class="navbar-admin">
     <figure class="navbar-logo">
-        <img src="assets/images/logo-esportes.png"
-            alt="Secretaria Municipal de Esportes de Guaratinguetá">
+        <img src="assets/images/logo-esportes.png" alt="Secretaria Municipal de Esportes de Guaratinguetá">
     </figure>
 
     <div class="navbar-right">
         <ul class="navbar-links">
             <li><a routerLink="/home" routerLinkActive="active">INICIAL</a></li>
             <li><a routerLink="/esportes" routerLinkActive="active">ESPORTES</a></li>
-            <li><a routerLink="/perfil" routerLinkActive="active">PERFIL</a></li>
+            <li><a routerLink="/admins-profile" routerLinkActive="active">PERFIL</a></li>
         </ul>
 
         @if (currentPageLabel()) {
-            <span class="current-page-badge">{{ currentPageLabel() }}</span>
+        <span class="current-page-badge">{{ currentPageLabel() }}</span>
         }
 
         <button type="button" class="menu-toggle-btn" [class.active]="isMenuOpen()" (click)="toggleMenu()">
@@ -25,11 +24,11 @@
 
     <div class="admin-submenu" [class.open]="isMenuOpen()">
         @for (page of adminPages; track page.label) {
-            @if (page.path) {
-                <a [routerLink]="page.path" routerLinkActive="active-pill" class="submenu-pill">{{ page.label }}</a>
-            } @else {
-                <a class="submenu-pill">{{ page.label }}</a>
-            }
+        @if (page.path) {
+        <a [routerLink]="page.path" routerLinkActive="active-pill" class="submenu-pill">{{ page.label }}</a>
+        } @else {
+        <a class="submenu-pill">{{ page.label }}</a>
+        }
         }
     </div>
 </nav>
