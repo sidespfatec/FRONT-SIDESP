@@ -1,0 +1,238 @@
+@use '../../../../styles/breakpoints' as *;
+
+:host {
+    display: block;
+    background: var(--color-bg-page);
+}
+
+.perfil-admin {
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: 1rem 1rem 2rem;
+}
+
+.cabecalho {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 1rem;
+    background: var(--white);
+    border: 1px solid var(--color-border);
+    border-radius: 0.875rem;
+}
+
+.perfilFoto {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.75rem;
+    height: 3.75rem;
+    color: var(--color-brand-primary);
+    background: var(--blue-50);
+    border-radius: 50%;
+
+    i {
+        font-size: 1.5rem;
+    }
+}
+
+.identidade {
+    min-width: 0; // deixa o texto quebrar em vez de esticar a caixa
+
+    h2 {
+        margin: 0;
+        font-size: 1.0625rem;
+        font-weight: 700;
+        line-height: 1.25;
+        color: var(--color-text-primary);
+    }
+}
+
+.nivel {
+    display: inline-block;
+    margin-top: 0.375rem;
+    padding: 0.1875rem 0.5rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: var(--color-brand-primary);
+    background: var(--blue-50);
+    border-radius: 999px;
+}
+
+.grupo {
+    margin-top: 0.75rem;
+    padding: 0.875rem 1rem 0.25rem;
+    background: var(--white);
+    border: 1px solid var(--color-border);
+    border-radius: 0.875rem;
+}
+
+.grupo-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.625rem;
+
+    h3 {
+        margin: 0;
+        font-size: 0.8125rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        color: var(--color-text-secondary);
+    }
+}
+
+.nota {
+    margin: 0.25rem 0 0;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: var(--color-text-muted);
+}
+
+dl {
+    margin: 0.5rem 0 0;
+}
+
+.campo {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.6875rem 0;
+    font-size: 0.875rem;
+    border-bottom: 1px solid var(--color-border);
+
+    &:last-child {
+        border-bottom: 0;
+    }
+
+    dt {
+        flex: none;
+        color: var(--color-text-secondary);
+    }
+
+    dd {
+        // min-width: 0 permite encolher; o break evita que um valor longo
+        // (um e-mail, por exemplo) estoure a largura do cartao
+        min-width: 0;
+        margin: 0;
+        font-weight: 600;
+        text-align: right;
+        overflow-wrap: anywhere;
+        color: var(--color-text-primary);
+    }
+}
+
+.fixo {
+    display: inline-block;
+    margin-left: 0.4375rem;
+    padding: 0.0625rem 0.375rem;
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    vertical-align: 0.0625rem;
+    color: var(--color-text-muted);
+    background: var(--gray-50);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+}
+
+.link {
+    padding: 0.25rem 0.125rem;
+    font-family: var(--font-app);
+    font-size: 0.84375rem;
+    font-weight: 600;
+    color: var(--color-brand-primary);
+    background: none;
+    border: 0;
+    cursor: pointer;
+
+    &:focus-visible {
+        outline: 0.1875rem solid var(--color-border-focus);
+        outline-offset: 0.125rem;
+    }
+}
+
+.form-campo {
+    padding: 0.5625rem 0 0.875rem;
+
+    label {
+        display: block;
+        margin-bottom: 0.3125rem;
+        font-size: 0.78125rem;
+        font-weight: 600;
+        color: var(--color-text-secondary);
+    }
+}
+
+:host ::ng-deep .form-campo .p-inputmask {
+    width: 100%;
+}
+
+.erro {
+    display: block;
+    margin-top: 0.3125rem;
+    font-size: 0.78125rem;
+    font-weight: 500;
+    color: var(--color-danger);
+}
+
+.acoes {
+    display: flex;
+    gap: 0.5625rem;
+    margin: 0 0 0.875rem;
+}
+
+:host ::ng-deep .acoes .p-button {
+    flex: 1;
+    justify-content: center;
+}
+
+.acoes-topo {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.625rem;
+}
+
+.sair {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    min-height: 2.5rem; // 40px de alvo de toque
+    padding: 0 0.875rem;
+    font-family: var(--font-app);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    background: var(--white);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    cursor: pointer;
+
+    // a cor de perigo so aparece na intencao de clicar
+    &:hover {
+        color: var(--color-danger);
+        border-color: var(--color-danger);
+    }
+
+    &:focus-visible {
+        outline: 0.1875rem solid var(--color-border-focus);
+        outline-offset: 0.125rem;
+    }
+
+    i {
+        font-size: 0.8125rem;
+    }
+}
+
+@include md {
+    .perfil-admin {
+        padding: 1.5rem 1.5rem 3rem;
+    }
+
+    .identidade h2 {
+        font-size: 1.25rem;
+    }
+}
