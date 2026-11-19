@@ -13,9 +13,23 @@
             </button>
         </div>
     </div>
+    <div class="abas-news">
+        <button type="button" [class.ativa]="!verArquivadas" (click)="verArquivadas = false">
+            Publicadas
+        </button>
+        <button type="button" [class.ativa]="verArquivadas" (click)="verArquivadas = true">
+            Arquivadas ({{ totalArquivadas }})
+        </button>
+    </div>
+
     <div class="cards-container">
-        @for (item of newsList; track item.id) {
-        <app-card-news [news]="item" (openNews)="openNews($event)"></app-card-news>
+        @for (item of listaVisivel; track item.id) {
+        <app-card-news [news]="item" [gerenciar]="true" (openNews)="openNews($event)"
+            (arquivar)="arquivarNews($event)" (apagar)="apagarNews($event)"></app-card-news>
+        } @empty {
+        <p class="news-vazio">
+            {{ verArquivadas ? 'Nenhuma notícia arquivada.' : 'Nenhuma notícia publicada no momento.' }}
+        </p>
         }
     </div>
 </div>

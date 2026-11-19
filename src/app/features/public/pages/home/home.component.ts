@@ -18,6 +18,9 @@ export class HomeComponent {
   viewModal: boolean = false;
   selectedNews: NewsItem | null = null;
 
+  //false = mostrando a home; true = mostrando o que foi arquivado
+  verArquivadas = false;
+
   newsList: NewsItem[] = [
     {
       id: 1,
@@ -25,8 +28,20 @@ export class HomeComponent {
       description: 'Agora você pode se inscrever nas modalidades, acompanhar sua frequência e muito mais, tudo em um só lugar.',
       image: 'https://tse3.mm.bing.net/th/id/OIP.3y6O6dX2lJJMUbb8OZJvNQHaEK?r=0&rs=1&pid=ImgDetMain&o=7&rm=3',
       date: new Date(),
+      fim: null,
     },
   ];
+
+  //a home mostra as ativas; a outra aba, as arquivadas
+  get listaVisivel(): NewsItem[] {
+    return this.newsList
+      .filter(n => !!n.arquivada === this.verArquivadas)
+      .sort((a, b) => b.date.getTime() - a.date.getTime());
+  }
+
+  get totalArquivadas(): number {
+    return this.newsList.filter(n => n.arquivada).length;
+  }
 
   openModal() {
     this.viewModal = true;
@@ -46,5 +61,17 @@ export class HomeComponent {
 
   addNews(news: NewsItem) {
     this.newsList = [news, ...this.newsList];
+  }
+
+  //arquivar nao perde nada: a noticia sai da home e fica na outra aba
+  arquivarNews(news: NewsItem) {
+    this.newsList = this.newsList.map(item =>
+      item.id === news.id ? { ...item, arquivada: !item.arquivada } : item
+    );
+  }
+
+  //apagar tira da lista de vez
+  apagarNews(news: NewsItem) {
+    this.newsList = this.newsList.filter(item => item.id !== news.id);
   }
 }

@@ -120,4 +120,71 @@
             }
         }
     }
+
+    //data de publicação, abaixo do título
+    .quando {
+        display: flex;
+        align-items: center;
+        gap: 0.375rem;
+        margin: 0.375rem 0 0;
+        font-size: 0.75rem;
+        color: var(--color-text-secondary);
+    }
+
+    .fixa,
+    .ate {
+        padding: 0.0625rem 0.375rem;
+        font-size: 0.6875rem;
+        font-weight: 600;
+        border-radius: 999px;
+    }
+
+    .fixa {
+        color: var(--color-brand-primary);
+        background: var(--blue-50);
+    }
+
+    .ate {
+        color: var(--yellow-700);
+        background: var(--yellow-100);
+    }
+
+    //arquivar e apagar ficam na esquerda; o Saiba mais continua na direita
+    .gerenciar {
+        order: -1;
+        display: flex;
+        align-items: center;
+        gap: 0.375rem;
+        margin-right: auto;
+
+        //os botões daqui nao herdam o azul do Saiba mais
+        button {
+            padding: 0.375rem 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            background-color: transparent;
+            border: 1px solid var(--color-border);
+            border-radius: 0.375rem;
+
+            &:hover {
+                background-color: var(--gray-100);
+            }
+        }
+
+        .acao i {
+            font-size: 0.8125rem;
+        }
+
+        //apagar so fica vermelho na confirmacao
+        .sim {
+            color: var(--color-danger);
+            border-color: var(--color-danger);
+        }
+    }
+
+    .pergunta {
+        font-size: 0.75rem;
+        color: var(--color-text-secondary);
+    }
 }

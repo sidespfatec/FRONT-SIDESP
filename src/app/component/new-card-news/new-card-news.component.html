@@ -28,9 +28,38 @@
                 placeholder="Escreva os detalhes da notícia"></textarea>
         </div>
 
+        <div class="field">
+            <label>Período no ar</label>
+            <p-selectbutton [options]="opcoesPeriodo" optionLabel="label" optionValue="value"
+                [(ngModel)]="periodo" [allowEmpty]="false" />
+        </div>
+
+        @if (periodo === 'FIXA') {
+        <div class="field">
+            <label for="news-date">Publicar em</label>
+            <p-datepicker inputId="news-date" [(ngModel)]="publicarEm" [showTime]="true"
+                dateFormat="dd/mm/yy" [minDate]="agora" [showIcon]="true" appendTo="body"
+                placeholder="Deixe vazio para publicar agora" />
+        </div>
+        }
+
+        <!-- range: o primeiro clique marca o início, o segundo o fim -->
+        @if (periodo === 'PRAZO') {
+        <div class="field">
+            <label for="news-range">No ar de / até</label>
+            <p-datepicker inputId="news-range" [(ngModel)]="intervalo" selectionMode="range"
+                dateFormat="dd/mm/yy" [minDate]="agora" [showIcon]="true" appendTo="body"
+                [readonlyInput]="true" placeholder="Escolha o início e o fim" />
+
+            @if (!temIntervaloCompleto) {
+            <small class="dica">Clique no primeiro dia e depois no último.</small>
+            }
+        </div>
+        }
+
         <div class="actions">
             <button type="button" pButton severity="secondary" (click)="close.emit()">Cancelar</button>
-            <button type="button" pButton [disabled]="!title.trim()" (click)="onSave()">Salvar</button>
+            <button type="button" pButton [disabled]="!podeSalvar" (click)="onSave()">Salvar</button>
         </div>
     </div>
 </p-dialog>
