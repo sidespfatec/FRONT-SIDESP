@@ -72,7 +72,6 @@ export class NewAdminModalComponent implements OnChanges {
         nivel: ['', Validators.required],
         cargo: [''],
         unidade: [''],
-        admissao: [null as Date | null],
         doisFatores: [true]
     });
 
@@ -148,7 +147,6 @@ export class NewAdminModalComponent implements OnChanges {
                     { rotulo: 'Nível de permissão', valor: a.nivel },
                     { rotulo: 'Cargo', valor: a.cargo },
                     { rotulo: 'Unidade', valor: a.unidade },
-                    { rotulo: 'Admissão', valor: data(a.admissao) },
                     { rotulo: 'Dois fatores', valor: a.doisFatores ? 'Exigida' : 'Não exigida' },
                     { rotulo: 'Cadastrado por', valor: a.cadastradoPor }
                 ]
@@ -185,7 +183,7 @@ export class NewAdminModalComponent implements OnChanges {
             nivel: v.nivel as Administrador['nivel'],
             cargo: v.cargo,
             unidade: v.unidade,
-            admissao: v.admissao,
+            admissao: this.admin?.admissao ?? null,
             doisFatores: v.doisFatores,
             ativo: this.admin?.ativo ?? true,
             cadastradoPor: this.admin?.cadastradoPor
@@ -240,8 +238,7 @@ export class NewAdminModalComponent implements OnChanges {
             nivel: v.nivel as NivelAcesso,
             rg: v.rg.trim(),
             cargo: v.cargo.trim(),
-            unidade: v.unidade.trim(),
-            admissao: this.dataIso(v.admissao)
+            unidade: v.unidade.trim()
         };
     }
 
@@ -282,7 +279,6 @@ export class NewAdminModalComponent implements OnChanges {
             nivel: admin.nivel,
             cargo: admin.cargo,
             unidade: admin.unidade,
-            admissao: admin.admissao,
             doisFatores: admin.doisFatores
         });
     }
@@ -291,7 +287,7 @@ export class NewAdminModalComponent implements OnChanges {
         this.form.reset({
             nome: '', cpf: '', rg: '', nascimento: null, genero: '', email: '', telefone: '',
             cep: '', rua: '', numero: '', complemento: '', bairro: '', cidade: '', uf: '',
-            nivel: '', cargo: '', unidade: '', admissao: null,
+            nivel: '', cargo: '', unidade: '',
             doisFatores: true
         });
     }

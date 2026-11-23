@@ -22,7 +22,6 @@ export interface NovoAdministrador {
     rg?: string;
     cargo?: string;
     unidade?: string;
-    admissao?: string;
 }
 
 export interface AdministradorCriado {
