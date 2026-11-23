@@ -1,3 +1,4 @@
+
 package br.gov.sidesp.management;
 
 import br.gov.sidesp.auth.Requests;
@@ -8,9 +9,11 @@ import java.time.LocalDate;
 
 /** Entradas da Sprint 2. Campos desconhecidos são recusados pelo Jackson. */
 public final class ManagementRequests {
+
   /** Agrupa contratos sem criar estado compartilhado. */
   private ManagementRequests() {}
 
+  /** Cadastro de administradores, mantendo o contrato existente. */
   public record Professional(
       @NotNull @Valid Requests.Registration cadastro,
       @Pattern(regexp = "ADMINISTRADOR_TOTAL|ADMINISTRADOR_PARCIAL") String nivel,
@@ -20,10 +23,26 @@ public final class ManagementRequests {
       @Size(max = 100) String cargo,
       @Size(max = 100) String unidade,
       @PastOrPresent LocalDate admissao) {
-    /** Evita imprimir credenciais e documentos em depuração. */
+
     @Override
     public String toString() {
       return "Professional[REDACTED]";
+    }
+  }
+
+  /** Cadastro de professores com ativação por primeiro acesso. */
+  public record Teacher(
+      @NotNull @Valid Requests.ProfessionalRegistration cadastro,
+      @Size(max = 20) String rg,
+      @NotBlank @Size(max = 40) String registro,
+      @NotBlank @Size(max = 150) String especialidade,
+      @Size(max = 100) String cargo,
+      @Size(max = 100) String unidade,
+      @PastOrPresent LocalDate admissao) {
+
+    @Override
+    public String toString() {
+      return "Teacher[REDACTED]";
     }
   }
 
@@ -49,7 +68,7 @@ public final class ManagementRequests {
       @Size(max = 1000) String restricoes,
       @NotBlank @Size(max = 100) String contatoEmergencia,
       @NotBlank @Size(max = 20) String telefoneEmergencia) {
-    /** Não inclui informações de saúde em logs acidentais. */
+
     @Override
     public String toString() {
       return "Medical[REDACTED]";

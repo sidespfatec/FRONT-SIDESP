@@ -12,7 +12,7 @@ import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 /** Confere atualização de V3 com dados já gravados, sem tocar no banco de desenvolvimento. */
 @EnabledIfEnvironmentVariable(named = "TEST_DB_URL", matches = ".*sidesp_test.*")
 class MigrationUpgradeTest {
-  /** Cria banco exclusivo, aplica V3, insere responsável e confere preservação após V4. */
+  /** Cria banco exclusivo, aplica V3, insere responsável e confere preservação após V4-V7. */
   @Test
   void upgradesPopulatedV3() throws Exception {
     String base = System.getenv("TEST_DB_URL").split("\\?")[0];
@@ -40,7 +40,7 @@ class MigrationUpgradeTest {
           statement.execute("INSERT INTO polos(pol_des) VALUES('Polo legado')");
         }
         var flyway = Flyway.configure().dataSource(url, user, password).load();
-        assertThat(flyway.migrate().migrationsExecuted).isEqualTo(1);
+        assertThat(flyway.migrate().migrationsExecuted).isEqualTo(4);
         assertThat(flyway.migrate().migrationsExecuted).isZero();
         try (var target = DriverManager.getConnection(url, user, password);
             var statement = target.createStatement()) {

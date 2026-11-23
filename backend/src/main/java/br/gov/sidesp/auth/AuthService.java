@@ -4,7 +4,9 @@ package br.gov.sidesp.auth;
 import br.gov.sidesp.security.Crypto;
 import br.gov.sidesp.security.TokenService;
 import java.security.MessageDigest;
+import java.security.SecureRandom;
 import java.time.Clock;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -84,6 +86,158 @@ public class AuthService {
         return new Registered(
                 personId,
                 "Cadastro concluído. Você já pode fazer login.");
+    }
+
+    /**
+     * Cadastra um profissional diretamente com o perfil PROFESSOR.
+     * Mantido para compatibilidade com o fluxo anterior.
+     */
+    @Transactional
+    public Registered registerProfessional(
+            Requests.Registration registration) {
+
+        Requests.Person person = registration.dadosPessoais();
+        Requests.Credentials credentials = registration.credenciais();
+
+        Rules.password(
+                credentials.senha(),
+                credentials.confirmacaoSenha());
+
+        Rules.address(registration.endereco());
+
+        if (Rules.minor(person.dataNascimento(), clock)) {
+            throw ApiException.invalid(
+                    "dadosPessoais.dataNascimento",
+                    "O profissional deve ser maior de idade.");
+        }
+
+        if (registration.responsavel() != null) {
+            throw ApiException.invalid(
+                    "responsavel",
+                    "Cadastro de profissional não aceita dados de responsável.");
+        }
+
+        String phone = Rules.phone(
+                person.telefone(),
+                "dadosPessoais.telefone");
+
+        String cpf = optionalCpf(person.cpf());
+
+        if (cpf == null) {
+            throw ApiException.invalid(
+                    "dadosPessoais.cpf",
+                    "CPF é obrigatório para o profissional.");
+        }
+
+        String email = Rules.email(credentials.email());
+
+        if (email.getBytes(java.nio.charset.StandardCharsets.UTF_8).length > 254) {
+            throw ApiException.invalid(
+                    "credenciais.email",
+                    "E-mail excede limite em bytes.");
+        }
+
+        validateLoginCpf(
+                credentials.cpfLogin(),
+                cpf,
+                "O titular do login deve ser o próprio profissional.");
+
+        checkAvailable(cpf, email);
+
+        int personId = repository.person(
+                person.nome(),
+                person.dataNascimento(),
+                person.genero(),
+                repository.registrationType("PROFESSOR"));
+
+        repository.cpf(
+                personId,
+                crypto.cpfHash(cpf));
+
+        createAccount(
+                personId,
+                email,
+                credentials.senha());
+
+        repository.contact(personId, null, phone);
+        repository.address(personId, registration.endereco());
+
+        if (registration.fichaMedica() != null) {
+            medical.saveMedical(personId, registration.fichaMedica());
+        }
+
+        return new Registered(
+                personId,
+                "Cadastro de professor concluído. Você já pode fazer login.");
+    }
+
+    /**
+     * Realiza o pré-cadastro de um professor.
+     * Cria uma conta inativa e aguarda a definição da primeira senha.
+     */
+    @Transactional
+    public Registered preRegisterProfessional(
+            Requests.ProfessionalRegistration registration) {
+
+        Requests.Person person = registration.dadosPessoais();
+
+        Rules.address(registration.endereco());
+
+        if (Rules.minor(person.dataNascimento(), clock)) {
+            throw ApiException.invalid(
+                    "dadosPessoais.dataNascimento",
+                    "O profissional deve ser maior de idade.");
+        }
+
+        String phone = Rules.phone(
+                person.telefone(),
+                "dadosPessoais.telefone");
+
+        String cpf = Rules.cpf(
+                person.cpf(),
+                "dadosPessoais.cpf");
+
+        String email = Rules.email(registration.email());
+
+        if (email.getBytes(java.nio.charset.StandardCharsets.UTF_8).length > 254) {
+            throw ApiException.invalid(
+                    "email",
+                    "E-mail excede limite em bytes.");
+        }
+
+        checkAvailable(cpf, email);
+
+        int personId = repository.person(
+                person.nome(),
+                person.dataNascimento(),
+                person.genero(),
+                repository.registrationType("PROFESSOR"));
+
+        repository.cpf(
+                personId,
+                crypto.cpfHash(cpf));
+
+        // Gera uma senha aleatória desconhecida pelo professor.
+        byte[] randomBytes = new byte[32];
+        new SecureRandom().nextBytes(randomBytes);
+
+        String temporaryPassword =
+                Base64.getUrlEncoder()
+                        .withoutPadding()
+                        .encodeToString(randomBytes);
+
+        repository.createInactiveAccount(
+                personId,
+                crypto.encryptEmail(email),
+                crypto.emailHash(email),
+                passwordEncoder.encode(temporaryPassword));
+
+        repository.contact(personId, null, phone);
+        repository.address(personId, registration.endereco());
+
+        return new Registered(
+                personId,
+                "Pré-cadastro realizado. O professor receberá as instruções de primeiro acesso.");
     }
 
     private String optionalCpf(String value) {

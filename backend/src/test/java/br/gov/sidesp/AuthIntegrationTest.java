@@ -396,12 +396,12 @@ class AuthIntegrationTest {
   }
 
   /**
-   * Confirma três migrations,32 tabelas+histórico, repetição sem novas DDL e recusa de acesso HTTP
-   * nãoautenticado.
+   * Confirma as sete migrations, 36 tabelas, repetição sem novas DDL e recusa de acesso HTTP
+   * não autenticado.
    */
   @Test
   void migrationsCompleteAndRepeatSafe() {
-    assertThat(flyway.info().applied()).hasSize(4);
+    assertThat(flyway.info().applied()).hasSize(7);
     assertThat(flyway.migrate().migrationsExecuted).isZero();
     assertThat(
             db.queryForObject(
@@ -462,12 +462,39 @@ class AuthIntegrationTest {
         .isEqualTo("ADMINISTRADOR_PARCIAL");
     assertThat(call("/admin/administradores", HttpMethod.POST, body, token).getStatusCode().value())
         .isEqualTo(409);
-    body.remove("nivel");
-    body.set("cadastro", adult(710000112));
-    body.put("registro", "CREF teste");
-    body.put("especialidade", "Natação");
-    assertThat(call("/admin/professores", HttpMethod.POST, body, token).getStatusCode().value())
+    var teacherBody = json.createObjectNode();
+    var teacherRegistration = json.createObjectNode();
+    var teacherPerson = adult(710000112);
+
+    teacherRegistration.set("dadosPessoais", teacherPerson.get("dadosPessoais").deepCopy());
+    teacherRegistration.set("endereco", teacherPerson.get("endereco").deepCopy());
+    teacherRegistration.put("email", "710000112@example.invalid");
+
+    teacherBody.set("cadastro", teacherRegistration);
+    teacherBody.put("registro", "CREF teste");
+    teacherBody.put("especialidade", "Natação");
+
+    var teacherCreated =
+        call("/admin/professores", HttpMethod.POST, teacherBody, token);
+    assertThat(teacherCreated.getStatusCode().value())
+        .as("Status: %s | Resposta do backend: %s", teacherCreated.getStatusCode(), teacherCreated.getBody())
         .isEqualTo(201);
+
+    Integer teacherAccountId =
+        db.queryForObject(
+            "SELECT con_id FROM contas WHERE con_email_hash=?",
+            Integer.class,
+            crypto.emailHash("710000112@example.invalid"));
+
+    assertThat(db.queryForObject(
+            "SELECT con_ativo FROM contas WHERE con_id=?",
+            Boolean.class,
+            teacherAccountId))
+        .isFalse();
+
+    assertThat(login("710000112@example.invalid", "abcdefgh").getStatusCode())
+        .isEqualTo(HttpStatus.UNAUTHORIZED);
+
     assertThat(count("turmas_professores")).isZero();
     int own =
         db.queryForObject(
