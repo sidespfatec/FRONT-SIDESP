@@ -5,6 +5,14 @@ import { ModalidadeDaLista } from './modality.model';
 
 const API = '/api/v1';
 
+//enquanto não há modalidade cadastrada no banco, o select usa estas para não travar
+//o cadastro de professor. Assim que o GET trouxer alguma, elas somem sozinhas.
+const MODALIDADES_PROVISORIAS: ModalidadeDaLista[] = [
+    { id: -1, nome: 'Natação', ativo: true },
+    { id: -2, nome: 'Futsal', ativo: true },
+    { id: -3, nome: 'Vôlei', ativo: true }
+];
+
 @Injectable({ providedIn: 'root' })
 export class ModalityService {
 
@@ -27,11 +35,12 @@ export class ModalityService {
             params: apenasAtivas ? { ativo: true } : {}
         }).subscribe({
             next: (lista) => {
-                this.modalidades.set(lista);
+                this.modalidades.set(lista.length ? lista : MODALIDADES_PROVISORIAS);
                 this.carregando.set(false);
             },
             error: (falha: HttpErrorResponse) => {
                 this.erro.set(this.explicarErro(falha));
+                this.modalidades.set(MODALIDADES_PROVISORIAS);
                 this.carregando.set(false);
             }
         });
