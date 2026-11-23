@@ -211,17 +211,6 @@ export function duracaoEmHoras(inicio: string, fim: string): number {
 // Tudo daqui para baixo e descartável: some quando os endpoints existirem.
 // ---------------------------------------------------------------------------
 
-export const PERFIL_PROVISORIO: PerfilProfessor = {
-    id: 1,
-    nome: 'Ricardo Alves de Campos',
-    cpf: '318.442.770-09',
-    dataNascimento: '1988-07-04',
-    sexo: 'M',
-    telefone: '(12) 99645-2210',
-    registroProfissional: 'CREF 012345-G/SP',
-    especialidade: 'Natação'
-};
-
 export const TURMAS_PROVISORIAS: TurmaDoProfessor[] = [
     {
         id: 1, modalidade: 'Natação', nome: 'Infantil A', polo: 'Polo Centro',
@@ -236,7 +225,7 @@ export const TURMAS_PROVISORIAS: TurmaDoProfessor[] = [
     {
         id: 3, modalidade: 'Natação', nome: 'Sub-18 Competição', polo: 'Polo Pedregulho',
         diasSemana: [2, 4, 6], horaInicio: '17h00', horaFim: '19h00',
-        totalAlunos: 11, vagas: 18, frequenciaMedia: 95, alunosEmRisco: 0, chamadaPendente: false
+        totalAlunos: 8, vagas: 18, frequenciaMedia: 95, alunosEmRisco: 0, chamadaPendente: false
     }
 ];
 

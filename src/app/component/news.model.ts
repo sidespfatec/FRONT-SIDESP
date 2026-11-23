@@ -5,6 +5,10 @@ export interface NewsItem {
   description: string;
   image: string;
   date: string;
+
+  //o card da main mostra estes dois; a API ainda não devolve nenhum deles
+  fim?: string | null;
+  arquivada?: boolean;
 }
 
 export interface NoticiaDados {

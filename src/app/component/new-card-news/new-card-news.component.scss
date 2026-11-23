@@ -207,7 +207,32 @@
 
         .p-togglebutton {
             flex: 1;
+            border: 1.5px solid var(--color-border-strong);
+        }
+
+        //quem tem fundo proprio e o content, nao o botao de fora:
+        //pintar so o botao deixava a letra branca sobre fundo claro
+        .p-togglebutton-content {
             justify-content: center;
+            width: 100%;
+            background: var(--gray-100);
+        }
+
+        .p-togglebutton-label {
+            color: var(--color-text-secondary);
+        }
+
+        .p-togglebutton-checked {
+            border-color: var(--color-brand-primary) !important;
+
+            .p-togglebutton-content {
+                background: var(--color-brand-primary) !important;
+                box-shadow: none !important;
+            }
+
+            .p-togglebutton-label {
+                color: var(--color-text-on-brand) !important;
+            }
         }
     }
 

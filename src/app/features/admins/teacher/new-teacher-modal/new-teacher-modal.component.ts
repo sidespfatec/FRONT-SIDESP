@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output, signal } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output, signal } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
@@ -13,6 +13,7 @@ import { MaskCaretDirective } from '../../../../directives/mask-caret.directive'
 
 import { GENEROS, maiorDeIdade, NovoProfessor, ProfessorCriado, SENHA_MIN, UFS } from '../teacher.model';
 import { TeacherAdminService } from '../teacher.service';
+import { ModalityService } from '../../modalites/modality.service';
 
 @Component({
     selector: 'app-new-teacher-modal',
@@ -21,12 +22,14 @@ import { TeacherAdminService } from '../teacher.service';
     styleUrl: './new-teacher-modal.component.scss'
 })
 
-export class NewTeacherModalComponent {
+export class NewTeacherModalComponent implements OnInit {
     @Input() visible = false;
     @Output() visibleChange = new EventEmitter<boolean>();
     @Output() salvo = new EventEmitter<ProfessorCriado>();
 
     private readonly service = inject(TeacherAdminService);
+
+    private readonly modalidades = inject(ModalityService);
 
     //a resposta chega fora de um evento: precisa ser signal para a tela repintar
     readonly salvando = signal(false);
@@ -74,12 +77,8 @@ export class NewTeacherModalComponent {
         { label: 'Concursado', value: 'concursado' }
     ];
 
-    modalities = [
-        { label: 'Educação física', value: 'educacao-fisica' },
-        { label: 'Natação', value: 'natacao' },
-        { label: 'Vôlei', value: 'volei' },
-        { label: 'Futebol', value: 'futebol' }
-    ];
+    //vêm do GET /admin/modalidades
+    readonly modalities = this.modalidades.opcoes;
 
     classGroups = [
         { label: 'Turma A - Manhã', value: 'turma-a' },
@@ -89,6 +88,10 @@ export class NewTeacherModalComponent {
 
     get maiorDeIdade(): boolean {
         return maiorDeIdade(this.nascimento);
+    }
+
+    ngOnInit(): void {
+        this.modalidades.buscarModalidades();
     }
 
     get senhaTemTamanho(): boolean {
@@ -180,10 +183,7 @@ export class NewTeacherModalComponent {
 
     /** O campo da API é um texto só, então as modalidades vão separadas por vírgula. */
     private nomesDasModalidades(): string {
-        return this.modalities
-            .filter(m => this.selectedModalities.includes(m.value))
-            .map(m => m.label)
-            .join(', ');
+        return this.selectedModalities.join(', ');
     }
 
     private limpar(): void {

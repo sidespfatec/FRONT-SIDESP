@@ -2,7 +2,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import {
-    Aula, AlunoDaTurma, Presenca, RegistroDeAula, TurmaDoProfessor,
+    Aula, AlunoDaTurma, Presenca, PerfilProfessor, RegistroDeAula, TurmaDoProfessor,
     ALUNOS_PROVISORIOS, AULAS_PROVISORIAS, REGISTROS_PROVISORIOS, TURMAS_PROVISORIAS
 } from './teacher.model';
 import { PerfilService } from '../../core/perfil/perfil.service';
@@ -31,7 +31,7 @@ export class TeacherService {
     private readonly _chamadas = signal<Record<number, Record<number, Presenca>>>({});
 
     //monta a ficha com o que o GET /perfil devolve; registro e especialidade não vêm nele
-    readonly perfil = computed(() => {
+    readonly perfil = computed<PerfilProfessor | null>(() => {
         const dados = this.conta.perfil();
         if (!dados) { return null; }
 

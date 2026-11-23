@@ -33,25 +33,6 @@ export const NIVEIS_PERMISSAO: { label: string; value: NivelPermissao }[] = [
 
 export type ModoFicha = 'ver' | 'editar' | 'novo';
 
-
-export const Perfil_provisorio: Administrador = {
-    id: 1,
-    nome: 'Josiane Blanco',
-    cpf: '000.000.000-00',
-    rg: '00.000.000-0',
-    nascimento: new Date(1996, 2, 4),
-    email: 'josiane.blanco@gmail.com',
-    telefone: '11959351068',
-    cidade: 'Guaratinguetá',
-    nivel: 'Administrador geral',
-    cargo: 'Administrador',
-    unidade: 'Guaratinguetá',
-    admissao: new Date(2023, 8, 30),
-    doisFatores: true,
-    ativo: true,
-    cadastradoPor: 'Paulo Rodrigues'
-}
-
 export function dataLocal(iso: string): Date {
     const [ano, mes, dia] = iso.split('-').map(Number);
     return new Date(ano, mes - 1, dia);

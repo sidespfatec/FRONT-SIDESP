@@ -126,7 +126,7 @@
 
         <div class="teacher-field">
             <label for="modalidades">Modalidades</label>
-            <p-multiselect inputId="modalidades" [options]="modalities" [(ngModel)]="selectedModalities"
+            <p-multiselect inputId="modalidades" [options]="modalities()" [(ngModel)]="selectedModalities"
                 name="selectedModalities" optionLabel="label" optionValue="value" display="chip"
                 placeholder="Selecione as modalidades" appendTo="body" />
         </div>
