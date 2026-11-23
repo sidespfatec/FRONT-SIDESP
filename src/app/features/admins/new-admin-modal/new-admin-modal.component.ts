@@ -38,6 +38,16 @@ export class NewAdminModalComponent implements OnChanges {
     private readonly fb = inject(FormBuilder);
 
     readonly niveis = NIVEIS_PERMISSAO;
+
+    readonly generos = [
+        { label: 'Feminino', value: 'F' },
+        { label: 'Masculino', value: 'M' }
+    ];
+
+    readonly ufs = [
+        'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG',
+        'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'
+    ];
     readonly hoje = new Date();
 
     readonly form = this.fb.nonNullable.group({
@@ -45,14 +55,22 @@ export class NewAdminModalComponent implements OnChanges {
         cpf: ['', Validators.required],
         rg: [''],
         nascimento: [null as Date | null],
+        genero: [''],
         email: ['', [Validators.required, Validators.email]],
         telefone: [''],
+        cep: [''],
+        rua: [''],
+        numero: [''],
+        complemento: [''],
+        bairro: [''],
         cidade: [''],
+        uf: [''],
         nivel: ['', Validators.required],
         cargo: [''],
         unidade: [''],
         admissao: [null as Date | null],
         senha: [''],
+        confirmacaoSenha: [''],
         doisFatores: [true]
     });
 
@@ -158,22 +176,27 @@ export class NewAdminModalComponent implements OnChanges {
             cpf: admin.cpf,
             rg: admin.rg ?? '',
             nascimento: admin.nascimento,
+            genero: '',
             email: admin.email,
             telefone: admin.telefone,
+            cep: '', rua: '', numero: '', complemento: '', bairro: '', uf: '',
             cidade: admin.cidade,
             nivel: admin.nivel,
             cargo: admin.cargo,
             unidade: admin.unidade,
             admissao: admin.admissao,
             senha: '',
+            confirmacaoSenha: '',
             doisFatores: admin.doisFatores
         });
     }
 
     private limpar(): void {
         this.form.reset({
-            nome: '', cpf: '', rg: '', nascimento: null, email: '', telefone: '', cidade: '',
-            nivel: '', cargo: '', unidade: '', admissao: null, senha: '', doisFatores: true
+            nome: '', cpf: '', rg: '', nascimento: null, genero: '', email: '', telefone: '',
+            cep: '', rua: '', numero: '', complemento: '', bairro: '', cidade: '', uf: '',
+            nivel: '', cargo: '', unidade: '', admissao: null, senha: '', confirmacaoSenha: '',
+            doisFatores: true
         });
     }
 }

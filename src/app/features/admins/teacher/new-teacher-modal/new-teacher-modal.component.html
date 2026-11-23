@@ -23,6 +23,11 @@
         </div>
 
         <div class="teacher-field">
+            <label>Gênero</label>
+            <p-selectbutton [options]="generos" optionLabel="label" optionValue="value" [allowEmpty]="false" />
+        </div>
+
+        <div class="teacher-field">
             <label for="email">E-mail</label>
             <input id="email" pInputText type="email" />
         </div>
@@ -50,15 +55,37 @@
             <input id="rua" pInputText />
         </div>
 
+        <div class="teacher-field">
+            <label for="complemento">Complemento</label>
+            <input id="complemento" pInputText />
+        </div>
+
         <div class="teacher-field-row">
             <div class="teacher-field">
                 <label for="bairro">Bairro</label>
                 <input id="bairro" pInputText />
             </div>
-            <div class="teacher-field">
-                <label for="cidade">Cidade</label>
-                <input id="cidade" pInputText />
+            <div class="teacher-field teacher-field-small">
+                <label for="uf">UF</label>
+                <p-select inputId="uf" [options]="ufs" placeholder="UF" appendTo="body" />
             </div>
+        </div>
+
+        <div class="teacher-field">
+            <label for="cidade">Cidade</label>
+            <input id="cidade" pInputText />
+        </div>
+
+        <h2 class="teacher-form-title">Acesso</h2>
+
+        <div class="teacher-field">
+            <label for="senha">Senha</label>
+            <input id="senha" pInputText type="password" autocomplete="new-password" />
+        </div>
+
+        <div class="teacher-field">
+            <label for="confirmacaoSenha">Confirmar senha</label>
+            <input id="confirmacaoSenha" pInputText type="password" autocomplete="new-password" />
         </div>
 
         <h2 class="teacher-form-title">Dados profissionais</h2>

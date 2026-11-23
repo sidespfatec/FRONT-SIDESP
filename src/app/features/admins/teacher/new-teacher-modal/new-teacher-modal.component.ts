@@ -24,6 +24,16 @@ export class NewTeacherModalComponent {
     shirtSize: string | null = null;
     contractType: 'contratado' | 'concursado' = 'contratado';
 
+    generos = [
+        { label: 'Feminino', value: 'F' },
+        { label: 'Masculino', value: 'M' }
+    ];
+
+    ufs = [
+        'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG',
+        'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'
+    ];
+
     shirtSizes = [
         { label: 'PP', value: 'PP' },
         { label: 'P', value: 'P' },
