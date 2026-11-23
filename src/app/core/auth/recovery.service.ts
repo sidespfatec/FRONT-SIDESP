@@ -27,4 +27,13 @@ export class RecoveryService {
             confirmacaoSenha
         });
     }
+
+    /** Mesmo corpo do redefinir, mas ativa a conta que nasceu inativa. */
+    primeiroAcesso(token: string, novaSenha: string, confirmacaoSenha: string): Observable<void> {
+        return this.http.post<void>(`${API}/auth/primeiro-acesso`, {
+            token,
+            novaSenha,
+            confirmacaoSenha
+        });
+    }
 }

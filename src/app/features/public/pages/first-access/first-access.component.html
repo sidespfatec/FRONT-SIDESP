@@ -1,0 +1,61 @@
+<main class="main-container">
+    <div class="layout-recuperacao">
+        <div class="recuperacao-card">
+
+            <header class="cabecalho">
+                <div class="selo">
+                    <i class="pi pi-user-plus"></i>
+                </div>
+                <h1>Primeiro acesso</h1>
+                <p class="sub">
+                    Digite o código que a secretaria enviou para o seu e-mail e crie a sua senha.
+                </p>
+            </header>
+
+            @if (erro) {
+            <p class="erro" role="alert">{{ erro }}</p>
+            }
+
+            <form class="formulario" (ngSubmit)="ativar()">
+                <div class="campo">
+                    <label for="codigo">Código recebido</label>
+                    <input pInputText id="codigo" type="text" autocomplete="one-time-code"
+                        [(ngModel)]="codigo" [ngModelOptions]="{ standalone: true }"
+                        placeholder="Cole aqui o código do e-mail" />
+                    <small class="dica">O código vale por 15 minutos e só pode ser usado uma vez.</small>
+                </div>
+
+                <div class="campo">
+                    <label for="nova">Crie sua senha</label>
+                    <input pInputText id="nova" type="password" autocomplete="new-password"
+                        [(ngModel)]="novaSenha" [ngModelOptions]="{ standalone: true }"
+                        placeholder="Mínimo de {{ senhaMin }} caracteres" />
+
+                    @if (novaSenha && !senhaTemTamanho) {
+                    <small class="erro-campo">A senha deve ter de 8 a 128 caracteres.</small>
+                    }
+                </div>
+
+                <div class="campo">
+                    <label for="confirmacao">Confirmar senha</label>
+                    <input pInputText id="confirmacao" type="password" autocomplete="new-password"
+                        [(ngModel)]="confirmacao" [ngModelOptions]="{ standalone: true }"
+                        placeholder="Digite a senha de novo" />
+
+                    @if (confirmacao && !senhasConferem) {
+                    <small class="erro-campo">As senhas não coincidem.</small>
+                    }
+                </div>
+
+                <p-button type="submit" styleClass="w-full" [disabled]="!podeAtivar || enviando"
+                    [label]="enviando ? 'ATIVANDO...' : 'ATIVAR MINHA CONTA'" />
+            </form>
+
+            <a routerLink="/login" class="voltar">
+                <i class="pi pi-chevron-left" aria-hidden="true"></i>
+                Voltar para o login
+            </a>
+
+        </div>
+    </div>
+</main>

@@ -28,6 +28,11 @@ export const routes: Routes = [
     },
 
     {
+        path: 'primeiro-acesso',
+        loadComponent: () => import('./features/public/pages/first-access/first-access.component').then(m => m.FirstAccessComponent)
+    },
+
+    {
         path: 'registration',
         component: RegistrationComponent
     },
