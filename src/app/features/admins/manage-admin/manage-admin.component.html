@@ -11,6 +11,10 @@
         </div>
 
         <ul class="admin-list">
+            @if (erro(); as mensagem) {
+            <li class="admin-item">{{ mensagem }}</li>
+            }
+
             @for (admin of administradores; track admin.id) {
             <li class="admin-item">
                 <div class="admin-info">
@@ -34,11 +38,13 @@
                     </button>
                 </div>
             </li>
+            } @empty {
+            <li class="admin-item">{{ carregando() ? 'Carregando...' : 'Nenhum administrador encontrado.' }}</li>
             }
         </ul>
     </p-card>
 </div>
 
 <app-new-admin-modal [(visible)]="showModal" [modo]="modo" [admin]="selecionado" (salvar)="salvar($event)"
-    (editar)="modo = 'editar'" (desativar)="alternarSituacao(selecionado!)" />
+    (salvo)="recarregar()" (editar)="modo = 'editar'" (desativar)="alternarSituacao(selecionado!)" />
 

@@ -8,7 +8,7 @@ import { FooterComponent } from './component/footer/footer.component';
 import { NavbarDesktopAdminComponent } from './component/navbar-desktop-admin/navbar-desktop-admin.component';
 
 /** Rotas que nao exibem navbar nem footer. */
-const SEM_NAVEGACAO = ['/login', '/registration'];
+const SEM_NAVEGACAO = ['/login', '/registration', '/recuperar-senha'];
 
 /** Rotas que tambem nao exibem o banner. */
 const SEM_BANNER = ['/registration'];

@@ -1,4 +1,4 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms'; import { ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
@@ -15,11 +15,19 @@ import { AdminService } from '../admin.service';
     templateUrl: './admins-profile.component.html',
     styleUrl: './admins-profile.component.scss'
 })
-export class AdminsProfileComponent {
+export class AdminsProfileComponent implements OnInit {
 
     private readonly service = inject(AdminService);
 
     readonly perfil = this.service.perfil;
+
+    readonly carregando = this.service.carregando;
+
+    readonly erro = this.service.erro;
+
+    ngOnInit(): void {
+        this.service.buscarPerfil();
+    }
 
     private readonly fb = inject(FormBuilder);
 

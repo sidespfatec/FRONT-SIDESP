@@ -21,6 +21,10 @@
 
         <ul class="teacher-list">
 
+            @if (erro(); as mensagem) {
+            <li class="teacher-empty">{{ mensagem }}</li>
+            }
+
             @for (teacher of filteredTeachers; track teacher.id) {
 
             <li class="teacher-row">
@@ -32,9 +36,9 @@
                     <span class="teacher-info">
                         <span class="teacher-title">
                             <strong>{{ teacher.name }}</strong>
-                            <span class="contract-tag" [class.concursado]="teacher.contractType === 'concursado'">
-                                {{ teacher.contractType === 'concursado' ? 'Concursado' : 'Contratado' }}
-                            </span>
+                            @if (teacher.cargo) {
+                            <span class="contract-tag">{{ teacher.cargo }}</span>
+                            }
                         </span>
                         <span class="teacher-meta">Modalidade: {{ teacher.modality }}</span>
                     </span>
@@ -52,7 +56,7 @@
             </li>
 
             } @empty {
-            <li class="teacher-empty">Nenhum professor encontrado.</li>
+            <li class="teacher-empty">{{ carregando() ? 'Carregando...' : 'Nenhum professor encontrado.' }}</li>
             }
 
         </ul>
@@ -61,5 +65,5 @@
 
 </div>
 
-<app-new-teacher-modal [(visible)]="showModal"> </app-new-teacher-modal>
+<app-new-teacher-modal [(visible)]="showModal" (salvo)="recarregar()"> </app-new-teacher-modal>
 

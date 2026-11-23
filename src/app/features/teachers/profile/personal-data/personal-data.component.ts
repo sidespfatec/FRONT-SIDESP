@@ -33,6 +33,8 @@ export class PersonalDataComponent {
     /** Controla se a secao Contato esta em modo leitura ou em modo formulario. */
     readonly editando = signal(false);
 
+    readonly salvando = signal(false);
+
     // nonNullable evita que o controle volte null depois de um reset.
     readonly formulario = this.fb.nonNullable.group({
         telefone: ['', [Validators.required, Validators.pattern(/^\(\d{2}\) \d{5}-\d{4}$/)]]
@@ -60,12 +62,26 @@ export class PersonalDataComponent {
             return;
         }
 
-        this.service.atualizarTelefone(this.formulario.getRawValue().telefone);
-        this.editando.set(false);
-        this.mensagens.add({
-            severity: 'success',
-            summary: 'Dados atualizados',
-            detail: 'Seu telefone foi alterado.'
+        this.salvando.set(true);
+
+        this.service.atualizarTelefone(this.formulario.getRawValue().telefone).subscribe({
+            next: () => {
+                this.salvando.set(false);
+                this.editando.set(false);
+                this.mensagens.add({
+                    severity: 'success',
+                    summary: 'Dados atualizados',
+                    detail: 'Seu telefone foi alterado.'
+                });
+            },
+            error: () => {
+                this.salvando.set(false);
+                this.mensagens.add({
+                    severity: 'error',
+                    summary: 'Não foi possível salvar',
+                    detail: 'Tente de novo em instantes.'
+                });
+            }
         });
     }
 

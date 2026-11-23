@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
@@ -6,12 +6,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { NewTeacherModalComponent } from '../new-teacher-modal/new-teacher-modal.component';
+import { TeacherAdminService } from '../teacher.service';
 
 interface Teacher {
     id: number;
     name: string;
     modality: string;
-    contractType: 'contratado' | 'concursado';
+    cargo: string;
     active: boolean;
 }
 
@@ -24,7 +25,12 @@ interface Teacher {
     templateUrl: './manage.teachers.component.html',
     styleUrl: './manage.teachers.component.scss'
 })
-export class ManageTeachersComponent {
+export class ManageTeachersComponent implements OnInit {
+
+    private readonly service = inject(TeacherAdminService);
+
+    readonly carregando = this.service.carregando;
+    readonly erro = this.service.erro;
 
     showModal = false;
     search = '';
@@ -35,21 +41,28 @@ export class ManageTeachersComponent {
         { label: 'Inativos', value: 'inactive' }
     ];
 
-    teachers: Teacher[] = [
-        { id: 1, name: 'Ana Martins', modality: 'Judô', contractType: 'concursado', active: true },
-        { id: 2, name: 'Carlos Souza', modality: 'Futsal', contractType: 'contratado', active: true },
-        { id: 3, name: 'Bruna Lima', modality: 'Vôlei', contractType: 'concursado', active: true },
-        { id: 4, name: 'Carla Dias', modality: 'Natação', contractType: 'contratado', active: true },
-        { id: 5, name: 'Pedro Alves', modality: 'Basquete', contractType: 'contratado', active: false },
-        { id: 6, name: 'Marina Costa', modality: 'Tênis', contractType: 'concursado', active: false }
-    ];
+    ngOnInit(): void {
+        this.service.buscarProfessores();
+    }
 
-    get filteredTeachers() {
+    get filteredTeachers(): Teacher[] {
         const text = this.search.toLowerCase();
-        return this.teachers.filter(teacher =>
-            teacher.active === (this.filter === 'active') &&
-            teacher.name.toLowerCase().includes(text)
-        );
+        return this.service.professores()
+            .filter(professor =>
+                professor.ativo === (this.filter === 'active') &&
+                professor.nome.toLowerCase().includes(text)
+            )
+            .map(professor => ({
+                id: professor.id,
+                name: professor.nome,
+                modality: professor.especialidade ?? '—',
+                cargo: professor.cargo ?? '',
+                active: professor.ativo
+            }));
+    }
+
+    recarregar() {
+        this.service.buscarProfessores();
     }
 
     initials(name: string) {
@@ -66,6 +79,9 @@ export class ManageTeachersComponent {
     }
 
     toggleStatus(teacher: Teacher) {
-        teacher.active = !teacher.active;
+        this.service.alterarSituacao(teacher.id, !teacher.active).subscribe({
+            next: () => this.recarregar(),
+            error: () => this.recarregar()
+        });
     }
 }

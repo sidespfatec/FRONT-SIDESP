@@ -1,5 +1,9 @@
 <p-toast position="bottom-center" />
 
+@if (erro(); as mensagem) {
+<p class="perfil-aviso">{{ mensagem }}</p>
+}
+
 @if (perfil(); as p) {
 
 <div class="perfil-admin">
@@ -89,4 +93,8 @@
     </section>
 
 </div>
+}
+
+@if (!perfil() && carregando()) {
+<p class="perfil-aviso">Carregando...</p>
 }

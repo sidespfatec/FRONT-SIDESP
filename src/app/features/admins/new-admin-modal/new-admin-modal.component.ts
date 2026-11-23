@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
@@ -12,6 +13,9 @@ import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
 
 import { Administrador, ModoFicha, NIVEIS_PERMISSAO } from '../admin.model';
+import { AdministradorCriado, NivelAcesso, NIVEIS_ACESSO, NovoAdministrador } from '../admin-management.model';
+import { AdminManagementService } from '../admin-management.service';
+import { GENEROS, maiorDeIdade, SENHA_MIN, UFS } from '../registration.model';
 
 @Component({
     selector: 'app-new-admin-modal',
@@ -31,13 +35,24 @@ export class NewAdminModalComponent implements OnChanges {
 
     @Output() visibleChange = new EventEmitter<boolean>();
     @Output() salvar = new EventEmitter<Administrador>();
+    @Output() salvo = new EventEmitter<AdministradorCriado>();
     @Output() editar = new EventEmitter<void>();
     @Output() desativar = new EventEmitter<void>();
     @Output() redefinirSenha = new EventEmitter<void>();
 
     private readonly fb = inject(FormBuilder);
 
+    private readonly service = inject(AdminManagementService);
+
+    //a resposta chega fora de um evento: precisa ser signal para a tela repintar
+    readonly salvando = signal(false);
+    readonly erro = signal<string | null>(null);
+
     readonly niveis = NIVEIS_PERMISSAO;
+    readonly niveisAcesso = NIVEIS_ACESSO;
+    readonly generos = GENEROS;
+    readonly ufs = UFS;
+    readonly senhaMin = SENHA_MIN;
     readonly hoje = new Date();
 
     readonly form = this.fb.nonNullable.group({
@@ -45,21 +60,68 @@ export class NewAdminModalComponent implements OnChanges {
         cpf: ['', Validators.required],
         rg: [''],
         nascimento: [null as Date | null],
+        genero: [''],
         email: ['', [Validators.required, Validators.email]],
         telefone: [''],
+        cep: [''],
+        rua: [''],
+        numero: [''],
+        complemento: [''],
+        bairro: [''],
         cidade: [''],
+        uf: [''],
         nivel: ['', Validators.required],
         cargo: [''],
         unidade: [''],
         admissao: [null as Date | null],
         senha: [''],
+        confirmacaoSenha: [''],
         doisFatores: [true]
     });
 
+    //só o cadastro novo manda dados para a API, então as exigências dela valem só nesse modo
+    private readonly camposDoCadastro = [
+        'nascimento', 'genero', 'telefone', 'cep', 'rua', 'numero', 'bairro', 'cidade', 'uf', 'confirmacaoSenha'
+    ];
+
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['admin'] || changes['modo'] || changes['visible']) {
+            this.erro.set(null);
+            this.ajustarExigencias();
             this.modo === 'novo' ? this.limpar() : this.preencher(this.admin);
         }
+    }
+
+    private ajustarExigencias(): void {
+        const novo = this.modo === 'novo';
+
+        for (const campo of this.camposDoCadastro) {
+            const controle = this.form.get(campo)!;
+            novo ? controle.addValidators(Validators.required) : controle.clearValidators();
+            controle.updateValueAndValidity({ emitEvent: false });
+        }
+
+        const senha = this.form.controls.senha;
+        novo
+            ? senha.addValidators([Validators.required, Validators.minLength(SENHA_MIN)])
+            : senha.clearValidators();
+        senha.updateValueAndValidity({ emitEvent: false });
+    }
+
+    get opcoesNivel() {
+        return this.modo === 'novo' ? this.niveisAcesso : this.niveis;
+    }
+
+    get maiorDeIdade(): boolean {
+        return maiorDeIdade(this.dataIso(this.form.controls.nascimento.value) ?? '');
+    }
+
+    get senhasConferem(): boolean {
+        return this.form.controls.senha.value === this.form.controls.confirmacaoSenha.value;
+    }
+
+    get podeCadastrar(): boolean {
+        return this.form.valid && this.maiorDeIdade && this.senhasConferem && !this.salvando();
     }
 
     get readOnly(): boolean {
@@ -117,6 +179,12 @@ export class NewAdminModalComponent implements OnChanges {
             this.form.markAllAsTouched();
             return;
         }
+
+        if (this.modo === 'novo') {
+            this.cadastrar();
+            return;
+        }
+
         const v = this.form.getRawValue();
         this.salvar.emit({
             id: this.admin?.id ?? 0,
@@ -135,6 +203,71 @@ export class NewAdminModalComponent implements OnChanges {
             ativo: this.admin?.ativo ?? true,
             cadastradoPor: this.admin?.cadastradoPor
         });
+    }
+
+    private cadastrar(): void {
+        if (!this.podeCadastrar) { return; }
+
+        this.salvando.set(true);
+        this.erro.set(null);
+
+        this.service.cadastrarAdministrador(this.montarCorpo()).subscribe({
+            next: (criado) => {
+                this.salvando.set(false);
+                this.salvo.emit(criado);
+                this.limpar();
+                this.fechar();
+            },
+            error: (falha: HttpErrorResponse) => {
+                this.salvando.set(false);
+                this.erro.set(this.service.explicarErro(falha));
+            }
+        });
+    }
+
+    /** Monta o corpo no formato aninhado que o POST espera. */
+    private montarCorpo(): NovoAdministrador {
+        const v = this.form.getRawValue();
+
+        return {
+            cadastro: {
+                dadosPessoais: {
+                    nome: v.nome.trim(),
+                    cpf: v.cpf.trim(),
+                    dataNascimento: this.dataIso(v.nascimento)!,
+                    genero: v.genero as 'M' | 'F',
+                    telefone: v.telefone.trim()
+                },
+                endereco: {
+                    cep: v.cep.trim(),
+                    rua: v.rua.trim(),
+                    numero: v.numero.trim(),
+                    complemento: v.complemento.trim(),
+                    bairro: v.bairro.trim(),
+                    cidade: v.cidade.trim(),
+                    uf: v.uf
+                },
+                credenciais: {
+                    email: v.email.trim(),
+                    senha: v.senha,
+                    confirmacaoSenha: v.confirmacaoSenha,
+                    cpfLogin: v.cpf.trim()
+                }
+            },
+            nivel: v.nivel as NivelAcesso,
+            rg: v.rg.trim(),
+            cargo: v.cargo.trim(),
+            unidade: v.unidade.trim(),
+            admissao: this.dataIso(v.admissao)
+        };
+    }
+
+    /** O back espera a data como texto 'aaaa-mm-dd'. */
+    private dataIso(data: Date | null): string | undefined {
+        if (!data) { return undefined; }
+        const mes = String(data.getMonth() + 1).padStart(2, '0');
+        const dia = String(data.getDate()).padStart(2, '0');
+        return `${data.getFullYear()}-${mes}-${dia}`;
     }
 
     cancelar(): void {
@@ -158,22 +291,27 @@ export class NewAdminModalComponent implements OnChanges {
             cpf: admin.cpf,
             rg: admin.rg ?? '',
             nascimento: admin.nascimento,
+            genero: '',
             email: admin.email,
             telefone: admin.telefone,
+            cep: '', rua: '', numero: '', complemento: '', bairro: '', uf: '',
             cidade: admin.cidade,
             nivel: admin.nivel,
             cargo: admin.cargo,
             unidade: admin.unidade,
             admissao: admin.admissao,
             senha: '',
+            confirmacaoSenha: '',
             doisFatores: admin.doisFatores
         });
     }
 
     private limpar(): void {
         this.form.reset({
-            nome: '', cpf: '', rg: '', nascimento: null, email: '', telefone: '', cidade: '',
-            nivel: '', cargo: '', unidade: '', admissao: null, senha: '', doisFatores: true
+            nome: '', cpf: '', rg: '', nascimento: null, genero: '', email: '', telefone: '',
+            cep: '', rua: '', numero: '', complemento: '', bairro: '', cidade: '', uf: '',
+            nivel: '', cargo: '', unidade: '', admissao: null, senha: '', confirmacaoSenha: '',
+            doisFatores: true
         });
     }
 }

@@ -22,6 +22,12 @@ export const routes: Routes = [
         component: LoginComponent
     },
     {
+        path: 'recuperar-senha',
+        loadComponent: () => import('./features/public/pages/password-recovery/password-recovery.component')
+            .then(m => m.PasswordRecoveryComponent)
+    },
+
+    {
         path: 'registration',
         component: RegistrationComponent
     },

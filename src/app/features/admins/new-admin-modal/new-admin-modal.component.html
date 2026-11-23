@@ -49,7 +49,19 @@
             <label for="nascimento">Data de nascimento</label>
             <p-datepicker id="nascimento" formControlName="nascimento" dateFormat="dd/mm/yy" [maxDate]="hoje"
                 appendTo="body" />
+            @if (modo === 'novo' && form.controls.nascimento.value && !maiorDeIdade) {
+            <small class="admin-field-error">O administrador precisa ser maior de idade.</small>
+            }
         </div>
+
+        @if (modo === 'novo') {
+        <div class="admin-field">
+            <label for="genero">Gênero</label>
+            <p-select id="genero" formControlName="genero" [options]="generos" optionLabel="label" optionValue="value"
+                placeholder="Selecione" appendTo="body" />
+            @if (invalido('genero')) { <small class="admin-field-error">Escolha o gênero.</small> }
+        </div>
+        }
 
         <h2 class="admin-form-title">Contato</h2>
 
@@ -70,12 +82,53 @@
             </div>
         </div>
 
+        @if (modo === 'novo') {
+        <h2 class="admin-form-title">Endereço</h2>
+
+        <div class="admin-field-row">
+            <div class="admin-field">
+                <label for="cep">CEP</label>
+                <p-inputmask id="cep" formControlName="cep" mask="99999-999" />
+                @if (invalido('cep')) { <small class="admin-field-error">Informe o CEP.</small> }
+            </div>
+            <div class="admin-field">
+                <label for="numero">Número</label>
+                <input id="numero" pInputText formControlName="numero" />
+                @if (invalido('numero')) { <small class="admin-field-error">Informe o número.</small> }
+            </div>
+        </div>
+
+        <div class="admin-field">
+            <label for="rua">Rua</label>
+            <input id="rua" pInputText formControlName="rua" />
+            @if (invalido('rua')) { <small class="admin-field-error">Informe a rua.</small> }
+        </div>
+
+        <div class="admin-field">
+            <label for="complemento">Complemento</label>
+            <input id="complemento" pInputText formControlName="complemento" />
+        </div>
+
+        <div class="admin-field-row">
+            <div class="admin-field">
+                <label for="bairro">Bairro</label>
+                <input id="bairro" pInputText formControlName="bairro" />
+                @if (invalido('bairro')) { <small class="admin-field-error">Informe o bairro.</small> }
+            </div>
+            <div class="admin-field">
+                <label for="uf">UF</label>
+                <p-select id="uf" formControlName="uf" [options]="ufs" placeholder="UF" appendTo="body" />
+                @if (invalido('uf')) { <small class="admin-field-error">Escolha a UF.</small> }
+            </div>
+        </div>
+        }
+
         <h2 class="admin-form-title">Acesso</h2>
 
         <div class="admin-field">
             <label for="nivel">Nível de permissão</label>
-            <p-select id="nivel" formControlName="nivel" [options]="niveis" optionLabel="label" optionValue="value"
-                appendTo="body" />
+            <p-select id="nivel" formControlName="nivel" [options]="opcoesNivel" optionLabel="label"
+                optionValue="value" appendTo="body" />
             @if (invalido('nivel')) { <small class="admin-field-error">Escolha um nível.</small> }
         </div>
 
@@ -99,7 +152,20 @@
         <div class="admin-field">
             <label for="senha">Senha inicial</label>
             <p-password id="senha" formControlName="senha" [toggleMask]="true" [feedback]="false" />
-            <small class="admin-field-hint">A pessoa troca no primeiro acesso.</small>
+            <small class="admin-field-hint">De {{ senhaMin }} a 128 caracteres. A pessoa troca no primeiro
+                acesso.</small>
+            @if (invalido('senha')) {
+            <small class="admin-field-error">A senha deve ter pelo menos {{ senhaMin }} caracteres.</small>
+            }
+        </div>
+
+        <div class="admin-field">
+            <label for="confirmacaoSenha">Confirmar senha</label>
+            <p-password id="confirmacaoSenha" formControlName="confirmacaoSenha" [toggleMask]="true"
+                [feedback]="false" />
+            @if (form.controls.confirmacaoSenha.value && !senhasConferem) {
+            <small class="admin-field-error">As senhas não coincidem.</small>
+            }
         </div>
         }
 
@@ -112,6 +178,10 @@
         <p-button label="Redefinir senha" icon="pi pi-key" severity="secondary" [text]="true"
             (onClick)="redefinirSenha.emit()" />
         }
+
+        @if (erro(); as mensagem) {
+        <p class="admin-form-erro">{{ mensagem }}</p>
+        }
     </form>
     }
 
@@ -121,7 +191,8 @@
         <p-button label="Editar" icon="pi pi-pencil" (onClick)="editar.emit()" />
         } @else {
         <p-button label="Cancelar" severity="secondary" [text]="true" (onClick)="cancelar()" />
-        <p-button [label]="modo === 'novo' ? 'Cadastrar' : 'Salvar'" icon="pi pi-check" (onClick)="enviar()" />
+        <p-button [label]="modo === 'novo' ? 'Cadastrar' : 'Salvar'" icon="pi pi-check" [loading]="salvando()"
+            (onClick)="enviar()" />
         }
     </ng-template>
 </p-dialog>

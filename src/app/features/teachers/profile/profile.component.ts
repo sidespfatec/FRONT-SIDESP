@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { TabsModule } from 'primeng/tabs';
 
 import { TeacherService } from '../teacher.service';
@@ -20,9 +20,13 @@ import { ScheduleComponent } from './schedule/schedule.component';
     templateUrl: './profile.component.html',
     styleUrl: './profile.component.scss'
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
 
     private readonly service = inject(TeacherService);
+
+    ngOnInit(): void {
+        this.service.buscarPerfil();
+    }
 
     // Signals vindos do service. Nao sao copias: se o service alterar, a tela redesenha.
     readonly perfil = this.service.perfil;

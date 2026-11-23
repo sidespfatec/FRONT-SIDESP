@@ -7,29 +7,39 @@
 
         <div class="teacher-field">
             <label for="nome">Nome completo</label>
-            <input id="nome" pInputText />
+            <input id="nome" pInputText [(ngModel)]="nome" name="nome" />
         </div>
 
         <div class="teacher-field-row">
             <div class="teacher-field">
                 <label for="cpf">CPF</label>
                 <p-inputmask maskCaret inputId="cpf" mask="999.999.999-99" placeholder="000.000.000-00"
-                    [autoClear]="false" />
+                    [autoClear]="false" [(ngModel)]="cpf" name="cpf" />
             </div>
             <div class="teacher-field">
                 <label for="nascimento">Data de nascimento</label>
-                <input id="nascimento" pInputText type="date" />
+                <input id="nascimento" pInputText type="date" [(ngModel)]="nascimento" name="nascimento" />
+                @if (nascimento && !maiorDeIdade) {
+                <small class="teacher-field-aviso">O professor precisa ser maior de idade.</small>
+                }
             </div>
+        </div>
+
+        <div class="teacher-field">
+            <label>Gênero</label>
+            <p-selectbutton [options]="generos" [(ngModel)]="genero" name="genero" optionLabel="label"
+                optionValue="value" [allowEmpty]="false" />
         </div>
 
         <div class="teacher-field">
             <label for="email">E-mail</label>
-            <input id="email" pInputText type="email" />
+            <input id="email" pInputText type="email" [(ngModel)]="email" name="email" />
         </div>
 
         <div class="teacher-field">
             <label for="telefone">Telefone</label>
-            <p-inputmask maskCaret inputId="telefone" mask="(99) 99999-9999" placeholder="(12) 90000-0000" [autoClear]="false" />
+            <p-inputmask maskCaret inputId="telefone" mask="(99) 99999-9999" placeholder="(12) 90000-0000" [autoClear]="false"
+                [(ngModel)]="telefone" name="telefone" />
         </div>
 
         <h2 class="teacher-form-title">Endereço</h2>
@@ -37,28 +47,58 @@
         <div class="teacher-field-row">
             <div class="teacher-field teacher-field-grow">
                 <label for="cep">CEP</label>
-                <p-inputmask maskCaret inputId="cep" mask="99999-999" placeholder="00000-000" [autoClear]="false" />
+                <p-inputmask maskCaret inputId="cep" mask="99999-999" placeholder="00000-000" [autoClear]="false"
+                    [(ngModel)]="cep" name="cep" />
             </div>
             <div class="teacher-field teacher-field-small">
                 <label for="numero">Número</label>
-                <input id="numero" pInputText />
+                <input id="numero" pInputText [(ngModel)]="numero" name="numero" />
             </div>
         </div>
 
         <div class="teacher-field">
             <label for="rua">Rua</label>
-            <input id="rua" pInputText />
+            <input id="rua" pInputText [(ngModel)]="rua" name="rua" />
+        </div>
+
+        <div class="teacher-field">
+            <label for="complemento">Complemento</label>
+            <input id="complemento" pInputText [(ngModel)]="complemento" name="complemento" />
         </div>
 
         <div class="teacher-field-row">
             <div class="teacher-field">
                 <label for="bairro">Bairro</label>
-                <input id="bairro" pInputText />
+                <input id="bairro" pInputText [(ngModel)]="bairro" name="bairro" />
             </div>
-            <div class="teacher-field">
-                <label for="cidade">Cidade</label>
-                <input id="cidade" pInputText />
+            <div class="teacher-field teacher-field-small">
+                <label for="uf">UF</label>
+                <p-select inputId="uf" [options]="ufs" [(ngModel)]="uf" name="uf" placeholder="UF" appendTo="body" />
             </div>
+        </div>
+
+        <div class="teacher-field">
+            <label for="cidade">Cidade</label>
+            <input id="cidade" pInputText [(ngModel)]="cidade" name="cidade" />
+        </div>
+
+        <h2 class="teacher-form-title">Acesso</h2>
+
+        <div class="teacher-field">
+            <label for="senha">Senha</label>
+            <input id="senha" pInputText type="password" autocomplete="new-password" [(ngModel)]="senha" name="senha" />
+            @if (senha && !senhaTemTamanho) {
+            <small class="teacher-field-aviso">A senha deve ter pelo menos {{ senhaMin }} caracteres.</small>
+            }
+        </div>
+
+        <div class="teacher-field">
+            <label for="confirmacaoSenha">Confirmar senha</label>
+            <input id="confirmacaoSenha" pInputText type="password" autocomplete="new-password"
+                [(ngModel)]="confirmacaoSenha" name="confirmacaoSenha" />
+            @if (confirmacaoSenha && !senhasConferem) {
+            <small class="teacher-field-aviso">As senhas não coincidem.</small>
+            }
         </div>
 
         <h2 class="teacher-form-title">Dados profissionais</h2>
@@ -73,7 +113,7 @@
             <div class="teacher-field teacher-field-grow">
                 <label for="cref">CREF</label>
                 <p-inputmask maskCaret inputId="cref" mask="999999-a/aa" placeholder="000000-G/SP"
-                    styleClass="uppercase" [autoClear]="false" />
+                    styleClass="uppercase" [autoClear]="false" [(ngModel)]="cref" name="cref" />
             </div>
             <div class="teacher-field teacher-field-small">
                 <label for="camiseta">Camiseta</label>
@@ -94,16 +134,21 @@
         <div class="teacher-field">
             <label for="turma">Turma</label>
             <p-select inputId="turma" [options]="classGroups" optionLabel="label" optionValue="value"
-                placeholder="Selecione uma turma" appendTo="body" />
+                placeholder="Selecione uma turma" appendTo="body" [(ngModel)]="classGroup" name="classGroup" />
         </div>
 
         <h2 class="teacher-form-title">Currículo</h2>
 
         <p-fileUpload mode="basic" chooseLabel="Anexar currículo (PDF)" accept=".pdf" />
+
+        @if (erro(); as mensagem) {
+        <p class="teacher-form-erro">{{ mensagem }}</p>
+        }
     </form>
 
     <ng-template pTemplate="footer">
         <p-button label="Cancelar" severity="secondary" [text]="true" (onClick)="onCancel()" />
-        <p-button label="Salvar" icon="pi pi-check" />
+        <p-button label="Salvar" icon="pi pi-check" [loading]="salvando()" [disabled]="!podeSalvar"
+            (onClick)="onSave()" />
     </ng-template>
 </p-dialog>

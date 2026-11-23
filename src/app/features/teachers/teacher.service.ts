@@ -1,9 +1,11 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import {
-    Aula, AlunoDaTurma, Presenca, PerfilProfessor, RegistroDeAula, TurmaDoProfessor,
-    ALUNOS_PROVISORIOS, AULAS_PROVISORIAS, PERFIL_PROVISORIO, REGISTROS_PROVISORIOS, TURMAS_PROVISORIAS
+    Aula, AlunoDaTurma, Presenca, RegistroDeAula, TurmaDoProfessor,
+    ALUNOS_PROVISORIOS, AULAS_PROVISORIAS, REGISTROS_PROVISORIOS, TURMAS_PROVISORIAS
 } from './teacher.model';
+import { PerfilService } from '../../core/perfil/perfil.service';
 
 /**
  * Fonte unica de dados da area do professor.
@@ -18,7 +20,8 @@ export class TeacherService {
 
     // O underline marca o signal "de dentro", que so o service altera.
     // Para fora expomos a versao readonly, assim nenhuma tela escreve no estado por engano.
-    private readonly _perfil = signal<PerfilProfessor>(PERFIL_PROVISORIO);
+    private readonly conta = inject(PerfilService);
+
     private readonly _turmas = signal<TurmaDoProfessor[]>(TURMAS_PROVISORIAS);
     private readonly _aulas = signal<Aula[]>(AULAS_PROVISORIAS);
     private readonly _alunos = signal<AlunoDaTurma[]>(ALUNOS_PROVISORIOS);
@@ -27,7 +30,26 @@ export class TeacherService {
     // Chamada guardada por aula: { [aulaId]: { [alunoId]: 'PRESENTE' | ... } }
     private readonly _chamadas = signal<Record<number, Record<number, Presenca>>>({});
 
-    readonly perfil = this._perfil.asReadonly();
+    //monta a ficha com o que o GET /perfil devolve; registro e especialidade não vêm nele
+    readonly perfil = computed(() => {
+        const dados = this.conta.perfil();
+        if (!dados) { return null; }
+
+        return {
+            id: 0,
+            nome: dados.nome,
+            cpf: '',
+            dataNascimento: dados.dataNascimento,
+            sexo: dados.genero,
+            telefone: this.conta.telefone(),
+            registroProfissional: '',
+            especialidade: ''
+        };
+    });
+
+    readonly carregando = this.conta.carregando;
+    readonly erro = this.conta.erro;
+
     readonly turmas = this._turmas.asReadonly();
     readonly aulas = this._aulas.asReadonly();
 
@@ -35,12 +57,13 @@ export class TeacherService {
         this.preencherChamadasJaSalvas();
     }
 
-    /**
-     * Atualiza o telefone do professor.
-     * Por enquanto so mexe no signal; vira um PATCH quando o endpoint existir.
-     */
-    atualizarTelefone(telefone: string): void {
-        this._perfil.update(perfil => ({ ...perfil, telefone }));
+    buscarPerfil(): void {
+        this.conta.buscarPerfil();
+    }
+
+    /** Devolve o Observable: quem decide o que fazer depois é a tela. */
+    atualizarTelefone(telefone: string): Observable<void> {
+        return this.conta.salvarTelefone(telefone);
     }
 
     turmaPorId(id: number): TurmaDoProfessor | undefined {

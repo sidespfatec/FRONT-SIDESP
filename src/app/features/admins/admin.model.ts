@@ -20,7 +20,9 @@ export type NivelPermissao =
     | 'Administrador geral'
     | 'Administrador de unidade'
     | 'Operador'
-    | 'Somente leitura';
+    | 'Somente leitura'
+    | 'Acesso total'
+    | 'Acesso parcial';
 
 export const NIVEIS_PERMISSAO: { label: string; value: NivelPermissao }[] = [
     { label: 'Administrador geral', value: 'Administrador geral' },
