@@ -82,25 +82,6 @@
             <input id="cidade" pInputText [(ngModel)]="cidade" name="cidade" />
         </div>
 
-        <h2 class="teacher-form-title">Acesso</h2>
-
-        <div class="teacher-field">
-            <label for="senha">Senha</label>
-            <input id="senha" pInputText type="password" autocomplete="new-password" [(ngModel)]="senha" name="senha" />
-            @if (senha && !senhaTemTamanho) {
-            <small class="teacher-field-aviso">A senha deve ter pelo menos {{ senhaMin }} caracteres.</small>
-            }
-        </div>
-
-        <div class="teacher-field">
-            <label for="confirmacaoSenha">Confirmar senha</label>
-            <input id="confirmacaoSenha" pInputText type="password" autocomplete="new-password"
-                [(ngModel)]="confirmacaoSenha" name="confirmacaoSenha" />
-            @if (confirmacaoSenha && !senhasConferem) {
-            <small class="teacher-field-aviso">As senhas não coincidem.</small>
-            }
-        </div>
-
         <h2 class="teacher-form-title">Dados profissionais</h2>
 
         <div class="teacher-field">

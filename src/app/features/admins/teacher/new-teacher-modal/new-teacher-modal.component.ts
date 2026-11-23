@@ -11,7 +11,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { InputMaskModule } from 'primeng/inputmask';
 import { MaskCaretDirective } from '../../../../directives/mask-caret.directive';
 
-import { GENEROS, maiorDeIdade, NovoProfessor, ProfessorCriado, SENHA_MIN, UFS } from '../teacher.model';
+import { GENEROS, maiorDeIdade, NovoProfessor, ProfessorCriado, UFS } from '../teacher.model';
 import { TeacherAdminService } from '../teacher.service';
 import { ModalityService } from '../../modalites/modality.service';
 
@@ -50,9 +50,6 @@ export class NewTeacherModalComponent implements OnInit {
     cidade = '';
     uf = '';
 
-    senha = '';
-    confirmacaoSenha = '';
-
     cref = '';
     selectedModalities: string[] = [];
     shirtSize: string | null = null;
@@ -61,7 +58,6 @@ export class NewTeacherModalComponent implements OnInit {
 
     readonly generos = GENEROS;
     readonly ufs = UFS;
-    readonly senhaMin = SENHA_MIN;
 
     shirtSizes = [
         { label: 'PP', value: 'PP' },
@@ -94,14 +90,6 @@ export class NewTeacherModalComponent implements OnInit {
         this.modalidades.buscarModalidades();
     }
 
-    get senhaTemTamanho(): boolean {
-        return this.senha.length >= SENHA_MIN;
-    }
-
-    get senhasConferem(): boolean {
-        return this.senha === this.confirmacaoSenha;
-    }
-
     get podeSalvar(): boolean {
         return !!this.nome.trim()
             && !!this.cpf.trim()
@@ -117,8 +105,6 @@ export class NewTeacherModalComponent implements OnInit {
             && !!this.uf
             && !!this.cref.trim()
             && this.selectedModalities.length > 0
-            && this.senhaTemTamanho
-            && this.senhasConferem
             && !this.salvando();
     }
 
@@ -149,13 +135,11 @@ export class NewTeacherModalComponent implements OnInit {
 
     /** Monta o corpo no formato aninhado que o POST espera. */
     private montarCorpo(): NovoProfessor {
-        const cpf = this.cpf.trim();
-
         return {
             cadastro: {
                 dadosPessoais: {
                     nome: this.nome.trim(),
-                    cpf: cpf,
+                    cpf: this.cpf.trim(),
                     dataNascimento: this.nascimento,
                     genero: this.genero as 'M' | 'F',
                     telefone: this.telefone.trim()
@@ -169,12 +153,8 @@ export class NewTeacherModalComponent implements OnInit {
                     cidade: this.cidade.trim(),
                     uf: this.uf
                 },
-                credenciais: {
-                    email: this.email.trim(),
-                    senha: this.senha,
-                    confirmacaoSenha: this.confirmacaoSenha,
-                    cpfLogin: cpf
-                }
+                //o back manda o link de primeiro acesso para este e-mail
+                email: this.email.trim()
             },
             registro: this.cref.trim(),
             especialidade: this.nomesDasModalidades()
@@ -200,8 +180,6 @@ export class NewTeacherModalComponent implements OnInit {
         this.bairro = '';
         this.cidade = '';
         this.uf = '';
-        this.senha = '';
-        this.confirmacaoSenha = '';
         this.cref = '';
         this.selectedModalities = [];
         this.shirtSize = null;
