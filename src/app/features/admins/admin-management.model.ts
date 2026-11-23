@@ -1,4 +1,4 @@
-import { Cadastro } from './registration.model';
+import { DadosPessoais, Endereco } from './registration.model';
 
 export type NivelAcesso = 'ADMINISTRADOR_TOTAL' | 'ADMINISTRADOR_PARCIAL';
 
@@ -8,9 +8,16 @@ export const NIVEIS_ACESSO: { label: string; value: NivelAcesso }[] = [
     { label: 'Acesso parcial', value: 'ADMINISTRADOR_PARCIAL' }
 ];
 
+//o administrador não recebe senha no cadastro: ele define a dela no primeiro acesso
+export interface CadastroAdministrador {
+    dadosPessoais: DadosPessoais;
+    endereco: Endereco;
+    email: string;
+}
+
 //formato que o POST /api/v1/admin/administradores recebe
 export interface NovoAdministrador {
-    cadastro: Cadastro;
+    cadastro: CadastroAdministrador;
     nivel: NivelAcesso;
     rg?: string;
     cargo?: string;

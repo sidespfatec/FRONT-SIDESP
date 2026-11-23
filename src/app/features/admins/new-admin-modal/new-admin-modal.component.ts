@@ -15,7 +15,7 @@ import { ButtonModule } from 'primeng/button';
 import { Administrador, ModoFicha, NIVEIS_PERMISSAO } from '../admin.model';
 import { AdministradorCriado, NivelAcesso, NIVEIS_ACESSO, NovoAdministrador } from '../admin-management.model';
 import { AdminManagementService } from '../admin-management.service';
-import { GENEROS, maiorDeIdade, SENHA_MIN, UFS } from '../registration.model';
+import { GENEROS, maiorDeIdade, UFS } from '../registration.model';
 
 @Component({
     selector: 'app-new-admin-modal',
@@ -52,7 +52,6 @@ export class NewAdminModalComponent implements OnChanges {
     readonly niveisAcesso = NIVEIS_ACESSO;
     readonly generos = GENEROS;
     readonly ufs = UFS;
-    readonly senhaMin = SENHA_MIN;
     readonly hoje = new Date();
 
     readonly form = this.fb.nonNullable.group({
@@ -74,14 +73,12 @@ export class NewAdminModalComponent implements OnChanges {
         cargo: [''],
         unidade: [''],
         admissao: [null as Date | null],
-        senha: [''],
-        confirmacaoSenha: [''],
         doisFatores: [true]
     });
 
     //só o cadastro novo manda dados para a API, então as exigências dela valem só nesse modo
     private readonly camposDoCadastro = [
-        'nascimento', 'genero', 'telefone', 'cep', 'rua', 'numero', 'bairro', 'cidade', 'uf', 'confirmacaoSenha'
+        'nascimento', 'genero', 'telefone', 'cep', 'rua', 'numero', 'bairro', 'cidade', 'uf'
     ];
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -100,12 +97,6 @@ export class NewAdminModalComponent implements OnChanges {
             novo ? controle.addValidators(Validators.required) : controle.clearValidators();
             controle.updateValueAndValidity({ emitEvent: false });
         }
-
-        const senha = this.form.controls.senha;
-        novo
-            ? senha.addValidators([Validators.required, Validators.minLength(SENHA_MIN)])
-            : senha.clearValidators();
-        senha.updateValueAndValidity({ emitEvent: false });
     }
 
     get opcoesNivel() {
@@ -116,12 +107,8 @@ export class NewAdminModalComponent implements OnChanges {
         return maiorDeIdade(this.dataIso(this.form.controls.nascimento.value) ?? '');
     }
 
-    get senhasConferem(): boolean {
-        return this.form.controls.senha.value === this.form.controls.confirmacaoSenha.value;
-    }
-
     get podeCadastrar(): boolean {
-        return this.form.valid && this.maiorDeIdade && this.senhasConferem && !this.salvando();
+        return this.form.valid && this.maiorDeIdade && !this.salvando();
     }
 
     get readOnly(): boolean {
@@ -247,12 +234,8 @@ export class NewAdminModalComponent implements OnChanges {
                     cidade: v.cidade.trim(),
                     uf: v.uf
                 },
-                credenciais: {
-                    email: v.email.trim(),
-                    senha: v.senha,
-                    confirmacaoSenha: v.confirmacaoSenha,
-                    cpfLogin: v.cpf.trim()
-                }
+                //o back manda o link de primeiro acesso para este e-mail
+                email: v.email.trim()
             },
             nivel: v.nivel as NivelAcesso,
             rg: v.rg.trim(),
@@ -300,8 +283,6 @@ export class NewAdminModalComponent implements OnChanges {
             cargo: admin.cargo,
             unidade: admin.unidade,
             admissao: admin.admissao,
-            senha: '',
-            confirmacaoSenha: '',
             doisFatores: admin.doisFatores
         });
     }
@@ -310,7 +291,7 @@ export class NewAdminModalComponent implements OnChanges {
         this.form.reset({
             nome: '', cpf: '', rg: '', nascimento: null, genero: '', email: '', telefone: '',
             cep: '', rua: '', numero: '', complemento: '', bairro: '', cidade: '', uf: '',
-            nivel: '', cargo: '', unidade: '', admissao: null, senha: '', confirmacaoSenha: '',
+            nivel: '', cargo: '', unidade: '', admissao: null,
             doisFatores: true
         });
     }
