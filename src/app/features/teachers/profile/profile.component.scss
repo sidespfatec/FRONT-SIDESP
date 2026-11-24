@@ -115,8 +115,6 @@
     }
 }
 
-// O tema do PrimeNG e injetado em tempo de execucao, DEPOIS do styles.scss.
-// Sem ::ng-deep estas regras perdem a disputa de especificidade para o tema.
 :host ::ng-deep .abas-perfil {
     margin-top: 1.125rem;
 

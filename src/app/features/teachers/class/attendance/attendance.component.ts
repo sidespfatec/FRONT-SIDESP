@@ -88,7 +88,6 @@ export class AttendanceComponent implements OnInit, AfterViewInit {
     protected readonly mesAno = mesAno;
 
     ngOnInit(): void {
-        // Abre sempre na aula mais recente, que e a que ele quer na maioria das vezes.
         this.carregarMarcacoes();
     }
 

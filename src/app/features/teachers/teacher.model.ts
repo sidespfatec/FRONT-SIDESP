@@ -1,9 +1,3 @@
-// Tipos e dados da area do professor.
-//
-// Enquanto o back-end não tem os endpoints, as constantes *_PROVISORIAS no fim do
-// arquivo alimentam as telas. Quando a API existir, essas constantes são apagadas e
-// as interfaces viram o tipo da resposta HTTP -- elas não mudam.
-
 export type Sexo = 'M' | 'F';
 
 /** Situacao de uma aula especifica no calendario da turma. */
@@ -205,11 +199,6 @@ export function duracaoEmHoras(inicio: string, fim: string): number {
     };
     return (minutos(fim) - minutos(inicio)) / 60;
 }
-
-// ---------------------------------------------------------------------------
-// Dados provisorios.
-// Tudo daqui para baixo e descartável: some quando os endpoints existirem.
-// ---------------------------------------------------------------------------
 
 export const PERFIL_PROVISORIO: PerfilProfessor = {
     id: 1,
