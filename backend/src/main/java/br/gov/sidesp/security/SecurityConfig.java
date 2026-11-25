@@ -101,7 +101,8 @@ public class SecurityConfig {
                     "/api/v1/auth/cadastros",
                     "/api/v1/health",
                     "/api/v1/auth/recuperar-senha",
-                    "/api/v1/auth/redefinir-senha")
+                    "/api/v1/auth/redefinir-senha",
+                    "/api/v1/auth/primeiro-acesso")
                 .permitAll()
 
                 // Consulta pública das notícias.
