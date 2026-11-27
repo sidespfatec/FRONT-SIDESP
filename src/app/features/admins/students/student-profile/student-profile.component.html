@@ -1,0 +1,316 @@
+<div class="profile-page">
+
+    <button type="button" class="back-link" (click)="voltar()">‹ Início</button>
+
+    <section class="profile-head">
+        <div class="profile-photo">
+            @if (aluno.foto) {
+            <img [src]="aluno.foto" [alt]="aluno.nome" />
+            } @else {
+            <span>sem foto</span>
+            }
+        </div>
+
+        <div class="profile-identity">
+            <h1 class="profile-name">{{ aluno.nome }}</h1>
+            <p class="profile-meta">{{ idade }} anos · na rede desde {{ aluno.entrada | date:'dd/MM/yyyy' }}</p>
+            <div class="profile-tags">
+                <span class="tag tag-status" [class.inactive]="!aluno.ativo">
+                    {{ aluno.ativo ? 'Ativa' : 'Inativa' }}
+                </span>
+                <span class="tag tag-classes">
+                    {{ aluno.turmas.length }} {{ aluno.turmas.length === 1 ? 'turma' : 'turmas' }}
+                </span>
+            </div>
+        </div>
+    </section>
+
+    @if (pendencias) {
+    <div class="alert">
+        <div class="alert-text">
+            <strong>{{ pendencias }} {{ pendencias === 1 ? 'documento pendente' : 'documentos pendentes' }}</strong>
+            <span>Entregue até {{ aluno.prazoDocumentos }} para não perder a vaga.</span>
+        </div>
+        <button type="button" class="alert-link" (click)="abaAtual = 'documentos'">ver ›</button>
+    </div>
+    }
+
+    <nav class="tabs" role="tablist">
+        @for (aba of abas; track aba.id) {
+        <button type="button" role="tab" class="tab" [class.active]="abaAtual === aba.id"
+            [attr.aria-selected]="abaAtual === aba.id" (click)="abaAtual = aba.id">
+            {{ aba.nome }}
+        </button>
+        }
+    </nav>
+
+    @switch (abaAtual) {
+
+    @case ('turmas') {
+    <div class="panel">
+        @for (turma of aluno.turmas; track turma.id) {
+        <article class="class-card">
+            <h2 class="class-title">{{ turma.modalidade }} — {{ turma.nome }}</h2>
+            <p class="class-where">{{ turma.polo }} · {{ turma.professor }}</p>
+
+            <div class="class-schedule">
+                <div>
+                    <span class="label">Dias</span>
+                    <span class="value">{{ turma.dias }}</span>
+                </div>
+                <div>
+                    <span class="label">Horário</span>
+                    <span class="value">{{ turma.horario }}</span>
+                </div>
+            </div>
+
+            <div class="class-frequency">
+                <span>Frequência desde a entrada: <b>{{ percentual(turma.aulas, turma.presencas) }}%</b></span>
+                <button type="button" class="link" (click)="verCalendario(turma.id)">ver calendário ›</button>
+            </div>
+        </article>
+        }
+    </div>
+    }
+
+    @case ('frequencia') {
+    <div class="panel">
+
+        <section class="summary-card">
+            <p class="summary-since">Desde a entrada, em {{ aluno.entrada | date:'dd/MM/yyyy' }}</p>
+
+            <div class="summary-numbers">
+                <div>
+                    <strong>{{ resumo.aulas }}</strong>
+                    <span>aulas</span>
+                </div>
+                <div class="ok">
+                    <strong>{{ resumo.presencas }}</strong>
+                    <span>presenças</span>
+                </div>
+                <div class="bad">
+                    <strong>{{ resumo.faltas }}</strong>
+                    <span>faltas</span>
+                </div>
+                <div class="pct">
+                    <strong>{{ resumo.percentual }}%</strong>
+                    <span>frequência</span>
+                </div>
+            </div>
+
+            <div class="progress">
+                <div class="progress-bar" [style.width.%]="resumo.percentual"></div>
+            </div>
+        </section>
+
+        <div class="chips">
+            <button type="button" class="chip" [class.active]="!turmaFiltro" (click)="filtrar(0)">
+                Todas as turmas
+            </button>
+            @for (turma of aluno.turmas; track turma.id) {
+            <button type="button" class="chip" [class.active]="turmaFiltro === turma.id" (click)="filtrar(turma.id)">
+                {{ turma.modalidade }}
+            </button>
+            }
+        </div>
+
+        <section class="calendar">
+            <header class="calendar-head">
+                <button type="button" class="calendar-nav" aria-label="Mês anterior" [disabled]="!podeAnterior"
+                    (click)="mudarMes(-1)">‹</button>
+                <h2 class="calendar-title">{{ tituloMes }}</h2>
+                <button type="button" class="calendar-nav" aria-label="Próximo mês" [disabled]="!podeProximo"
+                    (click)="mudarMes(1)">›</button>
+            </header>
+
+            <div class="calendar-week">
+                @for (letra of letrasSemana; track $index) {
+                <span>{{ letra }}</span>
+                }
+            </div>
+
+            <div class="calendar-grid">
+                @for (dia of dias; track $index) {
+                @if (dia) {
+                <button type="button" class="day" [class.marked]="dia.status"
+                    [class.selected]="diaSelecionado === dia.data" [disabled]="!dia.status" (click)="abrirDia(dia)">
+                    <span>{{ dia.numero }}</span>
+                    @if (dia.status) {
+                    <i class="dot" [attr.data-status]="dia.status"></i>
+                    }
+                </button>
+                } @else {
+                <span class="day-empty"></span>
+                }
+                }
+            </div>
+
+            <ul class="legend">
+                <li><i class="dot" data-status="presente"></i>presente</li>
+                <li><i class="dot" data-status="falta"></i>falta</li>
+                <li><i class="dot" data-status="cancelada"></i>aula cancelada</li>
+            </ul>
+        </section>
+
+        <div class="day-info">
+            @if (diaSelecionado) {
+            <p class="day-info-title">{{ diaSelecionado | date:'dd/MM/yyyy' }}</p>
+            @for (aula of aulasDoDia; track aula.turmaId) {
+            <p class="day-info-line">
+                <i class="dot" [attr.data-status]="aula.status"></i>
+                {{ turma(aula.turmaId)?.modalidade }} · {{ turma(aula.turmaId)?.horario }} · {{ rotulos[aula.status] }}
+            </p>
+            }
+            } @else {
+            <p>Toque num dia marcado para ver as aulas.</p>
+            }
+        </div>
+
+    </div>
+    }
+
+    @case ('documentos') {
+    <div class="panel">
+        <input #arquivo type="file" hidden (change)="anexar($event)" />
+
+        @for (documento of aluno.documentos; track documento.id) {
+        <article class="document">
+            <div class="document-main">
+                <h2 class="document-name">{{ documento.nome }}</h2>
+                <p class="document-detail">{{ documento.detalhe }}</p>
+
+                @if (documento.situacao !== 'entregue') {
+                <button type="button" class="upload" (click)="escolherArquivo(documento.id, arquivo)">
+                    {{ documento.situacao === 'vencendo' ? 'Enviar novo arquivo' : 'Enviar arquivo' }}
+                </button>
+                }
+            </div>
+
+            <span class="badge" [attr.data-status]="documento.situacao">{{ documento.situacao }}</span>
+        </article>
+        }
+    </div>
+    }
+
+    @case ('dados') {
+    <div class="panel">
+
+        <section class="data-card">
+            <h2 class="data-title">Identificação</h2>
+            <p class="data-hint">Para corrigir, procure a secretaria.</p>
+
+            <dl class="data-rows">
+                <div class="data-row">
+                    <dt>CPF</dt>
+                    <dd>{{ aluno.cpf }}<small>FIXO</small></dd>
+                </div>
+                <div class="data-row">
+                    <dt>Data de nascimento</dt>
+                    <dd>{{ aluno.nascimento | date:'dd/MM/yyyy' }}<small>FIXO</small></dd>
+                </div>
+                <div class="data-row">
+                    <dt>Gênero</dt>
+                    <dd>{{ aluno.genero }}<small>FIXO</small></dd>
+                </div>
+            </dl>
+        </section>
+
+        <section class="data-card">
+            <header class="data-head">
+                <h2 class="data-title">Contato</h2>
+                @if (secaoEditando !== 'contato') {
+                <button type="button" class="link" (click)="editar('contato')">Editar</button>
+                }
+            </header>
+
+            @if (secaoEditando === 'contato') {
+            <form class="edit-form" (ngSubmit)="salvar()">
+                <label class="edit-field">
+                    <span>Telefone</span>
+                    <p-inputmask maskCaret mask="(99) 99999-9999" name="telefone" [(ngModel)]="rascunho.telefone"
+                        [autoClear]="false" fluid />
+                </label>
+
+                <label class="edit-field">
+                    <span>E-mail</span>
+                    <input pInputText type="email" name="email" [(ngModel)]="rascunho.email" fluid />
+                </label>
+
+                <div class="edit-actions">
+                    <button type="button" class="btn-ghost" (click)="cancelar()">Cancelar</button>
+                    <button type="submit" class="btn-main" [disabled]="!podeSalvar()">Salvar</button>
+                </div>
+            </form>
+            } @else {
+            <dl class="data-rows">
+                <div class="data-row">
+                    <dt>Telefone</dt>
+                    <dd>{{ aluno.telefone }}</dd>
+                </div>
+                <div class="data-row">
+                    <dt>E-mail</dt>
+                    <dd>{{ aluno.email }}</dd>
+                </div>
+            </dl>
+            }
+        </section>
+
+        <section class="data-card">
+            <header class="data-head">
+                <h2 class="data-title">Endereço</h2>
+                @if (secaoEditando !== 'endereco') {
+                <button type="button" class="link" (click)="editar('endereco')">Editar</button>
+                }
+            </header>
+
+            @if (secaoEditando === 'endereco') {
+            <form class="edit-form" (ngSubmit)="salvar()">
+                <label class="edit-field">
+                    <span>CEP</span>
+                    <p-inputmask maskCaret mask="99999-999" name="cep" [(ngModel)]="rascunho.cep" [autoClear]="false"
+                        fluid />
+                </label>
+
+                <label class="edit-field">
+                    <span>Rua e número</span>
+                    <input pInputText name="rua" [(ngModel)]="rascunho.rua" fluid />
+                </label>
+
+                <label class="edit-field">
+                    <span>Bairro</span>
+                    <input pInputText name="bairro" [(ngModel)]="rascunho.bairro" fluid />
+                </label>
+
+                <div class="edit-actions">
+                    <button type="button" class="btn-ghost" (click)="cancelar()">Cancelar</button>
+                    <button type="submit" class="btn-main" [disabled]="!podeSalvar()">Salvar</button>
+                </div>
+            </form>
+            } @else {
+            <dl class="data-rows">
+                <div class="data-row">
+                    <dt>CEP</dt>
+                    <dd>{{ aluno.cep }}</dd>
+                </div>
+                <div class="data-row">
+                    <dt>Rua e número</dt>
+                    <dd>{{ aluno.rua }}</dd>
+                </div>
+                <div class="data-row">
+                    <dt>Bairro</dt>
+                    <dd>{{ aluno.bairro }}</dd>
+                </div>
+                <div class="data-row">
+                    <dt>Cidade / UF</dt>
+                    <dd>{{ aluno.cidade }} / {{ aluno.uf }}<small>FIXO</small></dd>
+                </div>
+            </dl>
+            }
+        </section>
+
+    </div>
+    }
+
+    }
+
+</div>

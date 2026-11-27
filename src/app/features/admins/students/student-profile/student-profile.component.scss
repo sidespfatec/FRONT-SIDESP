@@ -1,0 +1,630 @@
+$brand: var(--color-brand-primary, #14188a);
+$text: #1f2937;
+$muted: #6b7280;
+$line: #e5e7eb;
+$surface: #fafafa;
+
+%plain-button {
+    border: 0;
+    background: none;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+.profile-page {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem 1rem 6rem;
+    font-family: var(--font-app);
+    color: $text;
+}
+
+.back-link {
+    @extend %plain-button;
+    align-self: flex-start;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $brand;
+}
+
+.profile-head {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: $surface;
+    border: 1px solid $line;
+    border-radius: 1rem;
+}
+
+.profile-photo {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5.5rem;
+    height: 5.5rem;
+    overflow: hidden;
+    background: #e5e7eb;
+    border-radius: 0.75rem;
+    font-size: 0.75rem;
+    color: $muted;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.profile-identity {
+    min-width: 0;
+}
+
+.profile-name {
+    margin: 0;
+    font-size: 1.3rem;
+    line-height: 1.2;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.profile-meta {
+    margin: 0.25rem 0 0.5rem;
+    font-size: 0.8rem;
+    color: $muted;
+}
+
+.profile-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.tag {
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.tag-status {
+    background: #d1fae5;
+    color: #047857;
+
+    &.inactive {
+        background: #e5e7eb;
+        color: $muted;
+    }
+}
+
+.tag-classes {
+    background: #e8eaf9;
+    color: $brand;
+}
+
+.alert {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: #fde8e8;
+    border: 1px solid #f5c2c2;
+    border-left: 4px solid #dc2626;
+    border-radius: 0.6rem;
+}
+
+.alert-text {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.85rem;
+    color: #7f1d1d;
+
+    strong {
+        font-size: 0.9rem;
+    }
+}
+
+.alert-link {
+    @extend %plain-button;
+    flex-shrink: 0;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: $brand;
+}
+
+.tabs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid $line;
+}
+
+.tab {
+    @extend %plain-button;
+    padding: 0.75rem 0.25rem;
+    margin-bottom: -1px;
+    border-bottom: 2px solid transparent;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $muted;
+    text-align: center;
+
+    &.active {
+        border-bottom-color: $brand;
+        color: $brand;
+        font-weight: 700;
+    }
+}
+
+.panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.link {
+    @extend %plain-button;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: $brand;
+}
+
+.class-card {
+    padding: 1rem;
+    background: $surface;
+    border: 1px solid $line;
+    border-radius: 1rem;
+}
+
+.class-title {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.class-where {
+    margin: 0.2rem 0 0.75rem;
+    font-size: 0.8rem;
+    color: $muted;
+}
+
+.class-schedule {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 0.75rem;
+
+    div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .label {
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #9ca3af;
+    }
+
+    .value {
+        font-size: 0.9rem;
+    }
+}
+
+.class-frequency {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.6rem 0.75rem;
+    background: #f3f4f6;
+    border: 1px solid $line;
+    border-radius: 0.6rem;
+    font-size: 0.85rem;
+
+    b {
+        color: $brand;
+    }
+}
+
+.summary-card {
+    padding: 0.75rem 1rem 1rem;
+    background: $surface;
+    border: 1px solid $line;
+    border-radius: 1rem;
+}
+
+.summary-since {
+    margin: 0 0 0.5rem;
+    font-size: 0.8rem;
+}
+
+.summary-numbers {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    text-align: center;
+
+    div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    strong {
+        font-size: 1.5rem;
+        line-height: 1.2;
+    }
+
+    span {
+        font-size: 0.75rem;
+        color: $muted;
+    }
+
+    .ok strong,
+    .ok span {
+        color: #15803d;
+    }
+
+    .bad strong,
+    .bad span {
+        color: #b91c1c;
+    }
+
+    .pct span {
+        color: $brand;
+    }
+}
+
+.progress {
+    height: 0.5rem;
+    margin-top: 0.75rem;
+    overflow: hidden;
+    background: $line;
+    border-radius: 999px;
+}
+
+.progress-bar {
+    height: 100%;
+    background: $brand;
+    border-radius: 999px;
+}
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.chip {
+    @extend %plain-button;
+    padding: 0.4rem 0.9rem;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+
+    &.active {
+        background: $brand;
+        border-color: $brand;
+        color: #fff;
+    }
+}
+
+.calendar {
+    background: $surface;
+    border: 1px solid $line;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.calendar-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem;
+    border-bottom: 1px solid $line;
+}
+
+.calendar-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.calendar-nav {
+    @extend %plain-button;
+    width: 2.25rem;
+    height: 2.25rem;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+    line-height: 1;
+
+    &:disabled {
+        opacity: 0.4;
+        cursor: default;
+    }
+}
+
+.calendar-week,
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 0 0.5rem;
+    text-align: center;
+}
+
+.calendar-week {
+    padding-top: 0.75rem;
+
+    span {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #9ca3af;
+    }
+}
+
+.calendar-grid {
+    padding-bottom: 0.5rem;
+}
+
+.day,
+.day-empty {
+    height: 3.25rem;
+}
+
+.day {
+    @extend %plain-button;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
+    border-radius: 0.5rem;
+    font-size: 0.85rem;
+    color: #c4c7cf;
+
+    &.marked {
+        color: #111827;
+        font-weight: 700;
+    }
+
+    &.selected {
+        background: #e8eaf9;
+    }
+
+    &:disabled {
+        cursor: default;
+    }
+}
+
+.dot {
+    display: inline-block;
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    background: #cbd5e1;
+
+    &[data-status='presente'] {
+        background: #16a34a;
+    }
+
+    &[data-status='falta'] {
+        background: #dc2626;
+    }
+
+    &[data-status='cancelada'] {
+        background: #cbd5e1;
+    }
+}
+
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0.75rem;
+    border-top: 1px solid $line;
+    list-style: none;
+    font-size: 0.75rem;
+    color: $muted;
+
+    li {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+}
+
+.day-info {
+    padding: 0.9rem 1rem;
+    background: $surface;
+    border: 1px solid $line;
+    border-radius: 0.75rem;
+    font-size: 0.85rem;
+
+    p {
+        margin: 0;
+    }
+
+    .day-info-title {
+        margin-bottom: 0.4rem;
+        font-weight: 700;
+    }
+
+    .day-info-line {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.15rem 0;
+    }
+}
+
+.document {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: $surface;
+    border: 1px solid $line;
+    border-radius: 1rem;
+}
+
+.document-name {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.document-detail {
+    margin: 0.15rem 0 0;
+    font-size: 0.8rem;
+    color: $muted;
+}
+
+.upload {
+    @extend %plain-button;
+    margin-top: 0.5rem;
+    padding: 0.35rem 0.75rem;
+    background: #fff;
+    border: 1px dashed #a5a9e0;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: $brand;
+}
+
+.badge {
+    flex-shrink: 0;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+
+    &[data-status='vencendo'] {
+        background: #fecaca;
+        color: #b91c1c;
+    }
+
+    &[data-status='pendente'] {
+        background: #fef3c7;
+        color: #b45309;
+    }
+
+    &[data-status='entregue'] {
+        background: #d1fae5;
+        color: #047857;
+    }
+}
+
+.data-card {
+    padding: 1rem;
+    background: $surface;
+    border: 1px solid $line;
+    border-radius: 1rem;
+}
+
+.data-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.data-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.data-hint {
+    margin: 0.15rem 0 0;
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+.data-rows {
+    margin: 0.5rem 0 0;
+}
+
+.data-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid $line;
+    font-size: 0.9rem;
+
+    &:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    dt {
+        color: $muted;
+    }
+
+    dd {
+        margin: 0;
+        font-weight: 600;
+        text-align: right;
+        overflow-wrap: anywhere;
+    }
+
+    small {
+        margin-left: 0.4rem;
+        font-size: 0.65rem;
+        font-weight: 700;
+        color: #9ca3af;
+    }
+}
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+}
+
+.edit-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.8rem;
+    color: $muted;
+}
+
+.edit-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.btn-ghost,
+.btn-main {
+    @extend %plain-button;
+    padding: 0.5rem 1.1rem;
+    border-radius: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.btn-ghost {
+    background: #fff;
+    border: 1px solid #d1d5db;
+}
+
+.btn-main {
+    background: $brand;
+    color: #fff;
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: default;
+    }
+}
