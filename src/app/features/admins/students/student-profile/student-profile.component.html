@@ -1,6 +1,6 @@
 <div class="profile-page">
 
-    <button type="button" class="back-link" (click)="voltar()">‹ Início</button>
+    <button type="button" class="back-link" (click)="voltar()"><i class="pi pi-angle-left"></i> Início</button>
 
     <section class="profile-head">
         <div class="profile-photo">
@@ -26,7 +26,7 @@
     </section>
 
     @if (pendencias) {
-    <div class="alert">
+    <div class="alert" animate.leave="fade-out">
         <div class="alert-text">
             <strong>{{ pendencias }} {{ pendencias === 1 ? 'documento pendente' : 'documentos pendentes' }}</strong>
             <span>Entregue até {{ aluno.prazoDocumentos }} para não perder a vaga.</span>
@@ -74,7 +74,7 @@
     }
 
     @case ('frequencia') {
-    <div class="panel">
+    <div class="panel panel-frequency">
 
         <section class="summary-card">
             <p class="summary-since">Desde a entrada, em {{ aluno.entrada | date:'dd/MM/yyyy' }}</p>
@@ -180,7 +180,8 @@
                 <p class="document-detail">{{ documento.detalhe }}</p>
 
                 @if (documento.situacao !== 'entregue') {
-                <button type="button" class="upload" (click)="escolherArquivo(documento.id, arquivo)">
+                <button type="button" class="upload" animate.leave="fade-out"
+                    (click)="escolherArquivo(documento.id, arquivo)">
                     {{ documento.situacao === 'vencendo' ? 'Enviar novo arquivo' : 'Enviar arquivo' }}
                 </button>
                 }

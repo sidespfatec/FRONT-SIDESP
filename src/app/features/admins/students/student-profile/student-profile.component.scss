@@ -13,21 +13,59 @@ $surface: #fafafa;
     cursor: pointer;
 }
 
+@keyframes page-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+}
+
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+}
+
+@keyframes grow {
+    from {
+        transform: scaleX(0);
+    }
+}
+
 .profile-page {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    max-width: 64rem;
+    margin: 0 auto;
     padding: 1rem 1rem 6rem;
     font-family: var(--font-app);
     color: $text;
+    animation: page-in 0.35s ease both;
+
+    @media (min-width: 48rem) {
+        padding: 2rem 1.5rem 4rem;
+    }
 }
 
 .back-link {
     @extend %plain-button;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
     align-self: flex-start;
     font-size: 0.9rem;
     font-weight: 600;
     color: $brand;
+
+    .pi {
+        transition: transform 0.2s ease;
+    }
+
+    &:hover .pi {
+        transform: translateX(-3px);
+    }
 }
 
 .profile-head {
@@ -38,6 +76,11 @@ $surface: #fafafa;
     background: $surface;
     border: 1px solid $line;
     border-radius: 1rem;
+
+    @media (min-width: 48rem) {
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
 }
 
 .profile-photo {
@@ -52,6 +95,11 @@ $surface: #fafafa;
     border-radius: 0.75rem;
     font-size: 0.75rem;
     color: $muted;
+
+    @media (min-width: 48rem) {
+        width: 6.5rem;
+        height: 6.5rem;
+    }
 
     img {
         width: 100%;
@@ -70,12 +118,20 @@ $surface: #fafafa;
     line-height: 1.2;
     font-weight: 700;
     overflow-wrap: anywhere;
+
+    @media (min-width: 48rem) {
+        font-size: 1.7rem;
+    }
 }
 
 .profile-meta {
     margin: 0.25rem 0 0.5rem;
     font-size: 0.8rem;
     color: $muted;
+
+    @media (min-width: 48rem) {
+        font-size: 0.9rem;
+    }
 }
 
 .profile-tags {
@@ -135,6 +191,11 @@ $surface: #fafafa;
     font-size: 0.85rem;
     font-weight: 700;
     color: $brand;
+    transition: transform 0.2s ease;
+
+    &:hover {
+        transform: translateX(3px);
+    }
 }
 
 .tabs {
@@ -152,6 +213,17 @@ $surface: #fafafa;
     font-weight: 600;
     color: $muted;
     text-align: center;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+
+    @media (min-width: 48rem) {
+        font-size: 0.95rem;
+        padding: 0.9rem 0.25rem;
+    }
+
+    &:hover {
+        color: $brand;
+        background: #f5f6fd;
+    }
 
     &.active {
         border-bottom-color: $brand;
@@ -161,9 +233,43 @@ $surface: #fafafa;
 }
 
 .panel {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: 0.75rem;
+    animation: fade-up 0.3s ease both;
+
+    @media (min-width: 48rem) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+    }
+}
+
+.panel-frequency {
+    @media (min-width: 48rem) {
+        grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+        grid-template-rows: auto auto 1fr;
+        grid-template-areas:
+            'summary calendar'
+            'chips calendar'
+            'info calendar';
+        align-items: start;
+
+        .summary-card {
+            grid-area: summary;
+        }
+
+        .chips {
+            grid-area: chips;
+        }
+
+        .calendar {
+            grid-area: calendar;
+        }
+
+        .day-info {
+            grid-area: info;
+        }
+    }
 }
 
 .link {
@@ -171,6 +277,11 @@ $surface: #fafafa;
     font-size: 0.85rem;
     font-weight: 700;
     color: $brand;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+        opacity: 0.7;
+    }
 }
 
 .class-card {
@@ -178,6 +289,12 @@ $surface: #fafafa;
     background: $surface;
     border: 1px solid $line;
     border-radius: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px rgba(20, 24, 138, 0.08);
+    }
 }
 
 .class-title {
@@ -289,6 +406,9 @@ $surface: #fafafa;
     height: 100%;
     background: $brand;
     border-radius: 999px;
+    transform-origin: left;
+    animation: grow 0.7s ease-out both;
+    transition: width 0.4s ease;
 }
 
 .chips {
@@ -305,6 +425,15 @@ $surface: #fafafa;
     border-radius: 999px;
     font-size: 0.8rem;
     font-weight: 700;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+
+    &:hover {
+        border-color: $brand;
+    }
+
+    &:active {
+        transform: scale(0.97);
+    }
 
     &.active {
         background: $brand;
@@ -343,6 +472,12 @@ $surface: #fafafa;
     border-radius: 0.5rem;
     font-size: 1.1rem;
     line-height: 1;
+    transition: background 0.2s ease, border-color 0.2s ease;
+
+    &:hover:not(:disabled) {
+        background: #f3f4ff;
+        border-color: $brand;
+    }
 
     &:disabled {
         opacity: 0.4;
@@ -387,10 +522,19 @@ $surface: #fafafa;
     border-radius: 0.5rem;
     font-size: 0.85rem;
     color: #c4c7cf;
+    transition: background 0.15s ease, transform 0.1s ease;
 
     &.marked {
         color: #111827;
         font-weight: 700;
+
+        &:hover {
+            background: #f1f2fb;
+        }
+
+        &:active {
+            transform: scale(0.94);
+        }
     }
 
     &.selected {
@@ -473,6 +617,12 @@ $surface: #fafafa;
     background: $surface;
     border: 1px solid $line;
     border-radius: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px rgba(20, 24, 138, 0.08);
+    }
 }
 
 .document-name {
@@ -497,6 +647,12 @@ $surface: #fafafa;
     font-size: 0.8rem;
     font-weight: 700;
     color: $brand;
+    transition: background 0.2s ease, border-color 0.2s ease;
+
+    &:hover {
+        background: #f3f4ff;
+        border-color: $brand;
+    }
 }
 
 .badge {
@@ -527,6 +683,12 @@ $surface: #fafafa;
     background: $surface;
     border: 1px solid $line;
     border-radius: 1rem;
+
+    &:last-child:nth-child(odd) {
+        @media (min-width: 48rem) {
+            grid-column: 1 / -1;
+        }
+    }
 }
 
 .data-head {
@@ -589,6 +751,7 @@ $surface: #fafafa;
     flex-direction: column;
     gap: 0.75rem;
     margin-top: 0.75rem;
+    animation: fade-up 0.25s ease both;
 }
 
 .edit-field {
@@ -612,19 +775,53 @@ $surface: #fafafa;
     border-radius: 0.5rem;
     font-size: 0.85rem;
     font-weight: 700;
+    transition: background 0.2s ease, filter 0.2s ease, transform 0.1s ease;
+
+    &:active {
+        transform: scale(0.97);
+    }
 }
 
 .btn-ghost {
     background: #fff;
     border: 1px solid #d1d5db;
+
+    &:hover {
+        background: #f9fafb;
+    }
 }
 
 .btn-main {
     background: $brand;
     color: #fff;
 
+    &:hover:not(:disabled) {
+        filter: brightness(1.18);
+    }
+
     &:disabled {
         opacity: 0.5;
         cursor: default;
     }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .profile-page,
+    .profile-page * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+@keyframes fade-out {
+    to {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+}
+
+.fade-out {
+    animation: fade-out 0.2s ease both;
+    pointer-events: none;
 }
