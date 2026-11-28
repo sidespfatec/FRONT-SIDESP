@@ -1,0 +1,170 @@
+<div class="classes-page">
+
+    <button type="button" class="back-link" (click)="voltar()">
+        <i class="pi pi-angle-left"></i> Esportes
+    </button>
+
+    @if (esporte) {
+
+    <header class="classes-header">
+        <span class="classes-icon">
+            <app-sport-icon [nome]="esporte.icone" />
+        </span>
+        <div>
+            <h1 class="classes-title">{{ esporte.nome }}</h1>
+            <p class="classes-subtitle">
+                {{ esporte.turmas.length }} {{ esporte.turmas.length === 1 ? 'turma oferecida' : 'turmas oferecidas' }}
+            </p>
+        </div>
+    </header>
+
+    <div class="filters">
+        <select class="filter-select" [(ngModel)]="polo" aria-label="Filtrar por polo">
+            <option value="">Todos os polos</option>
+            @for (nome of polos; track nome) {
+            <option [value]="nome">{{ nome }}</option>
+            }
+        </select>
+
+        <label class="filter-check">
+            <input type="checkbox" [(ngModel)]="soDisponiveis" />
+            <span>Mostrar só turmas em que posso entrar</span>
+        </label>
+    </div>
+
+    <div class="class-list">
+        @for (turma of turmasFiltradas; track turma.id; let i = $index) {
+        @let estado = estadoDe(turma);
+
+        <article class="class-card" animate.leave="card-out" [attr.data-estado]="estado" [style.--i]="i">
+
+            <header class="class-head">
+                <h2 class="class-name">{{ turma.nome }}</h2>
+                <span class="status-tag" [attr.data-estado]="estado">{{ rotulos[estado] }}</span>
+            </header>
+
+            <p class="class-where">{{ turma.polo }} · {{ turma.professor }}</p>
+
+            <div class="class-schedule">
+                <div>
+                    <span class="label"><i class="pi pi-calendar"></i>Dias</span>
+                    <span class="value">{{ turma.dias }}</span>
+                </div>
+                <div>
+                    <span class="label"><i class="pi pi-clock"></i>Horário</span>
+                    <span class="value">{{ turma.horario }}</span>
+                </div>
+                <div>
+                    <span class="label"><i class="pi pi-users"></i>Idade</span>
+                    <span class="value">{{ turma.idadeMinima }}–{{ turma.idadeMaxima }}</span>
+                </div>
+            </div>
+
+            <div class="vacancy">
+                <div class="vacancy-line">
+                    <span>Vagas</span>
+                    <b>{{ textoVagas(turma) }}</b>
+                </div>
+                <div class="vacancy-bar">
+                    <div class="vacancy-fill" [class.full]="vagasLivres(turma) === 0" [style.width.%]="ocupacao(turma)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="class-footer">
+                @switch (estado) {
+
+                @case ('aberta') {
+                <div class="footer-state" animate.enter="state-in" animate.leave="state-out">
+                    <button type="button" class="btn-main" (click)="pedir(turma, 'inscrever')">Inscrever-se</button>
+                </div>
+                }
+
+                @case ('matriculada') {
+                <div class="footer-state" animate.enter="state-in" animate.leave="state-out">
+                    <p class="notice notice-info">Você já está matriculada nesta turma.</p>
+                    <button type="button" class="btn-danger" (click)="pedir(turma, 'cancelar')">
+                        Cancelar minha matrícula
+                    </button>
+                </div>
+                }
+
+                @case ('na-lista') {
+                <div class="footer-state" animate.enter="state-in" animate.leave="state-out">
+                    <div class="notice notice-wait">
+                        <span>Sua posição na lista</span>
+                        <strong>{{ turma.posicao }}º de {{ turma.tamanhoLista }}</strong>
+                    </div>
+                    <button type="button" class="btn-danger" (click)="pedir(turma, 'sair-lista')">
+                        Sair da lista de espera
+                    </button>
+                </div>
+                }
+
+                @case ('cheia-lista') {
+                <div class="footer-state" animate.enter="state-in" animate.leave="state-out">
+                    <p class="notice notice-info">
+                        {{ turma.tamanhoLista }} {{ turma.tamanhoLista === 1 ? 'pessoa' : 'pessoas' }} na lista de
+                        espera.
+                    </p>
+                    <button type="button" class="btn-outline" (click)="pedir(turma, 'entrar-lista')">
+                        Entrar na lista de espera
+                    </button>
+                </div>
+                }
+
+                @case ('cheia') {
+                <div class="footer-state" animate.enter="state-in" animate.leave="state-out">
+                    <p class="notice notice-muted">Sem vagas e sem lista de espera nesta turma.</p>
+                </div>
+                }
+
+                @case ('fora-idade') {
+                <div class="footer-state" animate.enter="state-in" animate.leave="state-out">
+                    <p class="notice notice-muted">
+                        Esta turma é para quem tem de {{ turma.idadeMinima }} a {{ turma.idadeMaxima }} anos.
+                    </p>
+                </div>
+                }
+
+                }
+            </div>
+
+        </article>
+        } @empty {
+        <p class="empty">Nenhuma turma encontrada com esses filtros.</p>
+        }
+    </div>
+
+    } @else {
+
+    <h1 class="classes-title">Esporte não encontrado</h1>
+    <p class="classes-subtitle">Volte para a lista e escolha outra modalidade.</p>
+
+    }
+
+</div>
+
+@if (turmaAcao && acao) {
+<div class="sheet-backdrop" animate.enter="fade-in" animate.leave="fade-out" (click)="fechar()"></div>
+
+<div class="sheet" role="dialog" aria-modal="true" animate.enter="sheet-in" animate.leave="sheet-out">
+    <h2 class="sheet-title">{{ confirmacoes[acao].titulo }}</h2>
+    <p class="sheet-class"><b>{{ turmaAcao.nome }}</b> — {{ turmaAcao.polo }}</p>
+    <p class="sheet-when">{{ turmaAcao.dias }}, {{ turmaAcao.horario }}</p>
+
+    <div class="sheet-actions">
+        <button type="button" class="btn-ghost" (click)="fechar()">Voltar</button>
+        <button type="button" class="btn-confirm" [class.danger]="confirmacoes[acao].perigo" (click)="confirmar()">
+            {{ confirmacoes[acao].botao }}
+        </button>
+    </div>
+</div>
+}
+
+@if (mensagem()) {
+<div class="toast" role="status" animate.enter="toast-in" animate.leave="toast-out">
+    <i class="pi pi-check-circle"></i>
+    {{ mensagem() }}
+</div>
+}

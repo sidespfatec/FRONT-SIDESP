@@ -1,0 +1,25 @@
+<div class="sports-page">
+
+    <h1 class="sports-title">Esportes</h1>
+    <p class="sports-subtitle">Escolha a modalidade para ver as turmas e se inscrever.</p>
+
+    <ul class="sports-list">
+        @for (esporte of esportes; track esporte.id; let i = $index) {
+        <li [style.animation-delay.ms]="i * 70">
+            <button type="button" class="sport-item" (click)="abrir(esporte)">
+                <span class="sport-icon">
+                    <app-sport-icon [nome]="esporte.icone" />
+                </span>
+
+                <span class="sport-info">
+                    <strong class="sport-name">{{ esporte.nome }}</strong>
+                    <span class="sport-meta">{{ resumo(esporte) }}</span>
+                </span>
+
+                <i class="pi pi-angle-right" aria-hidden="true"></i>
+            </button>
+        </li>
+        }
+    </ul>
+
+</div>

@@ -1,0 +1,148 @@
+$brand: var(--color-brand-primary, #14188a);
+$text: #1f2937;
+$muted: #6b7280;
+$line: #e5e7eb;
+
+@keyframes page-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+}
+
+@keyframes rise {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+}
+
+.sports-page {
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: 1rem 1rem 6rem;
+    font-family: var(--font-app);
+    color: $text;
+    animation: page-in 0.35s ease both;
+
+    @media (min-width: 48rem) {
+        padding: 2rem 1.5rem 4rem;
+    }
+}
+
+.sports-title {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+
+    @media (min-width: 48rem) {
+        font-size: 2rem;
+    }
+}
+
+.sports-subtitle {
+    margin: 0.25rem 0 1.25rem;
+    font-size: 0.9rem;
+    color: $muted;
+
+    @media (min-width: 48rem) {
+        font-size: 1rem;
+        margin-bottom: 1.75rem;
+    }
+}
+
+.sports-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+        animation: rise 0.45s ease both;
+    }
+}
+
+.sport-item {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    width: 100%;
+    padding: 0.9rem;
+    background: #fff;
+    border: 1px solid $line;
+    border-radius: 1rem;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+
+    .pi {
+        color: $brand;
+        transition: transform 0.2s ease;
+    }
+
+    &:hover {
+        transform: translateY(-2px);
+        border-color: #c7cbf3;
+        box-shadow: 0 10px 24px rgba(20, 24, 138, 0.1);
+
+        .sport-icon {
+            background: $brand;
+            color: #fff;
+        }
+
+        .pi {
+            transform: translateX(4px);
+        }
+    }
+
+    &:active {
+        transform: translateY(0) scale(0.99);
+    }
+
+    &:focus-visible {
+        outline: 2px solid $brand;
+        outline-offset: 2px;
+    }
+}
+
+.sport-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    background: #e8eaf9;
+    border-radius: 0.8rem;
+    color: $brand;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.sport-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.sport-name {
+    font-size: 1.05rem;
+}
+
+.sport-meta {
+    font-size: 0.8rem;
+    color: $muted;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .sports-page,
+    .sports-page * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
