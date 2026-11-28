@@ -100,6 +100,20 @@ export const routes: Routes = [
         loadComponent: () => import('./features/teachers/profile/profile.component')
             .then(m => m.ProfileComponent)
     },
+    {
+        path: 'aluno/perfil',
+        loadComponent: () => import('./features/admins/students/student-profile/student-profile.component').then(m => m.StudentProfileComponent)
+    },
+
+    {
+        path: 'aluno/esportes',
+        loadComponent: () => import('./features/admins/students/sports/sports.component').then(m => m.SportsComponent)
+    },
+
+    {
+        path: 'aluno/esportes/:id',
+        loadComponent: () => import('./features/admins/students/sports/sport-classes/sport-classes.component').then(m => m.SportClassesComponent)
+    },
 
     {
         path: '**',
